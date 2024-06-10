@@ -56,6 +56,14 @@ struct ptr_core
                         return std::forward< F >( f )( static_cast< U* >( ptr ) );
                 } );
         }
+
+        void reset()
+        {
+                dispatch< 0, TL::size >( index - 1, [&]< std::size_t j > {
+                        using U = typename type_at< j, TL >::type;
+                        delete static_cast< U* >( ptr );
+                } );
+        }
 };
 
 template < typename B, typename T >
@@ -79,6 +87,11 @@ struct ptr_core< B, typelist< T > >
         decltype( auto ) take_bits( F&& f )
         {
                 return std::forward< F >( f )( ptr );
+        }
+
+        void reset()
+        {
+                delete ptr;
         }
 };
 

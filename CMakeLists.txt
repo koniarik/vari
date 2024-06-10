@@ -3,7 +3,10 @@ cmake_minimum_required(VERSION 3.19)
 project(vari)
 
 add_library(vari INTERFACE
-	include/vari/typelist.h
+	include/vari/bits/typelist.h
+	include/vari/bits/overloaded.h
+	include/vari/bits/ptr_core.h
+	include/vari/bits/dispatch.h
 	include/vari/uvptr.h
 	include/vari/vptr.h
 	include/vari/vref.h

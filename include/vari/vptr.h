@@ -60,7 +60,7 @@ public:
                 return _core.ptr;
         }
 
-        auto* raw() const noexcept
+        auto* ptr() const noexcept
         {
                 return _core.ptr;
         }
@@ -71,7 +71,26 @@ public:
         }
 
         template < typename F >
-        decltype( auto ) take( F&& f )
+        decltype( auto ) visit( F&& f )
+        {
+                return match(
+                    [&]( vptr< B > ) {
+                            return f();
+                    },
+                    [&]( auto p ) {
+                            return f( *p );
+                    } );
+        }
+
+        template < typename... Fs >
+        decltype( auto ) visit( Fs&&... f )
+        {
+                return visit( bits::overloaded< std::remove_reference_t< Fs >... >(
+                    std::forward< Fs >( f )... ) );
+        }
+
+        template < typename F >
+        decltype( auto ) match( F&& f )
         {
                 if ( _core.ptr == nullptr )
                         return std::forward< F >( f )( vptr< B >{} );
@@ -81,15 +100,10 @@ public:
         }
 
         template < typename... Fs >
-        decltype( auto ) take( Fs&&... f )
+        decltype( auto ) match( Fs&&... f )
         {
-                if ( _core.ptr == nullptr )
-                        return bits::overloaded< std::remove_reference_t< Fs >... >(
-                            std::forward< Fs >( f )... )( vptr< B >{} );
-                return _core.take_bits( [&]< typename T >( T* p ) {
-                        return bits::overloaded< std::remove_reference_t< Fs >... >(
-                            std::forward< Fs >( f )... )( vptr< B, T >{ *p } );
-                } );
+                return match( bits::overloaded< std::remove_reference_t< Fs >... >(
+                    std::forward< Fs >( f )... ) );
         }
 
         friend void swap( vptr& lh, vptr& rh ) noexcept
@@ -102,12 +116,15 @@ private:
 
         template < typename C, typename... Us >
         friend class vptr;
+
+        template < typename C, typename... Us >
+        friend class uvptr;
 };
 
 }  // namespace vari::bits
 
 namespace vari
 {
-template < typename... Ts >
-using vptr = bits::define_vptr< bits::vptr, void, bits::typelist< Ts... > >;
+template < typename R, typename... Ts >
+using vptr = bits::define_vptr< bits::vptr, R, bits::typelist< Ts... > >;
 }

@@ -7,6 +7,9 @@ namespace vari::bits
 {
 
 template < typename B, typename... Ts >
+class uvref;
+
+template < typename B, typename... Ts >
 class uvptr
 {
         using TL = bits::typelist< Ts... >;
@@ -24,6 +27,14 @@ public:
 
         template < typename... Us >
                 requires( is_subset< typelist< Us... >, TL >::value )
+        uvptr( uvref< B, Us... >&& p ) noexcept
+        {
+                _ptr._core   = std::move( p._ref._core );
+                p._ref._core = ptr_core< B, typelist< Us... > >{};
+        }
+
+        template < typename... Us >
+                requires( is_subset< typelist< Us... >, TL >::value )
         uvptr( uvptr< B, Us... >&& p ) noexcept
           : _ptr( p.release() )
         {
@@ -31,7 +42,7 @@ public:
 
         template < typename U >
                 requires( contains_type< U, TL >::value )
-        uvptr( U* u ) noexcept
+        explicit uvptr( U* u ) noexcept
         {
                 if ( u )
                         _ptr = pointer{ *u };
@@ -39,7 +50,7 @@ public:
 
         template < typename... Us >
                 requires( is_subset< typelist< Us... >, TL >::value )
-        uvptr( vptr< B, Us... > p ) noexcept
+        explicit uvptr( vptr< B, Us... > p ) noexcept
           : _ptr( p )
         {
         }
@@ -58,13 +69,6 @@ public:
                 reset( p.release() );
         }
 
-        template < typename... Us >
-                requires( is_subset< bits::typelist< Us... >, TL >::value )
-        uvptr& operator=( vptr< B, Us... > p )
-        {
-                reset( p );
-        }
-
         auto& operator*()
         {
                 return *_ptr;
@@ -72,7 +76,7 @@ public:
 
         B* operator->()
         {
-                return _ptr.raw();
+                return _ptr.ptr();
         }
 
         const pointer& ptr() const
@@ -84,12 +88,7 @@ public:
         {
                 auto tmp = _ptr;
                 _ptr     = ptr;
-                tmp.take(
-                    [&]( vptr< B > ) {},
-                    [&]< typename T >( vptr< B, T > p ) {
-                            T* pp = p.raw();
-                            delete pp;
-                    } );
+                tmp._core.reset();
         }
 
         pointer release() noexcept
@@ -105,11 +104,23 @@ public:
         }
 
         template < typename... Fs >
+        decltype( auto ) visit( Fs&&... f )
+        {
+                return _ptr.visit( (Fs&&) f... );
+        }
+
+        template < typename... Fs >
+        decltype( auto ) match( Fs&&... f )
+        {
+                return _ptr.match( (Fs&&) f... );
+        }
+
+        template < typename... Fs >
         decltype( auto ) take( Fs&&... f ) &&
         {
                 auto p = release();
 
-                return p.take(
+                return p.match(
                     [&]( vptr< B > ) {
                             return bits::overloaded< std::remove_reference_t< Fs >... >(
                                 std::forward< Fs >( f )... )( uvptr< B >() );
@@ -122,7 +133,7 @@ public:
 
         ~uvptr()
         {
-                reset();
+                _ptr._core.reset();
         }
 
 private:
@@ -136,6 +147,7 @@ private:
 
 namespace vari
 {
-template < typename... Ts >
-using uvptr = bits::define_vptr< bits::uvptr, void, bits::typelist< Ts... > >;
-}
+template < typename R, typename... Ts >
+using uvptr = bits::define_vptr< bits::uvptr, R, bits::typelist< Ts... > >;
+
+}  // namespace vari

@@ -14,35 +14,50 @@ class vref
 public:
         template < typename... Us >
                 requires( is_subset< typelist< Us... >, TL >::value )
-        vref( vref< B, Us... > p )
+        vref( vref< B, Us... > p ) noexcept
           : _core( p._core )
         {
         }
 
         template < typename U >
                 requires( contains_type< U, TL >::value )
-        vref( U& u )
+        vref( U& u ) noexcept
           : _core( u )
         {
         }
 
-        auto operator*()
+        auto operator*() noexcept
         {
                 return *_core.ptr;
         }
 
-        B* operator->()
+        B* operator->() noexcept
         {
                 return _core.ptr;
         }
 
-        B* raw() const
+        B* ptr() const noexcept
         {
                 return _core.ptr;
         }
 
         template < typename F >
-        decltype( auto ) take( F&& f )
+        decltype( auto ) visit( F&& f )
+        {
+                return match( [&]( auto p ) {
+                        return f( *p );
+                } );
+        }
+
+        template < typename... Fs >
+        decltype( auto ) visit( Fs&&... f )
+        {
+                return visit( bits::overloaded< std::remove_reference_t< Fs >... >(
+                    std::forward< Fs >( f )... ) );
+        }
+
+        template < typename F >
+        decltype( auto ) match( F&& f )
         {
                 return _core.take_bits( [&]< typename T >( T* p ) {
                         return std::forward< F >( f )( vref< B, T >{ *p } );
@@ -50,7 +65,7 @@ public:
         }
 
         template < typename... Fs >
-        decltype( auto ) take( Fs&&... f )
+        decltype( auto ) match( Fs&&... f )
         {
                 return _core.take_bits( [&]< typename T >( T* p ) {
                         return bits::overloaded< std::remove_reference_t< Fs >... >(
@@ -65,12 +80,17 @@ private:
         friend class vref;
         template < typename C, typename... Us >
         friend class vptr;
+        template < typename C, typename... Us >
+        friend class uvref;
+        template < typename C, typename... Us >
+        friend class uvptr;
 };
 
 }  // namespace vari::bits
 
 namespace vari
 {
-template < typename... Ts >
-using vref = bits::define_vptr< bits::vref, void, bits::typelist< Ts... > >;
+template < typename R, typename... Ts >
+using vref = bits::define_vptr< bits::vref, R, bits::typelist< Ts... > >;
+
 }  // namespace vari

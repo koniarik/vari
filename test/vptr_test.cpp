@@ -20,6 +20,7 @@
 #include "vari/vptr.h"
 
 #include "vari/uvptr.h"
+#include "vari/uvref.h"
 #include "vari/vref.h"
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
@@ -51,23 +52,35 @@ namespace bits
 
 TEST_CASE( "vptr" )
 {
-        using V = vptr< int, float, std::string >;
+        using V = vptr< void, int, float, std::string >;
 
         int i;
         V   p1{ i };
 
         CHECK( p1 );
 
-        p1.take(
-            [&]( vptr<> ) {
+        p1.visit(
+            [&]() {
                     FAIL( "incorrect overload" );
             },
-            [&]( vptr< int > ) {},
-            [&]( vptr< float, std::string > ) {
+            [&]( int ) {},
+            [&]( float ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( std::string ) {
                     FAIL( "incorrect overload" );
             } );
 
-        vptr< float > p2;
+        p1.match(
+            [&]( vptr< void > ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( vptr< void, int > ) {},
+            [&]( vptr< void, float, std::string > ) {
+                    FAIL( "incorrect overload" );
+            } );
+
+        vptr< void, float > p2;
 
         CHECK_FALSE( p2 );
 
@@ -75,12 +88,12 @@ TEST_CASE( "vptr" )
 
         CHECK_FALSE( p1 );
 
-        vptr< float > p3;
+        vptr< void, float > p3;
 
         p3 = p2;
 
         CHECK_EQ( p2, p3 );
-        CHECK_EQ( p2.raw(), p3.raw() );
+        CHECK_EQ( p2.ptr(), p3.ptr() );
 }
 
 static_assert( std::same_as<
@@ -95,42 +108,103 @@ static_assert( std::same_as<
 
 TEST_CASE( "vref" )
 {
-        using V = vref< int, float, std::string >;
+        using V = vref< void, int, float, std::string >;
 
         std::string i{ "123456" };
         V           p1{ i };
 
-        p1.take(
-            [&]( vref< int > ) {
+        p1.visit(
+            [&]( int ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( vref< float, std::string > ) {} );
+            [&]( float ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( std::string ) {} );
 
-        vptr< int, float, std::string > p2 = p1;
-        vptr< int >                     p3;
+        p1.match(
+            [&]( vref< void, int > ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( vref< void, float, std::string > ) {} );
 
-        std::vector< int >         vec = { 1, 2, 3, 4 };
-        vptr< std::vector< int > > p4( vec );
-        CHECK_EQ( p2.raw(), p1.raw() );
+        vptr< void, int, float, std::string > p2 = p1;
+        vptr< void, int >                     p3;
+
+        std::vector< int >               vec = { 1, 2, 3, 4 };
+        vptr< void, std::vector< int > > p4( vec );
+        CHECK_EQ( p2.ptr(), p1.ptr() );
 }
 
 TEST_CASE( "uvptr" )
 {
-        using V = uvptr< int, float, std::string >;
+        using V = uvptr< void, int, float, std::string >;
 
-        V p1 = uvptr< std::string >( new std::string{ "s" } );
+        V p1 = uwrap< void >( std::string{ "s" } );
+
+        p1.visit(
+            [&]() {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( int ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( float ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( std::string ) {} );
+
+        p1.match(
+            [&]( vptr< void > ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( vptr< void, int > ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( vptr< void, float, std::string > ) {} );
 
         std::move( p1 ).take(
-            [&]( uvptr<> ) {
+            [&]( uvptr< void > ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( uvptr< int > ) {
+            [&]( uvptr< void, int > ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( uvptr< float, std::string > ) {} );
+            [&]( uvptr< void, float, std::string > ) {} );
 
-        vptr< int, float, std::string > p2 = p1.ptr();
-        CHECK_EQ( p2.raw(), p1.ptr().raw() );
+        vptr< void, int, float, std::string > p2 = p1.ptr();
+        CHECK_EQ( p2.ptr(), p1.ptr().ptr() );
+}
+
+TEST_CASE( "uvref" )
+{
+        using V = uvref< void, int, float, std::string >;
+
+        V p1 = uwrap< void >( std::string{ "s" } );
+
+        p1.visit(
+            [&]( int ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( float ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( std::string ) {} );
+
+        p1.match(
+            [&]( vref< void, int > ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( vref< void, float, std::string > ) {} );
+
+        std::move( p1 ).take(
+            [&]( uvref< void, int > ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( uvref< void, float, std::string > ) {} );
+
+        vptr< void, int, float, std::string > p2 = p1.ptr();
+        CHECK_EQ( p2.ptr(), p1.ptr().ptr() );
 }
 
 }  // namespace vari
