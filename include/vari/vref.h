@@ -59,7 +59,7 @@ public:
         template < typename F >
         decltype( auto ) match( F&& f )
         {
-                return _core.take_bits( [&]< typename T >( T* p ) {
+                return _core.match_impl( [&]< typename T >( T* p ) {
                         return std::forward< F >( f )( vref< B, T >{ *p } );
                 } );
         }
@@ -67,7 +67,7 @@ public:
         template < typename... Fs >
         decltype( auto ) match( Fs&&... f )
         {
-                return _core.take_bits( [&]< typename T >( T* p ) {
+                return _core.match_impl( [&]< typename T >( T* p ) {
                         return bits::overloaded< std::remove_reference_t< Fs >... >(
                             std::forward< Fs >( f )... )( vref< B, T >{ *p } );
                 } );

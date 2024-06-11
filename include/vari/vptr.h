@@ -94,7 +94,7 @@ public:
         {
                 if ( _core.ptr == nullptr )
                         return std::forward< F >( f )( vptr< B >{} );
-                return _core.take_bits( [&]< typename T >( T* p ) {
+                return _core.match_impl( [&]< typename T >( T* p ) {
                         return std::forward< F >( f )( vptr< B, T >{ *p } );
                 } );
         }

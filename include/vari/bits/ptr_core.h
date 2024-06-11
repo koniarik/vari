@@ -49,7 +49,7 @@ struct ptr_core
         }
 
         template < typename F >
-        decltype( auto ) take_bits( F&& f )
+        decltype( auto ) match_impl( F&& f )
         {
                 dispatch< 0, TL::size >( index - 1, [&]< std::size_t j > {
                         using U = typename type_at< j, TL >::type;
@@ -84,7 +84,7 @@ struct ptr_core< B, typelist< T > >
         }
 
         template < typename F >
-        decltype( auto ) take_bits( F&& f )
+        decltype( auto ) match_impl( F&& f )
         {
                 return std::forward< F >( f )( ptr );
         }
