@@ -80,7 +80,7 @@ public:
         {
                 auto tmp   = _ref;
                 _ref._core = ptr_core< B, TL >{};
-                return tmp.match( [&]< typename T >( vref< B, T > p ) {
+                return tmp.match( [&]< typename T >( vref< B, T > p ) -> decltype( auto ) {
                         return bits::overloaded< std::remove_reference_t< Fs >... >(
                             std::forward< Fs >( f )... )( uvref< B, T >( p ) );
                 } );

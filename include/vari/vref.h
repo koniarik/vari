@@ -26,7 +26,7 @@ public:
         {
         }
 
-        auto operator*() noexcept
+        auto& operator*() noexcept
         {
                 return *_core.ptr;
         }
@@ -44,8 +44,10 @@ public:
         template < typename F >
         decltype( auto ) visit( F&& f )
         {
-                return match( [&]( auto p ) {
-                        return f( *p );
+                static_assert(
+                    ( invocable< F, Ts& > && ... ), "Functor has to be invocable with all types" );
+                return match( [&]< typename T >( vref< B, T > p ) -> decltype( auto ) {
+                        return std::forward< F >( f )( *p );
                 } );
         }
 
@@ -59,7 +61,10 @@ public:
         template < typename F >
         decltype( auto ) match( F&& f )
         {
-                return _core.match_impl( [&]< typename T >( T* p ) {
+                static_assert(
+                    ( invocable< F, vref< B, Ts > > && ... ),
+                    "Functor has to be invocable with all types" );
+                return _core.match_impl( [&]< typename T >( T* p ) -> decltype( auto ) {
                         return std::forward< F >( f )( vref< B, T >{ *p } );
                 } );
         }
@@ -67,7 +72,7 @@ public:
         template < typename... Fs >
         decltype( auto ) match( Fs&&... f )
         {
-                return _core.match_impl( [&]< typename T >( T* p ) {
+                return _core.match_impl( [&]< typename T >( T* p ) -> decltype( auto ) {
                         return bits::overloaded< std::remove_reference_t< Fs >... >(
                             std::forward< Fs >( f )... )( vref< B, T >{ *p } );
                 } );

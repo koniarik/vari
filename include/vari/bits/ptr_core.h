@@ -51,10 +51,11 @@ struct ptr_core
         template < typename F >
         decltype( auto ) match_impl( F&& f )
         {
-                dispatch< 0, TL::size >( index - 1, [&]< std::size_t j > {
-                        using U = typename type_at< j, TL >::type;
-                        return std::forward< F >( f )( static_cast< U* >( ptr ) );
-                } );
+                return dispatch< 0, TL::size >(
+                    index - 1, [&]< std::size_t j >() -> decltype( auto ) {
+                            using U = typename type_at< j, TL >::type;
+                            return std::forward< F >( f )( static_cast< U* >( ptr ) );
+                    } );
         }
 
         void reset()
@@ -94,5 +95,13 @@ struct ptr_core< B, typelist< T > >
                 delete ptr;
         }
 };
+
+template < typename F, typename... Args >
+concept invocable = requires( F&& f, Args&&... args ) {
+        std::forward< F >( f )( std::forward< Args >( args )... );
+};
+
+template < typename F, typename... Ts >
+concept invokes_something = ( invocable< F, Ts > || ... || false );
 
 }  // namespace vari::bits

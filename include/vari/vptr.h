@@ -73,12 +73,15 @@ public:
         template < typename F >
         decltype( auto ) visit( F&& f )
         {
+                static_assert(
+                    (invocable< F, Ts& > && ... && invocable< F >),
+                    "Functor has to be invocable with all types and null" );
                 return match(
-                    [&]( vptr< B > ) {
-                            return f();
+                    [&]( vptr< B > ) -> decltype( auto ) {
+                            return std::forward< F >( f )();
                     },
-                    [&]( auto p ) {
-                            return f( *p );
+                    [&]< typename T >( vptr< B, T > p ) -> decltype( auto ) {
+                            return std::forward< F >( f )( *p );
                     } );
         }
 
@@ -92,9 +95,12 @@ public:
         template < typename F >
         decltype( auto ) match( F&& f )
         {
+                static_assert(
+                    (invocable< F, vptr< B, Ts > > && ... && invocable< F, vptr< B > >),
+                    "Functor has to be invocable with all types and null" );
                 if ( _core.ptr == nullptr )
                         return std::forward< F >( f )( vptr< B >{} );
-                return _core.match_impl( [&]< typename T >( T* p ) {
+                return _core.match_impl( [&]< typename T >( T* p ) -> decltype( auto ) {
                         return std::forward< F >( f )( vptr< B, T >{ *p } );
                 } );
         }

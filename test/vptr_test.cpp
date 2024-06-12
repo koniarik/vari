@@ -63,11 +63,11 @@ TEST_CASE( "vptr" )
             [&]() {
                     FAIL( "incorrect overload" );
             },
-            [&]( int ) {},
-            [&]( float ) {
+            [&]( int& ) {},
+            [&]( float& ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( std::string ) {
+            [&]( std::string& ) {
                     FAIL( "incorrect overload" );
             } );
 
@@ -76,9 +76,19 @@ TEST_CASE( "vptr" )
                     FAIL( "incorrect overload" );
             },
             [&]( vptr< void, int > ) {},
+            [&]( vptr< void, bool > ) {},
             [&]( vptr< void, float, std::string > ) {
                     FAIL( "incorrect overload" );
             } );
+
+        int& ii = p1.visit(
+            [&]() -> int& {
+                    return i;
+            },
+            [&]( auto& ) -> int& {
+                    return i;
+            } );
+        CHECK_EQ( &ii, &i );
 
         vptr< void, float > p2;
 
@@ -114,13 +124,18 @@ TEST_CASE( "vref" )
         V           p1{ i };
 
         p1.visit(
-            [&]( int ) {
+            [&]( int& ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( float ) {
+            [&]( float& ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( std::string ) {} );
+            [&]( std::string& ) {} );
+
+        std::string& ii = p1.visit( [&]( auto& ) -> std::string& {
+                return i;
+        } );
+        CHECK_EQ( i.data(), ii.data() );
 
         p1.match(
             [&]( vref< void, int > ) {
@@ -146,13 +161,13 @@ TEST_CASE( "uvptr" )
             [&]() {
                     FAIL( "incorrect overload" );
             },
-            [&]( int ) {
+            [&]( int& ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( float ) {
+            [&]( float& ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( std::string ) {} );
+            [&]( std::string& ) {} );
 
         p1.match(
             [&]( vptr< void > ) {
@@ -183,13 +198,13 @@ TEST_CASE( "uvref" )
         V p1 = uwrap< void >( std::string{ "s" } );
 
         p1.visit(
-            [&]( int ) {
+            [&]( int& ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( float ) {
+            [&]( float& ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( std::string ) {} );
+            [&]( std::string& ) {} );
 
         p1.match(
             [&]( vref< void, int > ) {

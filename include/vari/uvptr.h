@@ -121,11 +121,11 @@ public:
                 auto p = release();
 
                 return p.match(
-                    [&]( vptr< B > ) {
+                    [&]( vptr< B > ) -> decltype( auto ) {
                             return bits::overloaded< std::remove_reference_t< Fs >... >(
                                 std::forward< Fs >( f )... )( uvptr< B >() );
                     },
-                    [&]< typename T >( vptr< B, T > p ) {
+                    [&]< typename T >( vptr< B, T > p ) -> decltype( auto ) {
                             return bits::overloaded< std::remove_reference_t< Fs >... >(
                                 std::forward< Fs >( f )... )( uvptr< B, T >( p ) );
                     } );
