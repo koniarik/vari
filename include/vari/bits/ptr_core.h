@@ -51,16 +51,16 @@ struct ptr_core
         template < typename F >
         decltype( auto ) match_impl( F&& f )
         {
-                return dispatch< 0, TL::size >(
+                return dispatch_index< 0, TL::size >(
                     index - 1, [&]< std::size_t j >() -> decltype( auto ) {
                             using U = typename type_at< j, TL >::type;
                             return std::forward< F >( f )( static_cast< U* >( ptr ) );
                     } );
         }
 
-        void reset()
+        void delete_ptr()
         {
-                dispatch< 0, TL::size >( index - 1, [&]< std::size_t j > {
+                dispatch_index< 0, TL::size >( index - 1, [&]< std::size_t j > {
                         using U = typename type_at< j, TL >::type;
                         delete static_cast< U* >( ptr );
                 } );
@@ -90,7 +90,7 @@ struct ptr_core< B, typelist< T > >
                 return std::forward< F >( f )( ptr );
         }
 
-        void reset()
+        void delete_ptr()
         {
                 delete ptr;
         }

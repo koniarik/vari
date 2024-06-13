@@ -2,6 +2,8 @@
 
 #include "vari/bits/typelist.h"
 
+#include <utility>
+
 namespace vari::bits
 {
 
@@ -27,7 +29,22 @@ concept invocable = requires( F&& f, Args&&... args ) {
         std::forward< F >( f )( std::forward< Args >( args )... );
 };
 
-template < typename F, typename... Ts >
-concept invokes_something = ( invocable< F, Ts > || ... || false );
+template < typename... Args >
+struct function_picker
+{
+        template < typename F, typename... Fs >
+        static constexpr decltype( auto ) pick( F&& f, Fs&&... fs )
+        {
+                if constexpr ( invocable< F, Args... > ) {
+                        static_assert(
+                            ( !invocable< Fs, Args... > && ... ),
+                            "Only one of the functors should be invocable with Args..." );
+                        return std::forward< F >( f );
+                } else {
+                        static_assert( sizeof...( fs ) != 0 );
+                        return pick( std::forward< Fs >( fs )... );
+                }
+        }
+};
 
 }  // namespace vari::bits

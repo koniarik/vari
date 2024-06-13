@@ -116,24 +116,21 @@ public:
         }
 
         template < typename... Fs >
-        decltype( auto ) take( Fs&&... f ) &&
+        decltype( auto ) take( Fs&&... fs ) &&
         {
                 auto p = release();
-
                 return p.match(
-                    [&]( vptr< B > ) -> decltype( auto ) {
-                            return bits::overloaded< std::remove_reference_t< Fs >... >(
-                                std::forward< Fs >( f )... )( uvptr< B >() );
+                    [&]( empty_t ) -> decltype( auto ) {
+                            return dispatch_fun( empty, std::forward< Fs >( fs )... );
                     },
                     [&]< typename T >( vptr< B, T > p ) -> decltype( auto ) {
-                            return bits::overloaded< std::remove_reference_t< Fs >... >(
-                                std::forward< Fs >( f )... )( uvptr< B, T >( p ) );
+                            return dispatch_fun( uvptr< B, T >{ p }, std::forward< Fs >( fs )... );
                     } );
         }
 
         ~uvptr()
         {
-                _ptr._core.reset();
+                _ptr._core.delete_ptr();
         }
 
 private:

@@ -76,19 +76,18 @@ public:
         }
 
         template < typename... Fs >
-        decltype( auto ) take( Fs&&... f ) &&
+        decltype( auto ) take( Fs&&... fs ) &&
         {
                 auto tmp   = _ref;
                 _ref._core = ptr_core< B, TL >{};
                 return tmp.match( [&]< typename T >( vref< B, T > p ) -> decltype( auto ) {
-                        return bits::overloaded< std::remove_reference_t< Fs >... >(
-                            std::forward< Fs >( f )... )( uvref< B, T >( p ) );
+                        return dispatch_fun( uvref< B, T >{ p }, std::forward< Fs >( fs )... );
                 } );
         }
 
         ~uvref()
         {
-                _ref._core.reset();
+                _ref._core.delete_ptr();
         }
 
 private:

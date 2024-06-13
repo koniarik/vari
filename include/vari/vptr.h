@@ -1,10 +1,18 @@
 #pragma once
 
-#include "vari/bits/overloaded.h"
 #include "vari/bits/ptr_core.h"
 #include "vari/bits/util.h"
 
 #include <variant>
+
+namespace vari
+{
+struct empty_t
+{
+};
+
+static constexpr empty_t empty;
+}  // namespace vari
 
 namespace vari::bits
 {
@@ -71,46 +79,26 @@ public:
                 return _core.ptr != nullptr;
         }
 
-        template < typename F >
-        decltype( auto ) visit( F&& f )
-        {
-                static_assert(
-                    (invocable< F, Ts& > && ... && invocable< F >),
-                    "Functor has to be invocable with all types and null" );
-                return match(
-                    [&]( vptr< B > ) -> decltype( auto ) {
-                            return std::forward< F >( f )();
-                    },
-                    [&]< typename T >( vptr< B, T > p ) -> decltype( auto ) {
-                            return std::forward< F >( f )( *p );
-                    } );
-        }
-
         template < typename... Fs >
-        decltype( auto ) visit( Fs&&... f )
+        decltype( auto ) visit( Fs&&... fs )
         {
-                return visit( bits::overloaded< std::remove_reference_t< Fs >... >(
-                    std::forward< Fs >( f )... ) );
-        }
-
-        template < typename F >
-        decltype( auto ) match( F&& f )
-        {
-                static_assert(
-                    (invocable< F, vptr< B, Ts > > && ... && invocable< F, vptr< B > >),
-                    "Functor has to be invocable with all types and null" );
-                if ( _core.ptr == nullptr )
-                        return std::forward< F >( f )( vptr< B >{} );
+                if ( _core.ptr == nullptr ) {
+                        return dispatch_fun( empty, std::forward< Fs >( fs )... );
+                }
                 return _core.match_impl( [&]< typename T >( T* p ) -> decltype( auto ) {
-                        return std::forward< F >( f )( vptr< B, T >{ *p } );
+                        return dispatch_fun( *p, std::forward< Fs >( fs )... );
                 } );
         }
 
         template < typename... Fs >
-        decltype( auto ) match( Fs&&... f )
+        decltype( auto ) match( Fs&&... fs )
         {
-                return match( bits::overloaded< std::remove_reference_t< Fs >... >(
-                    std::forward< Fs >( f )... ) );
+                if ( _core.ptr == nullptr ) {
+                        return dispatch_fun( empty, std::forward< Fs >( fs )... );
+                }
+                return _core.match_impl( [&]< typename T >( T* p ) -> decltype( auto ) {
+                        return dispatch_fun( vptr< B, T >{ *p }, std::forward< Fs >( fs )... );
+                } );
         }
 
         friend void swap( vptr& lh, vptr& rh ) noexcept

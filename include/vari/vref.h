@@ -41,40 +41,19 @@ public:
                 return _core.ptr;
         }
 
-        template < typename F >
-        decltype( auto ) visit( F&& f )
+        template < typename... Fs >
+        decltype( auto ) visit( Fs&&... fs )
         {
-                static_assert(
-                    ( invocable< F, Ts& > && ... ), "Functor has to be invocable with all types" );
-                return match( [&]< typename T >( vref< B, T > p ) -> decltype( auto ) {
-                        return std::forward< F >( f )( *p );
+                return _core.match_impl( [&]< typename T >( T* p ) -> decltype( auto ) {
+                        return dispatch_fun( *p, std::forward< Fs >( fs )... );
                 } );
         }
 
         template < typename... Fs >
-        decltype( auto ) visit( Fs&&... f )
-        {
-                return visit( bits::overloaded< std::remove_reference_t< Fs >... >(
-                    std::forward< Fs >( f )... ) );
-        }
-
-        template < typename F >
-        decltype( auto ) match( F&& f )
-        {
-                static_assert(
-                    ( invocable< F, vref< B, Ts > > && ... ),
-                    "Functor has to be invocable with all types" );
-                return _core.match_impl( [&]< typename T >( T* p ) -> decltype( auto ) {
-                        return std::forward< F >( f )( vref< B, T >{ *p } );
-                } );
-        }
-
-        template < typename... Fs >
-        decltype( auto ) match( Fs&&... f )
+        decltype( auto ) match( Fs&&... fs )
         {
                 return _core.match_impl( [&]< typename T >( T* p ) -> decltype( auto ) {
-                        return bits::overloaded< std::remove_reference_t< Fs >... >(
-                            std::forward< Fs >( f )... )( vref< B, T >{ *p } );
+                        return dispatch_fun( vref< B, T >{ *p }, std::forward< Fs >( fs )... );
                 } );
         }
 

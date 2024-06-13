@@ -1,12 +1,14 @@
 #pragma once
 
+#include "util.h"
+
 #include <utility>
 
 namespace vari::bits
 {
 
 template < std::size_t Off, std::size_t N, typename F >
-constexpr decltype( auto ) dispatch( std::size_t i, F&& f )
+constexpr decltype( auto ) dispatch_index( std::size_t i, F&& f )
 {
 
 #define GEN( x )                       \
@@ -63,6 +65,15 @@ constexpr decltype( auto ) dispatch( std::size_t i, F&& f )
 #else
         __builtin_unreachable();
 #endif
+}
+
+template < typename T, typename... Fs >
+decltype( auto ) dispatch_fun( T&& item, Fs&&... fs )
+{
+        static_assert(
+            ( invocable< Fs, T > || ... ), "One of the functors has to be invocable with type T" );
+        auto&& f = function_picker< T >::pick( std::forward< Fs >( fs )... );
+        return std::forward< decltype( f ) >( f )( std::forward< T >( item ) );
 }
 
 }  // namespace vari::bits

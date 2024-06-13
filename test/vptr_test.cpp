@@ -60,7 +60,7 @@ TEST_CASE( "vptr" )
         CHECK( p1 );
 
         p1.visit(
-            [&]() {
+            [&]( empty_t ) {
                     FAIL( "incorrect overload" );
             },
             [&]( int& ) {},
@@ -72,7 +72,7 @@ TEST_CASE( "vptr" )
             } );
 
         p1.match(
-            [&]( vptr< void > ) {
+            [&]( empty_t ) {
                     FAIL( "incorrect overload" );
             },
             [&]( vptr< void, int > ) {},
@@ -82,10 +82,16 @@ TEST_CASE( "vptr" )
             } );
 
         int& ii = p1.visit(
-            [&]() -> int& {
+            [&]( empty_t ) -> int& {
                     return i;
             },
-            [&]( auto& ) -> int& {
+            [&]( int& ) -> int& {
+                    return i;
+            },
+            [&]( float& ) -> int& {
+                    return i;
+            },
+            [&]( std::string& ) -> int& {
                     return i;
             } );
         CHECK_EQ( &ii, &i );
@@ -158,7 +164,7 @@ TEST_CASE( "uvptr" )
         V p1 = uwrap< void >( std::string{ "s" } );
 
         p1.visit(
-            [&]() {
+            [&]( empty_t ) {
                     FAIL( "incorrect overload" );
             },
             [&]( int& ) {
@@ -170,7 +176,7 @@ TEST_CASE( "uvptr" )
             [&]( std::string& ) {} );
 
         p1.match(
-            [&]( vptr< void > ) {
+            [&]( empty_t ) {
                     FAIL( "incorrect overload" );
             },
             [&]( vptr< void, int > ) {
@@ -179,7 +185,7 @@ TEST_CASE( "uvptr" )
             [&]( vptr< void, float, std::string > ) {} );
 
         std::move( p1 ).take(
-            [&]( uvptr< void > ) {
+            [&]( empty_t ) {
                     FAIL( "incorrect overload" );
             },
             [&]( uvptr< void, int > ) {
