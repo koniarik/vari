@@ -4,7 +4,7 @@ project(vari)
 
 add_library(vari INTERFACE
 	include/vari/bits/typelist.h
-	include/vari/bits/overloaded.h
+	include/vari/bits/util.h
 	include/vari/bits/ptr_core.h
 	include/vari/bits/dispatch.h
 	include/vari/uvptr.h
