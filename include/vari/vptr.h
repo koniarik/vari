@@ -2,6 +2,7 @@
 
 #include "vari/bits/overloaded.h"
 #include "vari/bits/ptr_core.h"
+#include "vari/bits/util.h"
 
 #include <variant>
 

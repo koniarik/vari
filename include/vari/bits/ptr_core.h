@@ -96,12 +96,4 @@ struct ptr_core< B, typelist< T > >
         }
 };
 
-template < typename F, typename... Args >
-concept invocable = requires( F&& f, Args&&... args ) {
-        std::forward< F >( f )( std::forward< Args >( args )... );
-};
-
-template < typename F, typename... Ts >
-concept invokes_something = ( invocable< F, Ts > || ... || false );
-
 }  // namespace vari::bits
