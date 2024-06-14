@@ -59,17 +59,17 @@ public:
         {
         }
 
-        auto& operator*() noexcept
+        auto& operator*() const noexcept
         {
                 return *_core.ptr;
         }
 
-        auto* operator->() noexcept
+        auto* operator->() const noexcept
         {
                 return _core.ptr;
         }
 
-        auto* ptr() const noexcept
+        auto* get() const noexcept
         {
                 return _core.ptr;
         }
@@ -105,6 +105,8 @@ public:
         {
                 std::swap( lh._core, rh._core );
         }
+
+        friend auto operator<=>( vptr const& lh, vptr const& rh ) = default;
 
 private:
         ptr_core< B, TL > _core;

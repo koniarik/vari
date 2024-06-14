@@ -26,17 +26,17 @@ public:
         {
         }
 
-        auto& operator*() noexcept
+        auto& operator*() const noexcept
         {
                 return *_core.ptr;
         }
 
-        B* operator->() noexcept
+        auto* operator->() const noexcept
         {
                 return _core.ptr;
         }
 
-        B* ptr() const noexcept
+        auto* get() const noexcept
         {
                 return _core.ptr;
         }
@@ -56,6 +56,8 @@ public:
                         return dispatch_fun( vref< B, T >{ *p }, std::forward< Fs >( fs )... );
                 } );
         }
+
+        friend auto operator<=>( vref const& lh, vref const& rh ) = default;
 
 private:
         ptr_core< B, TL > _core;

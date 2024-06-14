@@ -109,7 +109,7 @@ TEST_CASE( "vptr" )
         p3 = p2;
 
         CHECK_EQ( p2, p3 );
-        CHECK_EQ( p2.ptr(), p3.ptr() );
+        CHECK_EQ( p2.get(), p3.get() );
 }
 
 static_assert( std::same_as<
@@ -154,7 +154,7 @@ TEST_CASE( "vref" )
 
         std::vector< int >               vec = { 1, 2, 3, 4 };
         vptr< void, std::vector< int > > p4( vec );
-        CHECK_EQ( p2.ptr(), p1.ptr() );
+        CHECK_EQ( p2.get(), p1.get() );
 }
 
 TEST_CASE( "uvptr" )
@@ -184,17 +184,21 @@ TEST_CASE( "uvptr" )
             },
             [&]( vptr< void, float, std::string > ) {} );
 
-        std::move( p1 ).take(
-            [&]( empty_t ) {
+        p1 = std::move( p1 ).take(
+            [&]( empty_t ) -> V {
                     FAIL( "incorrect overload" );
+                    return V{};
             },
-            [&]( uvptr< void, int > ) {
+            [&]( uvptr< void, int > ) -> V {
                     FAIL( "incorrect overload" );
+                    return V{};
             },
-            [&]( uvptr< void, float, std::string > ) {} );
+            [&]( uvptr< void, float, std::string > p ) -> V {
+                    return p;
+            } );
 
-        vptr< void, int, float, std::string > p2 = p1.ptr();
-        CHECK_EQ( p2.ptr(), p1.ptr().ptr() );
+        vptr< void, int, float, std::string > p2 = p1.get();
+        CHECK_EQ( p2.get(), p1.get().get() );
 }
 
 TEST_CASE( "uvref" )
@@ -218,14 +222,121 @@ TEST_CASE( "uvref" )
             },
             [&]( vref< void, float, std::string > ) {} );
 
-        std::move( p1 ).take(
-            [&]( uvref< void, int > ) {
+        int k;
+        p1 = std::move( p1 ).take(
+            [&]( uvref< void, int > ) -> V {
                     FAIL( "incorrect overload" );
+                    return V{ k };
             },
-            [&]( uvref< void, float, std::string > ) {} );
+            [&]( uvref< void, float, std::string > r ) -> V {
+                    return r;
+            } );
 
-        vptr< void, int, float, std::string > p2 = p1.ptr();
-        CHECK_EQ( p2.ptr(), p1.ptr().ptr() );
+        vptr< void, int, float, std::string > p2 = p1.get();
+        CHECK_EQ( p2.get(), p1.get().get() );
+}
+
+TEST_CASE( "dispatch" )
+{
+        for ( std::size_t i = 0; i < 128; i++ )
+                bits::dispatch_index< 0, 128 >( i, [&]< std::size_t j > {
+                        CHECK_EQ( i, j );
+                } );
+}
+
+TEST_CASE( "cmp" )
+{
+        std::set< vptr< void, int > > s1;
+        s1.insert( vptr< void, int >{} );
+
+        std::set< vptr< void, int, std::string > > s2;
+        s2.insert( vptr< void, int >{} );
+}
+
+TEST_CASE( "reference to functor" )
+{
+        struct foo
+        {
+                foo()                        = default;
+                foo( const foo& )            = delete;
+                foo( foo&& )                 = delete;
+                foo& operator=( const foo& ) = delete;
+                foo& operator=( foo&& )      = delete;
+
+                void operator()( empty_t )
+                {
+                }
+                void operator()( int& )
+                {
+                }
+                void operator()( std::string& )
+                {
+                }
+        };
+
+        foo f;
+        int i;
+
+        vref< void, int, std::string > r1{ i };
+        r1.visit( f );
+        vptr< void, int, std::string > p1{ i };
+        p1.visit( f );
+        uvref< void, int, std::string > r2 = uwrap< void >( std::string{ "wololo" } );
+        r2.visit( f );
+        uvptr< void, int, std::string > p2 = uwrap< void >( std::string{ "wololo" } );
+        p2.visit( f );
+}
+
+TEST_CASE( "moved functor" )
+{
+        struct foo
+        {
+                std::size_t count = 0;
+
+                foo()                        = default;
+                foo( const foo& )            = delete;
+                foo( foo&& )                 = default;
+                foo& operator=( const foo& ) = delete;
+                foo& operator=( foo&& )      = default;
+
+                auto&& operator()( empty_t ) &&
+                {
+                        count += 1;
+                        return std::move( *this );
+                }
+                auto&& operator()( int& ) &&
+                {
+                        count += 1;
+                        return std::move( *this );
+                }
+                auto&& operator()( std::string& ) &&
+                {
+                        count += 1;
+                        return std::move( *this );
+                }
+        };
+
+        foo f;
+        int i;
+
+        vref< void, int, std::string > r1{ i };
+        f = r1.visit( std::move( f ) );
+
+        foo                            f2;
+        vptr< void, int, std::string > p1{ i };
+        f = p1.visit( std::move( f ) );
+
+        foo                             f3;
+        uvref< void, int, std::string > r2 = uwrap< void >( std::string{ "wololo" } );
+
+        f = r2.visit( std::move( f ) );
+
+        foo                             f4;
+        uvptr< void, int, std::string > p2 = uwrap< void >( std::string{ "wololo" } );
+
+        f = p2.visit( std::move( f ) );
+
+        CHECK_EQ( f.count, 4 );
 }
 
 }  // namespace vari

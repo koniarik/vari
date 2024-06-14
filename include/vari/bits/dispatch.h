@@ -1,3 +1,22 @@
+///
+/// Copyright (C) 2020 Jan Veverak Koniarik
+///
+/// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+/// and associated documentation files (the "Software"), to deal in the Software without
+/// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+/// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+/// Software is furnished to do so, subject to the following conditions:
+///
+/// The above copyright notice and this permission notice shall be included in all copies or
+/// substantial portions of the Software.
+///
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+/// BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+/// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+/// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+///
+
 #pragma once
 
 #include "util.h"
@@ -10,10 +29,9 @@ namespace vari::bits
 template < std::size_t Off, std::size_t N, typename F >
 constexpr decltype( auto ) dispatch_index( std::size_t i, F&& f )
 {
-
-#define GEN( x )                       \
-        case x:                        \
-                if constexpr ( x < N ) \
+#define GEN( x )                                 \
+        case Off + x:                            \
+                if constexpr ( ( Off + x ) < N ) \
                         return std::forward< F >( f ).template operator()< Off + x >();
 
         switch ( i ) {
@@ -49,14 +67,12 @@ constexpr decltype( auto ) dispatch_index( std::size_t i, F&& f )
                 GEN( 29 )
                 GEN( 30 )
                 GEN( 31 )
-        default:
-                break;
         }
 
 #undef GEN
 
-        if constexpr ( N > 32 )
-                return index_switch< 32, N - 32 >( i - 32, std::forward< F >( f ) );
+        if constexpr ( N > Off + 32 )
+                return dispatch_index< Off + 32, N >( i, std::forward< F >( f ) );
 
 #if defined( __cpp_lib_unreachable )
         std::unreachable();

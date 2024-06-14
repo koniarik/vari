@@ -58,6 +58,7 @@ public:
         uvptr& operator=( std::nullptr_t ) noexcept
         {
                 reset( nullptr );
+                return *this;
         }
 
         template < typename... Us >
@@ -67,19 +68,27 @@ public:
                 if ( this == &p )
                         return *this;
                 reset( p.release() );
+                return *this;
         }
 
-        auto& operator*()
+        auto& operator*() const noexcept
         {
                 return *_ptr;
         }
 
-        B* operator->()
+        auto* operator->() const noexcept
         {
-                return _ptr.ptr();
+                return _ptr.get();
         }
 
-        const pointer& ptr() const
+        const pointer& get() const noexcept
+        {
+                return _ptr;
+        }
+
+        template < typename... Us >
+                requires( is_subset< TL, bits::typelist< Us... > >::value )
+        operator vptr< B, Us... >() & noexcept
         {
                 return _ptr;
         }
@@ -88,7 +97,7 @@ public:
         {
                 auto tmp = _ptr;
                 _ptr     = ptr;
-                tmp._core.reset();
+                tmp._core.delete_ptr();
         }
 
         pointer release() noexcept
@@ -98,7 +107,7 @@ public:
                 return res;
         }
 
-        operator bool() const
+        operator bool() const noexcept
         {
                 return _ptr;
         }
@@ -132,6 +141,8 @@ public:
         {
                 _ptr._core.delete_ptr();
         }
+
+        friend auto operator<=>( uvptr const& lh, uvptr const& rh ) = default;
 
 private:
         pointer _ptr;

@@ -40,25 +40,26 @@ public:
 
         template < typename... Us >
                 requires( is_subset< bits::typelist< Us... >, TL >::value )
-        uvref& operator=( uvref< B, Us... >&& p )
+        uvref& operator=( uvref< B, Us... >&& p ) noexcept
         {
                 if ( this == &p )
                         return *this;
                 using std::swap;
                 swap( _ref._core, p._ref._core );
+                return *this;
         }
 
-        auto& operator*()
+        auto& operator*() const noexcept
         {
                 return *_ref;
         }
 
-        B* operator->()
+        auto* operator->() const noexcept
         {
-                return _ref.ptr();
+                return _ref.get();
         }
 
-        const reference& ptr() const
+        const reference& get() const noexcept
         {
                 return _ref;
         }
@@ -89,6 +90,8 @@ public:
         {
                 _ref._core.delete_ptr();
         }
+
+        friend auto operator<=>( uvref const& lh, uvref const& rh ) = default;
 
 private:
         reference _ref;
