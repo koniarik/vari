@@ -7,10 +7,7 @@ on:
 
 jobs:
     test:
-        env:
-            CC: gcc-13
-            CXX: g++-13
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v2
 
