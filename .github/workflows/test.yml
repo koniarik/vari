@@ -9,11 +9,9 @@ jobs:
     test:
         runs-on: ubuntu-latest
         steps:
-          - uses: actions/checkout@v3
-
-          - uses: actions/checkout@v3
+          - uses: actions/checkout@v4
             with:
-              path: deps/doctest
+              submodules: 'true'
 
           - name: install deps
             run: sudo apt install ninja-build ccache
