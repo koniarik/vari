@@ -10,9 +10,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v2
+            with:
+              submomules: 'true'
 
           - name: install deps
-            run: sudo apt install ninja-build libgtest-dev ccache
+            run: sudo apt install ninja-build ccache
 
           - name: configure
             run: make configure SANITIZER=address
