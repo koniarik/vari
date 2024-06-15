@@ -34,7 +34,11 @@ using tl = vari::typelist< Ts... >;
 template < typename... Ts >
 using uvref = vari::uvref< void, Ts... >;
 template < typename... Ts >
+using cuvref = vari::uvref< const void, Ts... >;
+template < typename... Ts >
 using vref = vari::vref< void, Ts... >;
+template < typename... Ts >
+using cvref = vari::vref< const void, Ts... >;
 
 template < typename T >
 auto uwrap( T item )
@@ -81,10 +85,10 @@ struct reference
         vref< expr > ref;
 };
 
-std::ostream& operator<<( std::ostream& os, vref< expr > e )
+std::ostream& operator<<( std::ostream& os, cvref< const expr > e )
 {
         e.visit(
-            [&]( arithm_op& aop ) {
+            [&]( arithm_op const& aop ) {
                     char c = ' ';
                     switch ( aop.op ) {
                     case arithm_op::PLUS:
@@ -110,23 +114,23 @@ std::ostream& operator<<( std::ostream& os, vref< expr > e )
                             os << aop.lh.get() << c << aop.rh.get();
                     }
             },
-            [&]( variable& v ) {
+            [&]( variable const& v ) {
                     os << v.name;
             },
-            [&]( constant& c ) {
+            [&]( constant const& c ) {
                     os << c.val;
             },
-            [&]( reference& r ) {
+            [&]( reference const& r ) {
                     os << r.ref;
             } );
 
         return os;
 }
 
-value_type eval( vref< expr > e, std::vector< value_type > const& inpt )
+value_type eval( cvref< const expr > e, std::vector< value_type > const& inpt )
 {
         return e.visit(
-            [&]( arithm_op& aop ) -> value_type {
+            [&]( arithm_op const& aop ) -> value_type {
                     auto lh = eval( aop.lh.get(), inpt );
                     auto rh = eval( aop.rh.get(), inpt );
 
@@ -142,13 +146,13 @@ value_type eval( vref< expr > e, std::vector< value_type > const& inpt )
                     }
                     return 0;
             },
-            [&]( variable& v ) {
+            [&]( variable const& v ) {
                     return inpt.at( v.var_i );
             },
-            [&]( constant& c ) {
+            [&]( constant const& c ) {
                     return c.val;
             },
-            [&]( reference& r ) {
+            [&]( reference const& r ) {
                     return eval( r.ref, inpt );
             } );
 }

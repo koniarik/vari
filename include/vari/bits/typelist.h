@@ -22,13 +22,16 @@
 #include <concepts>
 #include <cstdint>
 
-namespace vari::bits
+namespace vari
 {
+
 template < typename... Ts >
 struct typelist
 {
         static constexpr std::size_t size = sizeof...( Ts );
 };
+
+/// ---
 
 template < typename T, typename TL >
 struct index_of;
@@ -45,6 +48,11 @@ struct index_of< T, typelist< U, Ts... > >
         static constexpr std::size_t value = 1 + index_of< T, typelist< Ts... > >::value;
 };
 
+template < typename T, typename TL >
+static constexpr std::size_t index_of_v = index_of< T, TL >::value;
+
+/// ---
+
 template < std::size_t j, typename TL >
 struct type_at;
 
@@ -60,6 +68,11 @@ struct type_at< 0, typelist< T, Ts... > >
         using type = T;
 };
 
+template < std::size_t j, typename TL >
+using type_at_t = typename type_at< j, TL >::type;
+
+/// ---
+
 template < typename T, typename TL >
 struct contains_type;
 
@@ -69,49 +82,70 @@ struct contains_type< T, typelist< Ts... > >
         static constexpr bool value = ( std::same_as< T, Ts > || ... || false );
 };
 
+template < typename T, typename TL >
+static constexpr bool contains_type_v = contains_type< T, TL >::value;
+
+/// ---
+
 template < typename TL1, typename TL2 >
-struct unique_typelist;
+struct unique_tl_impl;
 
 template < typename... Ts >
-struct unique_typelist< typelist< Ts... >, typelist<> >
+struct unique_tl_impl< typelist< Ts... >, typelist<> >
 {
         using type = typelist< Ts... >;
 };
 
 template < typename TL1, typename T, typename... Ts >
-        requires( contains_type< T, typelist< Ts... > >::value )
-struct unique_typelist< TL1, typelist< T, Ts... > >
+        requires( contains_type_v< T, typelist< Ts... > > )
+struct unique_tl_impl< TL1, typelist< T, Ts... > >
 {
-        using type = typename unique_typelist< TL1, typelist< Ts... > >::type;
+        using type = typename unique_tl_impl< TL1, typelist< Ts... > >::type;
 };
 
 template < typename... Us, typename T, typename... Ts >
-        requires( !contains_type< T, typelist< Ts... > >::value )
-struct unique_typelist< typelist< Us... >, typelist< T, Ts... > >
+        requires( !contains_type_v< T, typelist< Ts... > > )
+struct unique_tl_impl< typelist< Us... >, typelist< T, Ts... > >
 {
-        using type = typename unique_typelist< typelist< Us..., T >, typelist< Ts... > >::type;
+        using type = typename unique_tl_impl< typelist< Us..., T >, typelist< Ts... > >::type;
 };
 
+template < typename TL >
+using unique_typelist_t = typename unique_tl_impl< typelist<>, TL >::type;
+
+/// ---
+
 template < typename TL, typename... Ts >
-struct flatten_typelist;
+struct flatten_impl;
 
 template < typename TL >
-struct flatten_typelist< TL >
+struct flatten_impl< TL >
 {
         using type = TL;
 };
 
 template < typename... Us, typename T, typename... Ts >
-struct flatten_typelist< typelist< Us... >, T, Ts... >
+struct flatten_impl< typelist< Us... >, T, Ts... >
 {
-        using type = typename flatten_typelist< typelist< Us..., T >, Ts... >::type;
+        using type = typename flatten_impl< typelist< Us..., T >, Ts... >::type;
 };
 
 template < typename... Us, typename... Ks, typename... Ts >
-struct flatten_typelist< typelist< Us... >, typelist< Ks... >, Ts... >
+struct flatten_impl< typelist< Us... >, typelist< Ks... >, Ts... >
 {
-        using type = typename flatten_typelist< typelist< Us... >, Ks..., Ts... >::type;
+        using type = typename flatten_impl< typelist< Us... >, Ks..., Ts... >::type;
 };
+
+template < typename... Us, typename... Ks, typename... Ts >
+struct flatten_impl< typelist< Us... >, typelist< Ks... > const, Ts... >
+{
+        using type = typename flatten_impl< typelist< Us... >, Ks const..., Ts... >::type;
+};
+
+template < typename... Ts >
+using flatten_t = typename flatten_impl< typelist<>, Ts... >::type;
+
+/// ---
 
 template < typename T >
 struct is_flat;
@@ -134,18 +168,71 @@ struct is_flat< typelist< typelist< Us... >, Ts... > >
         static constexpr bool value = false;
 };
 
+template < typename TL >
+static constexpr bool is_flat_v = is_flat< TL >::value;
+
+/// ---
+
 template < typename LH, typename RH >
 struct is_subset;
 
 template < typename... Us, typename RH >
 struct is_subset< typelist< Us... >, RH >
 {
-        static constexpr bool value = ( contains_type< Us, RH >::value && ... );
+        static constexpr bool value = ( contains_type_v< Us, RH > && ... );
 };
 
-}  // namespace vari::bits
-
-namespace vari
+template < typename... Us, typename RH >
+struct is_subset< typelist< Us... > const, RH >
 {
-using bits::typelist;
-}
+        static constexpr bool value = ( contains_type_v< Us const, RH > && ... );
+};
+
+template < typename LH, typename RH >
+static constexpr bool is_subset_v = is_subset< LH, RH >::value;
+
+/// ---
+
+template < typename TL >
+struct any_is_const;
+
+template < typename... Us >
+struct any_is_const< typelist< Us... > >
+{
+        static constexpr bool value = ( std::is_const_v< Us > || ... );
+};
+
+template < typename TL >
+static constexpr bool any_is_const_v = any_is_const< TL >::value;
+
+/// ---
+
+template < typename TL >
+struct all_is_const;
+
+template < typename... Us >
+struct all_is_const< typelist< Us... > >
+{
+        static constexpr bool value = ( std::is_const_v< Us > && ... );
+};
+
+template < typename TL >
+static constexpr bool all_is_const_v = all_is_const< TL >::value;
+
+/// ---
+
+template < typename TL >
+struct none_is_const;
+
+template < typename... Us >
+struct none_is_const< typelist< Us... > >
+{
+        static constexpr bool value = !( std::is_const_v< Us > || ... );
+};
+
+template < typename TL >
+static constexpr bool none_is_const_v = none_is_const< TL >::value;
+
+/// ---
+
+}  // namespace vari

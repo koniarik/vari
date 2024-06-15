@@ -23,33 +23,40 @@
 
 #include <utility>
 
-namespace vari::bits
+namespace vari
 {
 
-template < template < typename... > typename T, typename U, typename TL >
-struct vptr_apply;
+template < template < typename... > typename T, typename B, typename TL >
+struct _vptr_apply;
 
-template < template < typename... > typename T, typename U, typename... Ts >
-struct vptr_apply< T, U, typelist< Ts... > >
+template < template < typename... > typename T, typename B, typename... Ts >
+struct _vptr_apply< T, B, typelist< Ts... > >
 {
-        using type = T< U, Ts... >;
+        using type = T< B, Ts... >;
 };
 
-template < template < typename... > typename T, typename U, typename TL >
-using define_vptr = typename vptr_apply<
-    T,
-    U,
-    typename unique_typelist<  //
-        typelist<>,
-        typename flatten_typelist< typelist<>, TL >::type >::type >::type;
+template < template < typename... > typename T, typename B, typename TL >
+using _vptr_apply_t = typename _vptr_apply< T, B, TL >::type;
+
+template < template < typename... > typename T, typename B, typename TL >
+using _define_vptr = _vptr_apply_t< T, B, unique_typelist_t< flatten_t< TL > > >;
 
 template < typename F, typename... Args >
 concept invocable = requires( F&& f, Args&&... args ) {
         std::forward< F >( f )( std::forward< Args >( args )... );
 };
 
+template < typename B, typename TL >
+concept all_or_none_const = (std::is_const_v< B > && all_is_const_v< TL >) ||
+                            ( !std::is_const_v< B > && none_is_const_v< TL > );
+
+template < typename From_B, typename From_TL, typename To_B, typename To_TL >
+concept vconvertible_to =
+    (std::same_as< From_B, To_B > && is_subset_v< From_TL, To_TL >) ||
+    ( std::same_as< From_B const, To_B > && is_subset_v< From_TL const, To_TL > );
+
 template < typename... Args >
-struct function_picker
+struct _function_picker
 {
         template < typename F, typename... Fs >
         static constexpr decltype( auto ) pick( F&& f, Fs&&... fs )
@@ -66,4 +73,4 @@ struct function_picker
         }
 };
 
-}  // namespace vari::bits
+}  // namespace vari

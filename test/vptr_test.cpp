@@ -31,24 +31,44 @@
 
 namespace vari
 {
-namespace bits
-{
-        static_assert( contains_type< int, typelist< int, float > >::value );
-        static_assert( !contains_type< std::string, typelist< int, float > >::value );
+static_assert( contains_type_v< int, typelist< int, float > > );
+static_assert( !contains_type_v< std::string, typelist< int, float > > );
 
-        using ut1 = unique_typelist< typelist<>, typelist< float, float, int, float, int > >;
-        static_assert( std::same_as< typename ut1::type, typelist< float, int > > );
+using ut1 = unique_typelist_t< typelist< float, float, int, float, int > >;
+static_assert( std::same_as< ut1, typelist< float, int > > );
 
-        using ft1 = flatten_typelist<
-            typelist<>,
-            typelist<  //
-                typelist< float, int >,
-                int,
-                typelist< float, int, typelist< std::string > >  //
-                > >;
-        using uft1 = unique_typelist< typelist<>, typename ft1::type >;
-        static_assert( std::same_as< typename uft1::type, typelist< float, int, std::string > > );
-}  // namespace bits
+using ft1  = flatten_t<  //
+    typelist< float, int >,
+    int,
+    typelist< float, int, typelist< std::string > >  //
+    >;
+using uft1 = unique_typelist_t< ft1 >;
+static_assert( std::same_as< uft1, typelist< float, int, std::string > > );
+
+static_assert( contains_type_v< int, typelist< int, const int > > );
+static_assert( contains_type_v< const int, typelist< int, const int > > );
+
+using ft2  = flatten_t<  //
+    typelist< const int >,
+    int,
+    typelist< float, int, typelist< float const > >  //
+    >;
+using uft2 = unique_typelist_t< ft2 >;
+static_assert( std::same_as< uft2, typelist< const int, float, int, const float > > );
+
+using ft3  = flatten_t<  //
+    const typelist< int >,
+    int,
+    typelist< float, int, const typelist< float > >  //
+    >;
+using uft3 = unique_typelist_t< ft3 >;
+static_assert( std::same_as< uft3, typelist< const int, float, int, const float > > );
+using ivst_tl1 = typelist< const int, const float >;
+using ivst_tl2 = typelist< int, float >;
+
+static_assert( vconvertible_to< const void, ivst_tl1, const void, ivst_tl1 > );
+static_assert( vconvertible_to< void, ivst_tl2, const void, ivst_tl1 > );
+static_assert( vconvertible_to< void, ivst_tl2, void, ivst_tl2 > );
 
 TEST_CASE( "vptr" )
 {
@@ -105,6 +125,8 @@ TEST_CASE( "vptr" )
         CHECK_FALSE( p1 );
 
         vptr< void, float > p3;
+        p3.visit( []( empty_t ) {}, []( float& ) {} );
+        p3.match( []( empty_t ) {}, []( vptr< void, float > ) {} );
 
         p3 = p2;
 
@@ -112,15 +134,9 @@ TEST_CASE( "vptr" )
         CHECK_EQ( p2.get(), p3.get() );
 }
 
-static_assert( std::same_as<
-               typename bits::type_at< 0, bits::typelist< int, float, std::string > >::type,
-               int > );
-static_assert( std::same_as<
-               typename bits::type_at< 1, bits::typelist< int, float, std::string > >::type,
-               float > );
-static_assert( std::same_as<
-               typename bits::type_at< 2, bits::typelist< int, float, std::string > >::type,
-               std::string > );
+static_assert( std::same_as< type_at_t< 0, typelist< int, float, std::string > >, int > );
+static_assert( std::same_as< type_at_t< 1, typelist< int, float, std::string > >, float > );
+static_assert( std::same_as< type_at_t< 2, typelist< int, float, std::string > >, std::string > );
 
 TEST_CASE( "vref" )
 {
@@ -226,7 +242,7 @@ TEST_CASE( "uvref" )
         p1 = std::move( p1 ).take(
             [&]( uvref< void, int > ) -> V {
                     FAIL( "incorrect overload" );
-                    return V{ k };
+                    return uwrap< void >( k );
             },
             [&]( uvref< void, float, std::string > r ) -> V {
                     return r;
@@ -239,7 +255,7 @@ TEST_CASE( "uvref" )
 TEST_CASE( "dispatch" )
 {
         for ( std::size_t i = 0; i < 128; i++ )
-                bits::dispatch_index< 0, 128 >( i, [&]< std::size_t j > {
+                _dispatch_index< 0, 128 >( i, [&]< std::size_t j > {
                         CHECK_EQ( i, j );
                 } );
 }
@@ -337,6 +353,73 @@ TEST_CASE( "moved functor" )
         f = p2.visit( std::move( f ) );
 
         CHECK_EQ( f.count, 4 );
+}
+
+TEST_CASE( "const vptr" )
+{
+        using V = vptr< const void, const int, const float, const std::string >;
+
+        int               i = 0;
+        vptr< void, int > tmp{ i };
+        V                 p1{ tmp };
+
+        CHECK( p1 );
+
+        p1.visit(
+            [&]( empty_t ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( int const& ) {},
+
+            [&]( const std::string& ) {
+                    FAIL( "incorrect overload" );
+            } );
+
+        p1.match(
+            [&]( empty_t ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( vptr< const void, int const > ) {},
+            [&]( vptr< const void, float const, std::string const > ) {
+                    FAIL( "incorrect overload" );
+            } );
+
+        int const& ii = p1.visit(
+            [&]( empty_t ) -> int const& {
+                    return i;
+            },
+            [&]( int const& ) -> int const& {
+                    return i;
+            },
+            [&]( std::string const& ) -> int const& {
+                    return i;
+            } );
+        CHECK_EQ( &ii, &i );
+
+        vptr< void const, float const > p2;
+
+        p1 = p2;
+
+        CHECK_FALSE( p1 );
+
+        vptr< void const, float const > p3;
+        p3.visit( []( empty_t ) {}, []( float const& ) {} );
+        p3.match( []( empty_t ) {}, []( vptr< void const, float const > ) {} );
+
+        p3 = p2;
+
+        CHECK_EQ( p2, p3 );
+        CHECK_EQ( p2.get(), p3.get() );
+}
+
+// XXX: arrays!
+
+TEST_CASE( "vptr to vref" )
+{
+}
+
+TEST_CASE( "uvptr to uvref" )
+{
 }
 
 }  // namespace vari

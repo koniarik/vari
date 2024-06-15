@@ -23,11 +23,11 @@
 
 #include <utility>
 
-namespace vari::bits
+namespace vari
 {
 
 template < std::size_t Off, std::size_t N, typename F >
-constexpr decltype( auto ) dispatch_index( std::size_t i, F&& f )
+constexpr decltype( auto ) _dispatch_index( std::size_t i, F&& f )
 {
 #define GEN( x )                                 \
         case Off + x:                            \
@@ -72,7 +72,7 @@ constexpr decltype( auto ) dispatch_index( std::size_t i, F&& f )
 #undef GEN
 
         if constexpr ( N > Off + 32 )
-                return dispatch_index< Off + 32, N >( i, std::forward< F >( f ) );
+                return _dispatch_index< Off + 32, N >( i, std::forward< F >( f ) );
 
 #if defined( __cpp_lib_unreachable )
         std::unreachable();
@@ -84,12 +84,12 @@ constexpr decltype( auto ) dispatch_index( std::size_t i, F&& f )
 }
 
 template < typename T, typename... Fs >
-decltype( auto ) dispatch_fun( T&& item, Fs&&... fs )
+decltype( auto ) _dispatch_fun( T&& item, Fs&&... fs )
 {
         static_assert(
             ( invocable< Fs, T > || ... ), "One of the functors has to be invocable with type T" );
-        auto&& f = function_picker< T >::pick( std::forward< Fs >( fs )... );
+        auto&& f = _function_picker< T >::pick( std::forward< Fs >( fs )... );
         return std::forward< decltype( f ) >( f )( std::forward< T >( item ) );
 }
 
-}  // namespace vari::bits
+}  // namespace vari

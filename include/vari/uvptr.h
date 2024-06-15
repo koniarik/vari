@@ -1,69 +1,91 @@
+///
+/// Copyright (C) 2020 Jan Veverak Koniarik
+///
+/// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+/// and associated documentation files (the "Software"), to deal in the Software without
+/// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+/// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+/// Software is furnished to do so, subject to the following conditions:
+///
+/// The above copyright notice and this permission notice shall be included in all copies or
+/// substantial portions of the Software.
+///
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+/// BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+/// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+/// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+///
+
 #pragma once
 
 #include "vari/bits/ptr_core.h"
 #include "vari/vptr.h"
 
-namespace vari::bits
+namespace vari
 {
 
 template < typename B, typename... Ts >
-class uvref;
+class _uvref;
 
 template < typename B, typename... Ts >
-class uvptr
+class _uvptr
 {
-        using TL = bits::typelist< Ts... >;
+        using TL = typelist< Ts... >;
 
 public:
-        static_assert( is_flat< TL >::value );
+        static_assert( is_flat_v< TL > );
+        static_assert(
+            all_or_none_const< B, TL >,
+            "Either all types and base type are const, or none are" );
 
-        using pointer = vptr< B, Ts... >;
+        using pointer = _vptr< B, Ts... >;
 
-        uvptr() noexcept = default;
+        _uvptr() noexcept = default;
 
-        uvptr( std::nullptr_t ) noexcept
+        _uvptr( std::nullptr_t ) noexcept
         {
         }
 
-        template < typename... Us >
-                requires( is_subset< typelist< Us... >, TL >::value )
-        uvptr( uvref< B, Us... >&& p ) noexcept
+        template < typename C, typename... Us >
+                requires( vconvertible_to< C, typelist< Us... >, B, TL > )
+        _uvptr( _uvref< C, Us... >&& p ) noexcept
         {
                 _ptr._core   = std::move( p._ref._core );
-                p._ref._core = ptr_core< B, typelist< Us... > >{};
+                p._ref._core = _ptr_core< B, typelist< Us... > >{};
         }
 
-        template < typename... Us >
-                requires( is_subset< typelist< Us... >, TL >::value )
-        uvptr( uvptr< B, Us... >&& p ) noexcept
+        template < typename C, typename... Us >
+                requires( vconvertible_to< C, typelist< Us... >, B, TL > )
+        _uvptr( _uvptr< C, Us... >&& p ) noexcept
           : _ptr( p.release() )
         {
         }
 
         template < typename U >
-                requires( contains_type< U, TL >::value )
-        explicit uvptr( U* u ) noexcept
+                requires( contains_type_v< U, TL > )
+        explicit _uvptr( U* u ) noexcept
         {
                 if ( u )
                         _ptr = pointer{ *u };
         }
 
-        template < typename... Us >
-                requires( is_subset< typelist< Us... >, TL >::value )
-        explicit uvptr( vptr< B, Us... > p ) noexcept
+        template < typename C, typename... Us >
+                requires( vconvertible_to< C, typelist< Us... >, B, TL > )
+        explicit _uvptr( _vptr< C, Us... > p ) noexcept
           : _ptr( p )
         {
         }
 
-        uvptr& operator=( std::nullptr_t ) noexcept
+        _uvptr& operator=( std::nullptr_t ) noexcept
         {
                 reset( nullptr );
                 return *this;
         }
 
-        template < typename... Us >
-                requires( is_subset< bits::typelist< Us... >, TL >::value )
-        uvptr& operator=( uvptr< B, Us... >&& p )
+        template < typename C, typename... Us >
+                requires( vconvertible_to< C, typelist< Us... >, B, TL > )
+        _uvptr& operator=( _uvptr< C, Us... >&& p )
         {
                 if ( this == &p )
                         return *this;
@@ -86,9 +108,9 @@ public:
                 return _ptr;
         }
 
-        template < typename... Us >
-                requires( is_subset< TL, bits::typelist< Us... > >::value )
-        operator vptr< B, Us... >() & noexcept
+        template < typename C, typename... Us >
+                requires( vconvertible_to< B, TL, C, typelist< Us... > > )
+        operator _vptr< C, Us... >() & noexcept
         {
                 return _ptr;
         }
@@ -128,34 +150,27 @@ public:
         decltype( auto ) take( Fs&&... fs ) &&
         {
                 auto p = release();
-                return p.match(
-                    [&]( empty_t ) -> decltype( auto ) {
-                            return dispatch_fun( empty, std::forward< Fs >( fs )... );
-                    },
-                    [&]< typename T >( vptr< B, T > p ) -> decltype( auto ) {
-                            return dispatch_fun( uvptr< B, T >{ p }, std::forward< Fs >( fs )... );
-                    } );
+                if ( p._core.ptr == nullptr ) {
+                        return _dispatch_fun( empty, std::forward< Fs >( fs )... );
+                }
+                return p._core.template take_impl< _uvptr, vptr >( std::forward< Fs >( fs )... );
         }
 
-        ~uvptr()
+        ~_uvptr()
         {
                 _ptr._core.delete_ptr();
         }
 
-        friend auto operator<=>( uvptr const& lh, uvptr const& rh ) = default;
+        friend auto operator<=>( _uvptr const& lh, _uvptr const& rh ) = default;
 
 private:
         pointer _ptr;
 
         template < typename C, typename... Us >
-        friend class uvptr;
+        friend class _uvptr;
 };
 
-}  // namespace vari::bits
-
-namespace vari
-{
 template < typename R, typename... Ts >
-using uvptr = bits::define_vptr< bits::uvptr, R, bits::typelist< Ts... > >;
+using uvptr = _define_vptr< _uvptr, R, typelist< Ts... > >;
 
 }  // namespace vari
