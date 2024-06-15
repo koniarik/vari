@@ -77,13 +77,13 @@ struct _ptr_core
         {
         }
 
-        constexpr std::size_t get_index() noexcept
+        constexpr std::size_t get_index() const noexcept
         {
                 return index;
         }
 
         template < typename... Fs >
-        decltype( auto ) visit_impl( Fs&&... fs )
+        decltype( auto ) visit_impl( Fs&&... fs ) const
         {
                 return _dispatch_index< 0, TL::size >(
                     index - 1, [&]< std::size_t j >() -> decltype( auto ) {
@@ -95,7 +95,7 @@ struct _ptr_core
         }
 
         template < template < typename... > typename ArgTempl, typename... Fs >
-        decltype( auto ) match_impl( Fs&&... fs )
+        decltype( auto ) match_impl( Fs&&... fs ) const
         {
                 return _dispatch_index< 0, TL::size >(
                     index - 1, [&]< std::size_t j >() -> decltype( auto ) {
@@ -114,7 +114,7 @@ struct _ptr_core
             template < typename... >
             typename ConvTempl,
             typename... Fs >
-        decltype( auto ) take_impl( Fs&&... fs )
+        decltype( auto ) take_impl( Fs&&... fs ) const
         {
                 return _dispatch_index< 0, TL::size >(
                     index - 1, [&]< std::size_t j >() -> decltype( auto ) {
@@ -137,7 +137,6 @@ struct _ptr_core
         }
 };
 
-// XXX: I feel like API is missing here, test it!
 template < typename B, typename T >
 struct _ptr_core< B, typelist< T > >
 {
@@ -156,20 +155,20 @@ struct _ptr_core< B, typelist< T > >
         {
         }
 
-        constexpr std::size_t get_index() noexcept
+        constexpr std::size_t get_index() const noexcept
         {
                 return ptr == nullptr ? 0 : 1;
         }
 
         template < typename... Fs >
-        decltype( auto ) visit_impl( Fs&&... fs )
+        decltype( auto ) visit_impl( Fs&&... fs ) const
         {
                 auto&& f = _function_picker< T& >::pick( std::forward< Fs >( fs )... );
                 return std::forward< decltype( f ) >( f )( *ptr );
         }
 
         template < template < typename... > typename ArgTempl, typename... Fs >
-        decltype( auto ) match_impl( Fs&&... fs )
+        decltype( auto ) match_impl( Fs&&... fs ) const
         {
                 using ArgType = ArgTempl< B, T >;
                 auto&& f      = _function_picker< ArgType >::pick( std::forward< Fs >( fs )... );
@@ -182,7 +181,7 @@ struct _ptr_core< B, typelist< T > >
             template < typename... >
             typename ConvTempl,
             typename... Fs >
-        decltype( auto ) take_impl( Fs&&... fs )
+        decltype( auto ) take_impl( Fs&&... fs ) const
         {
                 using ArgType  = ArgTempl< B, T >;
                 auto&& f       = _function_picker< ArgType >::pick( std::forward< Fs >( fs )... );

@@ -70,15 +70,31 @@ static_assert( vconvertible_to< const void, ivst_tl1, const void, ivst_tl1 > );
 static_assert( vconvertible_to< void, ivst_tl2, const void, ivst_tl1 > );
 static_assert( vconvertible_to< void, ivst_tl2, void, ivst_tl2 > );
 
+void check_cmp_operators( auto& lh, auto& rh )
+{
+        std::ignore = lh == rh;
+        std::ignore = lh < rh;
+        std::ignore = lh <= rh;
+        std::ignore = lh >= rh;
+        std::ignore = lh > rh;
+        std::ignore = lh != rh;
+}
+
 TEST_CASE( "vptr" )
 {
         using V = vptr< void, int, float, std::string >;
 
-        int i;
-        V   p1{ i };
+        V p0{};
+        CHECK_FALSE( p0 );
 
+        p0 = V{ nullptr };
+        CHECK_FALSE( p0 );
+
+        int i = 42;
+        p0    = V{ i };
+
+        V p1{ i };
         CHECK( p1 );
-
         p1.visit(
             [&]( empty_t ) {
                     FAIL( "incorrect overload" );
@@ -95,9 +111,9 @@ TEST_CASE( "vptr" )
             [&]( empty_t ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( vptr< void, int > ) {},
+            [&]( vref< void, int > ) {},
             [&]( vptr< void, bool > ) {},
-            [&]( vptr< void, float, std::string > ) {
+            [&]( vref< void, float, std::string > ) {
                     FAIL( "incorrect overload" );
             } );
 
@@ -132,6 +148,47 @@ TEST_CASE( "vptr" )
 
         CHECK_EQ( p2, p3 );
         CHECK_EQ( p2.get(), p3.get() );
+
+        swap( p3, p2 );
+        CHECK_EQ( p2.get(), p3.get() );
+
+        check_cmp_operators( p3, p2 );
+
+        vptr< void, int > p4{ i };
+        CHECK( p4 );
+        p4 = nullptr;
+        CHECK_FALSE( p4 );
+}
+struct base_t
+{
+        int v;
+};
+
+template < std::size_t i >
+struct derived_t : base_t
+{
+};
+
+TEST_CASE( "vptr_nonvoid" )
+{
+        using V = vptr< base_t, derived_t< 0 >, derived_t< 1 > >;
+
+        derived_t< 0 > d;
+        d.v = 42;
+
+        V p0{ d };
+
+        CHECK_EQ( ( *p0 ).v, 42 );
+        CHECK_EQ( p0->v, 42 );
+
+        V p1;
+        swap( p0, p1 );
+
+        CHECK_EQ( ( *p1 ).v, 42 );
+        CHECK_EQ( p1->v, 42 );
+        CHECK_FALSE( p0 );
+
+        check_cmp_operators( p0, p1 );
 }
 
 static_assert( std::same_as< type_at_t< 0, typelist< int, float, std::string > >, int > );
@@ -171,6 +228,39 @@ TEST_CASE( "vref" )
         std::vector< int >               vec = { 1, 2, 3, 4 };
         vptr< void, std::vector< int > > p4( vec );
         CHECK_EQ( p2.get(), p1.get() );
+
+        check_cmp_operators( p2, p1 );
+}
+
+TEST_CASE( "vref_nonvoid" )
+{
+        using V = vref< base_t, derived_t< 0 >, derived_t< 1 > >;
+
+        derived_t< 0 > d0;
+        d0.v = 42;
+
+        V p0{ d0 };
+
+        CHECK_EQ( ( *p0 ).v, 42 );
+        CHECK_EQ( p0->v, 42 );
+
+        derived_t< 0 > d1;
+        d1.v = 777;
+        V p1{ d1 };
+
+        swap( p0, p1 );
+
+        CHECK_EQ( ( *p1 ).v, 42 );
+        CHECK_EQ( p1->v, 42 );
+
+        CHECK_EQ( ( *p0 ).v, 777 );
+        CHECK_EQ( p0->v, 777 );
+        d1.v = 666;
+
+        CHECK_EQ( ( *p0 ).v, 666 );
+        CHECK_EQ( p0->v, 666 );
+
+        check_cmp_operators( p0, p1 );
 }
 
 TEST_CASE( "uvptr" )
@@ -198,14 +288,14 @@ TEST_CASE( "uvptr" )
             [&]( vptr< void, int > ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( vptr< void, float, std::string > ) {} );
+            [&]( vref< void, float, std::string > ) {} );
 
         p1 = std::move( p1 ).take(
             [&]( empty_t ) -> V {
                     FAIL( "incorrect overload" );
                     return V{};
             },
-            [&]( uvptr< void, int > ) -> V {
+            [&]( uvref< void, int > ) -> V {
                     FAIL( "incorrect overload" );
                     return V{};
             },
@@ -215,6 +305,41 @@ TEST_CASE( "uvptr" )
 
         vptr< void, int, float, std::string > p2 = p1.get();
         CHECK_EQ( p2.get(), p1.get().get() );
+
+        CHECK( p1 );
+        p1 = nullptr;
+        CHECK_FALSE( p1 );
+
+        V p3 = V();
+
+        std::move( p3 ).take(
+            [&]( empty_t ) {},
+            [&]( uvref< void, int > ) {
+                    FAIL( "incorrect overload" );
+            },
+            [&]( uvptr< void, float, std::string > ) {
+                    FAIL( "incorrect overload" );
+            } );
+
+        p3 = std::move( p3 );
+
+        uvref< void, int > r1 = uwrap< void >( int{ 42 } );
+
+        CHECK_FALSE( p3 );
+        p3 = std::move( r1 );
+        CHECK( p3 );
+
+        uvptr< void, int > p4{ new int{ 33 } };
+        CHECK_EQ( *p4, 33 );
+
+        uvptr< void, int > p5{ (int*) nullptr };
+        CHECK_FALSE( p5 );
+
+        uvptr< void, std::string > p6{ new std::string{ "wololo" } };
+        CHECK_EQ( p6->front(), 'w' );
+
+        vptr< void, std::string > p7 = p6;
+        CHECK_EQ( p7->c_str(), p6->c_str() );
 }
 
 TEST_CASE( "uvref" )
@@ -260,6 +385,46 @@ TEST_CASE( "dispatch" )
                 } );
 }
 
+template < template < typename... > typename T >
+void try_set()
+{
+        std::set< T< void, int, std::string > > s3;
+        std::vector< int >                      idata{ 127, 0 };
+        std::vector< std::string >              sdata{ 127, "wololo" };
+
+        for ( int& i : idata )
+                s3.insert( T< void, int >{ i } );
+
+        for ( std::string& s : sdata )
+                s3.insert( T< void, std::string >{ s } );
+
+        CHECK_EQ( idata.size() + sdata.size(), s3.size() );
+}
+
+void try_upset()
+{
+        std::set< uvptr< void, int, std::string > > s3;
+        static constexpr std::size_t                n = 128;
+        for ( std::size_t i = 0; i < n; i++ )
+                s3.insert( uvptr< void, int >{ new int{ 42 } } );
+        for ( std::size_t i = 0; i < n; i++ )
+                s3.insert( uvptr< void, std::string >{ new std::string{ "wololo" } } );
+
+        CHECK_EQ( 2 * n, s3.size() );
+}
+
+void try_urset()
+{
+        std::set< uvref< void, int, std::string > > s3;
+        static constexpr std::size_t                n = 128;
+        for ( std::size_t i = 0; i < n; i++ )
+                s3.insert( uvref< void, int >{ *new int{ 42 } } );
+        for ( std::size_t i = 0; i < n; i++ )
+                s3.insert( uvref< void, std::string >{ *new std::string{ "wololo" } } );
+
+        CHECK_EQ( 2 * n, s3.size() );
+}
+
 TEST_CASE( "cmp" )
 {
         std::set< vptr< void, int > > s1;
@@ -267,6 +432,11 @@ TEST_CASE( "cmp" )
 
         std::set< vptr< void, int, std::string > > s2;
         s2.insert( vptr< void, int >{} );
+
+        try_set< vptr >();
+        try_set< vref >();
+        try_upset();
+        try_urset();
 }
 
 TEST_CASE( "reference to functor" )
@@ -410,16 +580,6 @@ TEST_CASE( "const vptr" )
 
         CHECK_EQ( p2, p3 );
         CHECK_EQ( p2.get(), p3.get() );
-}
-
-// XXX: arrays!
-
-TEST_CASE( "vptr to vref" )
-{
-}
-
-TEST_CASE( "uvptr to uvref" )
-{
 }
 
 }  // namespace vari

@@ -67,23 +67,26 @@ public:
         }
 
         template < typename U >
-                requires( contains_type_v< U, TL > )
+                requires( vconvertible_to< B, typelist< U >, B, TL > )
         explicit _uvptr( U* u ) noexcept
         {
                 if ( u )
                         _ptr = pointer{ *u };
         }
 
-        template < typename C, typename... Us >
-                requires( vconvertible_to< C, typelist< Us... >, B, TL > )
-        explicit _uvptr( _vptr< C, Us... > p ) noexcept
-          : _ptr( p )
-        {
-        }
 
         _uvptr& operator=( std::nullptr_t ) noexcept
         {
                 reset( nullptr );
+                return *this;
+        }
+
+        template < typename C, typename... Us >
+                requires( vconvertible_to< C, typelist< Us... >, B, TL > )
+        _uvptr& operator=( _uvref< C, Us... >&& p )
+        {
+                _ptr._core   = std::move( p._ref._core );
+                p._ref._core = _ptr_core< B, typelist< Us... > >{};
                 return *this;
         }
 
@@ -156,7 +159,12 @@ public:
                 auto p = release();
                 if ( p._core.ptr == nullptr )
                         return _dispatch_fun( empty, std::forward< Fs >( fs )... );
-                return p._core.template take_impl< _uvptr, vptr >( std::forward< Fs >( fs )... );
+                return p._core.template take_impl< _uvref, _vref >( std::forward< Fs >( fs )... );
+        }
+
+        friend void swap( _uvptr& lh, _uvptr& rh ) noexcept
+        {
+                std::swap( lh._ptr, rh._ptr );
         }
 
         ~_uvptr()

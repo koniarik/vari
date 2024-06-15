@@ -56,6 +56,13 @@ public:
         {
         }
 
+        template < typename U >
+                requires( vconvertible_to< B, typelist< U >, B, TL > )
+        explicit _uvref( U& u ) noexcept
+          : _ref( u )
+        {
+        }
+
         template < typename C, typename... Us >
                 requires( vconvertible_to< C, typelist< Us... >, B, TL > )
         _uvref& operator=( _uvref< C, Us... >&& p ) noexcept
@@ -107,6 +114,11 @@ public:
                 auto tmp   = _ref;
                 _ref._core = _ptr_core< B, TL >{};
                 return tmp._core.template take_impl< _uvref, _vref >( std::forward< Fs >( fs )... );
+        }
+
+        friend void swap( _uvref& lh, _uvref& rh ) noexcept
+        {
+                std::swap( lh._ref, rh._ref );
         }
 
         ~_uvref()

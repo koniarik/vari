@@ -46,9 +46,8 @@ public:
         {
         }
 
-        // XXX: generally ,these should also accept const versions
         template < typename U >
-                requires( contains_type_v< U, TL > )
+                requires( vconvertible_to< B, typelist< U >, B, TL > )
         _vref( U& u ) noexcept
           : _core( u )
         {
@@ -70,15 +69,20 @@ public:
         }
 
         template < typename... Fs >
-        decltype( auto ) visit( Fs&&... fs )
+        decltype( auto ) visit( Fs&&... fs ) const
         {
                 return _core.template visit_impl( std::forward< Fs >( fs )... );
         }
 
         template < typename... Fs >
-        decltype( auto ) match( Fs&&... fs )
+        decltype( auto ) match( Fs&&... fs ) const
         {
                 return _core.template match_impl< _vref >( std::forward< Fs >( fs )... );
+        }
+
+        friend void swap( _vref& lh, _vref& rh ) noexcept
+        {
+                std::swap( lh._core, rh._core );
         }
 
         friend auto operator<=>( _vref const& lh, _vref const& rh ) = default;

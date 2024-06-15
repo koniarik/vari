@@ -74,7 +74,7 @@ public:
         }
 
         template < typename U >
-                requires( contains_type_v< U, TL > )
+                requires( vconvertible_to< B, typelist< U >, B, TL > )
         _vptr( U& u ) noexcept
           : _core( u )
         {
@@ -113,7 +113,7 @@ public:
         {
                 if ( _core.ptr == nullptr )
                         return _dispatch_fun( empty, std::forward< Fs >( fs )... );
-                return _core.template match_impl< _vptr >( std::forward< Fs >( fs )... );
+                return _core.template match_impl< _vref >( std::forward< Fs >( fs )... );
         }
 
         friend void swap( _vptr& lh, _vptr& rh ) noexcept
