@@ -1,16 +1,16 @@
-
 cmake_minimum_required(VERSION 3.19)
 project(vari)
 
-add_library(vari INTERFACE
-	include/vari/bits/typelist.h
-	include/vari/bits/util.h
-	include/vari/bits/ptr_core.h
-	include/vari/bits/dispatch.h
-	include/vari/uvptr.h
-	include/vari/vptr.h
-	include/vari/vref.h
-	)
+add_library(
+  vari
+  INTERFACE
+  include/vari/bits/typelist.h
+  include/vari/bits/util.h
+  include/vari/bits/ptr_core.h
+  include/vari/bits/dispatch.h
+  include/vari/uvptr.h
+  include/vari/vptr.h
+  include/vari/vref.h)
 target_include_directories(vari INTERFACE include)
 target_compile_features(vari INTERFACE cxx_std_20)
 

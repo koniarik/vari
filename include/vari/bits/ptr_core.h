@@ -21,7 +21,10 @@
 
 #include "vari/bits/dispatch.h"
 #include "vari/bits/typelist.h"
+#include "vari/bits/util.h"
 
+#include <compare>
+#include <cstddef>
 #include <utility>
 
 namespace vari

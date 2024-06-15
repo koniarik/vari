@@ -20,7 +20,11 @@
 #pragma once
 
 #include "vari/bits/ptr_core.h"
+#include "vari/bits/typelist.h"
+#include "vari/bits/util.h"
 #include "vari/vptr.h"
+
+#include <cstddef>
 
 namespace vari
 {
@@ -150,9 +154,8 @@ public:
         decltype( auto ) take( Fs&&... fs ) &&
         {
                 auto p = release();
-                if ( p._core.ptr == nullptr ) {
+                if ( p._core.ptr == nullptr )
                         return _dispatch_fun( empty, std::forward< Fs >( fs )... );
-                }
                 return p._core.template take_impl< _uvptr, vptr >( std::forward< Fs >( fs )... );
         }
 

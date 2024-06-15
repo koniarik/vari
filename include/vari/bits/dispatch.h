@@ -21,6 +21,7 @@
 
 #include "util.h"
 
+#include <cstddef>
 #include <utility>
 
 namespace vari
@@ -29,10 +30,10 @@ namespace vari
 template < std::size_t Off, std::size_t N, typename F >
 constexpr decltype( auto ) _dispatch_index( std::size_t i, F&& f )
 {
-#define GEN( x )                                 \
-        case Off + x:                            \
-                if constexpr ( ( Off + x ) < N ) \
-                        return std::forward< F >( f ).template operator()< Off + x >();
+#define GEN( x )                                     \
+        case Off + ( x ):                            \
+                if constexpr ( ( Off + ( x ) ) < N ) \
+                        return std::forward< F >( f ).template operator()< Off + ( x ) >();
 
         switch ( i ) {
                 GEN( 0 )
@@ -67,12 +68,13 @@ constexpr decltype( auto ) _dispatch_index( std::size_t i, F&& f )
                 GEN( 29 )
                 GEN( 30 )
                 GEN( 31 )
+        default:
+                if constexpr ( N > Off + 32 )
+                        return _dispatch_index< Off + 32, N >( i, std::forward< F >( f ) );
         }
 
-#undef GEN
 
-        if constexpr ( N > Off + 32 )
-                return _dispatch_index< Off + 32, N >( i, std::forward< F >( f ) );
+#undef GEN
 
 #if defined( __cpp_lib_unreachable )
         std::unreachable();

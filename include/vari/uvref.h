@@ -20,7 +20,10 @@
 #pragma once
 
 #include "vari/bits/ptr_core.h"
+#include "vari/bits/typelist.h"
+#include "vari/bits/util.h"
 #include "vari/vref.h"
+
 
 namespace vari
 {

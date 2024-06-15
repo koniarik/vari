@@ -31,7 +31,7 @@ class VPtrCorePrinter(gdb.ValuePrinter):
 
     def to_string(self):
         return str(self._typename)
-    
+
     def children(self):
         if self._ptr == 0:
             v = 0
@@ -41,19 +41,19 @@ class VPtrCorePrinter(gdb.ValuePrinter):
 
     def display_hint(self):
         return "map"
-    
+
 class VPtrPrinter(gdb.ValuePrinter):
 
     def __init__(self, val):
         self._typename = val.type
         self._core = VPtrCorePrinter(val['_core'])
-    
+
     def to_string(self):
         return str(self._typename)
 
     def children(self):
         return self._core.children()
-    
+
     def display_hint(self):
         return self._core.display_hint()
 

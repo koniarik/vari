@@ -20,9 +20,10 @@
 #pragma once
 
 #include "vari/bits/ptr_core.h"
+#include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
 
-#include <variant>
+#include <cstddef>
 
 namespace vari
 {
@@ -102,18 +103,16 @@ public:
         template < typename... Fs >
         decltype( auto ) visit( Fs&&... fs )
         {
-                if ( _core.ptr == nullptr ) {
+                if ( _core.ptr == nullptr )
                         return _dispatch_fun( empty, std::forward< Fs >( fs )... );
-                }
                 return _core.template visit_impl( std::forward< Fs >( fs )... );
         }
 
         template < typename... Fs >
         decltype( auto ) match( Fs&&... fs )
         {
-                if ( _core.ptr == nullptr ) {
+                if ( _core.ptr == nullptr )
                         return _dispatch_fun( empty, std::forward< Fs >( fs )... );
-                }
                 return _core.template match_impl< _vptr >( std::forward< Fs >( fs )... );
         }
 

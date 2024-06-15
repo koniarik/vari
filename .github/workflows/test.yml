@@ -1,0 +1,27 @@
+name: test
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    test:
+        env:
+            CC: gcc-13
+            CXX: g++-13
+        runs-on: ubuntu-22.04
+        steps:
+          - uses: actions/checkout@v2
+
+          - name: install deps
+            run: sudo apt install ninja-build libgtest-dev ccache
+
+          - name: configure
+            run: make configure SANITIZER=address
+
+          - name: build
+            run: make build
+
+          - name: test
+            run: make test
