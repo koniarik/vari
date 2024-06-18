@@ -74,7 +74,6 @@ public:
                         _ptr = pointer{ *u };
         }
 
-
         _uvptr& operator=( std::nullptr_t ) noexcept
         {
                 reset( nullptr );
