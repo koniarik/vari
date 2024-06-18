@@ -271,3 +271,7 @@ using vp_a = vari::vptr<const void, const set_a>;
 using vp_b = vari::vptr<const void, const a_t, const b_t>;
 ```
 Both types `vp_a` and `vp_b` are equal.
+
+## Credits
+
+Credits for the idea for this should go to `avakar`, live long and prosper.
