@@ -16,13 +16,17 @@ target_compile_features(vari INTERFACE cxx_std_20)
 
 include(CTest)
 
-add_executable(vptr_test test/vptr_test.cpp)
-target_link_libraries(vptr_test PUBLIC vari)
-target_include_directories(vptr_test PUBLIC deps/doctest/)
-add_test(NAME vptr_test COMMAND vptr_test)
+if(BUILD_TESTING)
 
-add_executable(example example.cpp)
-target_link_libraries(example PUBLIC vari)
-target_include_directories(example PUBLIC deps/doctest/)
-add_dependencies(example vptr_test)
-add_test(NAME example COMMAND example)
+  add_executable(vptr_test test/vptr_test.cpp)
+  target_link_libraries(vptr_test PUBLIC vari)
+  target_include_directories(vptr_test PUBLIC deps/doctest/)
+  add_test(NAME vptr_test COMMAND vptr_test)
+
+  add_executable(example example.cpp)
+  target_link_libraries(example PUBLIC vari)
+  target_include_directories(example PUBLIC deps/doctest/)
+  add_dependencies(example vptr_test)
+  add_test(NAME example COMMAND example)
+
+endif()
