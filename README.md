@@ -73,6 +73,9 @@ uvptr<void, std::string, int> p = uwrap<void>(std::string{"wololo"});
 ```
 Note that signature of uwrap is `uvref<B,T> uwrap<B>(T item)`, this works as we allow natural conversion of `uvref` to `uvptr`, but not the other way around.
 
+WARNING: `uvref` is movable object, once moved-from, it is put into `null` state - something not
+possible otherwise. It shall not be used in this state in any matter except to be assigned-to.
+
 ## Access API
 
 Given that we do have a `vptr`, how to access it? All variants share the same approach to API, so the name of methods are the same.
