@@ -88,6 +88,8 @@ public:
         friend auto operator<=>( _vref const& lh, _vref const& rh ) = default;
 
 private:
+        _vref() = default;
+
         _ptr_core< B, TL > _core;
 
         template < typename C, typename... Us >

@@ -24,6 +24,7 @@
 #include "vari/bits/util.h"
 
 #include <cstddef>
+#include <optional>
 
 namespace vari
 {
@@ -48,6 +49,8 @@ public:
         static_assert(
             all_or_none_const< B, TL >,
             "Either all types and base type are const, or none are" );
+
+        using reference = _vref< B, Ts... >;
 
         _vptr()                              = default;
         _vptr( const _vptr& )                = default;
@@ -100,8 +103,18 @@ public:
                 return _core.ptr != nullptr;
         }
 
+        std::optional< reference > ref() const noexcept
+        {
+                if ( !( *this ) )
+                        return std::nullopt;
+
+                reference r;
+                r._core = _core;
+                return r;
+        }
+
         template < typename... Fs >
-        decltype( auto ) visit( Fs&&... fs )
+        decltype( auto ) visit( Fs&&... fs ) const
         {
                 if ( _core.ptr == nullptr )
                         return _dispatch_fun( empty, std::forward< Fs >( fs )... );
@@ -109,7 +122,7 @@ public:
         }
 
         template < typename... Fs >
-        decltype( auto ) match( Fs&&... fs )
+        decltype( auto ) match( Fs&&... fs ) const
         {
                 if ( _core.ptr == nullptr )
                         return _dispatch_fun( empty, std::forward< Fs >( fs )... );

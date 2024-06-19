@@ -25,6 +25,7 @@
 #include "vari/vptr.h"
 
 #include <cstddef>
+#include <optional>
 
 namespace vari
 {
@@ -43,7 +44,9 @@ public:
             all_or_none_const< B, TL >,
             "Either all types and base type are const, or none are" );
 
-        using pointer = _vptr< B, Ts... >;
+        using pointer          = _vptr< B, Ts... >;
+        using reference        = _vref< B, Ts... >;
+        using owning_reference = _uvref< B, Ts... >;
 
         _uvptr() noexcept = default;
 
@@ -140,14 +143,27 @@ public:
                 return _ptr;
         }
 
+        std::optional< reference > ref() const& noexcept
+        {
+                return _ptr.ref();
+        }
+
+        std::optional< owning_reference > ref() && noexcept
+        {
+                auto p = release();
+                if ( auto oref = p.ref() )
+                        return owning_reference{ *oref };
+                return std::nullopt;
+        }
+
         template < typename... Fs >
-        decltype( auto ) visit( Fs&&... f )
+        decltype( auto ) visit( Fs&&... f ) const
         {
                 return _ptr.visit( (Fs&&) f... );
         }
 
         template < typename... Fs >
-        decltype( auto ) match( Fs&&... f )
+        decltype( auto ) match( Fs&&... f ) const
         {
                 return _ptr.match( (Fs&&) f... );
         }

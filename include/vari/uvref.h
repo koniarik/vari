@@ -97,13 +97,13 @@ public:
         }
 
         template < typename... Fs >
-        decltype( auto ) visit( Fs&&... f )
+        decltype( auto ) visit( Fs&&... f ) const
         {
                 return _ref.visit( (Fs&&) f... );
         }
 
         template < typename... Fs >
-        decltype( auto ) match( Fs&&... f )
+        decltype( auto ) match( Fs&&... f ) const
         {
                 return _ref.match( (Fs&&) f... );
         }

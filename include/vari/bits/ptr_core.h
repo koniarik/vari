@@ -77,7 +77,7 @@ struct _ptr_core
         {
         }
 
-        constexpr std::size_t get_index() const noexcept
+        [[nodiscard]] constexpr std::size_t get_index() const noexcept
         {
                 return index;
         }
@@ -155,7 +155,7 @@ struct _ptr_core< B, typelist< T > >
         {
         }
 
-        constexpr std::size_t get_index() const noexcept
+        [[nodiscard]] constexpr std::size_t get_index() const noexcept
         {
                 return ptr == nullptr ? 0 : 1;
         }

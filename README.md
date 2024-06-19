@@ -47,10 +47,17 @@ void foo(vari::vref<void, a_t, b_t>);
 
 ## Base type
 
-First template argument of all variadics is not one of allowed types, but rather type that is pointed to internally: `vptr<B,Ts...>`
+All present variadics are wrappers over raw pointers with extra semantics.
+Due to that we have to be picky about what the raw pointers points-to.
+This is specified by the first type of the template, which is NOT one
+of the possible types that can be present.
+
 Choice of this type has two consequences:
  - Pointer to any type in list `Ts...` has to be convertible to pointer to `B` and back.
  - `B*` is type accessible common operations over pointers: `B& vptr<B,Ts...>::operator*()`
+
+In most cases using `void` is good enough, and we actually suggest aliasing
+the templates to ones that use it. (As seen in `example.cpp`)
 
 ## uvptr and uvref
 
