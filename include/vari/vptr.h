@@ -34,23 +34,18 @@ struct empty_t
 
 static constexpr empty_t empty;
 
-template < typename B, typename... Ts >
+template < typename... Ts >
 class _vref;
 
-template < typename B, typename... Ts >
+template < typename... Ts >
 class _vptr
 {
         using TL = typelist< Ts... >;
 
 public:
-        static constexpr bool const_base = std::is_const_v< B >;
-
         static_assert( is_flat_v< TL >, "The provided typelist has to be flat" );
-        static_assert(
-            all_or_none_const< B, TL >,
-            "Either all types and base type are const, or none are" );
 
-        using reference = _vref< B, Ts... >;
+        using reference = _vref< Ts... >;
 
         _vptr()                              = default;
         _vptr( const _vptr& )                = default;
@@ -62,22 +57,22 @@ public:
         {
         }
 
-        template < typename C, typename... Us >
-                requires( vconvertible_to< C, typelist< Us... >, B, TL > )
-        _vptr( _vptr< C, Us... > p ) noexcept
+        template < typename... Us >
+                requires( vconvertible_to< typelist< Us... >, TL > )
+        _vptr( _vptr< Us... > p ) noexcept
           : _core( std::move( p._core ) )
         {
         }
 
-        template < typename C, typename... Us >
-                requires( vconvertible_to< C, typelist< Us... >, B, TL > )
-        _vptr( _vref< C, Us... > r ) noexcept
+        template < typename... Us >
+                requires( vconvertible_to< typelist< Us... >, TL > )
+        _vptr( _vref< Us... > r ) noexcept
           : _core( std::move( r._core ) )
         {
         }
 
         template < typename U >
-                requires( vconvertible_to< B, typelist< U >, B, TL > )
+                requires( vconvertible_to< typelist< U >, TL > )
         _vptr( U& u ) noexcept
           : _core( u )
         {
@@ -137,16 +132,16 @@ public:
         friend auto operator<=>( _vptr const& lh, _vptr const& rh ) = default;
 
 private:
-        _ptr_core< B, TL > _core;
+        _ptr_core< TL > _core;
 
-        template < typename C, typename... Us >
+        template < typename... Us >
         friend class _vptr;
 
-        template < typename C, typename... Us >
+        template < typename... Us >
         friend class _uvptr;
 };
 
-template < typename R, typename... Ts >
-using vptr = _define_vptr< _vptr, R, typelist< Ts... > >;
+template < typename... Ts >
+using vptr = _define_vptr< _vptr, typelist< Ts... > >;
 
 }  // namespace vari

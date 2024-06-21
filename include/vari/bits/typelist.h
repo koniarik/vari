@@ -42,6 +42,12 @@ struct index_of< T, typelist< T, Ts... > >
         static constexpr std::size_t value = 0;
 };
 
+template < typename T, typename... Ts >
+struct index_of< T, typelist< const T, Ts... > >
+{
+        static constexpr std::size_t value = 0;
+};
+
 template < typename T, typename U, typename... Ts >
 struct index_of< T, typelist< U, Ts... > >
 {

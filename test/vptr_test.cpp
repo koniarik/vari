@@ -66,9 +66,9 @@ static_assert( std::same_as< uft3, typelist< const int, float, int, const float 
 using ivst_tl1 = typelist< const int, const float >;
 using ivst_tl2 = typelist< int, float >;
 
-static_assert( vconvertible_to< const void, ivst_tl1, const void, ivst_tl1 > );
-static_assert( vconvertible_to< void, ivst_tl2, const void, ivst_tl1 > );
-static_assert( vconvertible_to< void, ivst_tl2, void, ivst_tl2 > );
+static_assert( vconvertible_to< ivst_tl1, ivst_tl1 > );
+static_assert( vconvertible_to< ivst_tl2, ivst_tl1 > );
+static_assert( vconvertible_to< ivst_tl2, ivst_tl2 > );
 
 void check_cmp_operators( auto& lh, auto& rh )
 {
@@ -82,7 +82,7 @@ void check_cmp_operators( auto& lh, auto& rh )
 
 TEST_CASE( "vptr" )
 {
-        using V = vptr< void, int, float, std::string >;
+        using V = vptr< int, float, std::string >;
 
         V p0{};
         CHECK_FALSE( p0 );
@@ -111,9 +111,9 @@ TEST_CASE( "vptr" )
             [&]( empty_t ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( vref< void, int > ) {},
-            [&]( vptr< void, bool > ) {},
-            [&]( vref< void, float, std::string > ) {
+            [&]( vref< int > ) {},
+            [&]( vptr< bool > ) {},
+            [&]( vref< float, std::string > ) {
                     FAIL( "incorrect overload" );
             } );
 
@@ -132,7 +132,7 @@ TEST_CASE( "vptr" )
             } );
         CHECK_EQ( &ii, &i );
 
-        vptr< void, float > p2;
+        vptr< float > p2;
 
         CHECK_FALSE( p2 );
 
@@ -140,9 +140,9 @@ TEST_CASE( "vptr" )
 
         CHECK_FALSE( p1 );
 
-        vptr< void, float > p3;
+        vptr< float > p3;
         p3.visit( []( empty_t ) {}, []( float& ) {} );
-        p3.match( []( empty_t ) {}, []( vptr< void, float > ) {} );
+        p3.match( []( empty_t ) {}, []( vptr< float > ) {} );
 
         p3 = p2;
 
@@ -154,41 +154,10 @@ TEST_CASE( "vptr" )
 
         check_cmp_operators( p3, p2 );
 
-        vptr< void, int > p4{ i };
+        vptr< int > p4{ i };
         CHECK( p4 );
         p4 = nullptr;
         CHECK_FALSE( p4 );
-}
-struct base_t
-{
-        int v;
-};
-
-template < std::size_t i >
-struct derived_t : base_t
-{
-};
-
-TEST_CASE( "vptr_nonvoid" )
-{
-        using V = vptr< base_t, derived_t< 0 >, derived_t< 1 > >;
-
-        derived_t< 0 > d;
-        d.v = 42;
-
-        V p0{ d };
-
-        CHECK_EQ( ( *p0 ).v, 42 );
-        CHECK_EQ( p0->v, 42 );
-
-        V p1;
-        swap( p0, p1 );
-
-        CHECK_EQ( ( *p1 ).v, 42 );
-        CHECK_EQ( p1->v, 42 );
-        CHECK_FALSE( p0 );
-
-        check_cmp_operators( p0, p1 );
 }
 
 static_assert( std::same_as< type_at_t< 0, typelist< int, float, std::string > >, int > );
@@ -197,7 +166,7 @@ static_assert( std::same_as< type_at_t< 2, typelist< int, float, std::string > >
 
 TEST_CASE( "vref" )
 {
-        using V = vref< void, int, float, std::string >;
+        using V = vref< int, float, std::string >;
 
         std::string i{ "123456" };
         V           p1{ i };
@@ -217,57 +186,26 @@ TEST_CASE( "vref" )
         CHECK_EQ( i.data(), ii.data() );
 
         p1.match(
-            [&]( vref< void, int > ) {
+            [&]( vref< int > ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( vref< void, float, std::string > ) {} );
+            [&]( vref< float, std::string > ) {} );
 
-        vptr< void, int, float, std::string > p2 = p1;
-        vptr< void, int >                     p3;
+        vptr< int, float, std::string > p2 = p1;
+        vptr< int >                     p3;
 
-        std::vector< int >               vec = { 1, 2, 3, 4 };
-        vptr< void, std::vector< int > > p4( vec );
+        std::vector< int >         vec = { 1, 2, 3, 4 };
+        vptr< std::vector< int > > p4( vec );
         CHECK_EQ( p2.get(), p1.get() );
 
         check_cmp_operators( p2, p1 );
 }
 
-TEST_CASE( "vref_nonvoid" )
-{
-        using V = vref< base_t, derived_t< 0 >, derived_t< 1 > >;
-
-        derived_t< 0 > d0;
-        d0.v = 42;
-
-        V p0{ d0 };
-
-        CHECK_EQ( ( *p0 ).v, 42 );
-        CHECK_EQ( p0->v, 42 );
-
-        derived_t< 0 > d1;
-        d1.v = 777;
-        V p1{ d1 };
-
-        swap( p0, p1 );
-
-        CHECK_EQ( ( *p1 ).v, 42 );
-        CHECK_EQ( p1->v, 42 );
-
-        CHECK_EQ( ( *p0 ).v, 777 );
-        CHECK_EQ( p0->v, 777 );
-        d1.v = 666;
-
-        CHECK_EQ( ( *p0 ).v, 666 );
-        CHECK_EQ( p0->v, 666 );
-
-        check_cmp_operators( p0, p1 );
-}
-
 TEST_CASE( "uvptr" )
 {
-        using V = uvptr< void, int, float, std::string >;
+        using V = uvptr< int, float, std::string >;
 
-        V p1 = uwrap< void >( std::string{ "s" } );
+        V p1 = uwrap( std::string{ "s" } );
 
         p1.visit(
             [&]( empty_t ) {
@@ -285,29 +223,29 @@ TEST_CASE( "uvptr" )
             [&]( empty_t ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( vptr< void, int > ) {
+            [&]( vptr< int > ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( vref< void, float, std::string > ) {} );
+            [&]( vref< float, std::string > ) {} );
 
         p1 = std::move( p1 ).take(
             [&]( empty_t ) -> V {
                     FAIL( "incorrect overload" );
                     return V{};
             },
-            [&]( uvref< void, int > ) -> V {
+            [&]( uvref< int > ) -> V {
                     FAIL( "incorrect overload" );
                     return V{};
             },
-            [&]( uvptr< void, float, std::string > p ) -> V {
+            [&]( uvptr< float, std::string > p ) -> V {
                     return p;
             } );
 
-        std::optional< vref< void, int, float, std::string > > opt_ref = p1.ref();
+        std::optional< vref< int, float, std::string > > opt_ref = p1.ref();
         CHECK( opt_ref );
         opt_ref->visit( [&]( int& ) {}, [&]( float& ) {}, [&]( std::string& ) {} );
 
-        vptr< void, int, float, std::string > p2 = p1.get();
+        vptr< int, float, std::string > p2 = p1.get();
         CHECK_EQ( p2.get(), p1.get().get() );
 
         CHECK( p1 );
@@ -318,47 +256,47 @@ TEST_CASE( "uvptr" )
 
         std::move( p3 ).take(
             [&]( empty_t ) {},
-            [&]( uvref< void, int > ) {
+            [&]( uvref< int > ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( uvptr< void, float, std::string > ) {
+            [&]( uvptr< float, std::string > ) {
                     FAIL( "incorrect overload" );
             } );
 
         p3 = std::move( p3 );
 
-        uvref< void, int > r1 = uwrap< void >( int{ 42 } );
+        uvref< int > r1 = uwrap( int{ 42 } );
 
         CHECK_FALSE( p3 );
         p3 = std::move( r1 );
         CHECK( p3 );
 
-        uvptr< void, int > p4{ new int{ 33 } };
+        uvptr< int > p4{ new int{ 33 } };
         CHECK_EQ( *p4, 33 );
 
-        uvptr< void, int > p5{ (int*) nullptr };
+        uvptr< int > p5{ (int*) nullptr };
         CHECK_FALSE( p5 );
 
-        uvptr< void, std::string > p6{ new std::string{ "wololo" } };
+        uvptr< std::string > p6{ new std::string{ "wololo" } };
         CHECK_EQ( p6->front(), 'w' );
 
-        vptr< void, std::string > p7 = p6;
+        vptr< std::string > p7 = p6;
         CHECK_EQ( p7->c_str(), p6->c_str() );
 
-        std::optional< uvref< void, std::string > > r8 = std::move( p6 ).ref();
+        std::optional< uvref< std::string > > r8 = std::move( p6 ).ref();
         CHECK( r8 );
         r8 = std::move( p6 ).ref();
         CHECK_FALSE( r8 );
 
-        p1 = uwrap< void >( int{ 42 } );
+        p1 = uwrap( int{ 42 } );
         p1 = std::move( p6 );
 }
 
 TEST_CASE( "uvref" )
 {
-        using V = uvref< void, int, float, std::string >;
+        using V = uvref< int, float, std::string >;
 
-        V p1 = uwrap< void >( std::string{ "s" } );
+        V p1 = uwrap( std::string{ "s" } );
 
         p1.visit(
             [&]( int& ) {
@@ -370,25 +308,25 @@ TEST_CASE( "uvref" )
             [&]( std::string& ) {} );
 
         p1.match(
-            [&]( vref< void, int > ) {
+            [&]( vref< int > ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( vref< void, float, std::string > ) {} );
+            [&]( vref< float, std::string > ) {} );
 
         int k;
         p1 = std::move( p1 ).take(
-            [&]( uvref< void, int > ) -> V {
+            [&]( uvref< int > ) -> V {
                     FAIL( "incorrect overload" );
-                    return uwrap< void >( k );
+                    return uwrap( k );
             },
-            [&]( uvref< void, float, std::string > r ) -> V {
+            [&]( uvref< float, std::string > r ) -> V {
                     return r;
             } );
 
-        vptr< void, int, float, std::string > p2 = p1.get();
+        vptr< int, float, std::string > p2 = p1.get();
         CHECK_EQ( p2.get(), p1.get().get() );
 
-        p1 = uwrap< void >( float{ 42 } );
+        p1 = uwrap( float{ 42 } );
 }
 
 TEST_CASE( "dispatch" )
@@ -402,50 +340,50 @@ TEST_CASE( "dispatch" )
 template < template < typename... > typename T >
 void try_set()
 {
-        std::set< T< void, int, std::string > > s3;
-        std::vector< int >                      idata{ 127, 0 };
-        std::vector< std::string >              sdata{ 127, "wololo" };
+        std::set< T< int, std::string > > s3;
+        std::vector< int >                idata{ 127, 0 };
+        std::vector< std::string >        sdata{ 127, "wololo" };
 
         for ( int& i : idata )
-                s3.insert( T< void, int >{ i } );
+                s3.insert( T< int >{ i } );
 
         for ( std::string& s : sdata )
-                s3.insert( T< void, std::string >{ s } );
+                s3.insert( T< std::string >{ s } );
 
         CHECK_EQ( idata.size() + sdata.size(), s3.size() );
 }
 
 void try_upset()
 {
-        std::set< uvptr< void, int, std::string > > s3;
-        static constexpr std::size_t                n = 128;
+        std::set< uvptr< int, std::string > > s3;
+        static constexpr std::size_t          n = 128;
         for ( std::size_t i = 0; i < n; i++ )
-                s3.insert( uvptr< void, int >{ new int{ 42 } } );
+                s3.insert( uvptr< int >{ new int{ 42 } } );
         for ( std::size_t i = 0; i < n; i++ )
-                s3.insert( uvptr< void, std::string >{ new std::string{ "wololo" } } );
+                s3.insert( uvptr< std::string >{ new std::string{ "wololo" } } );
 
         CHECK_EQ( 2 * n, s3.size() );
 }
 
 void try_urset()
 {
-        std::set< uvref< void, int, std::string > > s3;
-        static constexpr std::size_t                n = 128;
+        std::set< uvref< int, std::string > > s3;
+        static constexpr std::size_t          n = 128;
         for ( std::size_t i = 0; i < n; i++ )
-                s3.insert( uvref< void, int >{ *new int{ 42 } } );
+                s3.insert( uvref< int >{ *new int{ 42 } } );
         for ( std::size_t i = 0; i < n; i++ )
-                s3.insert( uvref< void, std::string >{ *new std::string{ "wololo" } } );
+                s3.insert( uvref< std::string >{ *new std::string{ "wololo" } } );
 
         CHECK_EQ( 2 * n, s3.size() );
 }
 
 TEST_CASE( "cmp" )
 {
-        std::set< vptr< void, int > > s1;
-        s1.insert( vptr< void, int >{} );
+        std::set< vptr< int > > s1;
+        s1.insert( vptr< int >{} );
 
-        std::set< vptr< void, int, std::string > > s2;
-        s2.insert( vptr< void, int >{} );
+        std::set< vptr< int, std::string > > s2;
+        s2.insert( vptr< int >{} );
 
         try_set< vptr >();
         try_set< vref >();
@@ -477,13 +415,13 @@ TEST_CASE( "reference to functor" )
         foo f;
         int i;
 
-        vref< void, int, std::string > r1{ i };
+        vref< int, std::string > r1{ i };
         r1.visit( f );
-        vptr< void, int, std::string > p1{ i };
+        vptr< int, std::string > p1{ i };
         p1.visit( f );
-        uvref< void, int, std::string > r2 = uwrap< void >( std::string{ "wololo" } );
+        uvref< int, std::string > r2 = uwrap( std::string{ "wololo" } );
         r2.visit( f );
-        uvptr< void, int, std::string > p2 = uwrap< void >( std::string{ "wololo" } );
+        uvptr< int, std::string > p2 = uwrap( std::string{ "wololo" } );
         p2.visit( f );
 }
 
@@ -519,20 +457,20 @@ TEST_CASE( "moved functor" )
         foo f;
         int i;
 
-        vref< void, int, std::string > r1{ i };
+        vref< int, std::string > r1{ i };
         f = r1.visit( std::move( f ) );
 
-        foo                            f2;
-        vptr< void, int, std::string > p1{ i };
+        foo                      f2;
+        vptr< int, std::string > p1{ i };
         f = p1.visit( std::move( f ) );
 
-        foo                             f3;
-        uvref< void, int, std::string > r2 = uwrap< void >( std::string{ "wololo" } );
+        foo                       f3;
+        uvref< int, std::string > r2 = uwrap( std::string{ "wololo" } );
 
         f = r2.visit( std::move( f ) );
 
-        foo                             f4;
-        uvptr< void, int, std::string > p2 = uwrap< void >( std::string{ "wololo" } );
+        foo                       f4;
+        uvptr< int, std::string > p2 = uwrap( std::string{ "wololo" } );
 
         f = p2.visit( std::move( f ) );
 
@@ -541,11 +479,11 @@ TEST_CASE( "moved functor" )
 
 TEST_CASE( "const vptr" )
 {
-        using V = vptr< const void, const int, const float, const std::string >;
+        using V = vptr< const int, const float, const std::string >;
 
-        int               i = 0;
-        vptr< void, int > tmp{ i };
-        V                 p1{ tmp };
+        int         i = 0;
+        vptr< int > tmp{ i };
+        V           p1{ tmp };
 
         CHECK( p1 );
 
@@ -563,8 +501,8 @@ TEST_CASE( "const vptr" )
             [&]( empty_t ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( vptr< const void, int const > ) {},
-            [&]( vptr< const void, float const, std::string const > ) {
+            [&]( vptr< int const > ) {},
+            [&]( vptr< float const, std::string const > ) {
                     FAIL( "incorrect overload" );
             } );
 
@@ -580,15 +518,15 @@ TEST_CASE( "const vptr" )
             } );
         CHECK_EQ( &ii, &i );
 
-        vptr< void const, float const > p2;
+        vptr< float const > p2;
 
         p1 = p2;
 
         CHECK_FALSE( p1 );
 
-        vptr< void const, float const > p3;
+        vptr< float const > p3;
         p3.visit( []( empty_t ) {}, []( float const& ) {} );
-        p3.match( []( empty_t ) {}, []( vptr< void const, float const > ) {} );
+        p3.match( []( empty_t ) {}, []( vptr< float const > ) {} );
 
         p3 = p2;
 

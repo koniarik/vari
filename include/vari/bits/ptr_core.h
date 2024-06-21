@@ -30,42 +30,38 @@
 namespace vari
 {
 
-template < bool ConstBase, typename TL, typename UL >
+template < typename TL, typename UL >
 struct _vptr_cnv_map;
 
 template < typename TL, typename... Us >
-struct _vptr_cnv_map< false, TL, typelist< Us... > >
+struct _vptr_cnv_map< TL, typelist< Us... > >
 {
         static constexpr std::size_t value[sizeof...( Us ) + 1] = {
             0u,
             1 + index_of_v< Us, TL >... };
 };
 
-template < typename TL, typename... Us >
-struct _vptr_cnv_map< true, TL, typelist< Us... > >
+template < typename T >
+constexpr void* to_void_cast( T* p ) noexcept
 {
-        static_assert( all_is_const_v< TL > );
+        return static_cast< void* >( const_cast< std::remove_const_t< T >* >( p ) );
+}
 
-        static constexpr std::size_t value[sizeof...( Us ) + 1] = {
-            0u,
-            1 + index_of_v< const Us, TL >... };
-};
-
-template < typename B, typename TL >
+template < typename TL >
 struct _ptr_core
 {
-        std::size_t index = 0;
-        B*          ptr   = nullptr;
 
-        static constexpr bool const_base = std::is_const_v< B >;
+        std::size_t index = 0;
+        void*       ptr   = nullptr;
+
 
         _ptr_core() noexcept = default;
 
-        template < typename C, typename UL >
-                requires( vconvertible_to< C, UL, B, TL > )
-        _ptr_core( _ptr_core< C, UL > other ) noexcept
-          : index( _vptr_cnv_map< const_base, TL, UL >::value[other.get_index()] )
-          , ptr( other.ptr )
+        template < typename UL >
+                requires( vconvertible_to< UL, TL > )
+        _ptr_core( _ptr_core< UL > other ) noexcept
+          : index( _vptr_cnv_map< TL, UL >::value[other.get_index()] )
+          , ptr( to_void_cast( other.ptr ) )
         {
         }
 
@@ -100,7 +96,7 @@ struct _ptr_core
                 return _dispatch_index< 0, TL::size >(
                     index - 1, [&]< std::size_t j >() -> decltype( auto ) {
                             using U       = type_at_t< j, TL >;
-                            using ArgType = ArgTempl< B, U >;
+                            using ArgType = ArgTempl< U >;
                             auto&& f =
                                 _function_picker< ArgType >::pick( std::forward< Fs >( fs )... );
                             U* p = static_cast< U* >( ptr );
@@ -119,8 +115,8 @@ struct _ptr_core
                 return _dispatch_index< 0, TL::size >(
                     index - 1, [&]< std::size_t j >() -> decltype( auto ) {
                             using U        = type_at_t< j, TL >;
-                            using ArgType  = ArgTempl< B, U >;
-                            using ConvType = ConvTempl< B, U >;
+                            using ArgType  = ArgTempl< U >;
+                            using ConvType = ConvTempl< U >;
                             auto&& f =
                                 _function_picker< ArgType >::pick( std::forward< Fs >( fs )... );
                             U* p = static_cast< U* >( ptr );
@@ -137,15 +133,15 @@ struct _ptr_core
         }
 };
 
-template < typename B, typename T >
-struct _ptr_core< B, typelist< T > >
+template < typename T >
+struct _ptr_core< typelist< T > >
 {
+
         T* ptr = nullptr;
 
         _ptr_core() noexcept = default;
 
-        template < typename C >
-        _ptr_core( _ptr_core< C, typelist<> > ) noexcept
+        _ptr_core( _ptr_core< typelist<> > ) noexcept
           : ptr( nullptr )
         {
         }
@@ -170,7 +166,7 @@ struct _ptr_core< B, typelist< T > >
         template < template < typename... > typename ArgTempl, typename... Fs >
         decltype( auto ) match_impl( Fs&&... fs ) const
         {
-                using ArgType = ArgTempl< B, T >;
+                using ArgType = ArgTempl< T >;
                 auto&& f      = _function_picker< ArgType >::pick( std::forward< Fs >( fs )... );
                 return std::forward< decltype( f ) >( f )( ArgType( *ptr ) );
         }
@@ -183,9 +179,9 @@ struct _ptr_core< B, typelist< T > >
             typename... Fs >
         decltype( auto ) take_impl( Fs&&... fs ) const
         {
-                using ArgType  = ArgTempl< B, T >;
+                using ArgType  = ArgTempl< T >;
                 auto&& f       = _function_picker< ArgType >::pick( std::forward< Fs >( fs )... );
-                using ConvType = ConvTempl< B, T >;
+                using ConvType = ConvTempl< T >;
                 return std::forward< decltype( f ) >( f )( ArgType( ConvType( *ptr ) ) );
         }
 
@@ -195,14 +191,14 @@ struct _ptr_core< B, typelist< T > >
         }
 };
 
-template < typename B, typename T >
-constexpr auto operator<=>( _ptr_core< B, T > const& lh, _ptr_core< B, T > const& rh )
+template < typename T >
+constexpr auto operator<=>( _ptr_core< T > const& lh, _ptr_core< T > const& rh )
 {
         return std::compare_three_way{}( lh.ptr, rh.ptr );
 }
 
-template < typename B, typename T >
-constexpr bool operator==( _ptr_core< B, T > const& lh, _ptr_core< B, T > const& rh )
+template < typename T >
+constexpr bool operator==( _ptr_core< T > const& lh, _ptr_core< T > const& rh )
 {
         return lh.ptr == rh.ptr;
 }

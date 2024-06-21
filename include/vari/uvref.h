@@ -28,44 +28,41 @@
 namespace vari
 {
 
-template < typename B, typename... Ts >
+template < typename... Ts >
 class _uvref
 {
         using TL = typelist< Ts... >;
 
 public:
         static_assert( is_flat_v< TL > );
-        static_assert(
-            all_or_none_const< B, TL >,
-            "Either all types and base type are const, or none are" );
 
-        using reference = _vref< B, Ts... >;
+        using reference = _vref< Ts... >;
 
-        template < typename C, typename... Us >
-                requires( vconvertible_to< C, typelist< Us... >, B, TL > )
-        _uvref( _uvref< C, Us... >&& p ) noexcept
+        template < typename... Us >
+                requires( vconvertible_to< typelist< Us... >, TL > )
+        _uvref( _uvref< Us... >&& p ) noexcept
           : _ref( p._ref )
         {
-                p._ref._core = _ptr_core< B, typelist< Us... > >{};
+                p._ref._core = _ptr_core< typelist< Us... > >{};
         }
 
-        template < typename C, typename... Us >
-                requires( vconvertible_to< C, typelist< Us... >, B, TL > )
-        explicit _uvref( _vref< C, Us... > p ) noexcept
+        template < typename... Us >
+                requires( vconvertible_to< typelist< Us... >, TL > )
+        explicit _uvref( _vref< Us... > p ) noexcept
           : _ref( p )
         {
         }
 
         template < typename U >
-                requires( vconvertible_to< B, typelist< U >, B, TL > )
+                requires( vconvertible_to< typelist< U >, TL > )
         explicit _uvref( U& u ) noexcept
           : _ref( u )
         {
         }
 
-        template < typename C, typename... Us >
-                requires( vconvertible_to< C, typelist< Us... >, B, TL > )
-        _uvref& operator=( _uvref< C, Us... >&& p )
+        template < typename... Us >
+                requires( vconvertible_to< typelist< Us... >, TL > )
+        _uvref& operator=( _uvref< Us... >&& p )
         {
                 using std::swap;
                 _uvref tmp{ std::move( p ) };
@@ -88,9 +85,9 @@ public:
                 return _ref;
         }
 
-        template < typename C, typename... Us >
-                requires( vconvertible_to< B, TL, C, typelist< Us... > > )
-        operator _vref< C, Us... >() & noexcept
+        template < typename... Us >
+                requires( vconvertible_to< TL, typelist< Us... > > )
+        operator _vref< Us... >() & noexcept
         {
                 return _ref;
         }
@@ -111,7 +108,7 @@ public:
         decltype( auto ) take( Fs&&... fs ) &&
         {
                 auto tmp   = _ref;
-                _ref._core = _ptr_core< B, TL >{};
+                _ref._core = _ptr_core< TL >{};
                 return tmp._core.template take_impl< _uvref, _vref >( std::forward< Fs >( fs )... );
         }
 
@@ -130,23 +127,23 @@ public:
 private:
         reference _ref;
 
-        template < typename C, typename... Us >
+        template < typename... Us >
         friend class _vptr;
 
-        template < typename C, typename... Us >
+        template < typename... Us >
         friend class _uvptr;
 
-        template < typename C, typename... Us >
+        template < typename... Us >
         friend class _uvref;
 };
 
-template < typename R, typename... Ts >
-using uvref = _define_vptr< _uvref, R, typelist< Ts... > >;
+template < typename... Ts >
+using uvref = _define_vptr< _uvref, typelist< Ts... > >;
 
-template < typename R, typename T >
-uvref< R, T > uwrap( T item )
+template < typename T >
+uvref< T > uwrap( T item )
 {
-        return uvref< R, T >( vref< R, T >( *new T( std::move( item ) ) ) );
+        return uvref< T >( vref< T >( *new T( std::move( item ) ) ) );
 }
 
 }  // namespace vari

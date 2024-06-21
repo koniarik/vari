@@ -28,26 +28,23 @@
 namespace vari
 {
 
-template < typename B, typename... Ts >
+template < typename... Ts >
 class _vref
 {
         using TL = typelist< Ts... >;
 
 public:
         static_assert( is_flat_v< TL > );
-        static_assert(
-            all_or_none_const< B, TL >,
-            "Either all types and base type are const, or none are" );
 
-        template < typename C, typename... Us >
-                requires( vconvertible_to< C, typelist< Us... >, B, TL > )
-        _vref( _vref< C, Us... > p ) noexcept
+        template < typename... Us >
+                requires( vconvertible_to< typelist< Us... >, TL > )
+        _vref( _vref< Us... > p ) noexcept
           : _core( p._core )
         {
         }
 
         template < typename U >
-                requires( vconvertible_to< B, typelist< U >, B, TL > )
+                requires( vconvertible_to< typelist< U >, TL > )
         _vref( U& u ) noexcept
           : _core( u )
         {
@@ -90,19 +87,19 @@ public:
 private:
         _vref() = default;
 
-        _ptr_core< B, TL > _core;
+        _ptr_core< TL > _core;
 
-        template < typename C, typename... Us >
+        template < typename... Us >
         friend class _vref;
-        template < typename C, typename... Us >
+        template < typename... Us >
         friend class _vptr;
-        template < typename C, typename... Us >
+        template < typename... Us >
         friend class _uvref;
-        template < typename C, typename... Us >
+        template < typename... Us >
         friend class _uvptr;
 };
 
-template < typename R, typename... Ts >
-using vref = _define_vptr< _vref, R, typelist< Ts... > >;
+template < typename... Ts >
+using vref = _define_vptr< _vref, typelist< Ts... > >;
 
 }  // namespace vari

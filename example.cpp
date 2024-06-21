@@ -32,19 +32,12 @@ template < typename... Ts >
 using tl = vari::typelist< Ts... >;
 
 template < typename... Ts >
-using uvref = vari::uvref< void, Ts... >;
+using uvref = vari::uvref< Ts... >;
 template < typename... Ts >
-using cuvref = vari::uvref< const void, Ts... >;
-template < typename... Ts >
-using vref = vari::vref< void, Ts... >;
-template < typename... Ts >
-using cvref = vari::vref< const void, Ts... >;
+using vref = vari::vref< Ts... >;
 
-template < typename T >
-auto uwrap( T item )
-{
-        return vari::uwrap< void >( std::move( item ) );
-}
+
+using vari::uwrap;
 
 struct arithm_op;
 struct variable;
@@ -85,7 +78,7 @@ struct reference
         vref< expr > ref;
 };
 
-std::ostream& operator<<( std::ostream& os, cvref< const expr > e )
+std::ostream& operator<<( std::ostream& os, vref< const expr > e )
 {
         e.visit(
             [&]( arithm_op const& aop ) {
@@ -127,7 +120,7 @@ std::ostream& operator<<( std::ostream& os, cvref< const expr > e )
         return os;
 }
 
-value_type eval( cvref< const expr > e, std::vector< value_type > const& inpt )
+value_type eval( vref< const expr > e, std::vector< value_type > const& inpt )
 {
         return e.visit(
             [&]( arithm_op const& aop ) -> value_type {
