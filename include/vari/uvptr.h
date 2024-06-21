@@ -87,8 +87,9 @@ public:
                 requires( vconvertible_to< C, typelist< Us... >, B, TL > )
         _uvptr& operator=( _uvref< C, Us... >&& p )
         {
-                _ptr._core   = std::move( p._ref._core );
-                p._ref._core = _ptr_core< B, typelist< Us... > >{};
+                using std::swap;
+                _uvptr tmp{ std::move( p ) };
+                swap( _ptr._core, tmp._ptr._core );
                 return *this;
         }
 
@@ -96,9 +97,9 @@ public:
                 requires( vconvertible_to< C, typelist< Us... >, B, TL > )
         _uvptr& operator=( _uvptr< C, Us... >&& p )
         {
-                if ( this == &p )
-                        return *this;
-                reset( p.release() );
+                using std::swap;
+                _uvptr tmp{ std::move( p ) };
+                swap( _ptr._core, tmp._ptr._core );
                 return *this;
         }
 

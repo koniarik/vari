@@ -65,12 +65,11 @@ public:
 
         template < typename C, typename... Us >
                 requires( vconvertible_to< C, typelist< Us... >, B, TL > )
-        _uvref& operator=( _uvref< C, Us... >&& p ) noexcept
+        _uvref& operator=( _uvref< C, Us... >&& p )
         {
-                if ( this == &p )
-                        return *this;
                 using std::swap;
-                swap( _ref._core, p._ref._core );
+                _uvref tmp{ std::move( p ) };
+                swap( _ref._core, tmp._ref._core );
                 return *this;
         }
 

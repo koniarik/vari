@@ -349,6 +349,9 @@ TEST_CASE( "uvptr" )
         CHECK( r8 );
         r8 = std::move( p6 ).ref();
         CHECK_FALSE( r8 );
+
+        p1 = uwrap< void >( int{ 42 } );
+        p1 = std::move( p6 );
 }
 
 TEST_CASE( "uvref" )
@@ -384,6 +387,8 @@ TEST_CASE( "uvref" )
 
         vptr< void, int, float, std::string > p2 = p1.get();
         CHECK_EQ( p2.get(), p1.get().get() );
+
+        p1 = uwrap< void >( float{ 42 } );
 }
 
 TEST_CASE( "dispatch" )
