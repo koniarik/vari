@@ -28,7 +28,7 @@ namespace vari
 {
 
 template < std::size_t Off, std::size_t N, typename F >
-constexpr decltype( auto ) _dispatch_index( std::size_t i, F&& f )
+constexpr decltype( auto ) _dispatch_index( std::size_t const i, F&& f )
 {
 #define GEN( x )                                     \
         case Off + ( x ):                            \

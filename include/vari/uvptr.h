@@ -131,8 +131,9 @@ public:
 
         pointer release() noexcept
         {
+                using std::swap;
                 pointer res;
-                std::swap( res, _ptr );
+                swap( res, _ptr );
                 return res;
         }
 

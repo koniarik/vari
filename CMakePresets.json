@@ -11,18 +11,70 @@
         "CMAKE_CXX_FLAGS": "-fprofile-arcs -ftest-coverage",
         "VARI_TESTS_ENABLED": "ON"
       }
+    },
+    {
+      "name": "asan",
+      "generator": "Ninja",
+      "binaryDir": "build",
+      "inherits": "debug",
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-fsanitize=address"
+      }
+    },
+    {
+      "name": "ubsan",
+      "generator": "Ninja",
+      "binaryDir": "build",
+      "inherits": "debug",
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-fsanitize=undefined"
+      }
+    },
+    {
+      "name": "release",
+      "generator": "Ninja",
+      "binaryDir": "build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "VARI_TESTS_ENABLED": "ON"
+      }
     }
   ],
   "buildPresets": [
     {
       "name": "debug",
       "configurePreset": "debug"
+    },
+    {
+      "name": "asan",
+      "configurePreset": "asan"
+    },
+    {
+      "name": "ubsan",
+      "configurePreset": "ubsan"
+    },
+    {
+      "name": "release",
+      "configurePreset": "release"
     }
   ],
   "testPresets": [
     {
       "name": "debug",
       "configurePreset": "debug"
+    },
+    {
+      "name": "asan",
+      "configurePreset": "asan"
+    },
+    {
+      "name": "ubsan",
+      "configurePreset": "ubsan"
+    },
+    {
+      "name": "release",
+      "configurePreset": "release"
     }
   ],
   "workflowPresets": [
@@ -39,6 +91,23 @@
         },
         {
           "name": "debug",
+          "type": "test"
+        }
+      ]
+    },
+    {
+      "name": "release",
+      "steps": [
+        {
+          "name": "release",
+          "type": "configure"
+        },
+        {
+          "name": "release",
+          "type": "build"
+        },
+        {
+          "name": "release",
           "type": "test"
         }
       ]

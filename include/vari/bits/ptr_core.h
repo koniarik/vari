@@ -126,6 +126,8 @@ struct _ptr_core
 
         void delete_ptr()
         {
+                if ( index == 0 )
+                        return;
                 _dispatch_index< 0, TL::size >( index - 1, [&]< std::size_t j > {
                         using U = type_at_t< j, TL >;
                         delete static_cast< U* >( ptr );
