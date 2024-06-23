@@ -189,7 +189,8 @@ struct _ptr_core< typelist< T > >
 
         void delete_ptr()
         {
-                delete ptr;
+                if ( ptr != nullptr )
+                        delete ptr;
         }
 };
 
