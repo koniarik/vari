@@ -225,7 +225,7 @@ using json_types = vari::typelist<simple_types, complex_types>;
 
 std::string simple_to_str(vari::vref<simple_types> p);
 
-std::string to_str(vari::vref<json_types> p)
+std::string to_str(vari::vptr<json_types> p)
 {
     using R = std::string;
     return p.match([&](vari::empty_t) -> R { return ""; },
