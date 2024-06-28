@@ -66,10 +66,10 @@ struct _ptr_core
         }
 
         template < typename U >
-                requires( contains_type_v< U, TL > )
+                requires( vconvertible_to< typelist< U >, TL > )
         _ptr_core( U& val ) noexcept
           : index( 1 + index_of_v< U, TL > )
-          , ptr( &val )
+          , ptr( to_void_cast( &val ) )
         {
         }
 
@@ -83,10 +83,9 @@ struct _ptr_core
         {
                 return _dispatch_index< 0, TL::size >(
                     index - 1, [&]< std::size_t j >() -> decltype( auto ) {
-                            using U  = type_at_t< j, TL >;
-                            auto&& f = _function_picker< U& >::pick( std::forward< Fs >( fs )... );
-                            U*     p = static_cast< U* >( ptr );
-                            return std::forward< decltype( f ) >( f )( *p );
+                            using U = type_at_t< j, TL >;
+                            U* p    = static_cast< U* >( ptr );
+                            return _dispatch_fun( *p, std::forward< Fs >( fs )... );
                     } );
         }
 
@@ -97,10 +96,8 @@ struct _ptr_core
                     index - 1, [&]< std::size_t j >() -> decltype( auto ) {
                             using U       = type_at_t< j, TL >;
                             using ArgType = ArgTempl< U >;
-                            auto&& f =
-                                _function_picker< ArgType >::pick( std::forward< Fs >( fs )... );
-                            U* p = static_cast< U* >( ptr );
-                            return std::forward< decltype( f ) >( f )( ArgType{ *p } );
+                            U* p          = static_cast< U* >( ptr );
+                            return _dispatch_fun( ArgType{ *p }, std::forward< Fs >( fs )... );
                     } );
         }
 
@@ -117,10 +114,9 @@ struct _ptr_core
                             using U        = type_at_t< j, TL >;
                             using ArgType  = ArgTempl< U >;
                             using ConvType = ConvTempl< U >;
-                            auto&& f =
-                                _function_picker< ArgType >::pick( std::forward< Fs >( fs )... );
-                            U* p = static_cast< U* >( ptr );
-                            return std::forward< decltype( f ) >( f )( ArgType( ConvType( *p ) ) );
+                            U* p           = static_cast< U* >( ptr );
+                            return _dispatch_fun(
+                                ArgType{ ConvType{ *p } }, std::forward< Fs >( fs )... );
                     } );
         }
 

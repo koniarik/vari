@@ -24,6 +24,7 @@
 #include "vari/bits/util.h"
 #include "vari/vptr.h"
 
+#include <cassert>
 
 namespace vari
 {
@@ -68,12 +69,14 @@ public:
         template < typename... Fs >
         decltype( auto ) visit( Fs&&... fs ) const
         {
+                assert( _core.ptr );
                 return _core.template visit_impl( std::forward< Fs >( fs )... );
         }
 
         template < typename... Fs >
         decltype( auto ) match( Fs&&... fs ) const
         {
+                assert( _core.ptr );
                 return _core.template match_impl< _vref >( std::forward< Fs >( fs )... );
         }
 

@@ -23,6 +23,7 @@
 #include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
 
+#include <cassert>
 #include <cstddef>
 #include <optional>
 
@@ -98,10 +99,9 @@ public:
                 return _core.ptr != nullptr;
         }
 
-        std::optional< reference > ref() const noexcept
+        reference vref() const noexcept
         {
-                if ( !( *this ) )
-                        return std::nullopt;
+                assert( _core.ptr );
 
                 reference r;
                 r._core = _core;

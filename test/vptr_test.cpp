@@ -241,7 +241,7 @@ TEST_CASE( "uvptr" )
                     return p;
             } );
 
-        std::optional< vref< int, float, std::string > > opt_ref = p1.ref();
+        std::optional< vref< int, float, std::string > > opt_ref = p1.vref();
         CHECK( opt_ref );
         opt_ref->visit( [&]( int& ) {}, [&]( float& ) {}, [&]( std::string& ) {} );
 
@@ -283,10 +283,8 @@ TEST_CASE( "uvptr" )
         vptr< std::string > p7 = p6;
         CHECK_EQ( p7->c_str(), p6->c_str() );
 
-        std::optional< uvref< std::string > > r8 = std::move( p6 ).ref();
-        CHECK( r8 );
-        r8 = std::move( p6 ).ref();
-        CHECK_FALSE( r8 );
+        uvref< std::string > r8 = std::move( p6 ).vref();
+        r8.visit( [&]( auto& ) {} );
 
         p1 = uwrap( int{ 42 } );
         p1 = std::move( p6 );

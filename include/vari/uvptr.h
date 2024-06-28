@@ -24,6 +24,7 @@
 #include "vari/bits/util.h"
 #include "vari/vptr.h"
 
+#include <cassert>
 #include <cstddef>
 #include <optional>
 
@@ -142,17 +143,17 @@ public:
                 return _ptr;
         }
 
-        std::optional< reference > ref() const& noexcept
+        reference vref() const& noexcept
         {
-                return _ptr.ref();
+                assert( _ptr );
+                return _ptr.vref();
         }
 
-        std::optional< owning_reference > ref() && noexcept
+        owning_reference vref() && noexcept
         {
+                assert( _ptr );
                 auto p = release();
-                if ( auto oref = p.ref() )
-                        return owning_reference{ *oref };
-                return std::nullopt;
+                return owning_reference{ p.vref() };
         }
 
         template < typename... Fs >

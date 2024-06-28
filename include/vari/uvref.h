@@ -24,6 +24,7 @@
 #include "vari/bits/util.h"
 #include "vari/vref.h"
 
+#include <cassert>
 
 namespace vari
 {
@@ -107,6 +108,7 @@ public:
         template < typename... Fs >
         decltype( auto ) take( Fs&&... fs ) &&
         {
+                assert( _ref._core.ptr );
                 auto tmp   = _ref;
                 _ref._core = _ptr_core< TL >{};
                 return tmp._core.template take_impl< _uvref, _vref >( std::forward< Fs >( fs )... );
