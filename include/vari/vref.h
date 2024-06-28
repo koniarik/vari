@@ -70,7 +70,7 @@ public:
         decltype( auto ) visit( Fs&&... fs ) const
         {
                 assert( _core.ptr );
-                return _core.template visit_impl( std::forward< Fs >( fs )... );
+                return _core.visit_impl( std::forward< Fs >( fs )... );
         }
 
         template < typename... Fs >

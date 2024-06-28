@@ -113,7 +113,7 @@ public:
         {
                 if ( _core.ptr == nullptr )
                         return _dispatch_fun( empty, std::forward< Fs >( fs )... );
-                return _core.template visit_impl( std::forward< Fs >( fs )... );
+                return _core.visit_impl( std::forward< Fs >( fs )... );
         }
 
         template < typename... Fs >
