@@ -157,16 +157,14 @@ struct _ptr_core< typelist< T > >
         template < typename... Fs >
         decltype( auto ) visit_impl( Fs&&... fs ) const
         {
-                auto&& f = _function_picker< T& >::pick( std::forward< Fs >( fs )... );
-                return std::forward< decltype( f ) >( f )( *ptr );
+                return _dispatch_fun( *ptr, std::forward< Fs >( fs )... );
         }
 
         template < template < typename... > typename ArgTempl, typename... Fs >
         decltype( auto ) match_impl( Fs&&... fs ) const
         {
                 using ArgType = ArgTempl< T >;
-                auto&& f      = _function_picker< ArgType >::pick( std::forward< Fs >( fs )... );
-                return std::forward< decltype( f ) >( f )( ArgType( *ptr ) );
+                return _dispatch_fun( ArgType( *ptr ), std::forward< Fs >( fs )... );
         }
 
         template <
@@ -178,9 +176,8 @@ struct _ptr_core< typelist< T > >
         decltype( auto ) take_impl( Fs&&... fs ) const
         {
                 using ArgType  = ArgTempl< T >;
-                auto&& f       = _function_picker< ArgType >::pick( std::forward< Fs >( fs )... );
                 using ConvType = ConvTempl< T >;
-                return std::forward< decltype( f ) >( f )( ArgType( ConvType( *ptr ) ) );
+                return _dispatch_fun( ArgType( ConvType( *ptr ) ), std::forward< Fs >( fs )... );
         }
 
         void delete_ptr()
