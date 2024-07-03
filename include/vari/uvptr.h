@@ -48,6 +48,9 @@ public:
 
         _uvptr() noexcept = default;
 
+        _uvptr( _uvptr const& )            = delete;
+        _uvptr& operator=( _uvptr const& ) = delete;
+
         _uvptr( std::nullptr_t ) noexcept
         {
         }
@@ -83,7 +86,7 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, TL > )
-        _uvptr& operator=( _uvref< Us... >&& p )
+        _uvptr& operator=( _uvref< Us... >&& p ) noexcept
         {
                 using std::swap;
                 _uvptr tmp{ std::move( p ) };
@@ -93,7 +96,7 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, TL > )
-        _uvptr& operator=( _uvptr< Us... >&& p )
+        _uvptr& operator=( _uvptr< Us... >&& p ) noexcept
         {
                 using std::swap;
                 _uvptr tmp{ std::move( p ) };

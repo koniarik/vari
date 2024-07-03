@@ -70,6 +70,22 @@ static_assert( vconvertible_to< ivst_tl1, ivst_tl1 > );
 static_assert( vconvertible_to< ivst_tl2, ivst_tl1 > );
 static_assert( vconvertible_to< ivst_tl2, ivst_tl2 > );
 
+static_assert( !std::is_copy_constructible_v< uvptr< int > > );
+static_assert( !std::is_copy_constructible_v< uvptr< int, float > > );
+static_assert( !std::is_copy_constructible_v< uvref< int > > );
+static_assert( !std::is_copy_constructible_v< uvref< int, float > > );
+
+static_assert( !std::is_copy_assignable_v< uvptr< int > > );
+static_assert( !std::is_copy_assignable_v< uvptr< int, float > > );
+static_assert( !std::is_copy_assignable_v< uvref< int > > );
+static_assert( !std::is_copy_assignable_v< uvref< int, float > > );
+
+
+static_assert( std::is_nothrow_move_assignable_v< uvptr< int > > );
+static_assert( std::is_nothrow_move_assignable_v< uvptr< int, float > > );
+static_assert( std::is_nothrow_move_assignable_v< uvref< int > > );
+static_assert( std::is_nothrow_move_assignable_v< uvref< int, float > > );
+
 void check_cmp_operators( auto& lh, auto& rh )
 {
         std::ignore = lh == rh;

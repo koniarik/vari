@@ -39,6 +39,9 @@ public:
 
         using reference = _vref< Ts... >;
 
+        _uvref( _uvref const& )            = delete;
+        _uvref& operator=( _uvref const& ) = delete;
+
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, TL > )
         _uvref( _uvref< Us... >&& p ) noexcept
@@ -63,7 +66,7 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, TL > )
-        _uvref& operator=( _uvref< Us... >&& p )
+        _uvref& operator=( _uvref< Us... >&& p ) noexcept
         {
                 using std::swap;
                 _uvref tmp{ std::move( p ) };
