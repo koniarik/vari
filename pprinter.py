@@ -60,9 +60,9 @@ class VPtrPrinter(gdb.ValuePrinter):
 def build_pretty_printer():
     pp = gdb.printing.RegexpCollectionPrettyPrinter(
         "vari")
-    pp.add_printer('vari::bits::ptr_core', '^vari::bits::ptr_core', VPtrCorePrinter)
-    pp.add_printer('vari::bits::ptr_core', '^vari::bits::vptr', VPtrPrinter)
-    pp.add_printer('vari::bits::ptr_core', '^vari::bits::vref', VPtrPrinter)
+    pp.add_printer('vari::_ptr_core', '^vari::_ptr_core', VPtrCorePrinter)
+    pp.add_printer('vari::_ptr_core', '^vari::_vptr', VPtrPrinter)
+    pp.add_printer('vari::_ptr_core', '^vari::_vref', VPtrPrinter)
     return pp
 
 if __name__ == "__main__":
