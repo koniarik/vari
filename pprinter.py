@@ -15,7 +15,7 @@ def get_template_arg_list(type_obj):
 class VPtrCorePrinter(gdb.ValuePrinter):
 
     def __init__(self, val):
-        _, type_list = get_template_arg_list(val.type)
+        type_list = get_template_arg_list(val.type)[0]
         alternatives = get_template_arg_list(type_list)
         self._typename = val.type
         if len(alternatives) > 1:
@@ -34,7 +34,7 @@ class VPtrCorePrinter(gdb.ValuePrinter):
 
     def children(self):
         if self._ptr == 0:
-            v = 0
+            v = "empty"
         else:
             v = self._ptr.dereference()
         return [('index', self._index), ('ptr', v)]
@@ -42,11 +42,10 @@ class VPtrCorePrinter(gdb.ValuePrinter):
     def display_hint(self):
         return "map"
 
-class VPtrPrinter(gdb.ValuePrinter):
-
-    def __init__(self, val):
+class VWrapperPrinter(gdb.ValuePrinter):
+    def __init__(self, val, core):
         self._typename = val.type
-        self._core = VPtrCorePrinter(val['_core'])
+        self._core = VPtrCorePrinter(core)
 
     def to_string(self):
         return str(self._typename)
@@ -57,12 +56,28 @@ class VPtrPrinter(gdb.ValuePrinter):
     def display_hint(self):
         return self._core.display_hint()
 
+class VPtrPrinter(VWrapperPrinter):
+
+    def __init__(self, val):
+        super().__init__(val, val["_core"])
+
+class UVPtrPrinter(VWrapperPrinter):
+    def __init__(self, val):
+        super().__init__(val, val["_ptr"]["_core"])
+
+class UVRefPrinter(VWrapperPrinter):
+    def __init__(self, val):
+        super().__init__(val, val["_ref"]["_core"])
+
+
 def build_pretty_printer():
     pp = gdb.printing.RegexpCollectionPrettyPrinter(
         "vari")
     pp.add_printer('vari::_ptr_core', '^vari::_ptr_core', VPtrCorePrinter)
     pp.add_printer('vari::_ptr_core', '^vari::_vptr', VPtrPrinter)
+    pp.add_printer('vari::_ptr_core', '^vari::_uvptr', UVPtrPrinter)
     pp.add_printer('vari::_ptr_core', '^vari::_vref', VPtrPrinter)
+    pp.add_printer('vari::_ptr_core', '^vari::_uvref', UVRefPrinter)
     return pp
 
 if __name__ == "__main__":

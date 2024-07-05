@@ -32,5 +32,19 @@ if(VARI_TESTS_ENABLED)
     add_dependencies(example vptr_test)
     add_test(NAME example COMMAND example)
 
+    add_executable(gdb_bin test/gdb_bin.cpp)
+    target_link_libraries(gdb_bin PUBLIC vari)
+    target_include_directories(gdb_bin PUBLIC deps/doctest/)
+
+    set(GDB_SCRIPT ${CMAKE_BINARY_DIR}/gdb_bin.gdb)
+    set(GDB_RESULT ${CMAKE_BINARY_DIR}/gdb.txt)
+    add_test(NAME gdb_bin_g
+             COMMAND gdb_bin gen ${CMAKE_CURRENT_SOURCE_DIR}/pprinter.py
+                     ${GDB_SCRIPT})
+    add_test(NAME gdb_bin_r COMMAND gdb gdb_bin -x ${GDB_SCRIPT} --batch)
+    set_tests_properties(gdb_bin_r PROPERTIES FIXTURES_REQUIRED gdb_bin_g)
+    add_test(NAME gdb_bin_e COMMAND gdb_bin eval ${GDB_RESULT})
+    set_tests_properties(gdb_bin_e PROPERTIES FIXTURES_REQUIRED gdb_bin_r)
+
   endif()
 endif()
