@@ -1,6 +1,11 @@
 
 import gdb
 
+if hasattr(gdb, 'ValuePrinter'):
+    printer_base = gdb.ValuePrinter
+else:
+    printer_base = object
+
 def get_template_arg_list(type_obj):
     """Return a type's template arguments as a list."""
     n = 0
@@ -12,7 +17,7 @@ def get_template_arg_list(type_obj):
             return template_args
         n += 1
 
-class VPtrCorePrinter(gdb.ValuePrinter):
+class VPtrCorePrinter(printer_base):
 
     def __init__(self, val):
         type_list = get_template_arg_list(val.type)[0]
@@ -42,7 +47,7 @@ class VPtrCorePrinter(gdb.ValuePrinter):
     def display_hint(self):
         return "map"
 
-class VWrapperPrinter(gdb.ValuePrinter):
+class VWrapperPrinter(printer_base):
     def __init__(self, val, core):
         self._typename = val.type
         self._core = VPtrCorePrinter(core)
