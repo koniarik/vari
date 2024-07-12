@@ -160,13 +160,6 @@ struct _ptr_core< typelist< T > >
                 return _dispatch_fun( *ptr, std::forward< Fs >( fs )... );
         }
 
-        template < template < typename... > typename ArgTempl, typename... Fs >
-        decltype( auto ) match_impl( Fs&&... fs ) const
-        {
-                using ArgType = ArgTempl< T >;
-                return _dispatch_fun( ArgType( *ptr ), std::forward< Fs >( fs )... );
-        }
-
         template <
             template < typename... >
             typename ArgTempl,

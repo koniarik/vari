@@ -72,7 +72,7 @@ possible otherwise. It shall not be used in this state in any matter except to b
 ## Access API
 
 Given that we do have a `vptr`, how to access it? All variants share the same approach to API, so the name of methods are the same.
-All have `visit` and `match` methods. `uvptr` and `uvref` also has `take`.
+All have `visit` method. `uvptr` and `uvref` also has `take`.
 
 ### Visit
 
@@ -89,7 +89,7 @@ void foo( vari::vref< std::vector< std::string >, std::list< std::string > > r )
             } );
 }
 ```
-Note that in case of pointers, we opted to introduce empty branch for cases when it is null.
+In case of pointers, we opted to introduce empty branch for cases when it is null.
 ```cpp
 void foo(vari::vptr<a_t, b_t> r)
 {
@@ -99,19 +99,29 @@ void foo(vari::vptr<a_t, b_t> r)
 }
 ```
 
-### Match
-
-`match` works with variadic references per se, instead of accessing items, we got variadic
-reference to it:
+Variadic references are constructible with references - all of the possible types:
+```cpp
+a_t a;
+vari::vref<a_t, b_t> r = a;
+```
+However, this also means that we can combine this with visit - the callable can handle multiple types:
 ```cpp
 void foo(vari::uvptr<a_t, b_t> r)
 {
-    r.match([&](vari::empty_t){},
-            [&](vari::vref<a_t>){},
-            [&](vari::vref<b_t>){});
+    r.visit([&](vari::empty_t){},
+            [&](vari::vref<a_t, b_t>){});
 }
 ```
-The benefit might not be obvious immediately, it becomes obvious once combined with sub-typing.
+Or we can mix both approaches:
+
+```cpp
+void foo(vari::uvptr<a_t, b_t, c_t> r)
+{
+    r.visit([&](vari::empty_t){},
+            [&](a_t&){},
+            [&](vari::vref<b_t, c_t>){});
+}
+```
 
 ### Take
 
@@ -127,7 +137,7 @@ void foo(vari::uvref<a_t, b_t> r)
 
 ### Concepts checks
 
-All three methods are subjected to same sanity checking of the set of callbacks: For each type in the set, one and only one callbacks can be called.
+Access methods are subjected to same sanity checking of the set of callbacks: For each type in the set, one and only one callbacks can be called.
 
 That is, following would fail to compile due to concept check:
 ```cpp
@@ -150,7 +160,7 @@ void foo(vari::uvref<a_t, b_t> r)
 
 ## Single-type extension
 
-To make work with variant a bit more convenient, all allow direct access to pointed-to type in
+To make work with variants a bit more convenient, all allow direct access to pointed-to type in
 case it is single type in the type-list:
 ```cpp
 struct boo_t{
@@ -164,7 +174,7 @@ p->val = 42;
 
 That is, in case there is only one type allowed, the signature of common methods is:
 `T* vptr<T>::operator()`
-This makes `match` or `take` API calls much more convenient to use.
+This makes `take` API calls much more convenient to use.
 
 ## Sub-typing
 
@@ -188,19 +198,19 @@ vari::uvref<b_t> gen_b();
 std::vector<vari::uvptr<a_t, b_t>> data = {gen_a(), gen_b(), nullptr};
 ```
 
-This also interacts well if `match` or `take`:
+This also interacts well with `take`:
 ```cpp
 struct c_t;
 struct d_t;
 
-void foo(vari::vptr<a_t, b_t, c_t, d_t> p)
+void foo(vari::uvptr<a_t, b_t, c_t, d_t> p)
 {
-    p.match([&](vari::empty_t){},
-            [&](vari::vref<a_t, b_t>){},
-            [&](vari::vref<c_t, d_t>){});
+    p.take([&](vari::empty_t){},
+           [&](vari::vref<a_t, b_t>){},
+           [&](vari::vref<c_t, d_t>){});
 }
 ```
-The way we can imagine this is: `p` can represent set of 4 types, `match` splits that into four unique references, each representing one type, *sub-typing* allows merging these references together - into two subsets, each made of two types.
+The way we can imagine this is: `p` can represent set of 4 types, `take` splits that into four unique references, each representing one type, *sub-typing* allows merging these references together - into two subsets, each made of two types.
 
 Note: As a side-effect of this, `vptr<a_t, b_t>` is naturally convertible to `vptr<b_t, a_t>`
 
@@ -228,10 +238,10 @@ std::string simple_to_str(vari::vref<simple_types> p);
 std::string to_str(vari::vptr<json_types> p)
 {
     using R = std::string;
-    return p.match([&](vari::empty_t) -> R { return ""; },
+    return p.visit([&](vari::empty_t) -> R { return ""; },
                    [&](vari::vref<simple_types> pp) -> R { return simple_to_str(p); },
-                   [&](vari::vref<array_t> pp) -> R { /* impl */ },
-                   [&](vari::vref<object_t> pp) -> R { /* impl */ });
+                   [&](array_t& pp) -> R { /* impl */ },
+                   [&](object_t& pp) -> R { /* impl */ });
 }
 ```
 

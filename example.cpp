@@ -152,7 +152,7 @@ value_type eval( vref< const expr > e, std::vector< value_type > const& inpt )
 
 uvref< expr > simplify( vref< expr > e, std::vector< value_type > const& inpt )
 {
-        return e.match(
+        return e.visit(
             [&]( vref< arithm_op > aop ) -> uvref< expr > {
                     auto lh = simplify( aop->lh.get(), inpt );
                     auto rh = simplify( aop->rh.get(), inpt );

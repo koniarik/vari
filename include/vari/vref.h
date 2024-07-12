@@ -73,13 +73,6 @@ public:
                 return _core.visit_impl( std::forward< Fs >( fs )... );
         }
 
-        template < typename... Fs >
-        decltype( auto ) match( Fs&&... fs ) const
-        {
-                assert( _core.ptr );
-                return _core.template match_impl< _vref >( std::forward< Fs >( fs )... );
-        }
-
         friend void swap( _vref& lh, _vref& rh ) noexcept
         {
                 std::swap( lh._core, rh._core );

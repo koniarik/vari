@@ -123,7 +123,7 @@ TEST_CASE( "vptr" )
                     FAIL( "incorrect overload" );
             } );
 
-        p1.match(
+        p1.visit(
             [&]( empty_t ) {
                     FAIL( "incorrect overload" );
             },
@@ -158,7 +158,7 @@ TEST_CASE( "vptr" )
 
         vptr< float > p3;
         p3.visit( []( empty_t ) {}, []( float& ) {} );
-        p3.match( []( empty_t ) {}, []( vptr< float > ) {} );
+        p3.visit( []( empty_t ) {}, []( vptr< float > ) {} );
 
         p3 = p2;
 
@@ -201,7 +201,7 @@ TEST_CASE( "vref" )
         } );
         CHECK_EQ( i.data(), ii.data() );
 
-        p1.match(
+        p1.visit(
             [&]( vref< int > ) {
                     FAIL( "incorrect overload" );
             },
@@ -235,7 +235,7 @@ TEST_CASE( "uvptr" )
             },
             [&]( std::string& ) {} );
 
-        p1.match(
+        p1.visit(
             [&]( empty_t ) {
                     FAIL( "incorrect overload" );
             },
@@ -321,7 +321,7 @@ TEST_CASE( "uvref" )
             },
             [&]( std::string& ) {} );
 
-        p1.match(
+        p1.visit(
             [&]( vref< int > ) {
                     FAIL( "incorrect overload" );
             },
@@ -511,7 +511,7 @@ TEST_CASE( "const vptr" )
                     FAIL( "incorrect overload" );
             } );
 
-        p1.match(
+        p1.visit(
             [&]( empty_t ) {
                     FAIL( "incorrect overload" );
             },
@@ -540,7 +540,7 @@ TEST_CASE( "const vptr" )
 
         vptr< float const > p3;
         p3.visit( []( empty_t ) {}, []( float const& ) {} );
-        p3.match( []( empty_t ) {}, []( vptr< float const > ) {} );
+        p3.visit( []( empty_t ) {}, []( vptr< float const > ) {} );
 
         p3 = p2;
 

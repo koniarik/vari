@@ -116,13 +116,6 @@ public:
                 return _core.visit_impl( std::forward< Fs >( fs )... );
         }
 
-        template < typename... Fs >
-        decltype( auto ) match( Fs&&... fs ) const
-        {
-                if ( _core.ptr == nullptr )
-                        return _dispatch_fun( empty, std::forward< Fs >( fs )... );
-                return _core.template match_impl< _vref >( std::forward< Fs >( fs )... );
-        }
 
         friend void swap( _vptr& lh, _vptr& rh ) noexcept
         {

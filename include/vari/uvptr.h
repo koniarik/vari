@@ -166,12 +166,6 @@ public:
         }
 
         template < typename... Fs >
-        decltype( auto ) match( Fs&&... f ) const
-        {
-                return _ptr.match( (Fs&&) f... );
-        }
-
-        template < typename... Fs >
         decltype( auto ) take( Fs&&... fs ) &&
         {
                 auto p = release();
