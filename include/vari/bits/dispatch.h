@@ -86,10 +86,11 @@ constexpr decltype( auto ) _dispatch_index( std::size_t const i, F&& f )
 }
 
 template < typename T, typename... Fs >
+concept invocable_for_one = ( invocable< Fs, T > || ... );
+
+template < typename T, typename... Fs >
 decltype( auto ) _dispatch_fun( T&& item, Fs&&... fs )
 {
-        static_assert(
-            ( invocable< Fs, T > || ... ), "One of the functors has to be invocable with type T" );
         auto&& f = _function_picker< T >::pick( std::forward< Fs >( fs )... );
         return std::forward< decltype( f ) >( f )( std::forward< T >( item ) );
 }

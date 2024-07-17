@@ -69,6 +69,9 @@ public:
         template < typename... Fs >
         decltype( auto ) visit( Fs&&... fs ) const
         {
+                static_assert(
+                    ( invocable_for_one< Ts&, Fs... > && ... ),
+                    "For each type, there has to be at exactly one callable" );
                 assert( _core.ptr );
                 return _core.visit_impl( std::forward< Fs >( fs )... );
         }

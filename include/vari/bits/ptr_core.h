@@ -89,18 +89,6 @@ struct _ptr_core
                     } );
         }
 
-        template < template < typename... > typename ArgTempl, typename... Fs >
-        decltype( auto ) match_impl( Fs&&... fs ) const
-        {
-                return _dispatch_index< 0, TL::size >(
-                    index - 1, [&]< std::size_t j >() -> decltype( auto ) {
-                            using U       = type_at_t< j, TL >;
-                            using ArgType = ArgTempl< U >;
-                            U* p          = static_cast< U* >( ptr );
-                            return _dispatch_fun( ArgType{ *p }, std::forward< Fs >( fs )... );
-                    } );
-        }
-
         template <
             template < typename... >
             typename ArgTempl,

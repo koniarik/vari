@@ -99,12 +99,18 @@ public:
         template < typename... Fs >
         decltype( auto ) visit( Fs&&... f ) const
         {
+                static_assert(
+                    ( invocable_for_one< Ts&, Fs... > && ... ),
+                    "For each type, there has to be at exactly one callable" );
                 return _ref.visit( (Fs&&) f... );
         }
 
         template < typename... Fs >
         decltype( auto ) take( Fs&&... fs ) &&
         {
+                static_assert(
+                    ( invocable_for_one< _uvref< Ts >, Fs... > && ... ),
+                    "For each type, there has to be at exactly one callable" );
                 assert( _ref._core.ptr );
                 auto tmp   = _ref;
                 _ref._core = _ptr_core< TL >{};
