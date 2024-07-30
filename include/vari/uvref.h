@@ -101,7 +101,7 @@ public:
         {
                 static_assert(
                     ( invocable_for_one< Ts&, Fs... > && ... ),
-                    "For each type, there has to be at exactly one callable" );
+                    "For each type, there has to be one and only one callable" );
                 return _ref.visit( (Fs&&) f... );
         }
 
@@ -110,7 +110,7 @@ public:
         {
                 static_assert(
                     ( invocable_for_one< _uvref< Ts >, Fs... > && ... ),
-                    "For each type, there has to be at exactly one callable" );
+                    "For each type, there has to be one and only one callable" );
                 assert( _ref._core.ptr );
                 auto tmp   = _ref;
                 _ref._core = _ptr_core< TL >{};

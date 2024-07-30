@@ -71,7 +71,7 @@ public:
         {
                 static_assert(
                     ( invocable_for_one< Ts&, Fs... > && ... ),
-                    "For each type, there has to be at exactly one callable" );
+                    "For each type, there has to be one and only one callable" );
                 assert( _core.ptr );
                 return _core.visit_impl( std::forward< Fs >( fs )... );
         }

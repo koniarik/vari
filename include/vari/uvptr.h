@@ -164,7 +164,7 @@ public:
         {
                 static_assert(
                     (invocable_for_one< Ts&, Fs... > && ... && invocable_for_one< empty_t, Fs... >),
-                    "For each type, there has to be at exactly one callable" );
+                    "For each type, there has to be one and only one callable" );
                 return _ptr.visit( (Fs&&) f... );
         }
 
@@ -174,7 +174,7 @@ public:
                 static_assert(
                     (invocable_for_one< _uvref< Ts >, Fs... > && ... &&
                      invocable_for_one< empty_t, Fs... >),
-                    "For each type, there has to be at exactly one callable" );
+                    "For each type, there has to be one and only one callable" );
                 auto p = release();
                 if ( p._core.ptr == nullptr )
                         return _dispatch_fun( empty, std::forward< Fs >( fs )... );
