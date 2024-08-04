@@ -114,7 +114,7 @@ public:
                 assert( _ref._core.ptr );
                 auto tmp   = _ref;
                 _ref._core = _ptr_core< TL >{};
-                return tmp._core.template take_impl< _uvref, _vref >( std::forward< Fs >( fs )... );
+                return tmp._core.template take_impl< _uvref, _vref >( (Fs&&) fs... );
         }
 
         friend void swap( _uvref& lh, _uvref& rh ) noexcept
@@ -143,7 +143,7 @@ private:
 };
 
 template < typename... Ts >
-using uvref = _define_vptr< _uvref, typelist< Ts... > >;
+using uvref = _define_variadic< _uvref, typelist< Ts... > >;
 
 template < typename T >
 uvref< T > uwrap( T item )

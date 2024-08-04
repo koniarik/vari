@@ -26,6 +26,11 @@ if(VARI_TESTS_ENABLED)
     target_include_directories(vptr_test PUBLIC deps/doctest/)
     add_test(NAME vptr_test COMMAND vptr_test)
 
+    add_executable(vval_test test/vval_test.cpp)
+    target_link_libraries(vval_test PUBLIC vari)
+    target_include_directories(vval_test PUBLIC deps/doctest/)
+    add_test(NAME vval_test COMMAND vval_test)
+
     add_executable(example example.cpp)
     target_link_libraries(example PUBLIC vari)
     target_include_directories(example PUBLIC deps/doctest/)

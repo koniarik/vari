@@ -177,8 +177,8 @@ public:
                     "For each type, there has to be one and only one callable" );
                 auto p = release();
                 if ( p._core.ptr == nullptr )
-                        return _dispatch_fun( empty, std::forward< Fs >( fs )... );
-                return p._core.template take_impl< _uvref, _vref >( std::forward< Fs >( fs )... );
+                        return _dispatch_fun( empty, (Fs&&) fs... );
+                return p._core.template take_impl< _uvref, _vref >( (Fs&&) fs... );
         }
 
         friend void swap( _uvptr& lh, _uvptr& rh ) noexcept
@@ -201,6 +201,6 @@ private:
 };
 
 template < typename... Ts >
-using uvptr = _define_vptr< _uvptr, typelist< Ts... > >;
+using uvptr = _define_variadic< _uvptr, typelist< Ts... > >;
 
 }  // namespace vari

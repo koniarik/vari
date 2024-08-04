@@ -73,7 +73,7 @@ public:
                     ( invocable_for_one< Ts&, Fs... > && ... ),
                     "For each type, there has to be one and only one callable" );
                 assert( _core.ptr );
-                return _core.visit_impl( std::forward< Fs >( fs )... );
+                return _core.visit_impl( (Fs&&) fs... );
         }
 
         friend void swap( _vref& lh, _vref& rh ) noexcept
@@ -99,6 +99,6 @@ private:
 };
 
 template < typename... Ts >
-using vref = _define_vptr< _vref, typelist< Ts... > >;
+using vref = _define_variadic< _vref, typelist< Ts... > >;
 
 }  // namespace vari

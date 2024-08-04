@@ -30,17 +30,6 @@
 namespace vari
 {
 
-template < typename TL, typename UL >
-struct _vptr_cnv_map;
-
-template < typename TL, typename... Us >
-struct _vptr_cnv_map< TL, typelist< Us... > >
-{
-        static constexpr std::size_t value[sizeof...( Us ) + 1] = {
-            0u,
-            1 + index_of_v< Us, TL >... };
-};
-
 template < typename T >
 constexpr void* to_void_cast( T* p ) noexcept
 {
@@ -85,7 +74,7 @@ struct _ptr_core
                     index - 1, [&]< std::size_t j >() -> decltype( auto ) {
                             using U = type_at_t< j, TL >;
                             U* p    = static_cast< U* >( ptr );
-                            return _dispatch_fun( *p, std::forward< Fs >( fs )... );
+                            return _dispatch_fun( *p, (Fs&&) fs... );
                     } );
         }
 
@@ -103,8 +92,7 @@ struct _ptr_core
                             using ArgType  = ArgTempl< U >;
                             using ConvType = ConvTempl< U >;
                             U* p           = static_cast< U* >( ptr );
-                            return _dispatch_fun(
-                                ArgType{ ConvType{ *p } }, std::forward< Fs >( fs )... );
+                            return _dispatch_fun( ArgType{ ConvType{ *p } }, (Fs&&) fs... );
                     } );
         }
 
@@ -145,7 +133,7 @@ struct _ptr_core< typelist< T > >
         template < typename... Fs >
         decltype( auto ) visit_impl( Fs&&... fs ) const
         {
-                return _dispatch_fun( *ptr, std::forward< Fs >( fs )... );
+                return _dispatch_fun( *ptr, (Fs&&) fs... );
         }
 
         template <
@@ -158,7 +146,7 @@ struct _ptr_core< typelist< T > >
         {
                 using ArgType  = ArgTempl< T >;
                 using ConvType = ConvTempl< T >;
-                return _dispatch_fun( ArgType( ConvType( *ptr ) ), std::forward< Fs >( fs )... );
+                return _dispatch_fun( ArgType( ConvType( *ptr ) ), (Fs&&) fs... );
         }
 
         void delete_ptr()

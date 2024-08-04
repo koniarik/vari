@@ -115,8 +115,8 @@ public:
                     (invocable_for_one< Ts&, Fs... > && ... && invocable_for_one< empty_t, Fs... >),
                     "For each type, there has to be one and only one callable" );
                 if ( _core.ptr == nullptr )
-                        return _dispatch_fun( empty, std::forward< Fs >( fs )... );
-                return _core.visit_impl( std::forward< Fs >( fs )... );
+                        return _dispatch_fun( empty, (Fs&&) fs... );
+                return _core.visit_impl( (Fs&&) fs... );
         }
 
 
@@ -138,6 +138,6 @@ private:
 };
 
 template < typename... Ts >
-using vptr = _define_vptr< _vptr, typelist< Ts... > >;
+using vptr = _define_variadic< _vptr, typelist< Ts... > >;
 
 }  // namespace vari

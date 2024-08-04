@@ -39,12 +39,10 @@ template < template < typename... > typename T, typename TL >
 using _vptr_apply_t = typename _vptr_apply< T, TL >::type;
 
 template < template < typename... > typename T, typename TL >
-using _define_vptr = _vptr_apply_t< T, unique_typelist_t< flatten_t< TL > > >;
+using _define_variadic = _vptr_apply_t< T, unique_typelist_t< flatten_t< TL > > >;
 
 template < typename F, typename... Args >
-concept invocable = requires( F&& f, Args&&... args ) {
-        std::forward< F >( f )( std::forward< Args >( args )... );
-};
+concept invocable = requires( F&& f, Args&&... args ) { ( (F&&) f )( (Args&&) args... ); };
 
 template < typename From_TL, typename To_TL >
 concept vconvertible_to = is_subset_v< From_TL, To_TL > || is_subset_v< From_TL const, To_TL >;
@@ -59,12 +57,23 @@ struct _function_picker
                         static_assert(
                             ( !invocable< Fs, Args... > && ... ),
                             "Only one of the functors should be invocable with Args..." );
-                        return std::forward< F >( f );
+                        return (F&&) f;
                 } else {
                         static_assert( sizeof...( fs ) != 0 );
-                        return pick( std::forward< Fs >( fs )... );
+                        return pick( (Fs&&) fs... );
                 }
         }
+};
+
+template < typename TL, typename UL >
+struct _vptr_cnv_map;
+
+template < typename TL, typename... Us >
+struct _vptr_cnv_map< TL, typelist< Us... > >
+{
+        static constexpr std::size_t value[sizeof...( Us ) + 1] = {
+            0u,
+            1 + index_of_v< Us, TL >... };
 };
 
 }  // namespace vari

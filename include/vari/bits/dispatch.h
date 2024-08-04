@@ -33,7 +33,7 @@ constexpr decltype( auto ) _dispatch_index( std::size_t const i, F&& f )
 #define GEN( x )                                     \
         case Off + ( x ):                            \
                 if constexpr ( ( Off + ( x ) ) < N ) \
-                        return std::forward< F >( f ).template operator()< Off + ( x ) >();
+                        return ( (F&&) f ).template operator()< Off + ( x ) >();
 
         switch ( i ) {
                 GEN( 0 )
@@ -70,7 +70,7 @@ constexpr decltype( auto ) _dispatch_index( std::size_t const i, F&& f )
                 GEN( 31 )
         default:
                 if constexpr ( N > Off + 32 )
-                        return _dispatch_index< Off + 32, N >( i, std::forward< F >( f ) );
+                        return _dispatch_index< Off + 32, N >( i, (F&&) f );
         }
 
 
@@ -89,10 +89,10 @@ template < typename T, typename... Fs >
 concept invocable_for_one = ( invocable< Fs, T > || ... );
 
 template < typename T, typename... Fs >
-decltype( auto ) _dispatch_fun( T&& item, Fs&&... fs )
+constexpr decltype( auto ) _dispatch_fun( T&& item, Fs&&... fs )
 {
-        auto&& f = _function_picker< T >::pick( std::forward< Fs >( fs )... );
-        return std::forward< decltype( f ) >( f )( std::forward< T >( item ) );
+        auto&& f = _function_picker< T >::pick( (Fs&&) fs... );
+        return std::forward< decltype( f ) >( f )( (T&&) item );
 }
 
 }  // namespace vari
