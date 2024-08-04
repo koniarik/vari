@@ -108,4 +108,44 @@ TEST_CASE( "vval" )
             } );
 }
 
+
+template < std::size_t i >
+struct tag
+{
+        std::string j = std::to_string( i );
+};
+using big_set = typelist<
+    tag< 0 >,
+    tag< 1 >,
+    tag< 2 >,
+    tag< 3 >,
+    tag< 4 >,
+    tag< 5 >,
+    tag< 6 >,
+    tag< 7 >,
+    tag< 8 >,
+    tag< 9 >,
+    tag< 10 >,
+    tag< 11 >,
+    tag< 12 >,
+    tag< 13 >,
+    tag< 14 >,
+    tag< 15 >,
+    tag< 16 >,
+    tag< 17 >,
+    tag< 18 >,
+    tag< 19 > >;
+TEST_CASE( "vval_big" )
+{
+        vval< big_set > v{ tag< 8 >{} };
+
+        for ( std::size_t i = 0; i < big_set::size; i++ )
+                _dispatch_index< 0, big_set::size >( i, [&]< std::size_t j >() -> decltype( auto ) {
+                        v.emplace< tag< j > >();
+                        v.visit( [&]( auto& item ) {
+                                CHECK_EQ( item.j, std::to_string( j ) );
+                        } );
+                } );
+}
+
 }  // namespace vari

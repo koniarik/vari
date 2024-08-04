@@ -71,8 +71,8 @@ union _val_union< typelist< Ts... > >
         ~_val_union(){};
 
         using s1 = split< typelist< Ts... > >;
-        using s2 = s1::lh;
-        using s3 = s1::rh;
+        using s2 = split< typename s1::lh >;
+        using s3 = split< typename s1::rh >;
 
         using b0 = _val_union< typename s2::lh >;
         using b1 = _val_union< typename s2::rh >;
@@ -490,10 +490,10 @@ struct _val_core
 
         constexpr void destroy()
         {
-                index = 0;
                 _dispatch_index< 0, TL::size >( index - 1, [&]< std::size_t j > {
                         std::destroy_at( &ST::template get< j >( storage ) );
                 } );
+                index = 0;
         }
 };
 
