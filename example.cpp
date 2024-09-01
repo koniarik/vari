@@ -268,7 +268,6 @@ using lexer::token_type;
 const std::vector< std::set< char > > bin_prio = {
     { '+', '-' },
     { '*', '/' },
-    {},
 };
 
 std::optional< std::string_view > eat( std::span< lexer::lex_tok >& toks, token_type tt )
@@ -305,12 +304,11 @@ uvref< expr > parse_expr( std::span< lexer::lex_tok >& toks, std::size_t prio = 
         while ( !toks.empty() && toks[0].token == token_type::OP ) {
                 char        c = ( toks[0].text )[0];
                 std::size_t i = prio;
-                for ( ; i < bin_prio.size(); i++ ) {
-                        if ( bin_prio[i].empty() )
-                                return lh;
+                for ( ; i < bin_prio.size(); i++ )
                         if ( bin_prio[i].contains( c ) )
                                 break;
-                }
+                if ( i == bin_prio.size() )
+                        return lh;
                 eat( toks, token_type::OP );
                 lh = uwrap( bin_arithm_op{
                     .lh = std::move( lh ),
