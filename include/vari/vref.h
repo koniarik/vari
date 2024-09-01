@@ -32,20 +32,20 @@ namespace vari
 template < typename... Ts >
 class _vref
 {
-        using TL = typelist< Ts... >;
-
 public:
-        static_assert( is_flat_v< TL > );
+        using types = typelist< Ts... >;
+
+        static_assert( is_flat_v< types > );
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, TL > )
+                requires( vconvertible_to< typelist< Us... >, types > )
         _vref( _vref< Us... > p ) noexcept
           : _core( p._core )
         {
         }
 
         template < typename U >
-                requires( vconvertible_to< typelist< U >, TL > )
+                requires( vconvertible_to< typelist< U >, types > )
         _vref( U& u ) noexcept
           : _core( u )
         {
@@ -86,7 +86,7 @@ public:
 private:
         _vref() = default;
 
-        _ptr_core< TL > _core;
+        _ptr_core< types > _core;
 
         template < typename... Us >
         friend class _vref;

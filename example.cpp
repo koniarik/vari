@@ -22,50 +22,35 @@
 #include "vari/vptr.h"
 #include "vari/vref.h"
 
+#include <charconv>
 #include <iostream>
+#include <map>
+#include <set>
+#include <span>
 #include <string_view>
 #include <vector>
 
 using namespace std::string_view_literals;
 
+using namespace vari;
+
 template < typename... Ts >
 using tl = vari::typelist< Ts... >;
 
-template < typename... Ts >
-using uvref = vari::uvref< Ts... >;
-template < typename... Ts >
-using vref = vari::vref< Ts... >;
-
-
-using vari::uwrap;
-
-struct arithm_op;
-struct variable;
+struct bin_arithm_op;
 struct constant;
-struct reference;
+struct id;
+struct definition;
 
-using value_type = float;
-using expr       = tl< arithm_op, variable, constant, reference >;
+using value_type = long;
+using expr       = tl< bin_arithm_op, constant, id >;
 
-struct arithm_op
+struct bin_arithm_op
 {
-        enum op_t
-        {
-                PLUS,
-                MINUS,
-                MULT,
-                DIV
-        };
 
         uvref< expr > lh;
-        op_t          op;
+        char          op;
         uvref< expr > rh;
-};
-
-struct variable
-{
-        std::size_t      var_i;
-        std::string_view name;
 };
 
 struct constant
@@ -73,200 +58,303 @@ struct constant
         value_type val;
 };
 
-struct reference
+struct id
 {
-        vref< expr > ref;
+        std::string_view text;
 };
+
+struct definition
+{
+        std::string_view name;
+        uvref< expr >    e;
+};
+
+namespace lexer
+{
+enum class token_type
+{
+        NUM,
+        OP,
+        ID,
+        LINE,
+        END
+};
+
+struct lex_tok
+{
+        token_type       token;
+        std::string_view text;
+};
+
+std::vector< lex_tok > full_lex( std::string_view inpt );
+
+}  // namespace lexer
+
+namespace parser
+{
+std::vector< definition > parse_defs( std::span< lexer::lex_tok > toks );
+}
 
 std::ostream& operator<<( std::ostream& os, vref< const expr > e )
 {
         e.visit(
-            [&]( arithm_op const& aop ) {
-                    char c = ' ';
+            [&]( bin_arithm_op const& aop ) {
+                    char c = aop.op;
                     switch ( aop.op ) {
-                    case arithm_op::PLUS:
-                            c = '+';
-                            break;
-                    case arithm_op::MINUS:
-                            c = '-';
-                            break;
-                    case arithm_op::MULT:
-                            c = '*';
-                            break;
-                    case arithm_op::DIV:
-                            c = '/';
-                            break;
-                    }
-                    switch ( aop.op ) {
-                    case arithm_op::PLUS:
-                    case arithm_op::MINUS:
+                    case '+':
+                    case '-':
                             os << '(' << aop.lh.get() << c << aop.rh.get() << ')';
                             break;
-                    case arithm_op::MULT:
-                    case arithm_op::DIV:
+                    case '*':
+                    case '/':
                             os << aop.lh.get() << c << aop.rh.get();
                     }
             },
-            [&]( variable const& v ) {
-                    os << v.name;
+            [&]( id const& id ) {
+                    os << id.text;
             },
             [&]( constant const& c ) {
                     os << c.val;
-            },
-            [&]( reference const& r ) {
-                    os << r.ref;
             } );
 
         return os;
 }
 
-value_type eval( vref< const expr > e, std::vector< value_type > const& inpt )
+std::ostream& operator<<( std::ostream& os, definition const& d )
+{
+        std::cout << d.name << " = " << d.e.get();
+        return os;
+}
+
+using state = std::map< std::string_view, value_type >;
+value_type eval( state& st, vref< const expr > e )
 {
         return e.visit(
-            [&]( arithm_op const& aop ) -> value_type {
-                    auto lh = eval( aop.lh.get(), inpt );
-                    auto rh = eval( aop.rh.get(), inpt );
+            [&]( id const& id ) {
+                    assert( st.contains( id.text ) );
+                    return st[id.text];
+            },
+            [&]( bin_arithm_op const& aop ) -> value_type {
+                    auto lh = eval( st, aop.lh.get() );
+                    auto rh = eval( st, aop.rh.get() );
 
                     switch ( aop.op ) {
-                    case arithm_op::PLUS:
+                    case '+':
                             return lh + rh;
-                    case arithm_op::MINUS:
+                    case '-':
                             return lh - rh;
-                    case arithm_op::MULT:
+                    case '*':
                             return lh * rh;
-                    case arithm_op::DIV:
+                    case '/':
                             return lh / rh;
                     }
                     return 0;
             },
-            [&]( variable const& v ) {
-                    return inpt.at( v.var_i );
-            },
             [&]( constant const& c ) {
                     return c.val;
-            },
-            [&]( reference const& r ) {
-                    return eval( r.ref, inpt );
             } );
-}
-
-uvref< expr > simplify( vref< expr > e, std::vector< value_type > const& inpt )
-{
-        return e.visit(
-            [&]( vref< arithm_op > aop ) -> uvref< expr > {
-                    auto lh = simplify( aop->lh.get(), inpt );
-                    auto rh = simplify( aop->rh.get(), inpt );
-
-                    return std::move( lh ).take(
-                        [&]( uvref< variable, arithm_op, reference > lhu ) -> uvref< expr > {
-                                return uwrap( arithm_op{
-                                    .lh = std::move( lhu ),
-                                    .op = aop->op,
-                                    .rh = std::move( rh ),
-                                } );
-                        },
-                        [&]( uvref< constant > lhc ) -> uvref< expr > {
-                                return std::move( rh ).take(
-                                    [&]( uvref< variable, arithm_op, reference > rhu )
-                                        -> uvref< expr > {
-                                            return uwrap( arithm_op{
-                                                .lh = std::move( lhc ),
-                                                .op = aop->op,
-                                                .rh = std::move( rhu ),
-                                            } );
-                                    },
-                                    [&]( uvref< constant > rhc ) -> uvref< expr > {
-                                            arithm_op tmp{
-                                                .lh = std::move( lhc ),
-                                                .op = aop->op,
-                                                .rh = std::move( rhc ) };
-                                            return uwrap( constant{
-                                                .val = eval( vref< expr >( tmp ), {} ),
-                                            } );
-                                    } );
-                        } );
-            },
-            [&]( vref< variable > v ) -> uvref< expr > {
-                    if ( v->var_i < inpt.size() )
-                            return uwrap( constant{ inpt[v->var_i] } );
-                    v->var_i -= inpt.size();
-                    return uwrap( *v );
-            },
-            [&]( vref< constant > c ) -> uvref< expr > {
-                    return uwrap( *c );
-            },
-            [&]( vref< reference > r ) -> uvref< expr > {
-                    return simplify( r->ref, inpt );
-            } );
-}
-
-uvref< arithm_op > make_op( uvref< expr > a, arithm_op::op_t op, uvref< expr > b )
-{
-        return uwrap( arithm_op{ std::move( a ), op, std::move( b ) } );
-}
-
-uvref< expr > fwd_expr( value_type v )
-{
-        return uwrap( constant{ v } );
-}
-uvref< expr > fwd_expr( vref< expr > v )
-{
-        return uwrap( reference{ v } );
-}
-uvref< expr > fwd_expr( uvref< expr > v )
-{
-        return v;
-}
-
-template < typename T >
-concept expr_or_val =
-    std::convertible_to< T, vref< expr > > || std::convertible_to< T, uvref< expr > > ||
-    std::convertible_to< T, value_type >;
-
-template < expr_or_val LH, expr_or_val RH >
-auto operator+( LH&& lh, RH&& rh )
-{
-        return make_op(
-            fwd_expr( std::forward< LH >( lh ) ),
-            arithm_op::PLUS,
-            fwd_expr( std::forward< RH >( rh ) ) );
-}
-template < expr_or_val LH, expr_or_val RH >
-auto operator-( LH&& lh, RH&& rh )
-{
-        return make_op(
-            fwd_expr( std::forward< LH >( lh ) ),
-            arithm_op::MINUS,
-            fwd_expr( std::forward< RH >( rh ) ) );
-}
-template < expr_or_val LH, expr_or_val RH >
-auto operator*( LH&& lh, RH&& rh )
-{
-        return make_op(
-            fwd_expr( std::forward< LH >( lh ) ),
-            arithm_op::MULT,
-            fwd_expr( std::forward< RH >( rh ) ) );
-}
-template < expr_or_val LH, expr_or_val RH >
-auto operator/( LH&& lh, RH&& rh )
-{
-        return make_op(
-            fwd_expr( std::forward< LH >( lh ) ),
-            arithm_op::DIV,
-            fwd_expr( std::forward< RH >( rh ) ) );
 }
 
 int main( int argc, char* argv[] )
 {
-        variable X{ .var_i = 0, .name = "X"sv };
-        variable Y{ .var_i = 1, .name = "Y"sv };
+        std::string inpt = R"""(
+a = 42 + 42 / 2 - 8*8
+b = a * 2
+main = b
+    )""";
 
-        auto f = X + Y * 2 / 42 + ( X - 42 );
-        std::cout << f.get() << std::endl;
-        auto f2 = simplify( f.get(), { 1 } );
-        std::cout << f2.get() << std::endl;
+        auto toks = lexer::full_lex( inpt );
+        auto defs = parser::parse_defs( toks );
 
-        std::cout << eval( f2.get(), { 1 } ) << std::endl;
+        for ( auto const& d : defs )
+                std::cout << d << std::endl;
+
+        state st;
+        for ( auto& d : defs )
+                st[d.name] = eval( st, d.e );
+
+        std::cout << std::endl;
+        std::cout << "main = " << st["main"] << std::endl;
 
         return 0;
 }
+
+
+// Implementation of lexer and parser
+
+[[noreturn]] void abort( std::string_view msg, auto const&... args )
+{
+        std::cerr << msg;
+        ( ( std::cerr << args ), ... );
+        std::cerr << std::endl;
+        std::abort();
+}
+
+void check( bool cond, std::string_view msg, auto const&... args )
+{
+        if ( !cond )
+                abort( msg, args... );
+}
+
+namespace lexer
+{
+
+lex_tok lex( std::string_view& inpt )
+{
+        if ( inpt.empty() )
+                return { .token = token_type::END };
+
+        char c = inpt[0];
+        if ( std::isdigit( c ) ) {
+                std::size_t i = 1;
+                for ( ; i < inpt.size(); i++ )
+                        if ( !std::isdigit( inpt[i] ) )
+                                break;
+                std::string_view text = inpt.substr( 0, i );
+                inpt                  = inpt.substr( i );
+                return { .token = token_type::NUM, .text = text };
+        }
+        if ( std::isalpha( c ) ) {
+                std::size_t i = 1;
+                for ( ; i < inpt.size(); i++ )
+                        if ( !std::isalpha( inpt[i] ) )
+                                break;
+                std::string_view text = inpt.substr( 0, i );
+                inpt                  = inpt.substr( i );
+                return { .token = token_type::ID, .text = text };
+        }
+        switch ( c ) {
+        case ' ':
+        case '\t':
+                inpt = inpt.substr( 1 );
+                return lex( inpt );
+        case '\n': {
+                std::string_view text = inpt.substr( 0, 1 );
+                inpt                  = inpt.substr( 1 );
+                return { .token = token_type::LINE, .text = text };
+        }
+        case '+':
+        case '-':
+        case '/':
+        case '*':
+        case '=': {
+                std::string_view text = inpt.substr( 0, 1 );
+                inpt                  = inpt.substr( 1 );
+                return { .token = token_type::OP, .text = text };
+        }
+        }
+        abort( "invalid char: ", c );
+}
+
+std::vector< lex_tok > full_lex( std::string_view inpt )
+{
+        std::vector< lex_tok > res;
+        for ( ;; ) {
+
+                lex_tok tok = lex( inpt );
+                res.push_back( tok );
+                if ( tok.token == token_type::END )
+                        break;
+        }
+        return res;
+}
+}  // namespace lexer
+
+namespace parser
+{
+
+using lexer::token_type;
+
+const std::vector< std::set< char > > bin_prio = {
+    { '+', '-' },
+    { '*', '/' },
+    {},
+};
+
+std::optional< std::string_view > eat( std::span< lexer::lex_tok >& toks, token_type tt )
+{
+        if ( toks.empty() )
+                return {};
+        auto& tok = toks[0];
+        if ( tok.token != tt )
+                return {};
+        toks = toks.subspan( 1 );
+        return tok.text;
+}
+
+uvref< expr > parse_simple_expr( std::span< lexer::lex_tok >& toks )
+{
+        if ( auto st = eat( toks, token_type::ID ) )
+                return uwrap( id{ .text = *st } );
+        else if ( auto st = eat( toks, token_type::NUM ) ) {
+                value_type val;
+                std::from_chars( st->data(), st->data() + st->size(), val );
+                return uwrap( constant{ .val = val } );
+        }
+
+        if ( !toks.empty() )
+                abort( "failed to parse simple expr: ", toks[0].text );
+        else
+                abort( "missing expression" );
+}
+
+uvref< expr > parse_expr( std::span< lexer::lex_tok >& toks, std::size_t prio = 0 )
+{
+        uvref< expr > lh = parse_simple_expr( toks );
+
+        while ( !toks.empty() && toks[0].token == token_type::OP ) {
+                char        c = ( toks[0].text )[0];
+                std::size_t i = prio;
+                for ( ; i < bin_prio.size(); i++ ) {
+                        if ( bin_prio[i].empty() )
+                                return lh;
+                        if ( bin_prio[i].contains( c ) )
+                                break;
+                }
+                eat( toks, token_type::OP );
+                lh = uwrap( bin_arithm_op{
+                    .lh = std::move( lh ),
+                    .op = c,
+                    .rh = parse_expr( toks, i + 1 ),
+                } );
+        }
+        return lh;
+}
+
+std::optional< definition > parse_def( std::span< lexer::lex_tok >& toks )
+{
+        if ( eat( toks, token_type::LINE ) || eat( toks, token_type::END ) )
+                return {};
+
+        std::string_view id;
+        if ( auto iid = eat( toks, token_type::ID ) )
+                id = *iid;
+        else
+                abort( "ID expected, got: ", toks[0].text );
+
+        if ( auto op = eat( toks, token_type::OP ) )
+                check( *op == "=", "= operator expected, got: ", *op );
+        else
+                abort( "= operator expected" );
+
+        uvref< expr > e = parse_expr( toks );
+
+        if ( !eat( toks, token_type::LINE ) && !eat( toks, token_type::END ) )
+                abort( "expected line end, got: ", toks[0].text );
+
+        return definition{
+            .name = id,
+            .e    = std::move( e ),
+        };
+}
+
+std::vector< definition > parse_defs( std::span< lexer::lex_tok > toks )
+{
+        std::vector< definition > res;
+        while ( !toks.empty() )
+                if ( auto d = parse_def( toks ) )
+                        res.emplace_back( std::move( *d ) );
+        return res;
+}
+
+}  // namespace parser

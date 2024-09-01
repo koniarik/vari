@@ -32,10 +32,9 @@ namespace vari
 template < typename... Ts >
 class _uvref
 {
-        using TL = typelist< Ts... >;
-
 public:
-        static_assert( is_flat_v< TL > );
+        using types = typelist< Ts... >;
+        static_assert( is_flat_v< types > );
 
         using reference = _vref< Ts... >;
 
@@ -43,7 +42,7 @@ public:
         _uvref& operator=( _uvref const& ) = delete;
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, TL > )
+                requires( vconvertible_to< typelist< Us... >, types > )
         _uvref( _uvref< Us... >&& p ) noexcept
           : _ref( p._ref )
         {
@@ -51,21 +50,21 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, TL > )
+                requires( vconvertible_to< typelist< Us... >, types > )
         explicit _uvref( _vref< Us... > p ) noexcept
           : _ref( p )
         {
         }
 
         template < typename U >
-                requires( vconvertible_to< typelist< U >, TL > )
+                requires( vconvertible_to< typelist< U >, types > )
         explicit _uvref( U& u ) noexcept
           : _ref( u )
         {
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, TL > )
+                requires( vconvertible_to< typelist< Us... >, types > )
         _uvref& operator=( _uvref< Us... >&& p ) noexcept
         {
                 using std::swap;
@@ -90,8 +89,15 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< TL, typelist< Us... > > )
+                requires( vconvertible_to< types, typelist< Us... > > )
         operator _vref< Us... >() & noexcept
+        {
+                return _ref;
+        }
+
+        template < typename... Us >
+                requires( vconvertible_to< types, typelist< Us... > > )
+        operator _vref< Us... >() const& noexcept
         {
                 return _ref;
         }
@@ -113,7 +119,7 @@ public:
                     "For each type, there has to be one and only one callable" );
                 assert( _ref._core.ptr );
                 auto tmp   = _ref;
-                _ref._core = _ptr_core< TL >{};
+                _ref._core = _ptr_core< types >{};
                 return tmp._core.template take_impl< _uvref, _vref >( (Fs&&) fs... );
         }
 

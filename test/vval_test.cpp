@@ -17,9 +17,11 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ///
 
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+
 #include "vari/vval.h"
 
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "./common.h"
 
 #include <doctest/doctest.h>
 
@@ -60,52 +62,35 @@ TEST_CASE( "val_core" )
 
 TEST_CASE( "vval" )
 {
-        vval< float, int, std::string > v1{ 0.1f };
-        v1.visit(
-            [&]( float& f ) {
-                    CHECK_EQ( f, 0.1f );
-            },
-            [&]( int& ) {
-                    FAIL( "" );
-            },
-            [&]( std::string& ) {
-                    FAIL( "" );
-            } );
+        static_assert( valid_variadic< vval< float, int > > );
+        static_assert( valid_variadic< vval< float > > );
 
-        vval< float, int, std::string > v2{ std::in_place_type_t< float >{}, 0.1f };
-        v2.visit(
-            [&]( float& f ) {
-                    CHECK_EQ( f, 0.1f );
-            },
-            [&]( int& ) {
-                    FAIL( "" );
-            },
-            [&]( std::string& ) {
-                    FAIL( "" );
-            } );
+        float                           fv = 0.1f;
+        vval< float, int, std::string > v1{ fv };
+        check_visit( v1, fv );
 
-        vval< float, int, std::string > v3{ std::string{ "wololo" } };
-        v3.visit(
-            [&]( float& ) {
-                    FAIL( "" );
-            },
-            [&]( int& ) {
-                    FAIL( "" );
-            },
-            [&]( std::string& s ) {
-                    CHECK_EQ( s, "wololo" );
-            } );
-        v3.emplace< int >( 42 );
-        v3.visit(
-            [&]( float& ) {
-                    FAIL( "" );
-            },
-            [&]( int& v ) {
-                    CHECK_EQ( v, 42 );
-            },
-            [&]( std::string& ) {
-                    FAIL( "" );
-            } );
+        vval< float, int, std::string > v2{ std::in_place_type_t< float >{}, fv };
+        check_visit( v2, fv );
+
+        std::string                     sv = "wololo";
+        vval< float, int, std::string > v3{ sv };
+        check_visit( v3, sv );
+
+        int iv = 42;
+        v3.emplace< int >( iv );
+        check_visit( v3, iv );
+
+        vval< float > v4{ fv };
+        check_visit( v4, fv );
+
+        std::vector< float >         vv = { 0.1f, 0.2f };
+        vval< std::vector< float > > v5{ vv };
+        check_visit( v5, vv );
+
+        check_swap( v5 );
+
+        vval< std::vector< float >, int >        v6{ v5 };
+        vval< std::vector< float >, int, float > v7{ std::move( v6 ) };
 }
 
 
@@ -146,6 +131,28 @@ TEST_CASE( "vval_big" )
                                 CHECK_EQ( item.j, std::to_string( j ) );
                         } );
                 } );
+}
+
+TEST_CASE( "cmp" )
+{
+        vval< int, float > v1{ 42 };
+        vval< int, float > v2{ 42 };
+
+        CHECK_EQ( v1, v2 );
+
+        vval< int, float > v3{ 42.F };
+
+        CHECK_NE( v3, v1 );
+
+        swap( v1, v3 );
+
+        CHECK_EQ( v3, v2 );
+        CHECK_NE( v1, v2 );
+
+        vval< int, float > v4{ 666 };
+
+        CHECK_LT( v2, v4 );
+        CHECK_GT( v4, v2 );
 }
 
 }  // namespace vari

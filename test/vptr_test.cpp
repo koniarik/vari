@@ -17,13 +17,14 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ///
 
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+
 #include "vari/vptr.h"
 
+#include "./common.h"
 #include "vari/uvptr.h"
 #include "vari/uvref.h"
 #include "vari/vref.h"
-
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
 #include <doctest/doctest.h>
 #include <string>
@@ -70,108 +71,32 @@ static_assert( vconvertible_to< ivst_tl1, ivst_tl1 > );
 static_assert( vconvertible_to< ivst_tl2, ivst_tl1 > );
 static_assert( vconvertible_to< ivst_tl2, ivst_tl2 > );
 
-static_assert( !std::is_copy_constructible_v< uvptr< int > > );
-static_assert( !std::is_copy_constructible_v< uvptr< int, float > > );
-static_assert( !std::is_copy_constructible_v< uvref< int > > );
-static_assert( !std::is_copy_constructible_v< uvref< int, float > > );
-
-static_assert( !std::is_copy_assignable_v< uvptr< int > > );
-static_assert( !std::is_copy_assignable_v< uvptr< int, float > > );
-static_assert( !std::is_copy_assignable_v< uvref< int > > );
-static_assert( !std::is_copy_assignable_v< uvref< int, float > > );
-
-
-static_assert( std::is_nothrow_move_assignable_v< uvptr< int > > );
-static_assert( std::is_nothrow_move_assignable_v< uvptr< int, float > > );
-static_assert( std::is_nothrow_move_assignable_v< uvref< int > > );
-static_assert( std::is_nothrow_move_assignable_v< uvref< int, float > > );
-
-void check_cmp_operators( auto& lh, auto& rh )
-{
-        std::ignore = lh == rh;
-        std::ignore = lh < rh;
-        std::ignore = lh <= rh;
-        std::ignore = lh >= rh;
-        std::ignore = lh > rh;
-        std::ignore = lh != rh;
-}
-
 TEST_CASE( "vptr" )
 {
         using V = vptr< int, float, std::string >;
+        static_assert( valid_null_variadic< V > );
 
-        V p0{};
-        CHECK_FALSE( p0 );
+        V p0;
 
         p0 = V{ nullptr };
         CHECK_FALSE( p0 );
 
         int i = 42;
-        p0    = V{ i };
 
         V p1{ i };
-        CHECK( p1 );
-        p1.visit(
-            [&]( empty_t ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( int& ) {},
-            [&]( float& ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( std::string& ) {
-                    FAIL( "incorrect overload" );
-            } );
-
-        p1.visit(
-            [&]( empty_t ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( vref< int > ) {},
-            [&]( vptr< bool > ) {},
-            [&]( vref< float, std::string > ) {
-                    FAIL( "incorrect overload" );
-            } );
-
-        int& ii = p1.visit(
-            [&]( empty_t ) -> int& {
-                    return i;
-            },
-            [&]( int& ) -> int& {
-                    return i;
-            },
-            [&]( float& ) -> int& {
-                    return i;
-            },
-            [&]( std::string& ) -> int& {
-                    return i;
-            } );
-        CHECK_EQ( &ii, &i );
+        check_nullable_visit( p1, i );
 
         vptr< float > p2;
-
         CHECK_FALSE( p2 );
 
         p1 = p2;
-
         CHECK_FALSE( p1 );
 
-        vptr< float > p3;
-        p3.visit( []( empty_t ) {}, []( float& ) {} );
-        p3.visit( []( empty_t ) {}, []( vptr< float > ) {} );
-
-        p3 = p2;
-
-        CHECK_EQ( p2, p3 );
-        CHECK_EQ( p2.get(), p3.get() );
-
-        swap( p3, p2 );
-        CHECK_EQ( p2.get(), p3.get() );
-
-        check_cmp_operators( p3, p2 );
+        float         f1 = 0.42;
+        vptr< float > p3 = f1;
+        check_nullable_visit( p3, f1 );
 
         vptr< int > p4{ i };
-        CHECK( p4 );
         p4 = nullptr;
         CHECK_FALSE( p4 );
 }
@@ -183,66 +108,33 @@ static_assert( std::same_as< type_at_t< 2, typelist< int, float, std::string > >
 TEST_CASE( "vref" )
 {
         using V = vref< int, float, std::string >;
+        static_assert( valid_variadic< V > );
 
         std::string i{ "123456" };
         V           p1{ i };
 
-        p1.visit(
-            [&]( int& ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( float& ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( std::string& ) {} );
-
-        std::string& ii = p1.visit( [&]( auto& ) -> std::string& {
-                return i;
-        } );
-        CHECK_EQ( i.data(), ii.data() );
-
-        p1.visit(
-            [&]( vref< int > ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( vref< float, std::string > ) {} );
+        check_visit( p1, i );
+        check_swap( p1 );
 
         vptr< int, float, std::string > p2 = p1;
-        vptr< int >                     p3;
+        CHECK_EQ( p2.get(), p1.get() );
 
         std::vector< int >         vec = { 1, 2, 3, 4 };
         vptr< std::vector< int > > p4( vec );
-        CHECK_EQ( p2.get(), p1.get() );
-
-        check_cmp_operators( p2, p1 );
+        check_nullable_visit( p4, vec );
+        check_nullable_swap( p4 );
 }
 
 TEST_CASE( "uvptr" )
 {
         using V = uvptr< int, float, std::string >;
+        static_assert( valid_null_owning_variadic< V > );
 
-        V p1 = uwrap( std::string{ "s" } );
+        std::string inpt{ "s" };
 
-        p1.visit(
-            [&]( empty_t ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( int& ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( float& ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( std::string& ) {} );
-
-        p1.visit(
-            [&]( empty_t ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( vptr< int > ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( vref< float, std::string > ) {} );
+        V p1 = uwrap( inpt );
+        check_nullable_visit( p1, inpt );
+        // check_nullable_swap( p1 );
 
         p1 = std::move( p1 ).take(
             [&]( empty_t ) -> V {
@@ -310,22 +202,11 @@ TEST_CASE( "uvref" )
 {
         using V = uvref< int, float, std::string >;
 
-        V p1 = uwrap( std::string{ "s" } );
+        std::string inpt{ "s" };
+        V           p1 = uwrap( inpt );
 
-        p1.visit(
-            [&]( int& ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( float& ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( std::string& ) {} );
-
-        p1.visit(
-            [&]( vref< int > ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( vref< float, std::string > ) {} );
+        check_visit( p1, inpt );
+        // check_swap(p1);
 
         int k;
         p1 = std::move( p1 ).take(
@@ -501,36 +382,8 @@ TEST_CASE( "const vptr" )
 
         CHECK( p1 );
 
-        p1.visit(
-            [&]( empty_t ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( int const& ) {},
-
-            [&]( const std::string& ) {
-                    FAIL( "incorrect overload" );
-            } );
-
-        p1.visit(
-            [&]( empty_t ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( vptr< int const > ) {},
-            [&]( vptr< float const, std::string const > ) {
-                    FAIL( "incorrect overload" );
-            } );
-
-        int const& ii = p1.visit(
-            [&]( empty_t ) -> int const& {
-                    return i;
-            },
-            [&]( int const& ) -> int const& {
-                    return i;
-            },
-            [&]( std::string const& ) -> int const& {
-                    return i;
-            } );
-        CHECK_EQ( &ii, &i );
+        check_nullable_visit( p1, std::as_const( i ) );
+        check_nullable_swap( p1 );
 
         vptr< float const > p2;
 

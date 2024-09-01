@@ -30,51 +30,51 @@ namespace vari
 template < std::size_t Off, std::size_t N, typename F >
 constexpr decltype( auto ) _dispatch_index( std::size_t const i, F&& f )
 {
-#define GEN( x )                                     \
+#define VARI_GEN_CASE( x )                           \
         case Off + ( x ):                            \
                 if constexpr ( ( Off + ( x ) ) < N ) \
                         return ( (F&&) f ).template operator()< Off + ( x ) >();
 
         switch ( i ) {
-                GEN( 0 )
-                GEN( 1 )
-                GEN( 2 )
-                GEN( 3 )
-                GEN( 4 )
-                GEN( 5 )
-                GEN( 6 )
-                GEN( 7 )
-                GEN( 8 )
-                GEN( 9 )
-                GEN( 10 )
-                GEN( 11 )
-                GEN( 12 )
-                GEN( 13 )
-                GEN( 14 )
-                GEN( 15 )
-                GEN( 16 )
-                GEN( 17 )
-                GEN( 18 )
-                GEN( 19 )
-                GEN( 20 )
-                GEN( 21 )
-                GEN( 22 )
-                GEN( 23 )
-                GEN( 24 )
-                GEN( 25 )
-                GEN( 26 )
-                GEN( 27 )
-                GEN( 28 )
-                GEN( 29 )
-                GEN( 30 )
-                GEN( 31 )
+                VARI_GEN_CASE( 0 )
+                VARI_GEN_CASE( 1 )
+                VARI_GEN_CASE( 2 )
+                VARI_GEN_CASE( 3 )
+                VARI_GEN_CASE( 4 )
+                VARI_GEN_CASE( 5 )
+                VARI_GEN_CASE( 6 )
+                VARI_GEN_CASE( 7 )
+                VARI_GEN_CASE( 8 )
+                VARI_GEN_CASE( 9 )
+                VARI_GEN_CASE( 10 )
+                VARI_GEN_CASE( 11 )
+                VARI_GEN_CASE( 12 )
+                VARI_GEN_CASE( 13 )
+                VARI_GEN_CASE( 14 )
+                VARI_GEN_CASE( 15 )
+                VARI_GEN_CASE( 16 )
+                VARI_GEN_CASE( 17 )
+                VARI_GEN_CASE( 18 )
+                VARI_GEN_CASE( 19 )
+                VARI_GEN_CASE( 20 )
+                VARI_GEN_CASE( 21 )
+                VARI_GEN_CASE( 22 )
+                VARI_GEN_CASE( 23 )
+                VARI_GEN_CASE( 24 )
+                VARI_GEN_CASE( 25 )
+                VARI_GEN_CASE( 26 )
+                VARI_GEN_CASE( 27 )
+                VARI_GEN_CASE( 28 )
+                VARI_GEN_CASE( 29 )
+                VARI_GEN_CASE( 30 )
+                VARI_GEN_CASE( 31 )
         default:
                 if constexpr ( N > Off + 32 )
                         return _dispatch_index< Off + 32, N >( i, (F&&) f );
         }
 
 
-#undef GEN
+#undef VARI_GEN_CASE
 
 #if defined( __cpp_lib_unreachable )
         std::unreachable();

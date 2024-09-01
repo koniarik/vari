@@ -350,36 +350,49 @@ struct _val_core
 
         constexpr _val_core() noexcept = default;
 
+        constexpr _val_core( _val_core const& other )
+        {
+                _copy_or_move< false, TL >( *this, other );
+        }
+
         template < typename UL >
                 requires( vconvertible_to< UL, TL > )
         constexpr _val_core( _val_core< UL > const& other )
         {
-                if ( other.index == 0 )
-                        return;
-                _dispatch_index< 0, TL::size >(
-                    other.index - 1, [&]< std::size_t j >() -> decltype( auto ) {
-                            static constexpr std::size_t i = _vptr_cnv_map< TL, UL >::value[j];
+                _copy_or_move< false, UL >( *this, other );
+        }
 
-                            index = i;
-                            std::construct_at(
-                                &storage.template get< i >(), other.storage.template get< j >() );
-                    } );
+        constexpr _val_core( _val_core&& other ) noexcept
+        {
+                _copy_or_move< true, TL >( *this, other );
         }
 
         template < typename UL >
                 requires( vconvertible_to< UL, TL > )
         constexpr _val_core( _val_core< UL >&& other ) noexcept
         {
+                _copy_or_move< true, UL >( *this, other );
+        }
+
+        template < bool IS_MOVE, typename UL >
+        static constexpr void _copy_or_move( auto& self, auto& other ) noexcept( IS_MOVE )
+        {
                 if ( other.index == 0 )
                         return;
-                _dispatch_index< 0, TL::size >(
+                _dispatch_index< 0, UL::size >(
                     other.index - 1, [&]< std::size_t j >() -> decltype( auto ) {
-                            static constexpr std::size_t i = _vptr_cnv_map< TL, UL >::value[j];
+                            static constexpr std::size_t i = _vptr_cnv_map< TL, UL >::value[j + 1];
+                            using OST                      = typename _val_core< UL >::ST;
 
-                            index = i;
-                            std::construct_at(
-                                &storage.template get< i >(),
-                                std::move( other.storage.template get< j >() ) );
+                            self.index = i;
+                            if ( IS_MOVE )
+                                    std::construct_at(
+                                        &ST::template get< i - 1 >( self.storage ),
+                                        std::move( OST::template get< j >( other.storage ) ) );
+                            else
+                                    std::construct_at(
+                                        &ST::template get< i - 1 >( self.storage ),
+                                        std::move( OST::template get< j >( other.storage ) ) );
                     } );
         }
 
@@ -404,17 +417,15 @@ struct _val_core
                 if ( lh.index == rh.index )
                         return _dispatch_index< 0, TL::size >(
                             lh.index - 1, [&]< std::size_t j >() -> decltype( auto ) {
-                                    auto& l = lh.storage.template get< j >();
-                                    auto& r = rh.storage.template get< j >();
+                                    auto& l = ST::template get< j >( lh.storage );
+                                    auto& r = ST::template get< j >( rh.storage );
                                     using namespace std;
                                     swap( l, r );
                             } );
 
                 _val_core tmp{ std::move( lh ) };
-                if ( lh.index != 0 ) {
+                if ( lh.index != 0 )
                         lh.destroy();
-                        tmp.index = std::exchange( lh.index, 0 );
-                }
 
                 if ( rh.index != 0 )
                         move_from_to( rh, lh );
@@ -427,8 +438,8 @@ struct _val_core
         {
                 _dispatch_index< 0, TL::size >(
                     lh.index - 1, [&]< std::size_t j >() -> decltype( auto ) {
-                            auto& l = lh.storage.template get< j >();
-                            auto& r = rh.storage.template get< j >();
+                            auto& l = ST::template get< j >( lh.storage );
+                            auto& r = ST::template get< j >( rh.storage );
                             std::construct_at( &r, std::move( l ) );
                             rh.index = lh.index;
                             std::destroy_at( &l );
@@ -495,7 +506,38 @@ struct _val_core
                 } );
                 index = 0;
         }
+
+        // XXX: this needs serious tests
+        friend constexpr std::partial_ordering
+        operator<=>( _val_core const& lh, _val_core const& rh )
+        {
+                // XXX: the partial ordering thing might be improved
+
+                std::size_t lh_i = lh.index - 1;
+                std::size_t rh_i = rh.index - 1;
+                if ( lh_i != rh_i )
+                        return lh_i <=> rh_i;
+                return _dispatch_index< 0, TL::size >(
+                    lh_i, [&]< std::size_t j >() -> std::partial_ordering {
+                            return ST::template get< j >( lh.storage ) <=>
+                                   ST::template get< j >( rh.storage );
+                    } );
+        }
+
+        friend constexpr decltype( auto ) operator==( _val_core const& lh, _val_core const& rh )
+        {
+                std::size_t lh_i = lh.index - 1;
+                std::size_t rh_i = rh.index - 1;
+                if ( lh_i != rh_i )
+                        return lh_i == rh_i;
+                return _dispatch_index< 0, TL::size >( lh_i, [&]< std::size_t j > {
+                        return ST::template get< j >( lh.storage ) ==
+                               ST::template get< j >( rh.storage );
+                } );
+        }
 };
 
+// XXX:
+// - vref/vptr should be constructible from this
 
 }  // namespace vari

@@ -29,39 +29,50 @@ namespace vari
 template < typename... Ts >
 class _vval
 {
-        using TL = typelist< Ts... >;
 
 public:
+        using types = typelist< Ts... >;
+
         template < typename U >
-                requires( vconvertible_to< typelist< std::remove_reference_t< U > >, TL > )
+                requires( vconvertible_to< typelist< std::remove_reference_t< U > >, types > )
         constexpr _vval( U&& v )
         {
                 _core.template emplace< std::remove_reference_t< U > >( (U&&) v );
         }
 
         template < typename U, typename... Args >
-                requires( vconvertible_to< typelist< U >, TL > )
+                requires( vconvertible_to< typelist< U >, types > )
         constexpr _vval( std::in_place_type_t< U >, Args&&... args )
         {
                 _core.template emplace< U >( (Args&&) args... );
         }
 
-        template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, TL > )
-        constexpr _vval( _vval< Us... >&& p ) noexcept
+        constexpr _vval( _vval const&& p ) noexcept
           : _core( std::move( p._core ) )
         {
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, TL > )
+                requires( vconvertible_to< typelist< Us... >, types > )
+        constexpr _vval( _vval< Us... >&& p ) noexcept
+          : _core( std::move( p._core ) )
+        {
+        }
+
+        constexpr _vval( _vval const& p )
+          : _core( p._core )
+        {
+        }
+
+        template < typename... Us >
+                requires( vconvertible_to< typelist< Us... >, types > )
         constexpr _vval( _vval< Us... > const& p )
           : _core( p._core )
         {
         }
 
         template < typename U >
-                requires( vconvertible_to< typelist< std::remove_reference_t< U > >, TL > )
+                requires( vconvertible_to< typelist< std::remove_reference_t< U > >, types > )
         constexpr _vval& operator=( U&& v )
         {
                 if ( _core.index != 0 )
@@ -70,21 +81,21 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, TL > )
+                requires( vconvertible_to< typelist< Us... >, types > )
         constexpr _vval& operator=( _vval< Us... >&& p ) noexcept
         {
                 _core = std::move( p._core );
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, TL > )
+                requires( vconvertible_to< typelist< Us... >, types > )
         constexpr _vval& operator=( _vval< Us... > const& p )
         {
                 _core = p._core;
         }
 
         template < typename T, typename... Args >
-                requires( vconvertible_to< typelist< T >, TL > )
+                requires( vconvertible_to< typelist< T >, types > )
         constexpr T& emplace( Args&&... args )
         {
                 return _core.template emplace< T >( (Args&&) args... );
@@ -92,21 +103,20 @@ public:
 
         constexpr auto& operator*() const noexcept
         {
-                static_assert( TL::size == 1 );
+                static_assert( types::size == 1 );
                 return _core.template get< 0 >();
         }
 
         constexpr auto* operator->() const noexcept
         {
-                static_assert( TL::size == 1 );
+                static_assert( types::size == 1 );
                 return &_core.template get< 0 >();
         }
 
         template < typename... Us >
-                requires( vconvertible_to< TL, typelist< Us... > > )
+                requires( vconvertible_to< types, typelist< Us... > > )
         constexpr operator _vref< Us... >() & noexcept
         {
-
                 return _core.visit_impl( [&]( auto& item ) {
                         return _vref< Us... >( item );
                 } );
@@ -141,9 +151,20 @@ public:
                 _core.destroy();
         }
 
-        friend constexpr auto operator<=>( _vval const& lh, _vval const& rh ) = default;
+        friend constexpr auto operator<=>( _vval const& lh, _vval const& rh )
+        {
+                return lh._core <=> rh._core;
+        };
+
+        friend constexpr auto operator==( _vval const& lh, _vval const& rh )
+        {
+                return lh._core == rh._core;
+        };
 
 private:
+        template < typename... Us >
+        friend class _vval;
+
         _val_core< typelist< Ts... > > _core;
 };
 

@@ -37,10 +37,9 @@ class _uvref;
 template < typename... Ts >
 class _uvptr
 {
-        using TL = typelist< Ts... >;
-
 public:
-        static_assert( is_flat_v< TL > );
+        using types = typelist< Ts... >;
+        static_assert( is_flat_v< types > );
 
         using pointer          = _vptr< Ts... >;
         using reference        = _vref< Ts... >;
@@ -56,7 +55,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, TL > )
+                requires( vconvertible_to< typelist< Us... >, types > )
         _uvptr( _uvref< Us... >&& p ) noexcept
         {
                 _ptr._core   = std::move( p._ref._core );
@@ -64,14 +63,14 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, TL > )
+                requires( vconvertible_to< typelist< Us... >, types > )
         _uvptr( _uvptr< Us... >&& p ) noexcept
           : _ptr( p.release() )
         {
         }
 
         template < typename U >
-                requires( vconvertible_to< typelist< U >, TL > )
+                requires( vconvertible_to< typelist< U >, types > )
         explicit _uvptr( U* u ) noexcept
         {
                 if ( u )
@@ -85,7 +84,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, TL > )
+                requires( vconvertible_to< typelist< Us... >, types > )
         _uvptr& operator=( _uvref< Us... >&& p ) noexcept
         {
                 using std::swap;
@@ -95,7 +94,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, TL > )
+                requires( vconvertible_to< typelist< Us... >, types > )
         _uvptr& operator=( _uvptr< Us... >&& p ) noexcept
         {
                 using std::swap;
@@ -120,8 +119,15 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< TL, typelist< Us... > > )
+                requires( vconvertible_to< types, typelist< Us... > > )
         operator _vptr< Us... >() & noexcept
+        {
+                return _ptr;
+        }
+
+        template < typename... Us >
+                requires( vconvertible_to< types, typelist< Us... > > )
+        operator _vptr< Us... >() const& noexcept
         {
                 return _ptr;
         }

@@ -41,10 +41,10 @@ class _vref;
 template < typename... Ts >
 class _vptr
 {
-        using TL = typelist< Ts... >;
-
 public:
-        static_assert( is_flat_v< TL >, "The provided typelist has to be flat" );
+        using types = typelist< Ts... >;
+
+        static_assert( is_flat_v< types >, "The provided typelist has to be flat" );
 
         using reference = _vref< Ts... >;
 
@@ -59,21 +59,21 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, TL > )
+                requires( vconvertible_to< typelist< Us... >, types > )
         _vptr( _vptr< Us... > p ) noexcept
           : _core( std::move( p._core ) )
         {
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, TL > )
+                requires( vconvertible_to< typelist< Us... >, types > )
         _vptr( _vref< Us... > r ) noexcept
           : _core( std::move( r._core ) )
         {
         }
 
         template < typename U >
-                requires( vconvertible_to< typelist< U >, TL > )
+                requires( vconvertible_to< typelist< U >, types > )
         _vptr( U& u ) noexcept
           : _core( u )
         {
@@ -128,7 +128,7 @@ public:
         friend auto operator<=>( _vptr const& lh, _vptr const& rh ) = default;
 
 private:
-        _ptr_core< TL > _core;
+        _ptr_core< types > _core;
 
         template < typename... Us >
         friend class _vptr;
