@@ -25,6 +25,21 @@
 var NAVTREE =
 [
   [ "vari", "index.html", [
+    [ "Variadic library", "index.html", [
+      [ "From std::variant to vptr or vref", "index.html#autotoc_md1", null ],
+      [ "uvptr and uvref", "index.html#autotoc_md2", null ],
+      [ "Access API", "index.html#autotoc_md3", [
+        [ "Visit", "index.html#autotoc_md4", null ],
+        [ "Take", "index.html#autotoc_md5", null ],
+        [ "Concepts checks", "index.html#autotoc_md6", null ]
+      ] ],
+      [ "Single-type extension", "index.html#autotoc_md7", null ],
+      [ "Sub-typing", "index.html#autotoc_md8", null ],
+      [ "Type-sets", "index.html#autotoc_md9", null ],
+      [ "Lvalue conversion from unique", "index.html#autotoc_md10", null ],
+      [ "Const", "index.html#autotoc_md11", null ],
+      [ "Credits", "index.html#autotoc_md12", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -59,7 +74,7 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "functions_b.html",
-"structvari_1_1unique__tl__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_01typelist_3_4_01_4.html"
+"structvari_1_1type__at_3_010_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html#aa4a7b8c978422771bad3a5e7243e46fc"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
