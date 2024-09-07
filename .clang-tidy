@@ -10,7 +10,6 @@ Checks: >
   readbility*,
 WarningsAsErrors: true
 HeaderFilterRegex: '.*'
-AnalyzeTemporaryDtors: true
 FormatStyle:     file
 CheckOptions:
   - key:             readability-identifier-naming.IgnoreFailedSplit

@@ -362,20 +362,22 @@ struct _val_core
                 _copy_or_move< false, UL >( *this, other );
         }
 
-        constexpr _val_core( _val_core&& other ) noexcept
+        constexpr _val_core( _val_core&& other ) noexcept( all_nothrow_move_constructible_v< TL > )
         {
                 _copy_or_move< true, TL >( *this, other );
         }
 
         template < typename UL >
                 requires( vconvertible_to< UL, TL > )
-        constexpr _val_core( _val_core< UL >&& other ) noexcept
+        constexpr _val_core( _val_core< UL >&& other ) noexcept(
+            all_nothrow_move_constructible_v< TL > )
         {
                 _copy_or_move< true, UL >( *this, other );
         }
 
         template < bool IS_MOVE, typename UL >
-        static constexpr void _copy_or_move( auto& self, auto& other ) noexcept( IS_MOVE )
+        static constexpr void _copy_or_move( auto& self, auto& other ) noexcept(
+            IS_MOVE && all_nothrow_move_constructible_v< UL > )
         {
                 if ( other.index == 0 )
                         return;
@@ -392,7 +394,7 @@ struct _val_core
                             else
                                     std::construct_at(
                                         &ST::template get< i - 1 >( self.storage ),
-                                        std::move( OST::template get< j >( other.storage ) ) );
+                                        OST::template get< j >( other.storage ) );
                     } );
         }
 
@@ -412,7 +414,8 @@ struct _val_core
                 swap( *this, tmp );
         }
 
-        friend constexpr void swap( _val_core& lh, _val_core& rh )
+        friend constexpr void
+        swap( _val_core& lh, _val_core& rh ) noexcept( all_nothrow_swappable_v< TL > )
         {
                 if ( lh.index == rh.index )
                         return _dispatch_index< 0, TL::size >(
@@ -447,44 +450,22 @@ struct _val_core
         }
 
 
-        // XXX: code dup. much
         template < typename... Fs >
-        constexpr decltype( auto ) visit_impl( Fs&&... fs ) const
+        static constexpr decltype( auto ) visit_impl( auto& self, Fs&&... fs )
         {
                 return _dispatch_index< 0, TL::size >(
-                    index - 1, [&]< std::size_t j >() -> decltype( auto ) {
-                            auto& p = ST::template get< j >( storage );
-                            return _dispatch_fun( p, (Fs&&) fs... );
-                    } );
-        }
-
-        template < typename... Fs >
-        constexpr decltype( auto ) visit_impl( Fs&&... fs )
-        {
-                return _dispatch_index< 0, TL::size >(
-                    index - 1, [&]< std::size_t j >() -> decltype( auto ) {
-                            auto& p = ST::template get< j >( storage );
+                    self.index - 1, [&]< std::size_t j >() -> decltype( auto ) {
+                            auto& p = ST::template get< j >( self.storage );
                             return _dispatch_fun( p, (Fs&&) fs... );
                     } );
         }
 
         template < typename F >
-        constexpr decltype( auto ) visit_impl( F&& f ) const
+        static constexpr decltype( auto ) visit_impl( auto& self, F&& f )
         {
                 return _dispatch_index< 0, TL::size >(
-                    index - 1, [&]< std::size_t j >() -> decltype( auto ) {
-                            auto& p = ST::template get< j >( storage );
-
-                            return ( (F&&) f )( p );
-                    } );
-        }
-
-        template < typename F >
-        constexpr decltype( auto ) visit_impl( F&& f )
-        {
-                return _dispatch_index< 0, TL::size >(
-                    index - 1, [&]< std::size_t j >() -> decltype( auto ) {
-                            auto& p = ST::template get< j >( storage );
+                    self.index - 1, [&]< std::size_t j >() -> decltype( auto ) {
+                            auto& p = ST::template get< j >( self.storage );
 
                             return ( (F&&) f )( p );
                     } );

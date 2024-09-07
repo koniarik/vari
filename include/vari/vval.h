@@ -29,6 +29,7 @@ namespace vari
 template < typename... Ts >
 class _vval
 {
+        using core_type = _val_core< typelist< Ts... > >;
 
 public:
         using types = typelist< Ts... >;
@@ -47,14 +48,17 @@ public:
                 _core.template emplace< U >( (Args&&) args... );
         }
 
-        constexpr _vval( _vval const&& p ) noexcept
+        // XXX: test the noexcept behavior
+        // test move itself
+        constexpr _vval( _vval&& p ) noexcept( std::is_nothrow_move_constructible_v< core_type > )
           : _core( std::move( p._core ) )
         {
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _vval( _vval< Us... >&& p ) noexcept
+        constexpr _vval( _vval< Us... >&& p ) noexcept(
+            std::is_nothrow_move_constructible_v< core_type > )
           : _core( std::move( p._core ) )
         {
         }
@@ -82,7 +86,8 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _vval& operator=( _vval< Us... >&& p ) noexcept
+        constexpr _vval&
+        operator=( _vval< Us... >&& p ) noexcept( std::is_nothrow_move_assignable_v< core_type > )
         {
                 _core = std::move( p._core );
         }
@@ -117,14 +122,18 @@ public:
                 requires( vconvertible_to< types, typelist< Us... > > )
         constexpr operator _vref< Us... >() & noexcept
         {
-                return _core.visit_impl( [&]( auto& item ) {
+                return core_type::visit_impl( _core, [&]( auto& item ) {
                         return _vref< Us... >( item );
                 } );
         }
 
-        constexpr friend void swap( _vval& lh, _vval& rh ) noexcept
+        template < typename... Us >
+                requires( vconvertible_to< types, typelist< Us... > > )
+        constexpr operator _vref< Us... >() const& noexcept
         {
-                swap( lh._core, rh._core );
+                return core_type::visit_impl( _core, [&]( auto& item ) {
+                        return _vref< Us... >( item );
+                } );
         }
 
 
@@ -134,7 +143,7 @@ public:
                 static_assert(
                     ( invocable_for_one< Ts const&, Fs... > && ... ),
                     "For each type, there has to be one and only one callable" );
-                return _core.visit_impl( (Fs&&) f... );
+                return core_type::visit_impl( _core, (Fs&&) f... );
         }
 
         template < typename... Fs >
@@ -143,7 +152,16 @@ public:
                 static_assert(
                     ( invocable_for_one< Ts&, Fs... > && ... ),
                     "For each type, there has to be one and only one callable" );
-                return _core.visit_impl( (Fs&&) f... );
+                return core_type::visit_impl( _core, (Fs&&) f... );
+        }
+
+        // XXX:
+        // - test swappability of values
+        // - test nothrow check
+        constexpr friend void
+        swap( _vval& lh, _vval& rh ) noexcept( std::is_nothrow_swappable_v< core_type > )
+        {
+                swap( lh._core, rh._core );
         }
 
         constexpr ~_vval()
@@ -165,7 +183,7 @@ private:
         template < typename... Us >
         friend class _vval;
 
-        _val_core< typelist< Ts... > > _core;
+        core_type _core;
 };
 
 template < typename... Ts >

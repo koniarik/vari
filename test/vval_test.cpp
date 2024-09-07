@@ -60,7 +60,7 @@ TEST_CASE( "val_core" )
         c1.destroy();
 }
 
-TEST_CASE( "vval" )
+TEST_CASE( "vval_visit" )
 {
         static_assert( valid_variadic< vval< float, int > > );
         static_assert( valid_variadic< vval< float > > );

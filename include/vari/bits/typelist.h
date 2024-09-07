@@ -241,4 +241,30 @@ static constexpr bool none_is_const_v = none_is_const< TL >::value;
 
 /// ---
 
+template < typename TL >
+struct all_nothrow_swappable;
+
+template < typename... Us >
+struct all_nothrow_swappable< typelist< Us... > >
+{
+        static constexpr bool value = ( std::is_nothrow_swappable_v< Us > || ... );
+};
+
+template < typename TL >
+static constexpr bool all_nothrow_swappable_v = all_nothrow_swappable< TL >::value;
+
+/// ---
+
+template < typename TL >
+struct all_nothrow_move_constructible;
+
+template < typename... Us >
+struct all_nothrow_move_constructible< typelist< Us... > >
+{
+        static constexpr bool value = ( std::is_nothrow_move_constructible_v< Us > || ... );
+};
+
+template < typename TL >
+static constexpr bool all_nothrow_move_constructible_v = all_nothrow_swappable< TL >::value;
+
 }  // namespace vari
