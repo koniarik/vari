@@ -1,0 +1,19 @@
+name: doxygen
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v4
+            with:
+              submodules: 'true'
+          - uses: mattnotmitt/doxygen-action@v1.9.5
+          - uses: peaceiris/actions-gh-pages@v4
+            with:
+              github_token: ${{ secrets.GITHUB_TOKEN }}
+              publish_dir: ./html
