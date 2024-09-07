@@ -1,0 +1,4 @@
+var structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01Ks_8_8_8_01_4_00_01Ts_8_8_8_01_4 =
+[
+    [ "type", "structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01Ks_8_8_8_01_4_00_01Ts_8_8_8_01_4.html#a1dc59a645dbb957c39569a6ba8c167ff", null ]
+];
