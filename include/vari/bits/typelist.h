@@ -265,6 +265,73 @@ struct all_nothrow_move_constructible< typelist< Us... > >
 };
 
 template < typename TL >
-static constexpr bool all_nothrow_move_constructible_v = all_nothrow_swappable< TL >::value;
+static constexpr bool all_nothrow_move_constructible_v =
+    all_nothrow_move_constructible< TL >::value;
+
+/// ---
+
+template < typename TL >
+struct all_nothrow_copy_constructible;
+
+template < typename... Us >
+struct all_nothrow_copy_constructible< typelist< Us... > >
+{
+        static constexpr bool value = ( std::is_nothrow_copy_constructible_v< Us > || ... );
+};
+
+template < typename TL >
+static constexpr bool all_nothrow_copy_constructible_v =
+    all_nothrow_copy_constructible< TL >::value;
+
+/// ---
+
+template < typename TL >
+struct all_nothrow_destructible;
+
+template < typename... Us >
+struct all_nothrow_destructible< typelist< Us... > >
+{
+        static constexpr bool value = ( std::is_nothrow_destructible_v< Us > || ... );
+};
+
+template < typename TL >
+static constexpr bool all_nothrow_destructible_v = all_nothrow_destructible< TL >::value;
+
+
+/// ---
+
+template < typename U, typename T >
+concept nothrow_three_way_comparable = noexcept( std::declval< U >() <=> std::declval< T >() );
+
+template < typename TL >
+struct all_nothrow_three_way_comparable;
+
+template < typename... Us >
+struct all_nothrow_three_way_comparable< typelist< Us... > >
+{
+        static constexpr bool value = ( nothrow_three_way_comparable< Us, Us > || ... );
+};
+
+template < typename TL >
+static constexpr bool all_nothrow_three_way_comparable_v =
+    all_nothrow_three_way_comparable< TL >::value;
+
+/// ---
+
+template < typename U, typename T >
+concept nothrow_equality_comparable = noexcept( std::declval< U >() == std::declval< T >() );
+
+template < typename TL >
+struct all_nothrow_equality_comparable;
+
+template < typename... Us >
+struct all_nothrow_equality_comparable< typelist< Us... > >
+{
+        static constexpr bool value = ( nothrow_equality_comparable< Us, Us > || ... );
+};
+
+template < typename TL >
+static constexpr bool all_nothrow_equality_comparable_v =
+    all_nothrow_equality_comparable< TL >::value;
 
 }  // namespace vari

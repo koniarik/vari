@@ -36,14 +36,15 @@ public:
 
         template < typename U >
                 requires( vconvertible_to< typelist< std::remove_reference_t< U > >, types > )
-        constexpr _vval( U&& v )
+        constexpr _vval( U&& v ) noexcept( forward_nothrow_constructible< U > )
         {
                 _core.template emplace< std::remove_reference_t< U > >( (U&&) v );
         }
 
         template < typename U, typename... Args >
                 requires( vconvertible_to< typelist< U >, types > )
-        constexpr _vval( std::in_place_type_t< U >, Args&&... args )
+        constexpr _vval( std::in_place_type_t< U >, Args&&... args ) noexcept(
+            std::is_nothrow_constructible_v< U, Args... > )
         {
                 _core.template emplace< U >( (Args&&) args... );
         }
@@ -58,26 +59,28 @@ public:
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
         constexpr _vval( _vval< Us... >&& p ) noexcept(
-            std::is_nothrow_move_constructible_v< core_type > )
+            std::is_nothrow_constructible_v< core_type, typename _vval< Us... >::core_type > )
           : _core( std::move( p._core ) )
         {
         }
 
-        constexpr _vval( _vval const& p )
+        constexpr _vval( _vval const& p ) noexcept(
+            std::is_nothrow_copy_constructible_v< core_type > )
           : _core( p._core )
         {
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _vval( _vval< Us... > const& p )
+        constexpr _vval( _vval< Us... > const& p ) noexcept(
+            std::is_nothrow_constructible_v< core_type, typename _vval< Us... >::core_type > )
           : _core( p._core )
         {
         }
 
         template < typename U >
                 requires( vconvertible_to< typelist< std::remove_reference_t< U > >, types > )
-        constexpr _vval& operator=( U&& v )
+        constexpr _vval& operator=( U&& v ) noexcept( forward_nothrow_constructible< U > )
         {
                 if ( _core.index != 0 )
                         _core.destroy();
@@ -86,22 +89,24 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _vval&
-        operator=( _vval< Us... >&& p ) noexcept( std::is_nothrow_move_assignable_v< core_type > )
+        constexpr _vval& operator=( _vval< Us... >&& p ) noexcept(
+            std::is_nothrow_assignable_v< core_type, typename _vval< Us... >::core_type&& > )
         {
                 _core = std::move( p._core );
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _vval& operator=( _vval< Us... > const& p )
+        constexpr _vval& operator=( _vval< Us... > const& p ) noexcept(
+            std::is_nothrow_assignable_v< core_type, typename _vval< Us... >::core_type const& > )
         {
                 _core = p._core;
         }
 
         template < typename T, typename... Args >
                 requires( vconvertible_to< typelist< T >, types > )
-        constexpr T& emplace( Args&&... args )
+        constexpr T&
+        emplace( Args&&... args ) noexcept( std::is_nothrow_constructible_v< T, Args... > )
         {
                 return _core.template emplace< T >( (Args&&) args... );
         }
@@ -164,19 +169,21 @@ public:
                 swap( lh._core, rh._core );
         }
 
-        constexpr ~_vval()
+        constexpr ~_vval() noexcept( std::is_nothrow_destructible_v< core_type > )
         {
                 _core.destroy();
         }
 
-        friend constexpr auto operator<=>( _vval const& lh, _vval const& rh )
+        friend constexpr auto operator<=>( _vval const& lh, _vval const& rh ) noexcept(
+            all_nothrow_three_way_comparable_v< types > )
         {
-                return lh._core <=> rh._core;
+                return core_type::three_way_compare( lh._core, rh._core );
         };
 
-        friend constexpr auto operator==( _vval const& lh, _vval const& rh )
+        friend constexpr auto operator==( _vval const& lh, _vval const& rh ) noexcept(
+            all_nothrow_equality_comparable_v< types > )
         {
-                return lh._core == rh._core;
+                return core_type::compare( lh._core, rh._core );
         };
 
 private:

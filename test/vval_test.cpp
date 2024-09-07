@@ -67,6 +67,7 @@ TEST_CASE( "vval_visit" )
 
         float                           fv = 0.1f;
         vval< float, int, std::string > v1{ fv };
+        vval< float, int, std::string > v1_5{ 0.1f };
         check_visit( v1, fv );
 
         vval< float, int, std::string > v2{ std::in_place_type_t< float >{}, fv };

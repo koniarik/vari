@@ -157,13 +157,13 @@ struct _ptr_core< typelist< T > >
 };
 
 template < typename T >
-constexpr auto operator<=>( _ptr_core< T > const& lh, _ptr_core< T > const& rh )
+constexpr auto operator<=>( _ptr_core< T > const& lh, _ptr_core< T > const& rh ) noexcept
 {
         return std::compare_three_way{}( lh.ptr, rh.ptr );
 }
 
 template < typename T >
-constexpr bool operator==( _ptr_core< T > const& lh, _ptr_core< T > const& rh )
+constexpr bool operator==( _ptr_core< T > const& lh, _ptr_core< T > const& rh ) noexcept
 {
         return lh.ptr == rh.ptr;
 }

@@ -62,7 +62,6 @@ template < typename TL >
 union _val_union;
 
 template < typename... Ts >
-        requires( sizeof...( Ts ) > 4 )
 union _val_union< typelist< Ts... > >
 {
         static constexpr std::size_t size = sizeof...( Ts );
@@ -350,34 +349,37 @@ struct _val_core
 
         constexpr _val_core() noexcept = default;
 
-        constexpr _val_core( _val_core const& other )
+        constexpr _val_core( _val_core const& other ) noexcept(
+            all_nothrow_copy_constructible_v< TL > )
         {
-                _copy_or_move< false, TL >( *this, other );
+                _copy_or_move_construct< false, TL >( *this, other );
         }
 
         template < typename UL >
                 requires( vconvertible_to< UL, TL > )
-        constexpr _val_core( _val_core< UL > const& other )
+        constexpr _val_core( _val_core< UL > const& other ) noexcept(
+            all_nothrow_copy_constructible_v< UL > )
         {
-                _copy_or_move< false, UL >( *this, other );
+                _copy_or_move_construct< false, UL >( *this, other );
         }
 
         constexpr _val_core( _val_core&& other ) noexcept( all_nothrow_move_constructible_v< TL > )
         {
-                _copy_or_move< true, TL >( *this, other );
+                _copy_or_move_construct< true, TL >( *this, other );
         }
 
         template < typename UL >
                 requires( vconvertible_to< UL, TL > )
         constexpr _val_core( _val_core< UL >&& other ) noexcept(
-            all_nothrow_move_constructible_v< TL > )
+            all_nothrow_move_constructible_v< UL > )
         {
-                _copy_or_move< true, UL >( *this, other );
+                _copy_or_move_construct< true, UL >( *this, other );
         }
 
         template < bool IS_MOVE, typename UL >
-        static constexpr void _copy_or_move( auto& self, auto& other ) noexcept(
-            IS_MOVE && all_nothrow_move_constructible_v< UL > )
+        static constexpr void _copy_or_move_construct( auto& self, auto& other ) noexcept(
+            IS_MOVE ? all_nothrow_move_constructible_v< UL > :
+                      all_nothrow_copy_constructible_v< UL > )
         {
                 if ( other.index == 0 )
                         return;
@@ -408,14 +410,17 @@ struct _val_core
 
         template < typename UL >
                 requires( vconvertible_to< UL, TL > )
-        constexpr _val_core& operator=( _val_core< UL >&& other ) noexcept
+        constexpr _val_core& operator=( _val_core< UL >&& other ) noexcept(
+            all_nothrow_move_constructible_v< UL > && all_nothrow_destructible_v< TL > &&
+            all_nothrow_swappable_v< TL > )
         {
                 _val_core tmp{ std::move( other ) };
                 swap( *this, tmp );
         }
 
-        friend constexpr void
-        swap( _val_core& lh, _val_core& rh ) noexcept( all_nothrow_swappable_v< TL > )
+        friend constexpr void swap( _val_core& lh, _val_core& rh ) noexcept(
+            all_nothrow_swappable_v< TL > && all_nothrow_move_constructible_v< TL > &&
+            all_nothrow_destructible_v< TL > )
         {
                 if ( lh.index == rh.index )
                         return _dispatch_index< 0, TL::size >(
@@ -437,7 +442,8 @@ struct _val_core
                         move_from_to( tmp, rh );
         }
 
-        friend constexpr void move_from_to( _val_core& lh, _val_core& rh )
+        friend constexpr void move_from_to( _val_core& lh, _val_core& rh ) noexcept(
+            all_nothrow_move_constructible_v< TL > && all_nothrow_destructible_v< TL > )
         {
                 _dispatch_index< 0, TL::size >(
                     lh.index - 1, [&]< std::size_t j >() -> decltype( auto ) {
@@ -472,7 +478,8 @@ struct _val_core
         }
 
         template < typename T, typename... Args >
-        constexpr T& emplace( Args&&... args )
+        constexpr T&
+        emplace( Args&&... args ) noexcept( std::is_nothrow_constructible_v< T, Args... > )
         {
                 constexpr std::size_t i = index_of_v< T, TL >;
 
@@ -480,7 +487,7 @@ struct _val_core
                 return *std::construct_at( &ST::template get< i >( storage ), (Args&&) args... );
         }
 
-        constexpr void destroy()
+        constexpr void destroy() noexcept( all_nothrow_destructible_v< TL > )
         {
                 _dispatch_index< 0, TL::size >( index - 1, [&]< std::size_t j > {
                         std::destroy_at( &ST::template get< j >( storage ) );
@@ -489,8 +496,10 @@ struct _val_core
         }
 
         // XXX: this needs serious tests
-        friend constexpr std::partial_ordering
-        operator<=>( _val_core const& lh, _val_core const& rh )
+        // XXX: derive the ordering!
+        static constexpr std::partial_ordering three_way_compare(
+            _val_core const& lh,
+            _val_core const& rh ) noexcept( all_nothrow_move_constructible_v< TL > )
         {
                 // XXX: the partial ordering thing might be improved
 
@@ -505,7 +514,9 @@ struct _val_core
                     } );
         }
 
-        friend constexpr decltype( auto ) operator==( _val_core const& lh, _val_core const& rh )
+        static constexpr decltype( auto ) compare(
+            _val_core const& lh,
+            _val_core const& rh ) noexcept( all_nothrow_equality_comparable_v< TL > )
         {
                 std::size_t lh_i = lh.index - 1;
                 std::size_t rh_i = rh.index - 1;

@@ -47,6 +47,12 @@ concept invocable = requires( F&& f, Args&&... args ) { ( (F&&) f )( (Args&&) ar
 template < typename From_TL, typename To_TL >
 concept vconvertible_to = is_subset_v< From_TL, To_TL > || is_subset_v< From_TL const, To_TL >;
 
+// XXX: test
+template < typename U >
+concept forward_nothrow_constructible =
+    ( std::is_lvalue_reference_v< U > ? std::is_nothrow_copy_constructible_v< U > :
+                                        std::is_nothrow_move_constructible_v< U > );
+
 template < typename... Args >
 struct _function_picker
 {
