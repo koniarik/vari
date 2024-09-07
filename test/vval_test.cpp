@@ -17,13 +17,13 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ///
 
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
 #include "vari/vval.h"
 
 #include "./common.h"
 
 #include <doctest/doctest.h>
+#include <vector>
 
 namespace vari
 {

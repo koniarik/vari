@@ -32,44 +32,6 @@
 
 namespace vari
 {
-static_assert( contains_type_v< int, typelist< int, float > > );
-static_assert( !contains_type_v< std::string, typelist< int, float > > );
-
-using ut1 = unique_typelist_t< typelist< float, float, int, float, int > >;
-static_assert( std::same_as< ut1, typelist< float, int > > );
-
-using ft1  = flatten_t<  //
-    typelist< float, int >,
-    int,
-    typelist< float, int, typelist< std::string > >  //
-    >;
-using uft1 = unique_typelist_t< ft1 >;
-static_assert( std::same_as< uft1, typelist< float, int, std::string > > );
-
-static_assert( contains_type_v< int, typelist< int, const int > > );
-static_assert( contains_type_v< const int, typelist< int, const int > > );
-
-using ft2  = flatten_t<  //
-    typelist< const int >,
-    int,
-    typelist< float, int, typelist< float const > >  //
-    >;
-using uft2 = unique_typelist_t< ft2 >;
-static_assert( std::same_as< uft2, typelist< const int, float, int, const float > > );
-
-using ft3  = flatten_t<  //
-    const typelist< int >,
-    int,
-    typelist< float, int, const typelist< float > >  //
-    >;
-using uft3 = unique_typelist_t< ft3 >;
-static_assert( std::same_as< uft3, typelist< const int, float, int, const float > > );
-using ivst_tl1 = typelist< const int, const float >;
-using ivst_tl2 = typelist< int, float >;
-
-static_assert( vconvertible_to< ivst_tl1, ivst_tl1 > );
-static_assert( vconvertible_to< ivst_tl2, ivst_tl1 > );
-static_assert( vconvertible_to< ivst_tl2, ivst_tl2 > );
 
 TEST_CASE( "vptr" )
 {
@@ -100,10 +62,6 @@ TEST_CASE( "vptr" )
         p4 = nullptr;
         CHECK_FALSE( p4 );
 }
-
-static_assert( std::same_as< type_at_t< 0, typelist< int, float, std::string > >, int > );
-static_assert( std::same_as< type_at_t< 1, typelist< int, float, std::string > >, float > );
-static_assert( std::same_as< type_at_t< 2, typelist< int, float, std::string > >, std::string > );
 
 TEST_CASE( "vref" )
 {

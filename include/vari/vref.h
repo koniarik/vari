@@ -35,8 +35,6 @@ class _vref
 public:
         using types = typelist< Ts... >;
 
-        static_assert( is_flat_v< types > );
-
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
         _vref( _vref< Us... > p ) noexcept

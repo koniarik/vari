@@ -34,7 +34,6 @@ class _uvref
 {
 public:
         using types = typelist< Ts... >;
-        static_assert( is_flat_v< types > );
 
         using reference = _vref< Ts... >;
 

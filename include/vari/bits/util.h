@@ -79,7 +79,7 @@ struct _vptr_cnv_map< TL, typelist< Us... > >
 {
         static constexpr std::size_t value[sizeof...( Us ) + 1] = {
             0u,
-            1 + index_of_v< Us, TL >... };
+            1 + index_of_t_or_const_t_v< Us, TL >... };
 };
 
 }  // namespace vari

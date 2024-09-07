@@ -39,7 +39,6 @@ class _uvptr
 {
 public:
         using types = typelist< Ts... >;
-        static_assert( is_flat_v< types > );
 
         using pointer          = _vptr< Ts... >;
         using reference        = _vref< Ts... >;

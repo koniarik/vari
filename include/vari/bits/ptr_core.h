@@ -57,7 +57,7 @@ struct _ptr_core
         template < typename U >
                 requires( vconvertible_to< typelist< U >, TL > )
         _ptr_core( U& val ) noexcept
-          : index( 1 + index_of_v< U, TL > )
+          : index( 1 + index_of_t_or_const_t_v< U, TL > )
           , ptr( to_void_cast( &val ) )
         {
         }

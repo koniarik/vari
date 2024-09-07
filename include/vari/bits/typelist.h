@@ -25,6 +25,8 @@
 namespace vari
 {
 
+/// ---
+
 template < typename... Ts >
 struct typelist
 {
@@ -34,28 +36,35 @@ struct typelist
 /// ---
 
 template < typename T, typename TL >
-struct index_of;
+struct index_of_t_or_const_t;
+
+template < typename T >
+struct index_of_t_or_const_t< T, typelist<> >
+{
+        static_assert( !std::same_as< T, T >, "Type T is not present in the type list" );
+};
 
 template < typename T, typename... Ts >
-struct index_of< T, typelist< T, Ts... > >
+struct index_of_t_or_const_t< T, typelist< T, Ts... > >
 {
         static constexpr std::size_t value = 0;
 };
 
 template < typename T, typename... Ts >
-struct index_of< T, typelist< const T, Ts... > >
+struct index_of_t_or_const_t< T, typelist< const T, Ts... > >
 {
         static constexpr std::size_t value = 0;
 };
 
 template < typename T, typename U, typename... Ts >
-struct index_of< T, typelist< U, Ts... > >
+struct index_of_t_or_const_t< T, typelist< U, Ts... > >
 {
-        static constexpr std::size_t value = 1 + index_of< T, typelist< Ts... > >::value;
+        static constexpr std::size_t value =
+            1 + index_of_t_or_const_t< T, typelist< Ts... > >::value;
 };
 
 template < typename T, typename TL >
-static constexpr std::size_t index_of_v = index_of< T, TL >::value;
+static constexpr std::size_t index_of_t_or_const_t_v = index_of_t_or_const_t< T, TL >::value;
 
 /// ---
 
@@ -153,32 +162,6 @@ using flatten_t = typename flatten_impl< typelist<>, Ts... >::type;
 
 /// ---
 
-template < typename T >
-struct is_flat;
-
-template <>
-struct is_flat< typelist<> >
-{
-        static constexpr bool value = true;
-};
-
-template < typename T, typename... Ts >
-struct is_flat< typelist< T, Ts... > >
-{
-        static constexpr bool value = is_flat< typelist< Ts... > >::value;
-};
-
-template < typename... Us, typename... Ts >
-struct is_flat< typelist< typelist< Us... >, Ts... > >
-{
-        static constexpr bool value = false;
-};
-
-template < typename TL >
-static constexpr bool is_flat_v = is_flat< TL >::value;
-
-/// ---
-
 template < typename LH, typename RH >
 struct is_subset;
 
@@ -247,7 +230,7 @@ struct all_nothrow_swappable;
 template < typename... Us >
 struct all_nothrow_swappable< typelist< Us... > >
 {
-        static constexpr bool value = ( std::is_nothrow_swappable_v< Us > || ... );
+        static constexpr bool value = ( std::is_nothrow_swappable_v< Us > && ... && true );
 };
 
 template < typename TL >
@@ -261,7 +244,7 @@ struct all_nothrow_move_constructible;
 template < typename... Us >
 struct all_nothrow_move_constructible< typelist< Us... > >
 {
-        static constexpr bool value = ( std::is_nothrow_move_constructible_v< Us > || ... );
+        static constexpr bool value = ( std::is_nothrow_move_constructible_v< Us > && ... && true );
 };
 
 template < typename TL >
@@ -276,7 +259,7 @@ struct all_nothrow_copy_constructible;
 template < typename... Us >
 struct all_nothrow_copy_constructible< typelist< Us... > >
 {
-        static constexpr bool value = ( std::is_nothrow_copy_constructible_v< Us > || ... );
+        static constexpr bool value = ( std::is_nothrow_copy_constructible_v< Us > && ... && true );
 };
 
 template < typename TL >
@@ -291,7 +274,7 @@ struct all_nothrow_destructible;
 template < typename... Us >
 struct all_nothrow_destructible< typelist< Us... > >
 {
-        static constexpr bool value = ( std::is_nothrow_destructible_v< Us > || ... );
+        static constexpr bool value = ( std::is_nothrow_destructible_v< Us > && ... && true );
 };
 
 template < typename TL >
@@ -309,7 +292,7 @@ struct all_nothrow_three_way_comparable;
 template < typename... Us >
 struct all_nothrow_three_way_comparable< typelist< Us... > >
 {
-        static constexpr bool value = ( nothrow_three_way_comparable< Us, Us > || ... );
+        static constexpr bool value = ( nothrow_three_way_comparable< Us, Us > && ... && true );
 };
 
 template < typename TL >
@@ -327,7 +310,7 @@ struct all_nothrow_equality_comparable;
 template < typename... Us >
 struct all_nothrow_equality_comparable< typelist< Us... > >
 {
-        static constexpr bool value = ( nothrow_equality_comparable< Us, Us > || ... );
+        static constexpr bool value = ( nothrow_equality_comparable< Us, Us > && ... && true );
 };
 
 template < typename TL >

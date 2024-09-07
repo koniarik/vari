@@ -481,7 +481,7 @@ struct _val_core
         constexpr T&
         emplace( Args&&... args ) noexcept( std::is_nothrow_constructible_v< T, Args... > )
         {
-                constexpr std::size_t i = index_of_v< T, TL >;
+                constexpr std::size_t i = index_of_t_or_const_t_v< T, TL >;
 
                 index = i + 1;
                 return *std::construct_at( &ST::template get< i >( storage ), (Args&&) args... );

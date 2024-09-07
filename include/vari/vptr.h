@@ -44,8 +44,6 @@ class _vptr
 public:
         using types = typelist< Ts... >;
 
-        static_assert( is_flat_v< types >, "The provided typelist has to be flat" );
-
         using reference = _vref< Ts... >;
 
         _vptr()                              = default;
