@@ -1,9 +1,10 @@
 var typelist_8h =
 [
     [ "vari::typelist< Ts >", "structvari_1_1typelist.html", null ],
-    [ "vari::index_of< T, typelist< T, Ts... > >", "structvari_1_1index__of_3_01T_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html", null ],
-    [ "vari::index_of< T, typelist< const T, Ts... > >", "structvari_1_1index__of_3_01T_00_01typelist_3_01const_01T_00_01Ts_8_8_8_01_4_01_4.html", null ],
-    [ "vari::index_of< T, typelist< U, Ts... > >", "structvari_1_1index__of_3_01T_00_01typelist_3_01U_00_01Ts_8_8_8_01_4_01_4.html", null ],
+    [ "vari::index_of_t_or_const_t< T, typelist<> >", "structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_4_01_4.html", null ],
+    [ "vari::index_of_t_or_const_t< T, typelist< T, Ts... > >", "structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html", null ],
+    [ "vari::index_of_t_or_const_t< T, typelist< const T, Ts... > >", "structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_01const_01T_00_01Ts_8_8_8_01_4_01_4.html", null ],
+    [ "vari::index_of_t_or_const_t< T, typelist< U, Ts... > >", "structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_01U_00_01Ts_8_8_8_01_4_01_4.html", null ],
     [ "vari::type_at< j, typelist< T, Ts... > >", "structvari_1_1type__at_3_01j_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html", "structvari_1_1type__at_3_01j_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4" ],
     [ "vari::type_at< 0, typelist< T, Ts... > >", "structvari_1_1type__at_3_010_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html", "structvari_1_1type__at_3_010_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4" ],
     [ "vari::contains_type< T, typelist< Ts... > >", "structvari_1_1contains__type_3_01T_00_01typelist_3_01Ts_8_8_8_01_4_01_4.html", null ],
@@ -14,9 +15,6 @@ var typelist_8h =
     [ "vari::flatten_impl< typelist< Us... >, T, Ts... >", "structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01T_00_01Ts_8_8_8_01_4.html", "structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01T_00_01Ts_8_8_8_01_4" ],
     [ "vari::flatten_impl< typelist< Us... >, typelist< Ks... >, Ts... >", "structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01Ks_8_8_8_01_4_00_01Ts_8_8_8_01_4.html", "structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01Ks_8_8_8_01_4_00_01Ts_8_8_8_01_4" ],
     [ "vari::flatten_impl< typelist< Us... >, typelist< Ks... > const, Ts... >", "structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01Ks_8_8_8_01_4_01const_00_01Ts_8_8_8_01_4.html", "structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01Ks_8_8_8_01_4_01const_00_01Ts_8_8_8_01_4" ],
-    [ "vari::is_flat< typelist<> >", "structvari_1_1is__flat_3_01typelist_3_4_01_4.html", null ],
-    [ "vari::is_flat< typelist< T, Ts... > >", "structvari_1_1is__flat_3_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html", null ],
-    [ "vari::is_flat< typelist< typelist< Us... >, Ts... > >", "structvari_1_1is__flat_3_01typelist_3_01typelist_3_01Us_8_8_8_01_4_00_01Ts_8_8_8_01_4_01_4.html", null ],
     [ "vari::is_subset< typelist< Us... >, RH >", "structvari_1_1is__subset_3_01typelist_3_01Us_8_8_8_01_4_00_01RH_01_4.html", null ],
     [ "vari::is_subset< typelist< Us... > const, RH >", "structvari_1_1is__subset_3_01typelist_3_01Us_8_8_8_01_4_01const_00_01RH_01_4.html", null ],
     [ "vari::any_is_const< typelist< Us... > >", "structvari_1_1any__is__const_3_01typelist_3_01Us_8_8_8_01_4_01_4.html", null ],

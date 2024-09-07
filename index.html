@@ -115,9 +115,9 @@ From std::variant to vptr or vref</h1>
 <div class="line"> </div>
 <div class="line">a_t a;</div>
 <div class="line">foo(a);</div>
-<div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdef"><b>Definition:</b> vptr.h:141</div></div>
+<div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdef"><b>Definition:</b> vptr.h:139</div></div>
 </div><!-- fragment --><p >But, what if we want to express that the pointer can never be null? With variant we can use <code>std::variant&lt;std::reference_wrapper&lt;a_t&gt;, std::reference_wrapper&lt;b_t&gt;&gt;</code> but that is not elegant at all. Here, <code>vref</code> comes to the rescue: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> foo(<a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;a_t, b_t&gt;</a>);</div>
-<div class="ttc" id="anamespacevari_html_a0b711b10138e06f9d5b455ff55c663d0"><div class="ttname"><a href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a></div><div class="ttdeci">_define_variadic&lt; _vref, typelist&lt; Ts... &gt; &gt; vref</div><div class="ttdef"><b>Definition:</b> vref.h:102</div></div>
+<div class="ttc" id="anamespacevari_html_a0b711b10138e06f9d5b455ff55c663d0"><div class="ttname"><a href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a></div><div class="ttdeci">_define_variadic&lt; _vref, typelist&lt; Ts... &gt; &gt; vref</div><div class="ttdef"><b>Definition:</b> vref.h:100</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
 uvptr and uvref</h1>
 <p ><code>u</code> prefixed variants imply ownership (unique), this way we can use them to manage lifetimes of objects - in same way as <code>std::variant</code> does.</p>
@@ -125,7 +125,7 @@ uvptr and uvref</h1>
 <div class="line"><span class="keyword">struct </span>b_t;</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#ad82d68f165b27cedcbdf385779eacb69">vari::uvptr&lt;a_t, b_t&gt;</a> p;</div>
-<div class="ttc" id="anamespacevari_html_ad82d68f165b27cedcbdf385779eacb69"><div class="ttname"><a href="namespacevari.html#ad82d68f165b27cedcbdf385779eacb69">vari::uvptr</a></div><div class="ttdeci">_define_variadic&lt; _uvptr, typelist&lt; Ts... &gt; &gt; uvptr</div><div class="ttdef"><b>Definition:</b> uvptr.h:210</div></div>
+<div class="ttc" id="anamespacevari_html_ad82d68f165b27cedcbdf385779eacb69"><div class="ttname"><a href="namespacevari.html#ad82d68f165b27cedcbdf385779eacb69">vari::uvptr</a></div><div class="ttdeci">_define_variadic&lt; _uvptr, typelist&lt; Ts... &gt; &gt; uvptr</div><div class="ttdef"><b>Definition:</b> uvptr.h:209</div></div>
 </div><!-- fragment --><p> Note that the <code>uvptr</code> can accept forward declared struct in friendly manner. Similar (bot not same) to <code>std::make_unique</code>, we have a friendly function to build the unique variants: <code>uwrap</code></p>
 <div class="fragment"><div class="line">uvptr&lt;std::string, int&gt; p = uwrap(std::string{<span class="stringliteral">&quot;wololo&quot;</span>});</div>
 </div><!-- fragment --><p> Note that signature of uwrap is <code>uvref&lt;T&gt; uwrap(T item)</code>, this works as we allow natural conversion of <code>uvref</code> to <code>uvptr</code>, but not the other way around.</p>
@@ -173,7 +173,7 @@ Take</h2>
 <div class="line">    std::move(r).take([&amp;](<a class="code hl_typedef" href="namespacevari.html#a53e8ed5b1956a1a8da2dd92ccd1249c9">vari::uvref&lt;a_t&gt;</a>){},</div>
 <div class="line">                      [&amp;](<a class="code hl_typedef" href="namespacevari.html#a53e8ed5b1956a1a8da2dd92ccd1249c9">vari::uvref&lt;b_t&gt;</a>){});</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespacevari_html_a53e8ed5b1956a1a8da2dd92ccd1249c9"><div class="ttname"><a href="namespacevari.html#a53e8ed5b1956a1a8da2dd92ccd1249c9">vari::uvref</a></div><div class="ttdeci">_define_variadic&lt; _uvref, typelist&lt; Ts... &gt; &gt; uvref</div><div class="ttdef"><b>Definition:</b> uvref.h:152</div></div>
+<div class="ttc" id="anamespacevari_html_a53e8ed5b1956a1a8da2dd92ccd1249c9"><div class="ttname"><a href="namespacevari.html#a53e8ed5b1956a1a8da2dd92ccd1249c9">vari::uvref</a></div><div class="ttdeci">_define_variadic&lt; _uvref, typelist&lt; Ts... &gt; &gt; uvref</div><div class="ttdef"><b>Definition:</b> uvref.h:151</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
 Concepts checks</h2>
 <p >Access methods are subjected to same sanity checking of the set of callbacks: For each type in the set, one and only one callbacks can be called.</p>
@@ -229,7 +229,7 @@ Type-sets</h1>
 <p >Given the following type sets: </p><div class="fragment"><div class="line"><span class="keyword">using </span>set_a = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;a_t, b_t&gt;</a>;</div>
 <div class="line"><span class="keyword">using </span>set_b = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;c_t, d_t&gt;</a>;</div>
 <div class="line"><span class="keyword">using </span>set_s = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;set_a, set_b, d_t&gt;</a>;</div>
-<div class="ttc" id="astructvari_1_1typelist_html"><div class="ttname"><a href="structvari_1_1typelist.html">vari::typelist</a></div><div class="ttdef"><b>Definition:</b> typelist.h:30</div></div>
+<div class="ttc" id="astructvari_1_1typelist_html"><div class="ttname"><a href="structvari_1_1typelist.html">vari::typelist</a></div><div class="ttdef"><b>Definition:</b> typelist.h:32</div></div>
 </div><!-- fragment --><p> The pointer <code>vptr&lt;set_s&gt;</code> actually resolves to equivalent of <code>vptr&lt;a_t, b_t, c_t, d_t&gt;</code>. The flatenning/filtering mechanism only resolves <code><a class="el" href="structvari_1_1typelist.html">vari::typelist</a></code>, that means that <code>void&lt;std::tuple&lt;a_t,b_t&gt;&gt;</code> would not be resolved to different form.</p>
 <p >Why? well, suddenly one can express complex data structures. Note that the typelists also interact well with sub-typing: </p><div class="fragment"><div class="line"><span class="keyword">using </span>simple_types = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;std::string, int, bool&gt;</a>;</div>
 <div class="line"><span class="keyword">using </span>complex_types = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;array_t, object_t&gt;</a>;</div>
