@@ -40,8 +40,8 @@ template < typename TL >
 struct _ptr_core
 {
 
-        std::size_t index = 0;
-        void*       ptr   = nullptr;
+        index_type index = null_index;
+        void*      ptr   = nullptr;
 
 
         _ptr_core() noexcept = default;
@@ -49,7 +49,7 @@ struct _ptr_core
         template < typename UL >
                 requires( vconvertible_to< UL, TL > )
         _ptr_core( _ptr_core< UL > other ) noexcept
-          : index( _vptr_cnv_map< TL, UL >::value[other.get_index()] )
+          : index( _vptr_cnv_map< TL, UL >::conv( other.get_index() ) )
           , ptr( to_void_cast( other.ptr ) )
         {
         }
@@ -57,12 +57,12 @@ struct _ptr_core
         template < typename U >
                 requires( vconvertible_to< typelist< U >, TL > )
         _ptr_core( U& val ) noexcept
-          : index( 1 + index_of_t_or_const_t_v< U, TL > )
+          : index( index_of_t_or_const_t_v< U, TL > )
           , ptr( to_void_cast( &val ) )
         {
         }
 
-        [[nodiscard]] constexpr std::size_t get_index() const noexcept
+        [[nodiscard]] constexpr index_type get_index() const noexcept
         {
                 return index;
         }
@@ -71,7 +71,7 @@ struct _ptr_core
         decltype( auto ) visit_impl( Fs&&... fs ) const
         {
                 return _dispatch_index< 0, TL::size >(
-                    index - 1, [&]< std::size_t j >() -> decltype( auto ) {
+                    index, [&]< index_type j >() -> decltype( auto ) {
                             using U = type_at_t< j, TL >;
                             U* p    = static_cast< U* >( ptr );
                             return _dispatch_fun( *p, (Fs&&) fs... );
@@ -87,7 +87,7 @@ struct _ptr_core
         decltype( auto ) take_impl( Fs&&... fs ) const
         {
                 return _dispatch_index< 0, TL::size >(
-                    index - 1, [&]< std::size_t j >() -> decltype( auto ) {
+                    index, [&]< index_type j >() -> decltype( auto ) {
                             using U        = type_at_t< j, TL >;
                             using ArgType  = ArgTempl< U >;
                             using ConvType = ConvTempl< U >;
@@ -98,9 +98,9 @@ struct _ptr_core
 
         void delete_ptr()
         {
-                if ( index == 0 )
+                if ( index == null_index )
                         return;
-                _dispatch_index< 0, TL::size >( index - 1, [&]< std::size_t j > {
+                _dispatch_index< 0, TL::size >( index, [&]< index_type j > {
                         using U = type_at_t< j, TL >;
                         delete static_cast< U* >( ptr );
                 } );
@@ -125,9 +125,9 @@ struct _ptr_core< typelist< T > >
         {
         }
 
-        [[nodiscard]] constexpr std::size_t get_index() const noexcept
+        [[nodiscard]] constexpr index_type get_index() const noexcept
         {
-                return ptr == nullptr ? 0 : 1;
+                return ptr == nullptr ? null_index : 0;
         }
 
         template < typename... Fs >

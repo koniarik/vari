@@ -21,8 +21,10 @@
 #include "vari/vval.h"
 
 #include "./common.h"
+#include "test_types.h"
 
 #include <doctest/doctest.h>
+#include <source_location>
 #include <vector>
 
 namespace vari
@@ -46,18 +48,99 @@ static_assert( valid_split<
 TEST_CASE( "val_core" )
 {
         _val_core< typelist< float, char > > c1;
-        CHECK_EQ( c1.index, 0 );
+        CHECK_EQ( c1.index, null_index );
 
         c1.emplace< float >( 0.1f );
+        CHECK_EQ( c1.index, 0 );
+
+        c1.destroy();
+        CHECK_EQ( c1.index, null_index );
+
+        c1.emplace< char >( 'w' );
         CHECK_EQ( c1.index, 1 );
 
         c1.destroy();
-        CHECK_EQ( c1.index, 0 );
+}
 
-        c1.emplace< char >( 'w' );
-        CHECK_EQ( c1.index, 2 );
+struct throw_mv_const : move_constructible< nothrow::NO >
+{
+};
 
-        c1.destroy();
+struct throw_cp_const : copy_constructible< nothrow::NO >
+{
+        throw_cp_const() noexcept                   = default;
+        throw_cp_const( throw_cp_const const& )     = default;
+        throw_cp_const( throw_cp_const&& ) noexcept = default;
+};
+
+struct throw_const : move_constructible< nothrow::NO >, copy_constructible< nothrow::NO >
+{
+};
+
+/*
+    typelist< int >,
+    typelist< float, int >,
+    typelist< throw_const >,
+    typelist< int, throw_const >,
+    typelist< throw_mv_const >,
+    typelist< int, throw_mv_const >,
+    typelist< throw_cp_const >,
+    typelist< int, throw_cp_const >,
+    big_set )
+*/
+
+template < typename T, typename U >
+void vval_construct_test(
+    U&&                  thing,
+    nothrow              nt,
+    std::size_t          index,
+    std::source_location sl = std::source_location::current() )
+{
+        INFO( std::string{ sl.file_name() }, ":", sl.line() );
+        T v1{ (U&&) thing };
+        CHECK_EQ( v1.get_index(), index );
+        CHECK( noexcept( T{ (U&&) thing } ) == ( nt == nothrow::YES ) );
+
+        T v2{ std::in_place_type_t< std::remove_cvref_t< U > >{}, (U&&) thing };
+        CHECK_EQ( v2.get_index(), index );
+        CHECK(
+            noexcept( T{ std::in_place_type_t< std::remove_cvref_t< U > >{}, (U&&) thing } ) ==
+            ( nt == nothrow::YES ) );
+}
+
+TEST_CASE( "vval_construct" )
+{
+
+        int i = 42;
+        vval_construct_test< vval< int > >( i, nothrow::YES, 0 );
+        vval_construct_test< vval< int > >( 42, nothrow::YES, 0 );
+        vval_construct_test< vval< float, int > >( i, nothrow::YES, 1 );
+        vval_construct_test< vval< float, int > >( 42, nothrow::YES, 1 );
+        vval_construct_test< vval< float, int > >( 42.0F, nothrow::YES, 0 );
+        throw_const tc;
+        vval_construct_test< vval< throw_const > >( tc, nothrow::NO, 0 );
+        vval_construct_test< vval< throw_const > >( throw_const{}, nothrow::NO, 0 );
+        vval_construct_test< vval< int, throw_const > >( tc, nothrow::NO, 1 );
+        vval_construct_test< vval< int, throw_const > >( throw_const{}, nothrow::NO, 1 );
+        vval_construct_test< vval< int, throw_const > >( i, nothrow::YES, 0 );
+        vval_construct_test< vval< int, throw_const > >( 42, nothrow::YES, 0 );
+        throw_mv_const mtc;
+        vval_construct_test< vval< throw_mv_const > >( mtc, nothrow::YES, 0 );
+        vval_construct_test< vval< throw_mv_const > >( throw_mv_const{}, nothrow::NO, 0 );
+        vval_construct_test< vval< int, throw_mv_const > >( mtc, nothrow::YES, 1 );
+        vval_construct_test< vval< int, throw_mv_const > >( throw_mv_const{}, nothrow::NO, 1 );
+        throw_cp_const ctc;
+        vval_construct_test< vval< throw_cp_const > >( ctc, nothrow::NO, 0 );
+        vval_construct_test< vval< throw_cp_const > >( throw_cp_const{}, nothrow::YES, 0 );
+        vval_construct_test< vval< int, throw_cp_const > >( ctc, nothrow::NO, 1 );
+        vval_construct_test< vval< int, throw_cp_const > >( throw_cp_const{}, nothrow::YES, 1 );
+
+        for ( std::size_t i = 0; i < big_set::size; i++ )
+                _dispatch_index< 0, big_set::size >( i, [&]< std::size_t j >() -> decltype( auto ) {
+                        tag< j > tg{};
+                        vval_construct_test< vval< big_set > >( tg, nothrow::NO, j );
+                        vval_construct_test< vval< big_set > >( tag< j >{}, nothrow::YES, j );
+                } );
 }
 
 TEST_CASE( "vval_visit" )
@@ -95,32 +178,6 @@ TEST_CASE( "vval_visit" )
 }
 
 
-template < std::size_t i >
-struct tag
-{
-        std::string j = std::to_string( i );
-};
-using big_set = typelist<
-    tag< 0 >,
-    tag< 1 >,
-    tag< 2 >,
-    tag< 3 >,
-    tag< 4 >,
-    tag< 5 >,
-    tag< 6 >,
-    tag< 7 >,
-    tag< 8 >,
-    tag< 9 >,
-    tag< 10 >,
-    tag< 11 >,
-    tag< 12 >,
-    tag< 13 >,
-    tag< 14 >,
-    tag< 15 >,
-    tag< 16 >,
-    tag< 17 >,
-    tag< 18 >,
-    tag< 19 > >;
 TEST_CASE( "vval_big" )
 {
         vval< big_set > v{ tag< 8 >{} };

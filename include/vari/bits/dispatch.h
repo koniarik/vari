@@ -27,8 +27,8 @@
 namespace vari
 {
 
-template < std::size_t Off, std::size_t N, typename F >
-constexpr decltype( auto ) _dispatch_index( std::size_t const i, F&& f )
+template < index_type Off, index_type N, typename F >
+constexpr decltype( auto ) _dispatch_index( index_type const i, F&& f )
 {
 #define VARI_GEN_CASE( x )                           \
         case Off + ( x ):                            \

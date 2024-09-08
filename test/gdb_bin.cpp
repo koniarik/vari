@@ -66,36 +66,36 @@ void run_tests( mode m, auto& st )
         std::string s = "wololo";
 
         vari::vptr< int > v1;
-        CHECK( m, v1, "vari::vptr = {[0] = empty}", st );
+        CHECK( m, v1, "vari::vptr = {0x0}", st );
         v1 = i;
-        CHECK( m, v1, "vari::vptr = {[1] = 42}", st );
+        CHECK( m, v1, "vari::vptr = {42}", st );
 
         vari::vptr< int, std::string > v2;
-        CHECK( m, v2, "vari::vptr = {[0] = empty}", st );
+        CHECK( m, v2, "vari::vptr = {0x0}", st );
         v2 = s;
-        CHECK( m, v2, "vari::vptr = {[2] = \"wololo\"}", st );
+        CHECK( m, v2, "vari::vptr = {\"wololo\"}", st );
 
         vari::vref< int > r1 = i;
-        CHECK( m, r1, "vari::vref = {[1] = 42}", st );
+        CHECK( m, r1, "vari::vref = {42}", st );
 
         vari::vref< int, std::string > r2 = s;
-        CHECK( m, r2, "vari::vref = {[2] = \"wololo\"}", st );
+        CHECK( m, r2, "vari::vref = {\"wololo\"}", st );
 
         vari::uvptr< int > uv1;
-        CHECK( m, uv1, "vari::uvptr = {[0] = empty}", st );
+        CHECK( m, uv1, "vari::uvptr = {0x0}", st );
         uv1 = vari::uwrap( i );
-        CHECK( m, uv1, "vari::uvptr = {[1] = 42}", st );
+        CHECK( m, uv1, "vari::uvptr = {42}", st );
 
         vari::uvptr< int, std::string > uv2;
-        CHECK( m, uv2, "vari::uvptr = {[0] = empty}", st );
+        CHECK( m, uv2, "vari::uvptr = {0x0}", st );
         uv2 = vari::uwrap( s );
-        CHECK( m, uv2, "vari::uvptr = {[2] = \"wololo\"}", st );
+        CHECK( m, uv2, "vari::uvptr = {\"wololo\"}", st );
 
         vari::uvref< int > ur1 = vari::uwrap( i );
-        CHECK( m, ur1, "vari::uvref = {[1] = 42}", st );
+        CHECK( m, ur1, "vari::uvref = {42}", st );
 
         vari::uvref< int, std::string > ur2 = vari::uwrap( s );
-        CHECK( m, ur2, "vari::uvref = {[2] = \"wololo\"}", st );
+        CHECK( m, ur2, "vari::uvref = {\"wololo\"}", st );
 }
 
 int main( int argc, char* argv[] )
@@ -108,6 +108,8 @@ int main( int argc, char* argv[] )
                 std::string_view pprinter = argv[2];
                 std::ofstream    out{ argv[3] };
                 out << "source " << pprinter << "\n";
+                out << "set logging overwrite"
+                    << "\n";
                 out << "set logging on"
                     << "\n";
                 run_tests( mode::gen, out );

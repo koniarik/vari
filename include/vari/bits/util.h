@@ -21,6 +21,8 @@
 
 #include "vari/bits/typelist.h"
 
+#include <cstdint>
+#include <limits>
 #include <utility>
 
 namespace vari
@@ -50,8 +52,9 @@ concept vconvertible_to = is_subset_v< From_TL, To_TL > || is_subset_v< From_TL 
 // XXX: test
 template < typename U >
 concept forward_nothrow_constructible =
-    ( std::is_lvalue_reference_v< U > ? std::is_nothrow_copy_constructible_v< U > :
-                                        std::is_nothrow_move_constructible_v< U > );
+    ( std::is_lvalue_reference_v< U > ?
+          std::is_nothrow_copy_constructible_v< std::remove_reference_t< U > > :
+          std::is_nothrow_move_constructible_v< U > );
 
 template < typename... Args >
 struct _function_picker
@@ -71,15 +74,23 @@ struct _function_picker
         }
 };
 
+using index_type                 = uint32_t;
+static constexpr auto null_index = std::numeric_limits< index_type >::max();
+
 template < typename TL, typename UL >
 struct _vptr_cnv_map;
 
 template < typename TL, typename... Us >
 struct _vptr_cnv_map< TL, typelist< Us... > >
 {
-        static constexpr std::size_t value[sizeof...( Us ) + 1] = {
-            0u,
-            1 + index_of_t_or_const_t_v< Us, TL >... };
+        static constexpr std::size_t conv( std::size_t i )
+        {
+                return i == null_index ? null_index : value[i];
+        }
+
+private:
+        static constexpr std::size_t value[sizeof...( Us )] = {
+            index_of_t_or_const_t_v< Us, TL >... };
 };
 
 }  // namespace vari

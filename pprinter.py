@@ -19,6 +19,8 @@ def get_template_arg_list(type_obj):
 
 class VPtrCorePrinter(printer_base):
 
+    _null_index = 2 ** 32
+
     def __init__(self, val):
         type_list = get_template_arg_list(val.type)[0]
         alternatives = get_template_arg_list(type_list)
@@ -26,26 +28,39 @@ class VPtrCorePrinter(printer_base):
         if len(alternatives) > 1:
             self._index = int(val['index'])
         else:
-            self._index = 0 if val['ptr'] == 0 else 1
+            self._index = self._null_index if val['ptr'] == 0 else 1
 
-        if self._index == 0 or self._index >= len(alternatives) + 1:
+        if self._index == self._null_index or self._index >= len(alternatives):
             self._ptr = val['ptr']
+            self._type = None
         else:
-            type = alternatives[self._index-1]
-            self._ptr = val['ptr'].cast(type.pointer())
+            self._type = alternatives[self._index]
+            self._ptr = val['ptr'].cast(self._type.pointer())
 
     def to_string(self):
         return str(self._typename)
 
+    class _iter(object):
+        def __init__(self, ptr):
+            self._ptr = ptr
+            self._count = 0
+        def __iter__(self):
+            return self
+        def __next__(self):
+            if self._count == 0:
+                self._count += 1
+                if self._ptr == 0:
+                    return ("empty", gdb.Value(0).cast(gdb.lookup_type("void").pointer()))
+                else:
+                    return (str(self._ptr.type.target()), self._ptr.dereference())
+            if self._count == 1:
+                raise StopIteration
+
     def children(self):
-        if self._ptr == 0:
-            v = "empty"
-        else:
-            v = self._ptr.dereference()
-        return [('index', self._index), ('ptr', v)]
+        return self._iter(self._ptr)
 
     def display_hint(self):
-        return "map"
+        return "array"
 
 class VWrapperPrinter(printer_base):
     def __init__(self, val, core):

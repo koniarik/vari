@@ -111,6 +111,11 @@ public:
                 return _core.template emplace< T >( (Args&&) args... );
         }
 
+        constexpr std::size_t get_index() const noexcept
+        {
+                return _core.index;
+        }
+
         constexpr auto& operator*() const noexcept
         {
                 static_assert( types::size == 1 );
