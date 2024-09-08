@@ -93,4 +93,34 @@ private:
             index_of_t_or_const_t_v< Us, TL >... };
 };
 
+template < typename UL, typename TL >
+struct _split_impl;
+
+template < typename... Us, typename T, typename... Ts >
+        requires( sizeof...( Us ) < sizeof...( Ts ) )
+struct _split_impl< typelist< Us... >, typelist< T, Ts... > >
+{
+        using sub = _split_impl< typelist< Us..., T >, typelist< Ts... > >;
+        using lh  = sub::lh;
+        using rh  = sub::rh;
+};
+
+template < typename... Us, typename T, typename... Ts >
+        requires( sizeof...( Us ) >= sizeof...( Ts ) )
+struct _split_impl< typelist< Us... >, typelist< T, Ts... > >
+{
+        using lh = typelist< Us... >;
+        using rh = typelist< T, Ts... >;
+};
+
+template <>
+struct _split_impl< typelist<>, typelist<> >
+{
+        using lh = typelist<>;
+        using rh = typelist<>;
+};
+
+template < typename TL >
+using split = _split_impl< typelist<>, TL >;
+
 }  // namespace vari
