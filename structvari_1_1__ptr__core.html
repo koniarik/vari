@@ -112,8 +112,8 @@ requires ( vconvertible_to&lt; UL, TL &gt; )</td></tr>
 requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; U &gt;, TL &gt; )</td></tr>
 <tr class="memitem:a5f26509c06e6fd055ec62456f3fbd3ee"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structvari_1_1__ptr__core.html#a5f26509c06e6fd055ec62456f3fbd3ee">_ptr_core</a> (U &amp;val) noexcept</td></tr>
 <tr class="separator:a5f26509c06e6fd055ec62456f3fbd3ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6942a50a2ef45914e4ba49fc28bdaa0"><td class="memItemLeft" align="right" valign="top">constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__ptr__core.html#aa6942a50a2ef45914e4ba49fc28bdaa0">get_index</a> () const noexcept</td></tr>
-<tr class="separator:aa6942a50a2ef45914e4ba49fc28bdaa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa18b2bf81b6550b0e6f21467cbcf907"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__ptr__core.html#aaa18b2bf81b6550b0e6f21467cbcf907">get_index</a> () const noexcept</td></tr>
+<tr class="separator:aaa18b2bf81b6550b0e6f21467cbcf907"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5750cadfa9cde59981a3ef92d5c9f69"><td class="memTemplParams" colspan="2">template&lt;typename... Fs&gt; </td></tr>
 <tr class="memitem:af5750cadfa9cde59981a3ef92d5c9f69"><td class="memTemplItemLeft" align="right" valign="top">decltype(auto)&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structvari_1_1__ptr__core.html#af5750cadfa9cde59981a3ef92d5c9f69">visit_impl</a> (Fs &amp;&amp;... fs) const</td></tr>
 <tr class="separator:af5750cadfa9cde59981a3ef92d5c9f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,8 +125,8 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a6b85328584b8bb27a665fd252106db06"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__ptr__core.html#a6b85328584b8bb27a665fd252106db06">index</a> = 0</td></tr>
-<tr class="separator:a6b85328584b8bb27a665fd252106db06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f7be86088e3d898791f633de6561b2c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__ptr__core.html#a0f7be86088e3d898791f633de6561b2c">index</a> = null_index</td></tr>
+<tr class="separator:a0f7be86088e3d898791f633de6561b2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d5816bf60140ba129aa3d1ed2a5168d"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__ptr__core.html#a5d5816bf60140ba129aa3d1ed2a5168d">ptr</a> = nullptr</td></tr>
 <tr class="separator:a5d5816bf60140ba129aa3d1ed2a5168d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -248,8 +248,8 @@ template&lt;typename TL &gt; </div>
 
 </div>
 </div>
-<a id="aa6942a50a2ef45914e4ba49fc28bdaa0" name="aa6942a50a2ef45914e4ba49fc28bdaa0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6942a50a2ef45914e4ba49fc28bdaa0">&#9670;&#160;</a></span>get_index()</h2>
+<a id="aaa18b2bf81b6550b0e6f21467cbcf907" name="aaa18b2bf81b6550b0e6f21467cbcf907"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa18b2bf81b6550b0e6f21467cbcf907">&#9670;&#160;</a></span>get_index()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -260,7 +260,7 @@ template&lt;typename TL &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr std::size_t <a class="el" href="structvari_1_1__ptr__core.html">vari::_ptr_core</a>&lt; TL &gt;::get_index </td>
+          <td class="memname">constexpr <a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> <a class="el" href="structvari_1_1__ptr__core.html">vari::_ptr_core</a>&lt; TL &gt;::get_index </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -336,8 +336,8 @@ template&lt;typename... Fs&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a6b85328584b8bb27a665fd252106db06" name="a6b85328584b8bb27a665fd252106db06"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b85328584b8bb27a665fd252106db06">&#9670;&#160;</a></span>index</h2>
+<a id="a0f7be86088e3d898791f633de6561b2c" name="a0f7be86088e3d898791f633de6561b2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f7be86088e3d898791f633de6561b2c">&#9670;&#160;</a></span>index</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -345,7 +345,7 @@ template&lt;typename... Fs&gt; </div>
 template&lt;typename TL &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::size_t <a class="el" href="structvari_1_1__ptr__core.html">vari::_ptr_core</a>&lt; TL &gt;::index = 0</td>
+          <td class="memname"><a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> <a class="el" href="structvari_1_1__ptr__core.html">vari::_ptr_core</a>&lt; TL &gt;::index = null_index</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -7,5 +7,6 @@ var util_8h =
     [ "vari::vconvertible_to", "conceptvari_1_1vconvertible__to.html", null ],
     [ "vari::forward_nothrow_constructible", "conceptvari_1_1forward__nothrow__constructible.html", null ],
     [ "_define_variadic", "util_8h.html#ad811f25a7115c12184565db0473a5a93", null ],
-    [ "_vptr_apply_t", "util_8h.html#a27f0cb184dbab9be3139f54135eef7c6", null ]
+    [ "_vptr_apply_t", "util_8h.html#a27f0cb184dbab9be3139f54135eef7c6", null ],
+    [ "index_type", "util_8h.html#a4c4b642a120de6f97cef24c8b60fb2ce", null ]
 ];

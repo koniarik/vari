@@ -270,6 +270,8 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ad811f25a7115c12184565db0473a5a93"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; typename T, typename TL &gt; </td></tr>
 <tr class="memitem:ad811f25a7115c12184565db0473a5a93"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">_define_variadic</a> = <a class="el" href="namespacevari.html#a27f0cb184dbab9be3139f54135eef7c6">_vptr_apply_t</a>&lt; T, <a class="el" href="namespacevari.html#aaa07eec3b32603b583fe8baf576e14ee">unique_typelist_t</a>&lt; <a class="el" href="namespacevari.html#ab99ffc8a5afd4acbc960e1b940b9c53d">flatten_t</a>&lt; TL &gt; &gt; &gt;</td></tr>
 <tr class="separator:ad811f25a7115c12184565db0473a5a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c4b642a120de6f97cef24c8b60fb2ce"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> = uint32_t</td></tr>
+<tr class="separator:a4c4b642a120de6f97cef24c8b60fb2ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad950dff4783054330b8276997d72fde2"><td class="memTemplParams" colspan="2">template&lt;typename TL &gt; </td></tr>
 <tr class="memitem:ad950dff4783054330b8276997d72fde2"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#ad950dff4783054330b8276997d72fde2">split</a> = <a class="el" href="structvari_1_1__split__impl.html">_split_impl</a>&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt;&gt;, TL &gt;</td></tr>
 <tr class="separator:ad950dff4783054330b8276997d72fde2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -291,9 +293,9 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a636019c5f2321b52c11b558412022f29"><td class="memTemplParams" colspan="2">template&lt;std::size_t Off, std::size_t N, typename F &gt; </td></tr>
-<tr class="memitem:a636019c5f2321b52c11b558412022f29"><td class="memTemplItemLeft" align="right" valign="top">constexpr decltype(auto)&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a636019c5f2321b52c11b558412022f29">_dispatch_index</a> (std::size_t const i, F &amp;&amp;f)</td></tr>
-<tr class="separator:a636019c5f2321b52c11b558412022f29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3e85eeb22dd1d293a9faad27085b62d"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> Off, <a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> N, typename F &gt; </td></tr>
+<tr class="memitem:ac3e85eeb22dd1d293a9faad27085b62d"><td class="memTemplItemLeft" align="right" valign="top">constexpr decltype(auto)&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#ac3e85eeb22dd1d293a9faad27085b62d">_dispatch_index</a> (<a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> const i, F &amp;&amp;f)</td></tr>
+<tr class="separator:ac3e85eeb22dd1d293a9faad27085b62d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77d23e28b947e6b21d5e530859632e20"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Fs&gt; </td></tr>
 <tr class="memitem:a77d23e28b947e6b21d5e530859632e20"><td class="memTemplItemLeft" align="right" valign="top">constexpr decltype(auto)&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a77d23e28b947e6b21d5e530859632e20">_dispatch_fun</a> (T &amp;&amp;item, Fs &amp;&amp;... fs)</td></tr>
 <tr class="separator:a77d23e28b947e6b21d5e530859632e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -358,6 +360,20 @@ template&lt;typename... Ts&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="namespacevari.html#ab99ffc8a5afd4acbc960e1b940b9c53d">vari::flatten_t</a> = typedef typename <a class="el" href="structvari_1_1flatten__impl.html">flatten_impl</a>&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt;&gt;, Ts... &gt;::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4c4b642a120de6f97cef24c8b60fb2ce" name="a4c4b642a120de6f97cef24c8b60fb2ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c4b642a120de6f97cef24c8b60fb2ce">&#9670;&#160;</a></span>index_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">vari::index_type</a> = typedef uint32_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -531,13 +547,13 @@ template&lt;typename T , typename... Fs&gt; </div>
 
 </div>
 </div>
-<a id="a636019c5f2321b52c11b558412022f29" name="a636019c5f2321b52c11b558412022f29"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a636019c5f2321b52c11b558412022f29">&#9670;&#160;</a></span>_dispatch_index()</h2>
+<a id="ac3e85eeb22dd1d293a9faad27085b62d" name="ac3e85eeb22dd1d293a9faad27085b62d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3e85eeb22dd1d293a9faad27085b62d">&#9670;&#160;</a></span>_dispatch_index()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t Off, std::size_t N, typename F &gt; </div>
+template&lt;<a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> Off, <a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> N, typename F &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -545,7 +561,7 @@ template&lt;std::size_t Off, std::size_t N, typename F &gt; </div>
         <tr>
           <td class="memname">constexpr decltype(auto) vari::_dispatch_index </td>
           <td>(</td>
-          <td class="paramtype">std::size_t const&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> const&#160;</td>
           <td class="paramname"><em>i</em>, </td>
         </tr>
         <tr>

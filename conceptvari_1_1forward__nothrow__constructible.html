@@ -98,9 +98,10 @@ $(document).ready(function(){initNavTree('conceptvari_1_1forward__nothrow__const
 <h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> U&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="conceptvari_1_1forward__nothrow__constructible.html">vari::forward_nothrow_constructible</a> = </div>
-<div class="line">    ( std::is_lvalue_reference_v&lt; U &gt; ? std::is_nothrow_copy_constructible_v&lt; U &gt; :</div>
-<div class="line">                                        std::is_nothrow_move_constructible_v&lt; U &gt; )</div>
-<div class="ttc" id="aconceptvari_1_1forward__nothrow__constructible_html"><div class="ttname"><a href="conceptvari_1_1forward__nothrow__constructible.html">vari::forward_nothrow_constructible</a></div><div class="ttdef"><b>Definition:</b> util.h:52</div></div>
+<div class="line">    ( std::is_lvalue_reference_v&lt; U &gt; ?</div>
+<div class="line">          std::is_nothrow_copy_constructible_v&lt; std::remove_reference_t&lt; U &gt; &gt; :</div>
+<div class="line">          std::is_nothrow_move_constructible_v&lt; U &gt; )</div>
+<div class="ttc" id="aconceptvari_1_1forward__nothrow__constructible_html"><div class="ttname"><a href="conceptvari_1_1forward__nothrow__constructible.html">vari::forward_nothrow_constructible</a></div><div class="ttdef"><b>Definition:</b> util.h:54</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

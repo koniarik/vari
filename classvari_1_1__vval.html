@@ -144,6 +144,8 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
 requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; T &gt;, <a class="el" href="classvari_1_1__vval.html#af57d9e7f52ea05925bb2d357e59a6878">types</a> &gt; )</td></tr>
 <tr class="memitem:a4d3c539029dcd34473bc121c547d3c61"><td class="memTemplItemLeft" align="right" valign="top">constexpr T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__vval.html#a4d3c539029dcd34473bc121c547d3c61">emplace</a> (Args &amp;&amp;... args) noexcept(std::is_nothrow_constructible_v&lt; T, Args... &gt;)</td></tr>
 <tr class="separator:a4d3c539029dcd34473bc121c547d3c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a452af0c1c3eaa9a344bb35ddb8cb9fd3"><td class="memItemLeft" align="right" valign="top">constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__vval.html#a452af0c1c3eaa9a344bb35ddb8cb9fd3">get_index</a> () const noexcept</td></tr>
+<tr class="separator:a452af0c1c3eaa9a344bb35ddb8cb9fd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac118cd6585d02b59deba2e85848230f7"><td class="memItemLeft" align="right" valign="top">constexpr auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__vval.html#ac118cd6585d02b59deba2e85848230f7">operator*</a> () const noexcept</td></tr>
 <tr class="separator:ac118cd6585d02b59deba2e85848230f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a50c27b9910bbf503293267dacdb4fb"><td class="memItemLeft" align="right" valign="top">constexpr auto *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__vval.html#a1a50c27b9910bbf503293267dacdb4fb">operator-&gt;</a> () const noexcept</td></tr>
@@ -433,6 +435,33 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
           <td class="paramtype">Args &amp;&amp;...&#160;</td>
           <td class="paramname"><em>args</em></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a452af0c1c3eaa9a344bb35ddb8cb9fd3" name="a452af0c1c3eaa9a344bb35ddb8cb9fd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a452af0c1c3eaa9a344bb35ddb8cb9fd3">&#9670;&#160;</a></span>get_index()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Ts&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr std::size_t <a class="el" href="classvari_1_1__vval.html">vari::_vval</a>&lt; Ts &gt;::get_index </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>

@@ -9,6 +9,7 @@ var classvari_1_1__vval =
     [ "_vval", "classvari_1_1__vval.html#a0b1a1bb3b1f5085b71effb3ccc438041", null ],
     [ "~_vval", "classvari_1_1__vval.html#aa219ddbf133dc3ef4a91f55d41dd5fce", null ],
     [ "emplace", "classvari_1_1__vval.html#a4d3c539029dcd34473bc121c547d3c61", null ],
+    [ "get_index", "classvari_1_1__vval.html#a452af0c1c3eaa9a344bb35ddb8cb9fd3", null ],
     [ "operator _vref< Us... >", "classvari_1_1__vval.html#afdb900b7dc28ac0b48860f3573198a73", null ],
     [ "operator _vref< Us... >", "classvari_1_1__vval.html#a8cd6c723b9895e800f2f4c0497941312", null ],
     [ "operator*", "classvari_1_1__vval.html#ac118cd6585d02b59deba2e85848230f7", null ],
