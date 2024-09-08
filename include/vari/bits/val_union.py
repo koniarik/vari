@@ -22,8 +22,8 @@ union _val_union< typelist< {",".join(tmpl_args)} > >
 {{
         static constexpr index_type size = {n};
 
-        _val_union() noexcept {{}};
-        ~_val_union() {{}};
+        _val_union() noexcept {{}}
+        ~_val_union() noexcept {{}}
 
         {items}
 

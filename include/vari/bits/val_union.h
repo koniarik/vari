@@ -77,8 +77,12 @@ union _val_union< typelist< T0 > >
 {
         static constexpr index_type size = 1;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0 item0;
 
@@ -97,8 +101,12 @@ union _val_union< typelist< T0, T1 > >
 {
         static constexpr index_type size = 2;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0 item0;
         T1 item1;
@@ -120,8 +128,12 @@ union _val_union< typelist< T0, T1, T2 > >
 {
         static constexpr index_type size = 3;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0 item0;
         T1 item1;
@@ -146,8 +158,12 @@ union _val_union< typelist< T0, T1, T2, T3 > >
 {
         static constexpr index_type size = 4;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0 item0;
         T1 item1;
@@ -175,8 +191,12 @@ union _val_union< typelist< T0, T1, T2, T3, T4 > >
 {
         static constexpr index_type size = 5;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0 item0;
         T1 item1;
@@ -207,8 +227,12 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5 > >
 {
         static constexpr index_type size = 6;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0 item0;
         T1 item1;
@@ -249,8 +273,12 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6 > >
 {
         static constexpr index_type size = 7;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0 item0;
         T1 item1;
@@ -295,8 +323,12 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7 > >
 {
         static constexpr index_type size = 8;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0 item0;
         T1 item1;
@@ -345,8 +377,12 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8 > >
 {
         static constexpr index_type size = 9;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0 item0;
         T1 item1;
@@ -399,8 +435,12 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9 > >
 {
         static constexpr index_type size = 10;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0 item0;
         T1 item1;
@@ -457,8 +497,12 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10 > >
 {
         static constexpr index_type size = 11;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0  item0;
         T1  item1;
@@ -519,8 +563,12 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11 > >
 {
         static constexpr index_type size = 12;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0  item0;
         T1  item1;
@@ -585,8 +633,12 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T1
 {
         static constexpr index_type size = 13;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0  item0;
         T1  item1;
@@ -655,8 +707,12 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T1
 {
         static constexpr index_type size = 14;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0  item0;
         T1  item1;
@@ -729,8 +785,12 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T1
 {
         static constexpr index_type size = 15;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0  item0;
         T1  item1;
@@ -807,8 +867,12 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T1
 {
         static constexpr index_type size = 16;
 
-        _val_union() noexcept {};
-        ~_val_union(){};
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
 
         T0  item0;
         T1  item1;
