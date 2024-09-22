@@ -117,16 +117,14 @@ public:
                 return _ptr;
         }
 
-        template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
-        operator _vptr< Us... >() & noexcept
+        [[nodiscard]] constexpr index_type index() const noexcept
         {
-                return _ptr;
+                return _ptr.index();
         }
 
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
-        operator _vptr< Us... >() const& noexcept
+        operator _vptr< Us... >() const noexcept
         {
                 return _ptr;
         }

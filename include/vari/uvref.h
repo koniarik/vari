@@ -87,16 +87,21 @@ public:
                 return _ref;
         }
 
+        [[nodiscard]] constexpr index_type index() const noexcept
+        {
+                return _ref.index();
+        }
+
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
-        operator _vref< Us... >() & noexcept
+        operator _vref< Us... >() const noexcept
         {
                 return _ref;
         }
 
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
-        operator _vref< Us... >() const& noexcept
+        operator _vptr< Us... >() const noexcept
         {
                 return _ref;
         }
