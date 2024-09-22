@@ -49,8 +49,6 @@ public:
                 _core.template emplace< U >( (Args&&) args... );
         }
 
-        // XXX: test the noexcept behavior
-        // test move itself
         constexpr _vval( _vval&& p ) noexcept( std::is_nothrow_move_constructible_v< core_type > )
           : _core( std::move( p._core ) )
         {
@@ -202,9 +200,6 @@ public:
                 return core_type::visit_impl( _core, (Fs&&) f... );
         }
 
-        // XXX:
-        // - test swappability of values
-        // - test nothrow check
         constexpr friend void
         swap( _vval& lh, _vval& rh ) noexcept( std::is_nothrow_swappable_v< core_type > )
         {
