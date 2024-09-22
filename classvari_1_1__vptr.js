@@ -10,6 +10,7 @@ var classvari_1_1__vptr =
     [ "_vptr", "classvari_1_1__vptr.html#a235e139ee1daa5568ccd883f5802b3ea", null ],
     [ "_vptr", "classvari_1_1__vptr.html#a84d541694768f6f90d2e9e44690fe020", null ],
     [ "get", "classvari_1_1__vptr.html#a2e84f43ed3cea4c172542e15386fa5c5", null ],
+    [ "index", "classvari_1_1__vptr.html#ab6093ade16c20f2edb5ab39a645b0895", null ],
     [ "operator bool", "classvari_1_1__vptr.html#ab3709dac96f6912c0c1d2243e355380a", null ],
     [ "operator*", "classvari_1_1__vptr.html#a6d1c8ec242f1cf8b1430a358609d4f53", null ],
     [ "operator->", "classvari_1_1__vptr.html#a8b3f18fcae70bab435a29199de23cc92", null ],

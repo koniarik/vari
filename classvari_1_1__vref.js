@@ -4,6 +4,7 @@ var classvari_1_1__vref =
     [ "_vref", "classvari_1_1__vref.html#a7502cf7d2657f6002fbce2376e9d9acf", null ],
     [ "_vref", "classvari_1_1__vref.html#aab9f46e55fded93a6c46c29d0d074d3f", null ],
     [ "get", "classvari_1_1__vref.html#a623ef3b419acac3b41fae3bd989420d3", null ],
+    [ "index", "classvari_1_1__vref.html#a5d224d443de1045e3f57cec361a6a26b", null ],
     [ "operator*", "classvari_1_1__vref.html#a01ad69a8b895c847b7d316662860d854", null ],
     [ "operator->", "classvari_1_1__vref.html#ae6836624875508f68a842531c0ff2123", null ],
     [ "visit", "classvari_1_1__vref.html#a32a704d6abf0fd7b52461c4af359189d", null ],
