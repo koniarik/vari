@@ -150,14 +150,12 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
 <tr class="separator:ae2474bc3bbf30d5b7a20c3bf4c12e050"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3efd778ea21158e05bb23fef1ae1486d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classvari_1_1__uvptr.html#a62687606225b479b4c88e6b9f64af6bf">pointer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a3efd778ea21158e05bb23fef1ae1486d">get</a> () const noexcept</td></tr>
 <tr class="separator:a3efd778ea21158e05bb23fef1ae1486d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ecf877ac734810d7ed950d0a21775df"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
+<tr class="memitem:a09a54f0cdcdf48659baf0e7e485882eb"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a09a54f0cdcdf48659baf0e7e485882eb">index</a> () const noexcept</td></tr>
+<tr class="separator:a09a54f0cdcdf48659baf0e7e485882eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af75d8861ba46409fcbf2e27339c969ec"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
 requires ( vconvertible_to&lt; <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt; &gt; )</td></tr>
-<tr class="memitem:a4ecf877ac734810d7ed950d0a21775df"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a4ecf877ac734810d7ed950d0a21775df">operator _vptr&lt; Us... &gt;</a> () &amp;noexcept</td></tr>
-<tr class="separator:a4ecf877ac734810d7ed950d0a21775df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a582be21a008be845bad4aa603fba2f09"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt; &gt; )</td></tr>
-<tr class="memitem:a582be21a008be845bad4aa603fba2f09"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a582be21a008be845bad4aa603fba2f09">operator _vptr&lt; Us... &gt;</a> () const &amp;noexcept</td></tr>
-<tr class="separator:a582be21a008be845bad4aa603fba2f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af75d8861ba46409fcbf2e27339c969ec"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#af75d8861ba46409fcbf2e27339c969ec">operator _vptr&lt; Us... &gt;</a> () const noexcept</td></tr>
+<tr class="separator:af75d8861ba46409fcbf2e27339c969ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a69b12b7a67067fb456af3a0d7181d502"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a69b12b7a67067fb456af3a0d7181d502">reset</a> (<a class="el" href="classvari_1_1__uvptr.html#a62687606225b479b4c88e6b9f64af6bf">pointer</a> ptr=<a class="el" href="classvari_1_1__uvptr.html#a62687606225b479b4c88e6b9f64af6bf">pointer</a>())</td></tr>
 <tr class="separator:a69b12b7a67067fb456af3a0d7181d502"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d3e775673c40203bd0608bf89e840fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvari_1_1__uvptr.html#a62687606225b479b4c88e6b9f64af6bf">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a6d3e775673c40203bd0608bf89e840fe">release</a> () noexcept</td></tr>
@@ -484,38 +482,35 @@ template&lt;typename... Ts&gt; </div>
 
 </div>
 </div>
-<a id="a4ecf877ac734810d7ed950d0a21775df" name="a4ecf877ac734810d7ed950d0a21775df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ecf877ac734810d7ed950d0a21775df">&#9670;&#160;</a></span>operator _vptr&lt; Us... &gt;() <span class="overload">[1/2]</span></h2>
+<a id="a09a54f0cdcdf48659baf0e7e485882eb" name="a09a54f0cdcdf48659baf0e7e485882eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09a54f0cdcdf48659baf0e7e485882eb">&#9670;&#160;</a></span>index()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename... Ts&gt; </div>
-<div class="memtemplate">
-template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt; &gt; )</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::operator <a class="el" href="classvari_1_1__vptr.html">_vptr</a>&lt; Us... &gt; </td>
+          <td class="memname">constexpr <a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::index </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> &amp;</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a582be21a008be845bad4aa603fba2f09" name="a582be21a008be845bad4aa603fba2f09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a582be21a008be845bad4aa603fba2f09">&#9670;&#160;</a></span>operator _vptr&lt; Us... &gt;() <span class="overload">[2/2]</span></h2>
+<a id="af75d8861ba46409fcbf2e27339c969ec" name="af75d8861ba46409fcbf2e27339c969ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af75d8861ba46409fcbf2e27339c969ec">&#9670;&#160;</a></span>operator _vptr&lt; Us... &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -532,7 +527,7 @@ requires ( vconvertible_to&lt; <a class="el" href="classvari_1_1__uvptr.html#a5c
           <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::operator <a class="el" href="classvari_1_1__vptr.html">_vptr</a>&lt; Us... &gt; </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const &amp;</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
