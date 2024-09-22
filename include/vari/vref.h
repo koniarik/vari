@@ -64,6 +64,11 @@ public:
                 return _core.ptr;
         }
 
+        [[nodiscard]] constexpr index_type index() const noexcept
+        {
+                return _core.get_index();
+        }
+
         template < typename... Fs >
         decltype( auto ) visit( Fs&&... fs ) const
         {

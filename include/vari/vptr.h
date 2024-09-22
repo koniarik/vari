@@ -92,6 +92,11 @@ public:
                 return _core.ptr;
         }
 
+        [[nodiscard]] constexpr index_type index() const noexcept
+        {
+                return _core.get_index();
+        }
+
         operator bool() const noexcept
         {
                 return _core.ptr != nullptr;

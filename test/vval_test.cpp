@@ -119,6 +119,28 @@ void vval_construct_test(
         CHECK(
             noexcept( v4.template emplace< std::remove_cvref_t< U > >( (U&&) thing ) ) ==
             ( nt == nothrow::YES ) );
+        v4.template emplace< int >( 42 );
+
+        if constexpr ( T::types::size < 32 ) {
+
+                vref< typename T::types > vrf1{ v1 };
+                CHECK_EQ( vrf1.index(), index );
+
+                vptr< typename T::types > vpr1{ v2 };
+                CHECK_EQ( vpr1.index(), index );
+
+                vref< typename T::types const > vrf2{ v1 };
+                CHECK_EQ( vrf2.index(), index );
+
+                vptr< typename T::types const > vpr2{ v2 };
+                CHECK_EQ( vpr2.index(), index );
+
+                vref< typename T::types const > vrf3{ std::as_const( v1 ) };
+                CHECK_EQ( vrf3.index(), index );
+
+                vptr< typename T::types const > vpr3{ std::as_const( v2 ) };
+                CHECK_EQ( vpr3.index(), index );
+        }
 }
 
 TEST_CASE( "vval_construct" )
@@ -219,6 +241,14 @@ TEST_CASE( "vval_move" )
                         vval< tag< 0 >, tag< 4 >, tag< j >, tag< 42 > > tg{ tag< j >{} };
                         vval_move_test< vval< big_set > >( std::move( tg ), nothrow::YES, j );
                 } );
+}
+
+TEST_CASE( "vval_deref" )
+{
+        vval< std::string > v1{ "wololo"s };
+        std::string         vv{ "wololo"s };
+        CHECK_EQ( *v1, vv );
+        CHECK_EQ( v1->size(), vv.size() );
 }
 
 

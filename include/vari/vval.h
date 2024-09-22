@@ -89,35 +89,35 @@ public:
                 return *this;
         }
 
-        constexpr _vval&
-        operator=( _vval&& p ) noexcept( std::is_nothrow_move_assignable_v< core_type > )
+        constexpr _vval& operator=( _vval&& p ) noexcept(
+            core_type::template is_nothrow_assignable< typename _vval::core_type&& > )
         {
-                _core = std::move( p._core );
+                _core.assign( std::move( p._core ) );
                 return *this;
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
         constexpr _vval& operator=( _vval< Us... >&& p ) noexcept(
-            std::is_nothrow_assignable_v< core_type, typename _vval< Us... >::core_type&& > )
+            core_type::template is_nothrow_assignable< typename _vval< Us... >::core_type&& > )
         {
-                _core = std::move( p._core );
+                _core.assign( std::move( p._core ) );
                 return *this;
         }
 
-        constexpr _vval&
-        operator=( _vval const& p ) noexcept( std::is_nothrow_copy_assignable_v< core_type > )
+        constexpr _vval& operator=( _vval const& p ) noexcept(
+            core_type::template is_nothrow_assignable< typename _vval::core_type const& > )
         {
-                _core = p._core;
+                _core.assign( p._core );
                 return *this;
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
         constexpr _vval& operator=( _vval< Us... > const& p ) noexcept(
-            std::is_nothrow_assignable_v< core_type, typename _vval< Us... >::core_type const& > )
+            core_type::template is_nothrow_assignable< typename _vval< Us... >::core_type const& > )
         {
-                _core = p._core;
+                _core.assign( p._core );
                 return *this;
         }
 
@@ -126,24 +126,28 @@ public:
         constexpr T&
         emplace( Args&&... args ) noexcept( std::is_nothrow_constructible_v< T, Args... > )
         {
+                _core.destroy();
                 return _core.template emplace< T >( (Args&&) args... );
         }
 
-        constexpr std::size_t index() const noexcept
+        [[nodiscard]] constexpr index_type index() const noexcept
         {
                 return _core.index;
         }
 
         constexpr auto& operator*() const noexcept
         {
-                static_assert( types::size == 1 );
-                return _core.template get< 0 >();
+                if constexpr ( types::size == 1 )
+                        return core_type::ST::template get< 0 >( _core.storage );
+                else
+                        return *core_type::visit_impl( _core, [&]( auto& item ) -> void* {
+                                return &item;
+                        } );
         }
 
         constexpr auto* operator->() const noexcept
         {
-                static_assert( types::size == 1 );
-                return &_core.template get< 0 >();
+                return &**this;
         }
 
         template < typename... Us >
@@ -159,9 +163,24 @@ public:
                 requires( vconvertible_to< types, typelist< Us... > > )
         constexpr operator _vref< Us... >() const& noexcept
         {
+                static_assert( all_is_const_v< typelist< Us... > > );
                 return core_type::visit_impl( _core, [&]( auto& item ) {
                         return _vref< Us... >( item );
                 } );
+        }
+
+        template < typename... Us >
+                requires( vconvertible_to< types, typelist< Us... > > )
+        constexpr operator _vptr< Us... >() & noexcept
+        {
+                return _vref< Us... >{ *this };
+        }
+
+        template < typename... Us >
+                requires( vconvertible_to< types, typelist< Us... > > )
+        constexpr operator _vptr< Us... >() const& noexcept
+        {
+                return _vref< Us... >{ *this };
         }
 
 

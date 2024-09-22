@@ -87,44 +87,16 @@ struct _val_core
                     } );
         }
 
-        constexpr _val_core& operator=( _val_core const& other ) noexcept(
-            all_nothrow_copy_constructible_v< TL > && all_nothrow_destructible_v< TL > &&
-            all_nothrow_swappable_v< TL > )
-        {
-                _val_core tmp{ other };
-                swap( *this, tmp );
-                return *this;
-        }
+        template < typename O >
+        static constexpr bool is_nothrow_assignable =
+            noexcept( _val_core{ std::declval< O >() } ) &&
+            std::is_nothrow_swappable_v< _val_core >;
 
-        template < typename UL >
-                requires( vconvertible_to< UL, TL > )
-        constexpr _val_core& operator=( _val_core< UL > const& other ) noexcept(
-            all_nothrow_copy_constructible_v< UL > && all_nothrow_destructible_v< TL > &&
-            all_nothrow_swappable_v< TL > )
+        template < typename O >
+        constexpr void assign( O&& other ) noexcept( is_nothrow_assignable< O > )
         {
-                _val_core tmp{ other };
+                _val_core tmp{ (O&&) other };
                 swap( *this, tmp );
-                return *this;
-        }
-
-        constexpr _val_core& operator=( _val_core&& other ) noexcept(
-            all_nothrow_move_constructible_v< TL > && all_nothrow_destructible_v< TL > &&
-            all_nothrow_swappable_v< TL > )
-        {
-                _val_core tmp{ std::move( other ) };
-                swap( *this, tmp );
-                return *this;
-        }
-
-        template < typename UL >
-                requires( vconvertible_to< UL, TL > )
-        constexpr _val_core& operator=( _val_core< UL >&& other ) noexcept(
-            all_nothrow_move_constructible_v< UL > && all_nothrow_destructible_v< TL > &&
-            all_nothrow_swappable_v< TL > )
-        {
-                _val_core tmp{ std::move( other ) };
-                swap( *this, tmp );
-                return *this;
         }
 
         friend constexpr void swap( _val_core& lh, _val_core& rh ) noexcept(
