@@ -95,6 +95,6 @@ struct tag_set< 0 >
         using type = typelist< tag< 0 >, tag< 1 >, tag< 2 >, tag< 3 > >;
 };
 
-using big_set = typename tag_set< 255 / 4 >::type;
+using big_set = typename tag_set< 220 / 4 >::type;
 
 }  // namespace vari

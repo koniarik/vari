@@ -86,6 +86,14 @@ public:
                 if ( _core.index != 0 )
                         _core.destroy();
                 _core.template emplace< std::remove_reference_t< U > >( (U&&) v );
+                return *this;
+        }
+
+        constexpr _vval&
+        operator=( _vval&& p ) noexcept( std::is_nothrow_move_assignable_v< core_type > )
+        {
+                _core = std::move( p._core );
+                return *this;
         }
 
         template < typename... Us >
@@ -94,6 +102,14 @@ public:
             std::is_nothrow_assignable_v< core_type, typename _vval< Us... >::core_type&& > )
         {
                 _core = std::move( p._core );
+                return *this;
+        }
+
+        constexpr _vval&
+        operator=( _vval const& p ) noexcept( std::is_nothrow_copy_assignable_v< core_type > )
+        {
+                _core = p._core;
+                return *this;
         }
 
         template < typename... Us >
@@ -102,6 +118,7 @@ public:
             std::is_nothrow_assignable_v< core_type, typename _vval< Us... >::core_type const& > )
         {
                 _core = p._core;
+                return *this;
         }
 
         template < typename T, typename... Args >
@@ -112,7 +129,7 @@ public:
                 return _core.template emplace< T >( (Args&&) args... );
         }
 
-        constexpr std::size_t get_index() const noexcept
+        constexpr std::size_t index() const noexcept
         {
                 return _core.index;
         }

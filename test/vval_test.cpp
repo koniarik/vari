@@ -99,13 +99,25 @@ void vval_construct_test(
 {
         INFO( std::string{ sl.file_name() }, ":", sl.line() );
         T v1{ (U&&) thing };
-        CHECK_EQ( v1.get_index(), index );
+        CHECK_EQ( v1.index(), index );
         CHECK( noexcept( T{ (U&&) thing } ) == ( nt == nothrow::YES ) );
 
         T v2{ std::in_place_type_t< std::remove_cvref_t< U > >{}, (U&&) thing };
-        CHECK_EQ( v2.get_index(), index );
+        CHECK_EQ( v2.index(), index );
         CHECK(
             noexcept( T{ std::in_place_type_t< std::remove_cvref_t< U > >{}, (U&&) thing } ) ==
+            ( nt == nothrow::YES ) );
+
+        T v3{ std::in_place_type_t< int >{}, 42 };
+        v3 = (U&&) thing;
+        CHECK_EQ( v1.index(), index );
+        CHECK( noexcept( v3 = (U&&) thing ) == ( nt == nothrow::YES ) );
+
+        T v4{ std::in_place_type_t< int >{}, 42 };
+        v4.template emplace< std::remove_cvref_t< U > >( (U&&) thing );
+        CHECK_EQ( v1.index(), index );
+        CHECK(
+            noexcept( v4.template emplace< std::remove_cvref_t< U > >( (U&&) thing ) ) ==
             ( nt == nothrow::YES ) );
 }
 
@@ -119,28 +131,28 @@ TEST_CASE( "vval_construct" )
         vval_construct_test< vval< float, int > >( 42, nothrow::YES, 1 );
         vval_construct_test< vval< float, int > >( 42.0F, nothrow::YES, 0 );
         throw_const tc;
-        vval_construct_test< vval< throw_const > >( tc, nothrow::NO, 0 );
-        vval_construct_test< vval< throw_const > >( throw_const{}, nothrow::NO, 0 );
+        vval_construct_test< vval< throw_const, int > >( tc, nothrow::NO, 0 );
+        vval_construct_test< vval< throw_const, int > >( throw_const{}, nothrow::NO, 0 );
         vval_construct_test< vval< int, throw_const > >( tc, nothrow::NO, 1 );
         vval_construct_test< vval< int, throw_const > >( throw_const{}, nothrow::NO, 1 );
         vval_construct_test< vval< int, throw_const > >( i, nothrow::YES, 0 );
         vval_construct_test< vval< int, throw_const > >( 42, nothrow::YES, 0 );
         throw_mv_const mtc;
-        vval_construct_test< vval< throw_mv_const > >( mtc, nothrow::YES, 0 );
-        vval_construct_test< vval< throw_mv_const > >( throw_mv_const{}, nothrow::NO, 0 );
+        vval_construct_test< vval< throw_mv_const, int > >( mtc, nothrow::YES, 0 );
+        vval_construct_test< vval< throw_mv_const, int > >( throw_mv_const{}, nothrow::NO, 0 );
         vval_construct_test< vval< int, throw_mv_const > >( mtc, nothrow::YES, 1 );
         vval_construct_test< vval< int, throw_mv_const > >( throw_mv_const{}, nothrow::NO, 1 );
         throw_cp_const ctc;
-        vval_construct_test< vval< throw_cp_const > >( ctc, nothrow::NO, 0 );
-        vval_construct_test< vval< throw_cp_const > >( throw_cp_const{}, nothrow::YES, 0 );
+        vval_construct_test< vval< throw_cp_const, int > >( ctc, nothrow::NO, 0 );
+        vval_construct_test< vval< throw_cp_const, int > >( throw_cp_const{}, nothrow::YES, 0 );
         vval_construct_test< vval< int, throw_cp_const > >( ctc, nothrow::NO, 1 );
         vval_construct_test< vval< int, throw_cp_const > >( throw_cp_const{}, nothrow::YES, 1 );
 
         for ( std::size_t i = 0; i < big_set::size; i++ )
                 _dispatch_index< 0, big_set::size >( i, [&]< std::size_t j >() -> decltype( auto ) {
                         tag< j > tg{};
-                        vval_construct_test< vval< big_set > >( tg, nothrow::NO, j );
-                        vval_construct_test< vval< big_set > >( tag< j >{}, nothrow::YES, j );
+                        vval_construct_test< vval< big_set, int > >( tg, nothrow::NO, j );
+                        vval_construct_test< vval< big_set, int > >( tag< j >{}, nothrow::YES, j );
                 } );
 }
 
@@ -153,8 +165,13 @@ void vval_copy_test(
 {
         INFO( std::string{ sl.file_name() }, ":", sl.line() );
         To v1{ val };
-        CHECK_EQ( v1.get_index(), index );
+        CHECK_EQ( v1.index(), index );
         CHECK( noexcept( To{ val } ) == ( nt == nothrow::YES ) );
+
+        To v2{ std::in_place_type_t< int >{}, 42 };
+        v2 = val;
+        CHECK_EQ( v2.index(), index );
+        CHECK( noexcept( v2 = val ) == ( nt == nothrow::YES ) );
 }
 
 TEST_CASE( "vval_copy" )
@@ -168,7 +185,7 @@ TEST_CASE( "vval_copy" )
         for ( std::size_t i = 0; i < big_set::size; i++ )
                 _dispatch_index< 0, big_set::size >( i, [&]< std::size_t j >() -> decltype( auto ) {
                         vval< tag< 0 >, tag< 4 >, tag< j >, tag< 42 > > tg{ tag< j >{} };
-                        vval_copy_test< vval< big_set > >( tg, nothrow::NO, j );
+                        vval_copy_test< vval< big_set, int > >( tg, nothrow::NO, j );
                 } );
 }
 
@@ -181,7 +198,7 @@ void vval_move_test(
 {
         INFO( std::string{ sl.file_name() }, ":", sl.line() );
         To v1{ std::move( val ) };
-        CHECK_EQ( v1.get_index(), index );
+        CHECK_EQ( v1.index(), index );
         CHECK( noexcept( To{ std::move( val ) } ) == ( nt == nothrow::YES ) );
 }
 
