@@ -4,7 +4,7 @@ var indexSectionsWithContent =
   1: "_acefintu",
   2: "v",
   3: "dprtuv",
-  4: "_cdegoprtuv~",
+  4: "_cdegioprtuv~",
   5: "bcfilpsv",
   6: "_bfiloprstuv",
   7: "_mos",

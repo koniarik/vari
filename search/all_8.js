@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['index_0',['index',['../structvari_1_1__val__core.html#ad4779361b27f3c9ebbae384b44865da7',1,'vari::_val_core::index()'],['../structvari_1_1__ptr__core.html#a0f7be86088e3d898791f633de6561b2c',1,'vari::_ptr_core::index()']]],
+  ['index_0',['index',['../classvari_1_1__vval.html#a4a21a85290716c6322a82dd2dce80b69',1,'vari::_vval::index()'],['../structvari_1_1__val__core.html#ad4779361b27f3c9ebbae384b44865da7',1,'vari::_val_core::index()'],['../structvari_1_1__ptr__core.html#a0f7be86088e3d898791f633de6561b2c',1,'vari::_ptr_core::index()']]],
   ['index_5fof_5ft_5for_5fconst_5ft_1',['index_of_t_or_const_t',['../structvari_1_1index__of__t__or__const__t.html',1,'vari']]],
   ['index_5fof_5ft_5for_5fconst_5ft_3c_20t_2c_20typelist_3c_20const_20t_2c_20ts_2e_2e_2e_20_3e_20_3e_2',['index_of_t_or_const_t&lt; T, typelist&lt; const T, Ts... &gt; &gt;',['../structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_01const_01T_00_01Ts_8_8_8_01_4_01_4.html',1,'vari']]],
   ['index_5fof_5ft_5for_5fconst_5ft_3c_20t_2c_20typelist_3c_20t_2c_20ts_2e_2e_2e_20_3e_20_3e_3',['index_of_t_or_const_t&lt; T, typelist&lt; T, Ts... &gt; &gt;',['../structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html',1,'vari']]],
