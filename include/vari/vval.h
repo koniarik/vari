@@ -59,7 +59,7 @@ public:
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
         constexpr _vval( _vval< Us... >&& p ) noexcept(
-            std::is_nothrow_constructible_v< core_type, typename _vval< Us... >::core_type > )
+            std::is_nothrow_constructible_v< core_type, typename _vval< Us... >::core_type&& > )
           : _core( std::move( p._core ) )
         {
         }
@@ -73,7 +73,8 @@ public:
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
         constexpr _vval( _vval< Us... > const& p ) noexcept(
-            std::is_nothrow_constructible_v< core_type, typename _vval< Us... >::core_type > )
+            std::
+                is_nothrow_constructible_v< core_type, typename _vval< Us... >::core_type const& > )
           : _core( p._core )
         {
         }

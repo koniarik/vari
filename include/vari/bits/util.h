@@ -101,8 +101,8 @@ template < typename... Us, typename T, typename... Ts >
 struct _split_impl< typelist< Us... >, typelist< T, Ts... > >
 {
         using sub = _split_impl< typelist< Us..., T >, typelist< Ts... > >;
-        using lh  = sub::lh;
-        using rh  = sub::rh;
+        using lh  = typename sub::lh;
+        using rh  = typename sub::rh;
 };
 
 template < typename... Us, typename T, typename... Ts >

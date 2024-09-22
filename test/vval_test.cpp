@@ -29,6 +29,7 @@
 
 namespace vari
 {
+using namespace std::string_literals;
 
 template < typename TL, typename LH, typename RH >
 concept valid_split =
@@ -142,6 +143,67 @@ TEST_CASE( "vval_construct" )
                         vval_construct_test< vval< big_set > >( tag< j >{}, nothrow::YES, j );
                 } );
 }
+
+template < typename To, typename From >
+void vval_copy_test(
+    From&&               val,
+    nothrow              nt,
+    std::size_t          index,
+    std::source_location sl = std::source_location::current() )
+{
+        INFO( std::string{ sl.file_name() }, ":", sl.line() );
+        To v1{ val };
+        CHECK_EQ( v1.get_index(), index );
+        CHECK( noexcept( To{ val } ) == ( nt == nothrow::YES ) );
+}
+
+TEST_CASE( "vval_copy" )
+{
+        vval_copy_test< vval< int > >( vval< int >{ 42 }, nothrow::YES, 0 );
+        vval_copy_test< vval< int, float > >( vval< int >{ 42 }, nothrow::YES, 0 );
+        vval_copy_test< vval< std::string, int > >( vval< int >{ 42 }, nothrow::YES, 1 );
+        vval_copy_test< vval< std::string, int > >(
+            vval< std::string >{ "wololo"s }, nothrow::NO, 0 );
+
+        for ( std::size_t i = 0; i < big_set::size; i++ )
+                _dispatch_index< 0, big_set::size >( i, [&]< std::size_t j >() -> decltype( auto ) {
+                        vval< tag< 0 >, tag< 4 >, tag< j >, tag< 42 > > tg{ tag< j >{} };
+                        vval_copy_test< vval< big_set > >( tg, nothrow::NO, j );
+                } );
+}
+
+template < typename To, typename From >
+void vval_move_test(
+    From&&               val,
+    nothrow              nt,
+    std::size_t          index,
+    std::source_location sl = std::source_location::current() )
+{
+        INFO( std::string{ sl.file_name() }, ":", sl.line() );
+        To v1{ std::move( val ) };
+        CHECK_EQ( v1.get_index(), index );
+        CHECK( noexcept( To{ std::move( val ) } ) == ( nt == nothrow::YES ) );
+}
+
+struct vval_move_constr : move_constructible< nothrow::NO >
+{
+};
+
+TEST_CASE( "vval_move" )
+{
+        vval_move_test< vval< int > >( vval< int >{ 42 }, nothrow::YES, 0 );
+        vval_move_test< vval< int, float > >( vval< int >{ 42 }, nothrow::YES, 0 );
+        vval_move_test< vval< vval_move_constr, int > >( vval< int >{ 42 }, nothrow::YES, 1 );
+        vval_move_test< vval< vval_move_constr, int > >(
+            vval< vval_move_constr >{ vval_move_constr{} }, nothrow::NO, 0 );
+
+        for ( std::size_t i = 0; i < big_set::size; i++ )
+                _dispatch_index< 0, big_set::size >( i, [&]< std::size_t j >() -> decltype( auto ) {
+                        vval< tag< 0 >, tag< 4 >, tag< j >, tag< 42 > > tg{ tag< j >{} };
+                        vval_move_test< vval< big_set > >( std::move( tg ), nothrow::YES, j );
+                } );
+}
+
 
 TEST_CASE( "vval_visit" )
 {
