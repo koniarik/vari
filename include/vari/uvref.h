@@ -158,7 +158,7 @@ using uvref = _define_variadic< _uvref, typelist< Ts... > >;
 template < typename T >
 uvref< T > uwrap( T item )
 {
-        return uvref< T >( vref< T >( *new T( std::move( item ) ) ) );
+        return uvref< T >( *new T( std::move( item ) ) );
 }
 
 }  // namespace vari

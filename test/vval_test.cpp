@@ -322,4 +322,19 @@ TEST_CASE( "cmp" )
         CHECK_GT( v4, v2 );
 }
 
+TEST_CASE( "to_uvref" )
+{
+        vval< int, float > v1{ 42 };
+
+        uvref< int, float > r = to_uvref( std::move( v1 ) );
+        CHECK_EQ( r.index(), 0 );
+        r.visit(
+            [&]( int& i ) {
+                    CHECK_EQ( i, 42 );
+            },
+            [&]( float& ) {
+                    FAIL( "bad branch" );
+            } );
+}
+
 }  // namespace vari
