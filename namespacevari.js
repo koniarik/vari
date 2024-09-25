@@ -98,6 +98,7 @@ var namespacevari =
     [ "_dispatch_index", "namespacevari.html#ac3e85eeb22dd1d293a9faad27085b62d", null ],
     [ "operator<=>", "namespacevari.html#a318743fdaa6ce7e075d774e758d86725", null ],
     [ "operator==", "namespacevari.html#ae8df00bdd5143f042044d66b329246a6", null ],
+    [ "to_uvref", "namespacevari.html#aabcc039fc2056089681b1006e588c4de", null ],
     [ "to_void_cast", "namespacevari.html#a89d91121cbd8944f7df2ea18cdeca936", null ],
     [ "uwrap", "namespacevari.html#a9678fedda24e0632bd16d490e05e7a74", null ]
 ];

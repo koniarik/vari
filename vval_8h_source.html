@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('vval_8h_source.html',''); initResizabl
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;<a class="code" href="dispatch_8h.html">vari/bits/dispatch.h</a>&quot;</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;<a class="code" href="val__core_8h.html">vari/bits/val_core.h</a>&quot;</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;<a class="code" href="vref_8h.html">vari/vref.h</a>&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;<a class="code" href="uvref_8h.html">vari/uvref.h</a>&quot;</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
@@ -311,7 +311,17 @@ $(document).ready(function(){initNavTree('vval_8h_source.html',''); initResizabl
 <div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
 <div class="line"><a id="l00234" name="l00234"></a><span class="lineno"><a class="line" href="namespacevari.html#a2723aaf6449b2f8fb597a7baad0173db">  234</a></span><span class="keyword">using </span><a class="code hl_typedef" href="namespacevari.html#a2723aaf6449b2f8fb597a7baad0173db">vval</a> = <a class="code hl_typedef" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">_define_variadic</a>&lt; <a class="code hl_class" href="classvari_1_1__vval.html">_vval</a>, <a class="code hl_struct" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;;</div>
 <div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>}  <span class="comment">// namespace vari</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno"><a class="line" href="namespacevari.html#aabcc039fc2056089681b1006e588c4de">  237</a></span><a class="code hl_class" href="classvari_1_1__uvref.html">_uvref</a>&lt; Ts... &gt; <a class="code hl_function" href="namespacevari.html#aabcc039fc2056089681b1006e588c4de">to_uvref</a>( <a class="code hl_class" href="classvari_1_1__vval.html">_vval&lt; Ts... &gt;</a> v )</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>{</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        <span class="keyword">using </span>R = <a class="code hl_class" href="classvari_1_1__uvref.html">_uvref</a>&lt; Ts... &gt;;</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        <span class="keywordflow">return</span> v.<a class="code hl_function" href="classvari_1_1__vval.html#aef6ecc4511cf735b6331ed5531a2e8b8">visit</a>( [&amp;]&lt; <span class="keyword">typename</span> U &gt;( U&amp; item ) -&gt; R {</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>                <span class="keywordflow">return</span> R{ *<span class="keyword">new</span> U{ std::move( item ) } };</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        } );</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>}</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> </div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>}  <span class="comment">// namespace vari</span></div>
+<div class="ttc" id="aclassvari_1_1__uvref_html"><div class="ttname"><a href="classvari_1_1__uvref.html">vari::_uvref</a></div><div class="ttdef"><b>Definition:</b> uvref.h:34</div></div>
 <div class="ttc" id="aclassvari_1_1__vptr_html"><div class="ttname"><a href="classvari_1_1__vptr.html">vari::_vptr</a></div><div class="ttdef"><b>Definition:</b> vptr.h:43</div></div>
 <div class="ttc" id="aclassvari_1_1__vref_html"><div class="ttname"><a href="classvari_1_1__vref.html">vari::_vref</a></div><div class="ttdef"><b>Definition:</b> vref.h:34</div></div>
 <div class="ttc" id="aclassvari_1_1__vval_html"><div class="ttname"><a href="classvari_1_1__vval.html">vari::_vval</a></div><div class="ttdef"><b>Definition:</b> vval.h:31</div></div>
@@ -341,6 +351,7 @@ $(document).ready(function(){initNavTree('vval_8h_source.html',''); initResizabl
 <div class="ttc" id="anamespacevari_html"><div class="ttname"><a href="namespacevari.html">vari</a></div><div class="ttdef"><b>Definition:</b> dispatch.h:28</div></div>
 <div class="ttc" id="anamespacevari_html_a2723aaf6449b2f8fb597a7baad0173db"><div class="ttname"><a href="namespacevari.html#a2723aaf6449b2f8fb597a7baad0173db">vari::vval</a></div><div class="ttdeci">_define_variadic&lt; _vval, typelist&lt; Ts... &gt; &gt; vval</div><div class="ttdef"><b>Definition:</b> vval.h:234</div></div>
 <div class="ttc" id="anamespacevari_html_a4c4b642a120de6f97cef24c8b60fb2ce"><div class="ttname"><a href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">vari::index_type</a></div><div class="ttdeci">uint32_t index_type</div><div class="ttdef"><b>Definition:</b> util.h:77</div></div>
+<div class="ttc" id="anamespacevari_html_aabcc039fc2056089681b1006e588c4de"><div class="ttname"><a href="namespacevari.html#aabcc039fc2056089681b1006e588c4de">vari::to_uvref</a></div><div class="ttdeci">_uvref&lt; Ts... &gt; to_uvref(_vval&lt; Ts... &gt; v)</div><div class="ttdef"><b>Definition:</b> vval.h:237</div></div>
 <div class="ttc" id="anamespacevari_html_ad811f25a7115c12184565db0473a5a93"><div class="ttname"><a href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">vari::_define_variadic</a></div><div class="ttdeci">_vptr_apply_t&lt; T, unique_typelist_t&lt; flatten_t&lt; TL &gt; &gt; &gt; _define_variadic</div><div class="ttdef"><b>Definition:</b> util.h:44</div></div>
 <div class="ttc" id="astructvari_1_1__val__core_html"><div class="ttname"><a href="structvari_1_1__val__core.html">vari::_val_core&lt; typelist&lt; Ts... &gt; &gt;</a></div></div>
 <div class="ttc" id="astructvari_1_1__val__core_html_a156f289f0a826e32f428e908404dc4f9"><div class="ttname"><a href="structvari_1_1__val__core.html#a156f289f0a826e32f428e908404dc4f9">vari::_val_core&lt; typelist&lt; Ts... &gt; &gt;::compare</a></div><div class="ttdeci">static constexpr decltype(auto) compare(_val_core const &amp;lh, _val_core const &amp;rh) noexcept(all_nothrow_equality_comparable_v&lt; typelist&lt; Ts... &gt; &gt;)</div><div class="ttdef"><b>Definition:</b> val_core.h:198</div></div>
@@ -352,8 +363,8 @@ $(document).ready(function(){initNavTree('vval_8h_source.html',''); initResizabl
 <div class="ttc" id="astructvari_1_1__val__core_html_ad4779361b27f3c9ebbae384b44865da7"><div class="ttname"><a href="structvari_1_1__val__core.html#ad4779361b27f3c9ebbae384b44865da7">vari::_val_core::index</a></div><div class="ttdeci">index_type index</div><div class="ttdef"><b>Definition:</b> val_core.h:34</div></div>
 <div class="ttc" id="astructvari_1_1typelist_html"><div class="ttname"><a href="structvari_1_1typelist.html">vari::typelist</a></div><div class="ttdef"><b>Definition:</b> typelist.h:32</div></div>
 <div class="ttc" id="astructvari_1_1typelist_html_a15fb7c43c8a1d3b60a2ad8386673f206"><div class="ttname"><a href="structvari_1_1typelist.html#a15fb7c43c8a1d3b60a2ad8386673f206">vari::typelist::size</a></div><div class="ttdeci">static constexpr std::size_t size</div><div class="ttdef"><b>Definition:</b> typelist.h:33</div></div>
+<div class="ttc" id="auvref_8h_html"><div class="ttname"><a href="uvref_8h.html">uvref.h</a></div></div>
 <div class="ttc" id="aval__core_8h_html"><div class="ttname"><a href="val__core_8h.html">val_core.h</a></div></div>
-<div class="ttc" id="avref_8h_html"><div class="ttname"><a href="vref_8h.html">vref.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
