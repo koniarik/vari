@@ -29,10 +29,10 @@ namespace vari
 template < typename... Ts >
 class _vval
 {
-        using core_type = _val_core< typelist< Ts... > >;
+        using core_type = _val_core< unique_typelist_t< flatten_t< Ts... > > >;
 
 public:
-        using types = typelist< Ts... >;
+        using types = typename core_type::types;
 
         template < typename U >
                 requires( vconvertible_to< typelist< std::remove_reference_t< U > >, types > )
@@ -149,7 +149,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
+                requires( vconvertible_to< types, typename _vref< Us... >::types > )
         constexpr operator _vref< Us... >() & noexcept
         {
                 return core_type::visit_impl( _core, [&]( auto& item ) {
@@ -158,7 +158,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
+                requires( vconvertible_to< types, typename _vref< Us... >::types > )
         constexpr operator _vref< Us... >() const& noexcept
         {
                 static_assert( all_is_const_v< typelist< Us... > > );
@@ -168,14 +168,14 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
+                requires( vconvertible_to< types, typename _vptr< Us... >::types > )
         constexpr operator _vptr< Us... >() & noexcept
         {
                 return _vref< Us... >{ *this };
         }
 
         template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
+                requires( vconvertible_to< types, typename _vptr< Us... >::types > )
         constexpr operator _vptr< Us... >() const& noexcept
         {
                 return _vref< Us... >{ *this };
@@ -185,18 +185,14 @@ public:
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... f ) const
         {
-                static_assert(
-                    ( invocable_for_one< Ts const&, Fs... > && ... ),
-                    "For each type, there has to be one and only one callable" );
+                typename check_unique_invocability< types >::template with_pure_cref< Fs... > _{};
                 return core_type::visit_impl( _core, (Fs&&) f... );
         }
 
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... f )
         {
-                static_assert(
-                    ( invocable_for_one< Ts&, Fs... > && ... ),
-                    "For each type, there has to be one and only one callable" );
+                typename check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
                 return core_type::visit_impl( _core, (Fs&&) f... );
         }
 
@@ -231,7 +227,7 @@ private:
 };
 
 template < typename... Ts >
-using vval = _define_variadic< _vval, typelist< Ts... > >;
+using vval = _vval< Ts... >;
 
 template < typename... Ts >
 _uvref< Ts... > to_uvref( _vval< Ts... > v )

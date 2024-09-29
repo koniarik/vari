@@ -114,9 +114,8 @@ public:
         template < typename... Fs >
         decltype( auto ) visit( Fs&&... fs ) const
         {
-                static_assert(
-                    (invocable_for_one< Ts&, Fs... > && ... && invocable_for_one< empty_t, Fs... >),
-                    "For each type, there has to be one and only one callable" );
+                static_assert( invocable_for_one< empty_t, Fs... >, "" );
+                typename check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
                 if ( _core.ptr == nullptr )
                         return _dispatch_fun( empty, (Fs&&) fs... );
                 return _core.visit_impl( (Fs&&) fs... );

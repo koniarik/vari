@@ -56,6 +56,43 @@ concept forward_nothrow_constructible =
           std::is_nothrow_copy_constructible_v< std::remove_reference_t< U > > :
           std::is_nothrow_move_constructible_v< U > );
 
+template < typename T, typename... Fs >
+concept invocable_for_one = ( (+invocable< Fs, T >) +... ) == 1;
+
+template < typename... Ts >
+struct _uvref;
+
+template < typename T >
+struct check_unique_invocability;
+
+template < typename... Ts >
+struct check_unique_invocability< typelist< Ts... > >
+{
+        template < typename... Fs >
+        struct with_pure_ref
+        {
+                static_assert(
+                    ( invocable_for_one< Ts&, Fs... > && ... ),
+                    "For each type, there has to be one and only one callable" );
+        };
+
+        template < typename... Fs >
+        struct with_pure_cref
+        {
+                static_assert(
+                    ( invocable_for_one< Ts const&, Fs... > && ... ),
+                    "For each type, there has to be one and only one callable" );
+        };
+
+        template < typename... Fs >
+        struct with_uvref
+        {
+                static_assert(
+                    ( invocable_for_one< _uvref< Ts >, Fs... > && ... ),
+                    "For each type, there has to be one and only one callable" );
+        };
+};
+
 template < typename... Args >
 struct _function_picker
 {

@@ -43,7 +43,9 @@ struct id;
 struct definition;
 
 using value_type = long;
-using expr       = tl< bin_arithm_op, constant, id >;
+struct expr : tl< bin_arithm_op, constant, id >
+{
+};
 
 struct bin_arithm_op
 {

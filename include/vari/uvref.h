@@ -93,14 +93,14 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
+                requires( vconvertible_to< types, typename _vref< Us... >::types > )
         operator _vref< Us... >() const noexcept
         {
                 return _ref;
         }
 
         template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
+                requires( vconvertible_to< types, typename _vptr< Us... >::types > )
         operator _vptr< Us... >() const noexcept
         {
                 return _ref;
@@ -109,18 +109,14 @@ public:
         template < typename... Fs >
         decltype( auto ) visit( Fs&&... f ) const
         {
-                static_assert(
-                    ( invocable_for_one< Ts&, Fs... > && ... ),
-                    "For each type, there has to be one and only one callable" );
+                typename check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
                 return _ref.visit( (Fs&&) f... );
         }
 
         template < typename... Fs >
         decltype( auto ) take( Fs&&... fs ) &&
         {
-                static_assert(
-                    ( invocable_for_one< _uvref< Ts >, Fs... > && ... ),
-                    "For each type, there has to be one and only one callable" );
+                typename check_unique_invocability< types >::template with_uvref< Fs... > _{};
                 assert( _ref._core.ptr );
                 auto tmp   = _ref;
                 _ref._core = _ptr_core< types >{};

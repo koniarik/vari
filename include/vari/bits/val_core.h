@@ -29,7 +29,8 @@ namespace vari
 template < typename TL >
 struct _val_core
 {
-        using ST = _val_union< TL >;
+        using types = TL;
+        using ST    = _val_union< TL >;
 
         index_type index = null_index;
         ST         storage;
