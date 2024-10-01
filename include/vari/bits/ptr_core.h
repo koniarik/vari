@@ -120,6 +120,13 @@ struct _ptr_core< typelist< T > >
         {
         }
 
+        template < typename U >
+                requires( std::same_as< U, T > || std::same_as< U const, T > )
+        _ptr_core( _ptr_core< typelist< U > > other ) noexcept
+          : ptr( other.ptr )
+        {
+        }
+
         _ptr_core( T& val ) noexcept
           : ptr( &val )
         {

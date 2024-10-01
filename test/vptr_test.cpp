@@ -357,6 +357,11 @@ TEST_CASE( "const vptr" )
 
         CHECK_EQ( p2, p3 );
         CHECK_EQ( p2.get(), p3.get() );
+
+        auto f = []( vref< const int > ) {};
+
+        vref< int > r1{ i };
+        f( r1 );
 }
 
 }  // namespace vari
