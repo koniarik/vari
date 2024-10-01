@@ -165,20 +165,17 @@ public:
         template < typename... Fs >
         decltype( auto ) visit( Fs&&... f ) const
         {
-                static_assert(
-                    invocable_for_one< empty_t, Fs... >,
-                    "There has to be callabe for empty instance" );
-                typename check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
+                typename check_unique_invocability< types >::template with_nullable_pure_ref<
+                    Fs... >
+                    _{};
                 return _ptr.visit( (Fs&&) f... );
         }
 
         template < typename... Fs >
         decltype( auto ) take( Fs&&... fs ) &&
         {
-                static_assert(
-                    invocable_for_one< empty_t, Fs... >,
-                    "There has to be callabe for empty instance" );
-                typename check_unique_invocability< types >::template with_uvref< Fs... > _{};
+                typename check_unique_invocability< types >::template with_nullable_uvref< Fs... >
+                     _{};
                 auto p = release();
                 if ( p._core.ptr == nullptr )
                         return _dispatch_fun( empty, (Fs&&) fs... );
