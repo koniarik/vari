@@ -100,9 +100,6 @@ struct _function_picker
         static constexpr decltype( auto ) pick( F&& f, Fs&&... fs )
         {
                 if constexpr ( invocable< F, Args... > ) {
-                        static_assert(
-                            ( !invocable< Fs, Args... > && ... ),
-                            "Only one of the functors should be invocable with Args..." );
                         return (F&&) f;
                 } else {
                         static_assert( sizeof...( fs ) != 0 );

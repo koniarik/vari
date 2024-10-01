@@ -36,7 +36,7 @@ public:
         using types = unique_typelist_t< flatten_t< Ts... > >;
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vref< Us... >::types, types > )
         _vref( _vref< Us... > p ) noexcept
           : _core( p._core )
         {

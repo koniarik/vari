@@ -33,7 +33,7 @@ template < typename... Ts >
 class _uvref
 {
 public:
-        using types = typelist< Ts... >;
+        using types = unique_typelist_t< flatten_t< Ts... > >;
 
         using reference = _vref< Ts... >;
 
@@ -41,15 +41,15 @@ public:
         _uvref& operator=( _uvref const& ) = delete;
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _uvref< Us... >::types, types > )
         _uvref( _uvref< Us... >&& p ) noexcept
           : _ref( p._ref )
         {
-                p._ref._core = _ptr_core< typelist< Us... > >{};
+                p._ref._core = _ptr_core< typename _uvref< Us... >::types >{};
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vref< Us... >::types, types > )
         explicit _uvref( _vref< Us... > p ) noexcept
           : _ref( p )
         {
@@ -63,7 +63,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _uvref< Us... >::types, types > )
         _uvref& operator=( _uvref< Us... >&& p ) noexcept
         {
                 using std::swap;
@@ -149,7 +149,7 @@ private:
 };
 
 template < typename... Ts >
-using uvref = _define_variadic< _uvref, typelist< Ts... > >;
+using uvref = _uvref< Ts... >;
 
 template < typename T >
 uvref< T > uwrap( T item )

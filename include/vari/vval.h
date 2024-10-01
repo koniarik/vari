@@ -55,7 +55,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vval< Us... >::types, types > )
         constexpr _vval( _vval< Us... >&& p ) noexcept(
             std::is_nothrow_constructible_v< core_type, typename _vval< Us... >::core_type&& > )
           : _core( std::move( p._core ) )
@@ -69,7 +69,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vval< Us... >::types, types > )
         constexpr _vval( _vval< Us... > const& p ) noexcept(
             std::
                 is_nothrow_constructible_v< core_type, typename _vval< Us... >::core_type const& > )
@@ -95,7 +95,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vval< Us... >::types, types > )
         constexpr _vval& operator=( _vval< Us... >&& p ) noexcept(
             core_type::template is_nothrow_assignable< typename _vval< Us... >::core_type&& > )
         {
@@ -111,7 +111,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vval< Us... >::types, types > )
         constexpr _vval& operator=( _vval< Us... > const& p ) noexcept(
             core_type::template is_nothrow_assignable< typename _vval< Us... >::core_type const& > )
         {
