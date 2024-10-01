@@ -36,7 +36,25 @@ struct typelist
 };
 
 template < typename T >
-concept typelist_compatible = T::is_vari_compatible_typelist;
+struct typelist_traits
+{
+        static constexpr bool is_compatible = false;
+};
+
+template < typename T >
+        requires( T::is_vari_compatible_typelist )
+struct typelist_traits< T >
+{
+        static constexpr bool is_compatible = true;
+
+        using types = typename T::types;
+};
+
+template < typename T >
+using typelist_traits_types = typename typelist_traits< T >::types;
+
+template < typename T >
+concept typelist_compatible = typelist_traits< T >::is_compatible;
 
 /// ---
 
@@ -44,7 +62,7 @@ template < typename T, typename TL >
 struct index_of_t_or_const_t;
 
 template < typename T, typelist_compatible TL >
-struct index_of_t_or_const_t< T, TL > : index_of_t_or_const_t< typename T::types, TL >
+struct index_of_t_or_const_t< T, TL > : index_of_t_or_const_t< typelist_traits_types< T >, TL >
 {
 };
 
@@ -82,7 +100,7 @@ template < std::size_t j, typename TL >
 struct type_at;
 
 template < std::size_t j, typelist_compatible TL >
-struct type_at< j, TL > : type_at< j, typename TL::types >
+struct type_at< j, TL > : type_at< j, typelist_traits_types< TL > >
 {
 };
 
@@ -107,7 +125,7 @@ template < typename T, typename TL >
 struct contains_type;
 
 template < typename T, typelist_compatible TL >
-struct contains_type< T, TL > : contains_type< T, typename TL::types >
+struct contains_type< T, TL > : contains_type< T, typelist_traits_types< TL > >
 {
 };
 
@@ -126,7 +144,7 @@ template < typename TL1, typename TL2 >
 struct unique_tl_impl;
 
 template < typename TL1, typelist_compatible TL2 >
-struct unique_tl_impl< TL1, TL2 > : unique_tl_impl< TL1, typename TL2::types >
+struct unique_tl_impl< TL1, TL2 > : unique_tl_impl< TL1, typelist_traits_types< TL2 > >
 {
 };
 
@@ -165,7 +183,7 @@ struct flatten_impl< TL >
 
 template < typename... Us, typelist_compatible T, typename... Ts >
 struct flatten_impl< typelist< Us... >, T, Ts... >
-  : flatten_impl< typelist< Us... >, typename T::types, Ts... >
+  : flatten_impl< typelist< Us... >, typelist_traits_types< T >, Ts... >
 {
 };
 
@@ -215,7 +233,7 @@ template < typename TL >
 struct any_is_const;
 
 template < typelist_compatible TL >
-struct any_is_const< TL > : any_is_const< typename TL::types >
+struct any_is_const< TL > : any_is_const< typelist_traits_types< TL > >
 {
 };
 
@@ -234,7 +252,7 @@ template < typename TL >
 struct all_is_const;
 
 template < typelist_compatible TL >
-struct all_is_const< TL > : all_is_const< typename TL::types >
+struct all_is_const< TL > : all_is_const< typelist_traits_types< TL > >
 {
 };
 
@@ -253,7 +271,7 @@ template < typename TL >
 struct none_is_const;
 
 template < typelist_compatible TL >
-struct none_is_const< TL > : none_is_const< typename TL::types >
+struct none_is_const< TL > : none_is_const< typelist_traits_types< TL > >
 {
 };
 
@@ -272,7 +290,7 @@ template < typename TL >
 struct all_nothrow_swappable;
 
 template < typelist_compatible TL >
-struct all_nothrow_swappable< TL > : all_nothrow_swappable< typename TL::types >
+struct all_nothrow_swappable< TL > : all_nothrow_swappable< typelist_traits_types< TL > >
 {
 };
 
@@ -291,7 +309,8 @@ template < typename TL >
 struct all_nothrow_move_constructible;
 
 template < typelist_compatible TL >
-struct all_nothrow_move_constructible< TL > : all_nothrow_move_constructible< typename TL::types >
+struct all_nothrow_move_constructible< TL >
+  : all_nothrow_move_constructible< typelist_traits_types< TL > >
 {
 };
 
@@ -311,7 +330,8 @@ template < typename TL >
 struct all_nothrow_copy_constructible;
 
 template < typelist_compatible TL >
-struct all_nothrow_copy_constructible< TL > : all_nothrow_copy_constructible< typename TL::types >
+struct all_nothrow_copy_constructible< TL >
+  : all_nothrow_copy_constructible< typelist_traits_types< TL > >
 {
 };
 
@@ -331,7 +351,7 @@ template < typename TL >
 struct all_nothrow_destructible;
 
 template < typelist_compatible TL >
-struct all_nothrow_destructible< TL > : all_nothrow_destructible< typename TL::types >
+struct all_nothrow_destructible< TL > : all_nothrow_destructible< typelist_traits_types< TL > >
 {
 };
 
@@ -356,7 +376,7 @@ struct all_nothrow_three_way_comparable;
 
 template < typelist_compatible TL >
 struct all_nothrow_three_way_comparable< TL >
-  : all_nothrow_three_way_comparable< typename TL::types >
+  : all_nothrow_three_way_comparable< typelist_traits_types< TL > >
 {
 };
 
@@ -380,7 +400,8 @@ template < typename TL >
 struct all_nothrow_equality_comparable;
 
 template < typelist_compatible TL >
-struct all_nothrow_equality_comparable< TL > : all_nothrow_copy_constructible< typename TL::types >
+struct all_nothrow_equality_comparable< TL >
+  : all_nothrow_copy_constructible< typelist_traits_types< TL > >
 {
 };
 

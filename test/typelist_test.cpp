@@ -17,6 +17,12 @@ static_assert( typelist< int, int >::size == 2 );
 
 /// ---
 
+static_assert( typelist_compatible< typelist<> > );
+static_assert( typelist_compatible< typelist< int > > );
+static_assert( !typelist_compatible< int > );
+
+/// ---
+
 static_assert( index_of_t_or_const_t_v< float, typelist< float > > == 0 );
 static_assert( index_of_t_or_const_t_v< float, typelist< int, float > > == 1 );
 static_assert( index_of_t_or_const_t_v< float, typelist< float, int > > == 0 );
