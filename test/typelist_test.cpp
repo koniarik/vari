@@ -21,6 +21,24 @@ static_assert( typelist_compatible< typelist<> > );
 static_assert( typelist_compatible< typelist< int > > );
 static_assert( !typelist_compatible< int > );
 
+struct derived_tp : typelist<>
+{
+};
+static_assert( typelist_compatible< derived_tp > );
+
+struct traited_tp
+{
+};
+
+template <>
+struct typelist_traits< traited_tp >
+{
+        static constexpr bool is_compatible = true;
+        using types                         = typelist<>;
+};
+
+static_assert( typelist_compatible< traited_tp > );
+
 /// ---
 
 static_assert( index_of_t_or_const_t_v< float, typelist< float > > == 0 );
