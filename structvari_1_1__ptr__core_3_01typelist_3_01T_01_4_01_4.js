@@ -2,6 +2,7 @@ var structvari_1_1__ptr__core_3_01typelist_3_01T_01_4_01_4 =
 [
     [ "_ptr_core", "structvari_1_1__ptr__core_3_01typelist_3_01T_01_4_01_4.html#abfac6be59ee2e456c4aa994bfd8131eb", null ],
     [ "_ptr_core", "structvari_1_1__ptr__core_3_01typelist_3_01T_01_4_01_4.html#aab52e34d928a4c48bba0d32dd6bbcf5e", null ],
+    [ "_ptr_core", "structvari_1_1__ptr__core_3_01typelist_3_01T_01_4_01_4.html#a420cc56885f90815298c8d4752545bc4", null ],
     [ "_ptr_core", "structvari_1_1__ptr__core_3_01typelist_3_01T_01_4_01_4.html#a777e8f6a4b6ca7ea0d092994611aef31", null ],
     [ "delete_ptr", "structvari_1_1__ptr__core_3_01typelist_3_01T_01_4_01_4.html#a68e0135fdfa527dc6fcdb7350c66aae5", null ],
     [ "get_index", "structvari_1_1__ptr__core_3_01typelist_3_01T_01_4_01_4.html#aef447a509450a35e06cc5458b5881437", null ],

@@ -106,6 +106,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:abfac6be59ee2e456c4aa994bfd8131eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab52e34d928a4c48bba0d32dd6bbcf5e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__ptr__core_3_01typelist_3_01T_01_4_01_4.html#aab52e34d928a4c48bba0d32dd6bbcf5e">_ptr_core</a> (<a class="el" href="structvari_1_1__ptr__core.html">_ptr_core</a>&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt;&gt; &gt;) noexcept</td></tr>
 <tr class="separator:aab52e34d928a4c48bba0d32dd6bbcf5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a420cc56885f90815298c8d4752545bc4"><td class="memTemplParams" colspan="2">template&lt;typename U &gt; <br />
+requires ( std::same_as&lt; U, T &gt; || std::same_as&lt; U const, T &gt; )</td></tr>
+<tr class="memitem:a420cc56885f90815298c8d4752545bc4"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structvari_1_1__ptr__core_3_01typelist_3_01T_01_4_01_4.html#a420cc56885f90815298c8d4752545bc4">_ptr_core</a> (<a class="el" href="structvari_1_1__ptr__core.html">_ptr_core</a>&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; U &gt; &gt; other) noexcept</td></tr>
+<tr class="separator:a420cc56885f90815298c8d4752545bc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a777e8f6a4b6ca7ea0d092994611aef31"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__ptr__core_3_01typelist_3_01T_01_4_01_4.html#a777e8f6a4b6ca7ea0d092994611aef31">_ptr_core</a> (T &amp;val) noexcept</td></tr>
 <tr class="separator:a777e8f6a4b6ca7ea0d092994611aef31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef447a509450a35e06cc5458b5881437"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__ptr__core_3_01typelist_3_01T_01_4_01_4.html#aef447a509450a35e06cc5458b5881437">get_index</a> () const noexcept</td></tr>
@@ -126,7 +130,7 @@ Public Attributes</h2></td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="abfac6be59ee2e456c4aa994bfd8131eb" name="abfac6be59ee2e456c4aa994bfd8131eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfac6be59ee2e456c4aa994bfd8131eb">&#9670;&#160;</a></span>_ptr_core() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abfac6be59ee2e456c4aa994bfd8131eb">&#9670;&#160;</a></span>_ptr_core() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -153,7 +157,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="aab52e34d928a4c48bba0d32dd6bbcf5e" name="aab52e34d928a4c48bba0d32dd6bbcf5e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab52e34d928a4c48bba0d32dd6bbcf5e">&#9670;&#160;</a></span>_ptr_core() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aab52e34d928a4c48bba0d32dd6bbcf5e">&#9670;&#160;</a></span>_ptr_core() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -180,8 +184,39 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="a420cc56885f90815298c8d4752545bc4" name="a420cc56885f90815298c8d4752545bc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a420cc56885f90815298c8d4752545bc4">&#9670;&#160;</a></span>_ptr_core() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<div class="memtemplate">
+template&lt;typename U &gt; <br />
+requires ( std::same_as&lt; U, T &gt; || std::same_as&lt; U const, T &gt; )</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structvari_1_1__ptr__core.html">vari::_ptr_core</a>&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; T &gt; &gt;::_ptr_core </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structvari_1_1__ptr__core.html">_ptr_core</a>&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; U &gt; &gt;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a777e8f6a4b6ca7ea0d092994611aef31" name="a777e8f6a4b6ca7ea0d092994611aef31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a777e8f6a4b6ca7ea0d092994611aef31">&#9670;&#160;</a></span>_ptr_core() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a777e8f6a4b6ca7ea0d092994611aef31">&#9670;&#160;</a></span>_ptr_core() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
