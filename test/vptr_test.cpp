@@ -91,8 +91,12 @@ TEST_CASE( "vref" )
         std::string const& s3 = v1;
         CHECK_EQ( s3.c_str(), v1->c_str() );
 
-        vref< const std::string >       v2{ s1 };
-        vref< const typename V::types > v3 = v2;
+        struct tset : V::types
+        {
+        };
+
+        vref< const std::string > v2{ s1 };
+        vref< const tset >        v3 = v2;
 
         v3 = v2;
 }
@@ -195,7 +199,11 @@ TEST_CASE( "uvref" )
 
         p1 = uwrap( float{ 42 } );
 
-        std::vector< uvref< std::string, int > > vec1, vec2;
+        struct tset : typelist< std::string, int >
+        {
+        };
+
+        std::vector< uvref< tset > > vec1, vec2;
 
         vec2.emplace_back( uwrap( "wololo"s ) );
 

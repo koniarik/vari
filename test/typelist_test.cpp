@@ -106,6 +106,16 @@ using ft3  = flatten_t<  //
 using uft3 = unique_typelist_t< ft3 >;
 static_assert( std::same_as< uft3, typelist< const int, float, int, const float > > );
 
+struct ft4 : flatten_t< const ft3 >
+{
+};
+using uft4 = unique_typelist_t< ft4 >;
+static_assert( std::same_as< uft4, typelist< const int, const float > > );
+
+struct ft5 : typelist< int, float >
+{
+};
+static_assert( std::same_as< flatten_t< const ft5 >, typelist< const int, const float > > );
 // ---
 
 static_assert( is_subset_v< typelist<>, typelist<> > );

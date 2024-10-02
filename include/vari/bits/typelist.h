@@ -51,6 +51,15 @@ struct typelist_traits< T >
 };
 
 template < typename T >
+        requires( T::is_vari_compatible_typelist )
+struct typelist_traits< const T >
+{
+        static constexpr bool is_compatible = true;
+
+        using types = const typename T::types;
+};
+
+template < typename T >
 using typelist_traits_types = typename typelist_traits< T >::types;
 
 template < typename T >
