@@ -64,6 +64,13 @@ public:
                 return _core.ptr;
         }
 
+        template < typename U >
+                requires( vconvertible_to< types, typelist< U > > )
+        operator U&() const noexcept
+        {
+                return *_core.ptr;
+        }
+
         [[nodiscard]] constexpr index_type index() const noexcept
         {
                 return _core.get_index();
