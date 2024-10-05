@@ -33,10 +33,10 @@ template < typename... Ts >
 class _vref
 {
 public:
-        using types = typelist< Ts... >;
+        using types = unique_typelist_t< flatten_t< Ts... > >;
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vref< Us... >::types, types > )
         _vref( _vref< Us... > p ) noexcept
           : _core( p._core )
         {
@@ -64,6 +64,13 @@ public:
                 return _core.ptr;
         }
 
+        template < typename U >
+                requires( vconvertible_to< types, typelist< U > > )
+        operator U&() const noexcept
+        {
+                return *_core.ptr;
+        }
+
         [[nodiscard]] constexpr index_type index() const noexcept
         {
                 return _core.get_index();
@@ -72,9 +79,7 @@ public:
         template < typename... Fs >
         decltype( auto ) visit( Fs&&... fs ) const
         {
-                static_assert(
-                    ( invocable_for_one< Ts&, Fs... > && ... ),
-                    "For each type, there has to be one and only one callable" );
+                typename check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
                 assert( _core.ptr );
                 return _core.visit_impl( (Fs&&) fs... );
         }
@@ -102,6 +107,6 @@ private:
 };
 
 template < typename... Ts >
-using vref = _define_variadic< _vref, typelist< Ts... > >;
+using vref = _vref< Ts... >;
 
 }  // namespace vari

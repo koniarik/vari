@@ -277,6 +277,30 @@ using vp_b = vari::vptr<const a_t, const b_t>;
 ```
 Both types `vp_a` and `vp_b` are equal.
 
+## Typelist compatibility
+
+Library can be extended by using other types than just `vari::typelist` to represent set of types. There are two common options.
+
+### is_vari_compatible_typelist
+
+Any type that contains static member named `is_vari_compatible_typelist` which evaluates to true, is considered as a typelist. It is expected that it also contains member named `types`, which is also vari-compatible typelist.
+(Note: beware of recursion, most propably `types` should be alias to `vari::typelist`)
+
+`vari::typelist` itself contains all these attributes so that typelist can be defined by inheriting from it:
+
+```cpp
+struct expr : vari::typelist< binary_expr, unary_expr, constant >
+{};
+```
+
+Note that this is implemented as default behavior of traits system which takes precedence.
+
+### traits
+
+Whenever type is typelist is dertermined by `vari::typelist_traits<T>`. In case `vari::typelist_traits<T>:::is_compatible` evaluates to `true`, library considers `T` to be typelist-like type which shall be flattened.
+
+In such a case, `vari::typelist_traits<T>::types` should be a type which by itself is vari-compatible typelist. Transtively, this should eventually resolve into `vari::typelist` itself which is used by the library directly.
+
 ## Credits
 
 Credits for the idea for this should go to `avakar`, live long and prosper.

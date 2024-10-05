@@ -29,7 +29,8 @@ namespace vari
 template < typename TL >
 struct _val_core
 {
-        using ST = _val_union< TL >;
+        using types = TL;
+        using ST    = _val_union< TL >;
 
         index_type index = null_index;
         ST         storage;
@@ -177,7 +178,7 @@ struct _val_core
         }
 
         // XXX: this needs serious tests
-        // XXX: derive the ordering!
+        // XXX: derive the ordering! -> std comparison category
         static constexpr std::partial_ordering three_way_compare(
             _val_core const& lh,
             _val_core const& rh ) noexcept( all_nothrow_move_constructible_v< TL > )

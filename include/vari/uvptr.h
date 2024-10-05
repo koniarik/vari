@@ -38,7 +38,7 @@ template < typename... Ts >
 class _uvptr
 {
 public:
-        using types = typelist< Ts... >;
+        using types = unique_typelist_t< flatten_t< Ts... > >;
 
         using pointer          = _vptr< Ts... >;
         using reference        = _vref< Ts... >;
@@ -54,15 +54,15 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _uvref< Us... >::types, types > )
         _uvptr( _uvref< Us... >&& p ) noexcept
         {
                 _ptr._core   = std::move( p._ref._core );
-                p._ref._core = _ptr_core< typelist< Us... > >{};
+                p._ref._core = _ptr_core< typename _uvref< Us... >::types >{};
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _uvptr< Us... >::types, types > )
         _uvptr( _uvptr< Us... >&& p ) noexcept
           : _ptr( p.release() )
         {
@@ -83,7 +83,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _uvref< Us... >::types, types > )
         _uvptr& operator=( _uvref< Us... >&& p ) noexcept
         {
                 using std::swap;
@@ -93,7 +93,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _uvptr< Us... >::types, types > )
         _uvptr& operator=( _uvptr< Us... >&& p ) noexcept
         {
                 using std::swap;
@@ -123,7 +123,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
+                requires( vconvertible_to< types, typename _vptr< Us... >::types > )
         operator _vptr< Us... >() const noexcept
         {
                 return _ptr;
@@ -165,19 +165,17 @@ public:
         template < typename... Fs >
         decltype( auto ) visit( Fs&&... f ) const
         {
-                static_assert(
-                    (invocable_for_one< Ts&, Fs... > && ... && invocable_for_one< empty_t, Fs... >),
-                    "For each type, there has to be one and only one callable" );
+                typename check_unique_invocability< types >::template with_nullable_pure_ref<
+                    Fs... >
+                    _{};
                 return _ptr.visit( (Fs&&) f... );
         }
 
         template < typename... Fs >
         decltype( auto ) take( Fs&&... fs ) &&
         {
-                static_assert(
-                    (invocable_for_one< _uvref< Ts >, Fs... > && ... &&
-                     invocable_for_one< empty_t, Fs... >),
-                    "For each type, there has to be one and only one callable" );
+                typename check_unique_invocability< types >::template with_nullable_uvref< Fs... >
+                     _{};
                 auto p = release();
                 if ( p._core.ptr == nullptr )
                         return _dispatch_fun( empty, (Fs&&) fs... );
@@ -204,6 +202,6 @@ private:
 };
 
 template < typename... Ts >
-using uvptr = _define_variadic< _uvptr, typelist< Ts... > >;
+using uvptr = _uvptr< Ts... >;
 
 }  // namespace vari

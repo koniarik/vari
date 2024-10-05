@@ -29,11 +29,6 @@
 
 namespace vari
 {
-struct empty_t
-{
-};
-
-static constexpr empty_t empty;
 
 template < typename... Ts >
 class _vref;
@@ -42,7 +37,7 @@ template < typename... Ts >
 class _vptr
 {
 public:
-        using types = typelist< Ts... >;
+        using types = unique_typelist_t< flatten_t< Ts... > >;
 
         using reference = _vref< Ts... >;
 
@@ -57,14 +52,14 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vptr< Us... >::types, types > )
         _vptr( _vptr< Us... > p ) noexcept
           : _core( std::move( p._core ) )
         {
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vref< Us... >::types, types > )
         _vptr( _vref< Us... > r ) noexcept
           : _core( std::move( r._core ) )
         {
@@ -114,9 +109,9 @@ public:
         template < typename... Fs >
         decltype( auto ) visit( Fs&&... fs ) const
         {
-                static_assert(
-                    (invocable_for_one< Ts&, Fs... > && ... && invocable_for_one< empty_t, Fs... >),
-                    "For each type, there has to be one and only one callable" );
+                typename check_unique_invocability< types >::template with_nullable_pure_ref<
+                    Fs... >
+                    _{};
                 if ( _core.ptr == nullptr )
                         return _dispatch_fun( empty, (Fs&&) fs... );
                 return _core.visit_impl( (Fs&&) fs... );
@@ -141,6 +136,6 @@ private:
 };
 
 template < typename... Ts >
-using vptr = _define_variadic< _vptr, typelist< Ts... > >;
+using vptr = _vptr< Ts... >;
 
 }  // namespace vari
