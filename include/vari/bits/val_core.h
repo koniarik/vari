@@ -178,7 +178,7 @@ struct _val_core
         }
 
         // XXX: this needs serious tests
-        // XXX: derive the ordering!
+        // XXX: derive the ordering! -> std comparison category
         static constexpr std::partial_ordering three_way_compare(
             _val_core const& lh,
             _val_core const& rh ) noexcept( all_nothrow_move_constructible_v< TL > )

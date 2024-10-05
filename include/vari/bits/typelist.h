@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include <compare>
 #include <concepts>
 #include <cstddef>
 

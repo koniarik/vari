@@ -58,7 +58,7 @@ public:
         _uvptr( _uvref< Us... >&& p ) noexcept
         {
                 _ptr._core   = std::move( p._ref._core );
-                p._ref._core = _ptr_core< typelist< Us... > >{};
+                p._ref._core = _ptr_core< typename _uvref< Us... >::types >{};
         }
 
         template < typename... Us >
