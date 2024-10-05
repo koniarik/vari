@@ -67,12 +67,12 @@ void run_tests( mode m, auto& st )
 
         vari::vptr< int > v1;
         CHECK( m, v1, "vari::vptr = {0x0}", st );
-        v1 = i;
+        v1 = &i;
         CHECK( m, v1, "vari::vptr = {42}", st );
 
         vari::vptr< int, std::string > v2;
         CHECK( m, v2, "vari::vptr = {0x0}", st );
-        v2 = s;
+        v2 = &s;
         CHECK( m, v2, "vari::vptr = {\"wololo\"}", st );
 
         vari::vref< int > r1 = i;

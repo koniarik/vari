@@ -230,9 +230,9 @@ template < typename... Ts >
 using vval = _define_variadic< _vval, typelist< Ts... > >;
 
 template < typename... Ts >
-_uvref< Ts... > to_uvref( _vval< Ts... > v )
+_uvref< default_deleter, Ts... > to_uvref( _vval< Ts... > v )
 {
-        using R = _uvref< Ts... >;
+        using R = _uvref< default_deleter, Ts... >;
         return v.visit( [&]< typename U >( U& item ) -> R {
                 return R{ *new U{ std::move( item ) } };
         } );

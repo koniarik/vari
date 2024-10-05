@@ -36,8 +36,8 @@ constexpr void* to_void_cast( T* p ) noexcept
         return static_cast< void* >( const_cast< std::remove_const_t< T >* >( p ) );
 }
 
-template < typename TL >
-struct _ptr_core
+template < typename Deleter, typename TL >
+struct _ptr_core : private deleter_box< Deleter >
 {
 
         index_type index = null_index;
@@ -48,7 +48,7 @@ struct _ptr_core
 
         template < typename UL >
                 requires( vconvertible_to< UL, TL > )
-        _ptr_core( _ptr_core< UL > other ) noexcept
+        _ptr_core( _ptr_core< Deleter, UL > other ) noexcept
           : index( _vptr_cnv_map< TL, UL >::conv( other.get_index() ) )
           , ptr( to_void_cast( other.ptr ) )
         {
@@ -56,10 +56,15 @@ struct _ptr_core
 
         template < typename U >
                 requires( vconvertible_to< typelist< U >, TL > )
-        _ptr_core( U& val ) noexcept
-          : index( index_of_t_or_const_t_v< U, TL > )
-          , ptr( to_void_cast( &val ) )
+        constexpr void set( U& val ) noexcept
         {
+                index = index_of_t_or_const_t_v< U, TL >;
+                ptr   = to_void_cast( &val );
+        }
+
+        constexpr void reset() noexcept
+        {
+                *this = _ptr_core{};
         }
 
         [[nodiscard]] constexpr index_type get_index() const noexcept
@@ -89,10 +94,10 @@ struct _ptr_core
                 return _dispatch_index< 0, TL::size >(
                     index, [&]< index_type j >() -> decltype( auto ) {
                             using U        = type_at_t< j, TL >;
-                            using ArgType  = ArgTempl< U >;
+                            using ArgType  = ArgTempl< Deleter, U >;
                             using ConvType = ConvTempl< U >;
                             U* p           = static_cast< U* >( ptr );
-                            return _dispatch_fun( ArgType{ ConvType{ *p } }, (Fs&&) fs... );
+                            return _dispatch_fun( ArgType{ *p }, (Fs&&) fs... );
                     } );
         }
 
@@ -102,35 +107,43 @@ struct _ptr_core
                         return;
                 _dispatch_index< 0, TL::size >( index, [&]< index_type j > {
                         using U = type_at_t< j, TL >;
-                        delete static_cast< U* >( ptr );
+                        deleter_box< Deleter >::get()( static_cast< U* >( ptr ) );
                 } );
         }
 };
 
-template < typename T >
-struct _ptr_core< typelist< T > >
+template < typename Deleter, typename T >
+struct _ptr_core< Deleter, typelist< T > > : deleter_box< Deleter >
 {
 
         T* ptr = nullptr;
 
         _ptr_core() noexcept = default;
 
-        _ptr_core( _ptr_core< typelist<> > ) noexcept
+        _ptr_core( _ptr_core< Deleter, typelist<> > ) noexcept
           : ptr( nullptr )
         {
         }
 
         template < typename U >
                 requires( std::same_as< U, T > || std::same_as< U const, T > )
-        _ptr_core( _ptr_core< typelist< U > > other ) noexcept
+        _ptr_core( _ptr_core< Deleter, typelist< U > > other ) noexcept
           : ptr( other.ptr )
         {
         }
 
-        _ptr_core( T& val ) noexcept
-          : ptr( &val )
+        template < typename U >
+                requires( vconvertible_to< typelist< U >, typelist< T > > )
+        constexpr void set( U& val ) noexcept
         {
+                ptr = &val;
         }
+
+        constexpr void reset() noexcept
+        {
+                *this = _ptr_core{};
+        }
+
 
         [[nodiscard]] constexpr index_type get_index() const noexcept
         {
@@ -159,18 +172,20 @@ struct _ptr_core< typelist< T > >
         void delete_ptr()
         {
                 if ( ptr != nullptr )
-                        delete ptr;
+                        deleter_box< Deleter >::get()( ptr );
         }
 };
 
-template < typename T >
-constexpr auto operator<=>( _ptr_core< T > const& lh, _ptr_core< T > const& rh ) noexcept
+template < typename Deleter, typename T >
+constexpr auto
+operator<=>( _ptr_core< Deleter, T > const& lh, _ptr_core< Deleter, T > const& rh ) noexcept
 {
         return std::compare_three_way{}( lh.ptr, rh.ptr );
 }
 
-template < typename T >
-constexpr bool operator==( _ptr_core< T > const& lh, _ptr_core< T > const& rh ) noexcept
+template < typename Deleter, typename T >
+constexpr bool
+operator==( _ptr_core< Deleter, T > const& lh, _ptr_core< Deleter, T > const& rh ) noexcept
 {
         return lh.ptr == rh.ptr;
 }

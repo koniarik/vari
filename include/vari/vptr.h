@@ -67,9 +67,10 @@ public:
 
         template < typename U >
                 requires( vconvertible_to< typelist< U >, types > )
-        _vptr( U& u ) noexcept
-          : _core( u )
+        _vptr( U* u ) noexcept
         {
+                if ( u )
+                        _core.set( *u );
         }
 
         auto& operator*() const noexcept
@@ -126,12 +127,12 @@ public:
         friend auto operator<=>( _vptr const& lh, _vptr const& rh ) = default;
 
 private:
-        _ptr_core< types > _core;
+        _ptr_core< default_deleter, types > _core;
 
         template < typename... Us >
         friend class _vptr;
 
-        template < typename... Us >
+        template < typename Deleter2, typename... Us >
         friend class _uvptr;
 };
 

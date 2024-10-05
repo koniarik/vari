@@ -45,8 +45,8 @@ public:
         template < typename U >
                 requires( vconvertible_to< typelist< U >, types > )
         _vref( U& u ) noexcept
-          : _core( u )
         {
+                _core.set( u );
         }
 
         auto& operator*() const noexcept
@@ -92,17 +92,17 @@ public:
         friend auto operator<=>( _vref const& lh, _vref const& rh ) = default;
 
 private:
-        _vref() = default;
+        constexpr _vref() noexcept = default;
 
-        _ptr_core< types > _core;
+        _ptr_core< default_deleter, types > _core;
 
         template < typename... Us >
         friend class _vref;
         template < typename... Us >
         friend class _vptr;
-        template < typename... Us >
+        template < typename Deleter, typename... Us >
         friend class _uvref;
-        template < typename... Us >
+        template < typename Deleter, typename... Us >
         friend class _uvptr;
 };
 

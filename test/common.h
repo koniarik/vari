@@ -122,7 +122,7 @@ void check_visit( V& variadic, T& val )
 
         if constexpr ( FS::size > 0 ) {
                 variadic.visit(
-                    [&]( vptr< F > ) {
+                    [&]( vref< F > ) {
                             c++;
                     },
                     [&]( vref< FS > ) {
@@ -180,7 +180,7 @@ void check_nullable_visit( V& variadic, T& val )
         if constexpr ( FS::size > 0 ) {
                 variadic.visit(
                     [&]( empty_t ) {},
-                    [&]( vptr< F > ) {
+                    [&]( vref< F > ) {
                             c++;
                     },
                     [&]( vref< FS > ) {

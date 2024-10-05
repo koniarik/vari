@@ -35,20 +35,20 @@ struct empty_t
 static constexpr empty_t empty;
 
 
-template < template < typename... > typename T, typename TL >
+template < template < typename... > typename T, typename TL, typename... Us >
 struct _vptr_apply;
 
-template < template < typename... > typename T, typename... Ts >
-struct _vptr_apply< T, typelist< Ts... > >
+template < template < typename... > typename T, typename... Ts, typename... Us >
+struct _vptr_apply< T, typelist< Ts... >, Us... >
 {
-        using type = T< Ts... >;
+        using type = T< Us..., Ts... >;
 };
 
-template < template < typename... > typename T, typename TL >
-using _vptr_apply_t = typename _vptr_apply< T, TL >::type;
+template < template < typename... > typename T, typename TL, typename... Us >
+using _vptr_apply_t = typename _vptr_apply< T, TL, Us... >::type;
 
-template < template < typename... > typename T, typename TL >
-using _define_variadic = _vptr_apply_t< T, unique_typelist_t< flatten_t< TL > > >;
+template < template < typename... > typename T, typename TL, typename... Us >
+using _define_variadic = _vptr_apply_t< T, unique_typelist_t< flatten_t< TL > >, Us... >;
 
 template < typename F, typename... Args >
 concept invocable = requires( F&& f, Args&&... args ) { ( (F&&) f )( (Args&&) args... ); };
@@ -69,7 +69,7 @@ concept invocable_for_one = ( (+invocable< Fs, T >) +... ) == 1;
 template < typename F, typename... Ts >
 concept invocable_with_any = ( invocable< F, Ts > || ... || false );
 
-template < typename... Ts >
+template < typename Deleter, typename... Ts >
 struct _uvref;
 
 template < typename T >
@@ -112,27 +112,31 @@ struct check_unique_invocability< typelist< Ts... > >
                     "For each function, there has to be at least one type it is invocable with" );
         };
 
-        template < typename... Fs >
-        struct with_uvref
+        template < typename Deleter >
+        struct with_deleter
         {
-                static_assert(
-                    ( invocable_for_one< _uvref< Ts >, Fs... > && ... ),
-                    "For each type, there has to be one and only one callable" );
-                static_assert(
-                    ( invocable_with_any< Fs, _uvref< Ts >... > && ... ),
-                    "For each function, there has to be at least one type it is invocable with" );
-        };
+                template < typename... Fs >
+                struct with_uvref
+                {
+                        static_assert(
+                            ( invocable_for_one< _uvref< Deleter, Ts >, Fs... > && ... ),
+                            "For each type, there has to be one and only one callable" );
+                        static_assert(
+                            ( invocable_with_any< Fs, _uvref< Deleter, Ts >... > && ... ),
+                            "For each function, there has to be at least one type it is invocable with" );
+                };
 
-        template < typename... Fs >
-        struct with_nullable_uvref
-        {
-                static_assert(
-                    (invocable_for_one< _uvref< Ts >, Fs... > && ... &&
-                     invocable_for_one< empty_t, Fs... >),
-                    "For each type, there has to be one and only one callable" );
-                static_assert(
-                    ( invocable_with_any< Fs, empty_t, _uvref< Ts >... > && ... ),
-                    "For each function, there has to be at least one type it is invocable with" );
+                template < typename... Fs >
+                struct with_nullable_uvref
+                {
+                        static_assert(
+                            (invocable_for_one< _uvref< Deleter, Ts >, Fs... > && ... &&
+                             invocable_for_one< empty_t, Fs... >),
+                            "For each type, there has to be one and only one callable" );
+                        static_assert(
+                            ( invocable_with_any< Fs, empty_t, _uvref< Deleter, Ts >... > && ... ),
+                            "For each function, there has to be at least one type it is invocable with" );
+                };
         };
 };
 
@@ -199,5 +203,31 @@ struct _split_impl< typelist<>, typelist<> >
 
 template < typename TL >
 using split = _split_impl< typelist<>, TL >;
+
+template < typename Deleter >
+struct deleter_box : private Deleter
+{
+        static_assert( std::is_nothrow_default_constructible_v< Deleter > );
+        constexpr deleter_box() noexcept = default;
+
+        static_assert( std::is_nothrow_move_constructible_v< Deleter > );
+        constexpr deleter_box( Deleter&& d ) noexcept
+          : Deleter( std::move( d ) )
+        {
+        }
+
+        Deleter& get()
+        {
+                return *this;
+        }
+};
+
+struct default_deleter
+{
+        void operator()( auto* item ) const
+        {
+                delete item;
+        }
+};
 
 }  // namespace vari

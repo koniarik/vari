@@ -47,7 +47,7 @@ TEST_CASE( "vptr" )
 
         int i = 42;
 
-        V p1{ i };
+        V p1{ &i };
         check_nullable_visit( p1, i );
 
         vptr< float > p2;
@@ -57,10 +57,10 @@ TEST_CASE( "vptr" )
         CHECK_FALSE( p1 );
 
         float         f1 = 0.42;
-        vptr< float > p3 = f1;
+        vptr< float > p3 = &f1;
         check_nullable_visit( p3, f1 );
 
-        vptr< int > p4{ i };
+        vptr< int > p4{ &i };
         p4 = nullptr;
         CHECK_FALSE( p4 );
 }
@@ -80,7 +80,7 @@ TEST_CASE( "vref" )
         CHECK_EQ( p2.get(), p1.get() );
 
         std::vector< int >         vec = { 1, 2, 3, 4 };
-        vptr< std::vector< int > > p4( vec );
+        vptr< std::vector< int > > p4( &vec );
         check_nullable_visit( p4, vec );
         check_nullable_swap( p4 );
 
@@ -230,6 +230,22 @@ void try_set()
         CHECK_EQ( idata.size() + sdata.size(), s3.size() );
 }
 
+template < template < typename... > typename T >
+void try_null_set()
+{
+        std::set< T< int, std::string > > s3;
+        std::vector< int >                idata{ 127, 0 };
+        std::vector< std::string >        sdata{ 127, "wololo" };
+
+        for ( int& i : idata )
+                s3.insert( T< int >{ &i } );
+
+        for ( std::string& s : sdata )
+                s3.insert( T< std::string >{ &s } );
+
+        CHECK_EQ( idata.size() + sdata.size(), s3.size() );
+}
+
 void try_upset()
 {
         std::set< uvptr< int, std::string > > s3;
@@ -262,7 +278,7 @@ TEST_CASE( "cmp" )
         std::set< vptr< int, std::string > > s2;
         s2.insert( vptr< int >{} );
 
-        try_set< vptr >();
+        try_null_set< vptr >();
         try_set< vref >();
         try_upset();
         try_urset();
@@ -294,7 +310,7 @@ TEST_CASE( "reference to functor" )
 
         vref< int, std::string > r1{ i };
         r1.visit( f );
-        vptr< int, std::string > p1{ i };
+        vptr< int, std::string > p1{ &i };
         p1.visit( f );
         uvref< int, std::string > r2 = uwrap( std::string{ "wololo" } );
         r2.visit( f );
@@ -338,7 +354,7 @@ TEST_CASE( "moved functor" )
         f = r1.visit( std::move( f ) );
 
         foo                      f2;
-        vptr< int, std::string > p1{ i };
+        vptr< int, std::string > p1{ &i };
         f = p1.visit( std::move( f ) );
 
         foo                       f3;
@@ -359,7 +375,7 @@ TEST_CASE( "const vptr" )
         using V = vptr< const int, const float, const std::string >;
 
         int         i = 0;
-        vptr< int > tmp{ i };
+        vptr< int > tmp{ &i };
         V           p1{ tmp };
 
         CHECK( p1 );
@@ -375,7 +391,7 @@ TEST_CASE( "const vptr" )
 
         vptr< float const > p3;
         p3.visit( []( empty_t ) {}, []( float const& ) {} );
-        p3.visit( []( empty_t ) {}, []( vptr< float const > ) {} );
+        p3.visit( []( empty_t ) {}, []( vref< float const > ) {} );
 
         p3 = p2;
 

@@ -31,18 +31,19 @@
 namespace vari
 {
 
-template < typename... Ts >
+template < typename Deleter, typename... Ts >
 class _uvref;
 
-template < typename... Ts >
+template < typename Deleter, typename... Ts >
 class _uvptr
 {
 public:
         using types = typelist< Ts... >;
 
+        using core_type        = _ptr_core< Deleter, types >;
         using pointer          = _vptr< Ts... >;
         using reference        = _vref< Ts... >;
-        using owning_reference = _uvref< Ts... >;
+        using owning_reference = _uvref< Deleter, Ts... >;
 
         _uvptr() noexcept = default;
 
@@ -55,17 +56,18 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _uvptr( _uvref< Us... >&& p ) noexcept
+        _uvptr( _uvref< Deleter, Us... >&& p ) noexcept
         {
-                _ptr._core   = std::move( p._ref._core );
-                p._ref._core = _ptr_core< typelist< Us... > >{};
+                _core = std::move( p._core );
+                p._core.reset();
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _uvptr( _uvptr< Us... >&& p ) noexcept
-          : _ptr( p.release() )
+        _uvptr( _uvptr< Deleter, Us... >&& p ) noexcept
         {
+                _core = std::move( p._core );
+                p._core.reset();
         }
 
         template < typename U >
@@ -73,7 +75,7 @@ public:
         explicit _uvptr( U* u ) noexcept
         {
                 if ( u )
-                        _ptr = pointer{ *u };
+                        _core.set( *u );
         }
 
         _uvptr& operator=( std::nullptr_t ) noexcept
@@ -84,82 +86,88 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _uvptr& operator=( _uvref< Us... >&& p ) noexcept
+        _uvptr& operator=( _uvref< Deleter, Us... >&& p ) noexcept
         {
                 using std::swap;
                 _uvptr tmp{ std::move( p ) };
-                swap( _ptr._core, tmp._ptr._core );
+                swap( _core, tmp._core );
                 return *this;
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _uvptr& operator=( _uvptr< Us... >&& p ) noexcept
+        _uvptr& operator=( _uvptr< Deleter, Us... >&& p ) noexcept
         {
                 using std::swap;
                 _uvptr tmp{ std::move( p ) };
-                swap( _ptr._core, tmp._ptr._core );
+                swap( _core, tmp._core );
                 return *this;
         }
 
         auto& operator*() const noexcept
         {
-                return *_ptr;
+                return *_core.ptr;
         }
 
         auto* operator->() const noexcept
         {
-                return _ptr.get();
+                return _core.ptr;
         }
 
-        const pointer& get() const noexcept
+        pointer get() const noexcept
         {
-                return _ptr;
+                pointer res;
+                res._core = _core;
+                return res;
         }
 
         [[nodiscard]] constexpr index_type index() const noexcept
         {
-                return _ptr.index();
+                return _core.index;
         }
 
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
         operator _vptr< Us... >() const noexcept
         {
-                return _ptr;
+                return _core.ptr;
         }
 
         void reset( pointer ptr = pointer() )
         {
-                auto tmp = _ptr;
-                _ptr     = ptr;
-                tmp._core.delete_ptr();
+                auto tmp = _core;
+                _core    = std::move( ptr._core );
+                tmp.delete_ptr();
         }
 
         pointer release() noexcept
         {
                 using std::swap;
                 pointer res;
-                swap( res, _ptr );
+                swap( res._core, _core );
                 return res;
         }
 
         operator bool() const noexcept
         {
-                return _ptr;
+                return _core.get_index() != null_index;
         }
 
         reference vref() const& noexcept
         {
-                assert( _ptr );
-                return _ptr.vref();
+                assert( _core.get_index() != null_index );
+                reference res;
+                res._core = _core;
+                return res;
         }
 
         owning_reference vref() && noexcept
         {
-                assert( _ptr );
-                auto p = release();
-                return owning_reference{ p.vref() };
+                assert( _core.get_index() != null_index );
+                using std::swap;
+                owning_reference res;
+                swap( res._core, _core );
+                return res;
         }
 
         template < typename... Fs >
@@ -169,13 +177,16 @@ public:
                 typename check_unique_invocability< types >::template with_nullable_pure_ref<
                     Fs... >
                     _{};
-                return _ptr.visit( (Fs&&) f... );
+                if ( _core.ptr == nullptr )
+                        return _dispatch_fun( empty, (Fs&&) f... );
+                return _core.visit_impl( (Fs&&) f... );
         }
 
         template < typename... Fs >
         decltype( auto ) take( Fs&&... fs ) &&
         {
-                typename check_unique_invocability< types >::template with_nullable_uvref< Fs... >
+                typename check_unique_invocability< types >::template with_deleter<
+                    Deleter >::template with_nullable_uvref< Fs... >
                      _{};
                 auto p = release();
                 if ( p._core.ptr == nullptr )
@@ -190,19 +201,19 @@ public:
 
         ~_uvptr()
         {
-                _ptr._core.delete_ptr();
+                _core.delete_ptr();
         }
 
         friend auto operator<=>( _uvptr const& lh, _uvptr const& rh ) = default;
 
 private:
-        pointer _ptr;
+        core_type _core;
 
-        template < typename... Us >
+        template < typename Deleter2, typename... Us >
         friend class _uvptr;
 };
 
 template < typename... Ts >
-using uvptr = _define_variadic< _uvptr, typelist< Ts... > >;
+using uvptr = _define_variadic< _uvptr, typelist< Ts... >, default_deleter >;
 
 }  // namespace vari
