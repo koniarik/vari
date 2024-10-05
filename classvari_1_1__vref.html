@@ -124,6 +124,10 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
 <tr class="separator:a623ef3b419acac3b41fae3bd989420d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d224d443de1045e3f57cec361a6a26b"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__vref.html#a5d224d443de1045e3f57cec361a6a26b">index</a> () const noexcept</td></tr>
 <tr class="separator:a5d224d443de1045e3f57cec361a6a26b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9cb797aaa4ef669ba38750223a61aab"><td class="memTemplParams" colspan="2">template&lt;typename U &gt; <br />
+requires ( vconvertible_to&lt; <a class="el" href="classvari_1_1__vref.html#af6b0203c0694f29db107deac7b1023a8">types</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; U &gt; &gt; )</td></tr>
+<tr class="memitem:af9cb797aaa4ef669ba38750223a61aab"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__vref.html#af9cb797aaa4ef669ba38750223a61aab">operator U&amp;</a> () const noexcept</td></tr>
+<tr class="separator:af9cb797aaa4ef669ba38750223a61aab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32a704d6abf0fd7b52461c4af359189d"><td class="memTemplParams" colspan="2">template&lt;typename... Fs&gt; </td></tr>
 <tr class="memitem:a32a704d6abf0fd7b52461c4af359189d"><td class="memTemplItemLeft" align="right" valign="top">decltype(auto)&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__vref.html#a32a704d6abf0fd7b52461c4af359189d">visit</a> (Fs &amp;&amp;... fs) const</td></tr>
 <tr class="separator:a32a704d6abf0fd7b52461c4af359189d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -276,6 +280,36 @@ template&lt;typename... Ts&gt; </div>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af9cb797aaa4ef669ba38750223a61aab" name="af9cb797aaa4ef669ba38750223a61aab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9cb797aaa4ef669ba38750223a61aab">&#9670;&#160;</a></span>operator U&amp;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Ts&gt; </div>
+<div class="memtemplate">
+template&lt;typename U &gt; <br />
+requires ( vconvertible_to&lt; <a class="el" href="classvari_1_1__vref.html#af6b0203c0694f29db107deac7b1023a8">types</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; U &gt; &gt; )</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvari_1_1__vref.html">vari::_vref</a>&lt; Ts &gt;::operator U&amp; </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

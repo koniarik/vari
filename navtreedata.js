@@ -74,9 +74,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"index.html#autotoc_md2",
-"structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01T_00_01Ts_8_8_8_01_4.html#abaa21b95ac276b3ab028d4db788c8793",
-"unionvari_1_1__val__union_3_01typelist_3_01T0_00_01T1_00_01T2_00_01T3_00_01T4_00_01T5_00_01T6_00_01T7_01_4_01_4.html"
+"index.html#autotoc_md11",
+"structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01T_00_01Ts_8_8_8_01_4.html",
+"unionvari_1_1__val__union_3_01typelist_3_01T0_00_01T1_00_01T2_00_01T3_00_01T4_00_01T5_00_01T6_00_01T7_00_01T8_01_4_01_4.html#af91d7399c0ae8fa46eebc574d8c22553"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
