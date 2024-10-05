@@ -154,7 +154,7 @@ private:
 };
 
 template < typename... Ts >
-using uvref = _define_variadic< _uvref, typelist< Ts... >, default_deleter >;
+using uvref = _define_variadic< _uvref, typelist< Ts... >, def_del >;
 
 template < typename T >
 uvref< T > uwrap( T item )

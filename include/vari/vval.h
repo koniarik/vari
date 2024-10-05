@@ -171,14 +171,14 @@ public:
                 requires( vconvertible_to< types, typelist< Us... > > )
         constexpr operator _vptr< Us... >() & noexcept
         {
-                return _vref< Us... >{ *this };
+                return _vptr< Us... >{ *this };
         }
 
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
         constexpr operator _vptr< Us... >() const& noexcept
         {
-                return _vref< Us... >{ *this };
+                return _vptr< Us... >{ *this };
         }
 
 
@@ -230,9 +230,9 @@ template < typename... Ts >
 using vval = _define_variadic< _vval, typelist< Ts... > >;
 
 template < typename... Ts >
-_uvref< default_deleter, Ts... > to_uvref( _vval< Ts... > v )
+_uvref< def_del, Ts... > to_uvref( _vval< Ts... > v )
 {
-        using R = _uvref< default_deleter, Ts... >;
+        using R = _uvref< def_del, Ts... >;
         return v.visit( [&]< typename U >( U& item ) -> R {
                 return R{ *new U{ std::move( item ) } };
         } );

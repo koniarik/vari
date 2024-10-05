@@ -76,7 +76,7 @@ TEST_CASE( "vref" )
         check_visit( p1, s1 );
         check_swap( p1 );
 
-        vptr< int, float, std::string > p2 = p1;
+        vptr< int, float, std::string > p2{ p1 };
         CHECK_EQ( p2.get(), p1.get() );
 
         std::vector< int >         vec = { 1, 2, 3, 4 };
@@ -106,7 +106,7 @@ TEST_CASE( "uvptr" )
 
         std::string inpt{ "s" };
 
-        V p1 = uwrap( inpt );
+        V p1{ uwrap( inpt ) };
         check_nullable_visit( p1, inpt );
         // check_nullable_swap( p1 );
 
@@ -119,8 +119,8 @@ TEST_CASE( "uvptr" )
                     FAIL( "incorrect overload" );
                     return V{};
             },
-            [&]( uvptr< float, std::string > p ) -> V {
-                    return p;
+            [&]( uvref< float, std::string > p ) -> V {
+                    return V{ std::move( p ) };
             } );
 
         std::optional< vref< int, float, std::string > > opt_ref = p1.vref();
@@ -141,7 +141,7 @@ TEST_CASE( "uvptr" )
             [&]( uvref< int > ) {
                     FAIL( "incorrect overload" );
             },
-            [&]( uvptr< float, std::string > ) {
+            [&]( uvref< float, std::string > ) {
                     FAIL( "incorrect overload" );
             } );
 
@@ -192,7 +192,7 @@ TEST_CASE( "uvref" )
                     return r;
             } );
 
-        vptr< int, float, std::string > p2 = p1.get();
+        vptr< int, float, std::string > p2{ p1.get() };
         CHECK_EQ( p2.get(), p1.get().get() );
 
         p1 = uwrap( float{ 42 } );
@@ -314,7 +314,7 @@ TEST_CASE( "reference to functor" )
         p1.visit( f );
         uvref< int, std::string > r2 = uwrap( std::string{ "wololo" } );
         r2.visit( f );
-        uvptr< int, std::string > p2 = uwrap( std::string{ "wololo" } );
+        uvptr< int, std::string > p2{ uwrap( std::string{ "wololo" } ) };
         p2.visit( f );
 }
 
@@ -363,7 +363,7 @@ TEST_CASE( "moved functor" )
         f = r2.visit( std::move( f ) );
 
         foo                       f4;
-        uvptr< int, std::string > p2 = uwrap( std::string{ "wololo" } );
+        uvptr< int, std::string > p2{ uwrap( std::string{ "wololo" } ) };
 
         f = p2.visit( std::move( f ) );
 

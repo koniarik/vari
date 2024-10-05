@@ -56,7 +56,7 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _uvptr( _uvref< Deleter, Us... >&& p ) noexcept
+        explicit _uvptr( _uvref< Deleter, Us... >&& p ) noexcept
         {
                 _core = std::move( p._core );
                 p._core.reset();
@@ -72,7 +72,7 @@ public:
 
         template < typename U >
                 requires( vconvertible_to< typelist< U >, types > )
-        explicit _uvptr( U* u ) noexcept
+        _uvptr( U* u ) noexcept
         {
                 if ( u )
                         _core.set( *u );
@@ -214,6 +214,6 @@ private:
 };
 
 template < typename... Ts >
-using uvptr = _define_variadic< _uvptr, typelist< Ts... >, default_deleter >;
+using uvptr = _define_variadic< _uvptr, typelist< Ts... >, def_del >;
 
 }  // namespace vari

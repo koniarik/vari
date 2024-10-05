@@ -23,6 +23,7 @@
 
 #include <cstdint>
 #include <limits>
+#include <memory>
 #include <utility>
 
 namespace vari
@@ -222,11 +223,11 @@ struct deleter_box : private Deleter
         }
 };
 
-struct default_deleter
+struct def_del
 {
         void operator()( auto* item ) const
         {
-                delete item;
+                std::destroy_at( item );
         }
 };
 

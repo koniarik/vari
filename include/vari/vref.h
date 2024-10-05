@@ -94,7 +94,7 @@ public:
 private:
         constexpr _vref() noexcept = default;
 
-        _ptr_core< default_deleter, types > _core;
+        _ptr_core< def_del, types > _core;
 
         template < typename... Us >
         friend class _vref;

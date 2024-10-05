@@ -53,15 +53,15 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _vptr( _vptr< Us... > p ) noexcept
-          : _core( std::move( p._core ) )
+        explicit _vptr( _vref< Us... > r ) noexcept
+          : _core( std::move( r._core ) )
         {
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _vptr( _vref< Us... > r ) noexcept
-          : _core( std::move( r._core ) )
+        _vptr( _vptr< Us... > p ) noexcept
+          : _core( std::move( p._core ) )
         {
         }
 
@@ -127,7 +127,7 @@ public:
         friend auto operator<=>( _vptr const& lh, _vptr const& rh ) = default;
 
 private:
-        _ptr_core< default_deleter, types > _core;
+        _ptr_core< def_del, types > _core;
 
         template < typename... Us >
         friend class _vptr;
