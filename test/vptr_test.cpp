@@ -33,6 +33,8 @@
 namespace vari
 {
 
+using namespace std::string_literals;
+
 TEST_CASE( "vptr" )
 {
         using V = vptr< int, float, std::string >;
@@ -68,10 +70,10 @@ TEST_CASE( "vref" )
         using V = vref< int, float, std::string >;
         static_assert( valid_variadic< V > );
 
-        std::string i{ "123456" };
-        V           p1{ i };
+        std::string s1{ "123456" };
+        V           p1{ s1 };
 
-        check_visit( p1, i );
+        check_visit( p1, s1 );
         check_swap( p1 );
 
         vptr< int, float, std::string > p2 = p1;
@@ -81,6 +83,20 @@ TEST_CASE( "vref" )
         vptr< std::vector< int > > p4( vec );
         check_nullable_visit( p4, vec );
         check_nullable_swap( p4 );
+
+        vref< std::string > v1{ s1 };
+
+        std::string& s2 = v1;
+        CHECK_EQ( s2.c_str(), v1->c_str() );
+        std::string const& s3 = v1;
+        CHECK_EQ( s3.c_str(), v1->c_str() );
+
+        using tset = typename V::types;
+
+        vref< const std::string > v2{ s1 };
+        vref< const tset >        v3 = v2;
+
+        v3 = v2;
 }
 
 TEST_CASE( "uvptr" )
@@ -180,6 +196,14 @@ TEST_CASE( "uvref" )
         CHECK_EQ( p2.get(), p1.get().get() );
 
         p1 = uwrap( float{ 42 } );
+
+        using tset = typelist< std::string, int >;
+
+        std::vector< uvref< tset > > vec1, vec2;
+
+        vec2.emplace_back( uwrap( "wololo"s ) );
+
+        vec1 = std::move( vec2 );
 }
 
 TEST_CASE( "dispatch" )

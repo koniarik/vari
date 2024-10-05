@@ -69,6 +69,13 @@ public:
                 return _core.get_index();
         }
 
+        template < typename U >
+                requires( vconvertible_to< types, typelist< U > > )
+        operator U&() const noexcept
+        {
+                return *_core.ptr;
+        }
+
         template < typename... Fs >
         decltype( auto ) visit( Fs&&... fs ) const
         {
