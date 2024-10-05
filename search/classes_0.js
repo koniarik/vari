@@ -8,7 +8,7 @@ var searchData=
   ['_5fsplit_5fimpl_3c_20typelist_3c_20us_2e_2e_2e_20_3e_2c_20typelist_3c_20t_2c_20ts_2e_2e_2e_20_3e_20_3e_5',['_split_impl&lt; typelist&lt; Us... &gt;, typelist&lt; T, Ts... &gt; &gt;',['../structvari_1_1__split__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html',1,'vari']]],
   ['_5fsplit_5fimpl_3c_20typelist_3c_3e_2c_20typelist_3c_3e_20_3e_6',['_split_impl&lt; typelist&lt;&gt;, typelist&lt;&gt; &gt;',['../structvari_1_1__split__impl_3_01typelist_3_4_00_01typelist_3_4_01_4.html',1,'vari']]],
   ['_5fuvptr_7',['_uvptr',['../classvari_1_1__uvptr.html',1,'vari']]],
-  ['_5fuvref_8',['_uvref',['../classvari_1_1__uvref.html',1,'vari']]],
+  ['_5fuvref_8',['_uvref',['../structvari_1_1__uvref.html',1,'vari']]],
   ['_5fval_5fcore_9',['_val_core',['../structvari_1_1__val__core.html',1,'vari']]],
   ['_5fval_5fcore_3c_20typelist_3c_20ts_2e_2e_2e_20_3e_20_3e_10',['_val_core&lt; typelist&lt; Ts... &gt; &gt;',['../structvari_1_1__val__core.html',1,'vari']]],
   ['_5fval_5funion_11',['_val_union',['../unionvari_1_1__val__union.html',1,'vari']]],
