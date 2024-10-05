@@ -28,6 +28,13 @@
 namespace vari
 {
 
+struct empty_t
+{
+};
+
+static constexpr empty_t empty;
+
+
 template < template < typename... > typename T, typename TL >
 struct _vptr_apply;
 
@@ -56,6 +63,79 @@ concept forward_nothrow_constructible =
           std::is_nothrow_copy_constructible_v< std::remove_reference_t< U > > :
           std::is_nothrow_move_constructible_v< U > );
 
+template < typename T, typename... Fs >
+concept invocable_for_one = ( (+invocable< Fs, T >) +... ) == 1;
+
+template < typename F, typename... Ts >
+concept invocable_with_any = ( invocable< F, Ts > || ... || false );
+
+template < typename... Ts >
+struct _uvref;
+
+template < typename T >
+struct check_unique_invocability;
+
+template < typename... Ts >
+struct check_unique_invocability< typelist< Ts... > >
+{
+
+        template < typename... Fs >
+        struct with_pure_ref
+        {
+                static_assert(
+                    ( invocable_for_one< Ts&, Fs... > && ... ),
+                    "For each type, there has to be one and only one callable" );
+                static_assert(
+                    ( invocable_with_any< Fs, Ts&... > && ... ),
+                    "For each function, there has to be at least one type it is invocable with" );
+        };
+
+        template < typename... Fs >
+        struct with_nullable_pure_ref
+        {
+                static_assert(
+                    (invocable_for_one< Ts&, Fs... > && ... && invocable_for_one< empty_t, Fs... >),
+                    "For each type, there has to be one and only one callable" );
+                static_assert(
+                    ( invocable_with_any< Fs, empty_t, Ts&... > && ... ),
+                    "For each function, there has to be at least one type it is invocable with" );
+        };
+
+        template < typename... Fs >
+        struct with_pure_cref
+        {
+                static_assert(
+                    ( invocable_for_one< Ts const&, Fs... > && ... ),
+                    "For each type, there has to be one and only one callable" );
+                static_assert(
+                    ( invocable_with_any< Fs, Ts const&... > && ... ),
+                    "For each function, there has to be at least one type it is invocable with" );
+        };
+
+        template < typename... Fs >
+        struct with_uvref
+        {
+                static_assert(
+                    ( invocable_for_one< _uvref< Ts >, Fs... > && ... ),
+                    "For each type, there has to be one and only one callable" );
+                static_assert(
+                    ( invocable_with_any< Fs, _uvref< Ts >... > && ... ),
+                    "For each function, there has to be at least one type it is invocable with" );
+        };
+
+        template < typename... Fs >
+        struct with_nullable_uvref
+        {
+                static_assert(
+                    (invocable_for_one< _uvref< Ts >, Fs... > && ... &&
+                     invocable_for_one< empty_t, Fs... >),
+                    "For each type, there has to be one and only one callable" );
+                static_assert(
+                    ( invocable_with_any< Fs, empty_t, _uvref< Ts >... > && ... ),
+                    "For each function, there has to be at least one type it is invocable with" );
+        };
+};
+
 template < typename... Args >
 struct _function_picker
 {
@@ -63,9 +143,6 @@ struct _function_picker
         static constexpr decltype( auto ) pick( F&& f, Fs&&... fs )
         {
                 if constexpr ( invocable< F, Args... > ) {
-                        static_assert(
-                            ( !invocable< Fs, Args... > && ... ),
-                            "Only one of the functors should be invocable with Args..." );
                         return (F&&) f;
                 } else {
                         static_assert( sizeof...( fs ) != 0 );

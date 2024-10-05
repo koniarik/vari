@@ -185,18 +185,14 @@ public:
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... f ) const
         {
-                static_assert(
-                    ( invocable_for_one< Ts const&, Fs... > && ... ),
-                    "For each type, there has to be one and only one callable" );
+                typename check_unique_invocability< types >::template with_pure_cref< Fs... > _{};
                 return core_type::visit_impl( _core, (Fs&&) f... );
         }
 
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... f )
         {
-                static_assert(
-                    ( invocable_for_one< Ts&, Fs... > && ... ),
-                    "For each type, there has to be one and only one callable" );
+                typename check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
                 return core_type::visit_impl( _core, (Fs&&) f... );
         }
 

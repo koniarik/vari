@@ -86,9 +86,6 @@ constexpr decltype( auto ) _dispatch_index( index_type const i, F&& f )
 }
 
 template < typename T, typename... Fs >
-concept invocable_for_one = ( invocable< Fs, T > || ... );
-
-template < typename T, typename... Fs >
 constexpr decltype( auto ) _dispatch_fun( T&& item, Fs&&... fs )
 {
         auto&& f = _function_picker< T >::pick( (Fs&&) fs... );
