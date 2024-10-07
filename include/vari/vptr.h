@@ -25,7 +25,6 @@
 
 #include <cassert>
 #include <cstddef>
-#include <optional>
 
 namespace vari
 {

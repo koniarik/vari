@@ -19,8 +19,10 @@
 
 #pragma once
 
+#include "util.h"
 #include "val_union.h"
 
+#include <compare>
 #include <memory>
 
 namespace vari

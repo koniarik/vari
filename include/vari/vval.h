@@ -17,9 +17,15 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ///
 
-#include "vari/bits/dispatch.h"
+#include "vari/bits/typelist.h"
+#include "vari/bits/util.h"
 #include "vari/bits/val_core.h"
 #include "vari/uvref.h"
+#include "vari/vptr.h"
+#include "vari/vref.h"
+
+#include <type_traits>
+#include <utility>
 
 #pragma once
 

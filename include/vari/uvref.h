@@ -22,6 +22,7 @@
 #include "vari/bits/ptr_core.h"
 #include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
+#include "vari/vptr.h"
 #include "vari/vref.h"
 
 #include <cassert>
