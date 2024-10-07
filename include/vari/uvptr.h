@@ -88,7 +88,6 @@ public:
                 requires( vconvertible_to< typelist< Us... >, types > )
         _uvptr& operator=( _uvref< Deleter, Us... >&& p ) noexcept
         {
-                using std::swap;
                 _uvptr tmp{ std::move( p ) };
                 swap( _core, tmp._core );
                 return *this;
@@ -98,7 +97,6 @@ public:
                 requires( vconvertible_to< typelist< Us... >, types > )
         _uvptr& operator=( _uvptr< Deleter, Us... >&& p ) noexcept
         {
-                using std::swap;
                 _uvptr tmp{ std::move( p ) };
                 swap( _core, tmp._core );
                 return *this;
@@ -130,7 +128,9 @@ public:
                 requires( vconvertible_to< types, typelist< Us... > > )
         operator _vptr< Us... >() const noexcept
         {
-                return _core.ptr;
+                _vptr< Us... > res;
+                res._core = _core;
+                return res;
         }
 
         void reset( pointer ptr = pointer() )
@@ -142,7 +142,6 @@ public:
 
         pointer release() noexcept
         {
-                using std::swap;
                 pointer res;
                 swap( res._core, _core );
                 return res;
@@ -164,7 +163,6 @@ public:
         owning_reference vref() && noexcept
         {
                 assert( _core.get_index() != null_index );
-                using std::swap;
                 owning_reference res;
                 swap( res._core, _core );
                 return res;
@@ -191,12 +189,12 @@ public:
                 auto p = release();
                 if ( p._core.ptr == nullptr )
                         return _dispatch_fun( empty, (Fs&&) fs... );
-                return p._core.template take_impl< _uvref, _vref >( (Fs&&) fs... );
+                return p._core.template take_impl< _uvref >( (Fs&&) fs... );
         }
 
         friend void swap( _uvptr& lh, _uvptr& rh ) noexcept
         {
-                std::swap( lh._ptr, rh._ptr );
+                swap( lh._core, rh._core );
         }
 
         ~_uvptr()

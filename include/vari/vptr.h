@@ -121,7 +121,7 @@ public:
 
         friend void swap( _vptr& lh, _vptr& rh ) noexcept
         {
-                std::swap( lh._core, rh._core );
+                swap( lh._core, rh._core );
         }
 
         friend auto operator<=>( _vptr const& lh, _vptr const& rh ) = default;
@@ -130,9 +130,12 @@ private:
         _ptr_core< def_del, types > _core;
 
         template < typename... Us >
+        friend class _vref;
+        template < typename... Us >
         friend class _vptr;
-
-        template < typename Deleter2, typename... Us >
+        template < typename Deleter, typename... Us >
+        friend class _uvref;
+        template < typename Deleter, typename... Us >
         friend class _uvptr;
 };
 

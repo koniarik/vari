@@ -171,14 +171,14 @@ public:
                 requires( vconvertible_to< types, typelist< Us... > > )
         constexpr operator _vptr< Us... >() & noexcept
         {
-                return _vptr< Us... >{ *this };
+                return _vref< Us... >{ *this }.vptr();
         }
 
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
         constexpr operator _vptr< Us... >() const& noexcept
         {
-                return _vptr< Us... >{ *this };
+                return _vref< Us... >{ *this }.vptr();
         }
 
 

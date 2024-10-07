@@ -44,7 +44,6 @@ TEST_CASE( "vptr" )
 
         p0 = V{ nullptr };
         CHECK_FALSE( p0 );
-
         int i = 42;
 
         V p1{ &i };
@@ -63,6 +62,12 @@ TEST_CASE( "vptr" )
         vptr< int > p4{ &i };
         p4 = nullptr;
         CHECK_FALSE( p4 );
+
+        vptr< int > p5{ &i };
+        vptr< int > p6;
+        swap( p5, p6 );
+        CHECK_FALSE( p5 );
+        CHECK_EQ( *p6, i );
 }
 
 TEST_CASE( "vref" )
@@ -97,6 +102,12 @@ TEST_CASE( "vref" )
         vref< const tset >        v3 = v2;
 
         v3 = v2;
+
+        vptr< std::string > p5{ &s1 };
+        vptr< std::string > p6;
+        swap( p5, p6 );
+        CHECK_FALSE( p5 );
+        CHECK_EQ( *p6, s1 );
 }
 
 TEST_CASE( "uvptr" )
@@ -170,6 +181,23 @@ TEST_CASE( "uvptr" )
 
         p1 = uwrap( int{ 42 } );
         p1 = std::move( p6 );
+
+        uvptr< int > p9{ uwrap( 42 ) };
+        std::move( p9 ).take(
+            [&]( empty_t ) {},
+            [&]( uvref< int > u ) {
+                    CHECK_EQ( *u, 42 );
+            } );
+
+        uvptr< int, float > p10{ uwrap( 42 ) };
+        vptr< int, float >  p11;
+        p11 = p10;
+
+        uvptr< int > p12{ uwrap( 666 ) };
+        uvptr< int > p13;
+        swap( p12, p13 );
+        CHECK_FALSE( p12 );
+        CHECK_EQ( *p13, 666 );
 }
 
 TEST_CASE( "uvref" )
@@ -204,6 +232,18 @@ TEST_CASE( "uvref" )
         vec2.emplace_back( uwrap( "wololo"s ) );
 
         vec1 = std::move( vec2 );
+
+        uvref< int > p3 = uwrap( 42 );
+        std::move( p3 ).take( [&]( uvref< int > u ) {
+                CHECK_EQ( *u, 42 );
+        } );
+
+        uvref< int > p4 = uwrap( 666 );
+        uvref< int > p5 = uwrap( 42 );
+        CHECK_EQ( *p4, 666 );
+        swap( p5, p4 );
+        CHECK_EQ( *p4, 42 );
+        CHECK_EQ( *p5, 666 );
 }
 
 TEST_CASE( "dispatch" )

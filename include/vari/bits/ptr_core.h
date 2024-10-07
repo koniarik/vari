@@ -54,6 +54,12 @@ struct _ptr_core : private deleter_box< Deleter >
         {
         }
 
+        friend void swap( _ptr_core& lh, _ptr_core& rh ) noexcept
+        {
+                std::swap( lh.ptr, rh.ptr );
+                std::swap( lh.index, rh.index );
+        }
+
         template < typename U >
                 requires( vconvertible_to< typelist< U >, TL > )
         constexpr void set( U& val ) noexcept
@@ -83,20 +89,14 @@ struct _ptr_core : private deleter_box< Deleter >
                     } );
         }
 
-        template <
-            template < typename... >
-            typename ArgTempl,
-            template < typename... >
-            typename ConvTempl,
-            typename... Fs >
+        template < template < typename... > typename ArgTempl, typename... Fs >
         decltype( auto ) take_impl( Fs&&... fs ) const
         {
                 return _dispatch_index< 0, TL::size >(
                     index, [&]< index_type j >() -> decltype( auto ) {
-                            using U        = type_at_t< j, TL >;
-                            using ArgType  = ArgTempl< Deleter, U >;
-                            using ConvType = ConvTempl< U >;
-                            U* p           = static_cast< U* >( ptr );
+                            using U       = type_at_t< j, TL >;
+                            using ArgType = ArgTempl< Deleter, U >;
+                            U* p          = static_cast< U* >( ptr );
                             return _dispatch_fun( ArgType{ *p }, (Fs&&) fs... );
                     } );
         }
@@ -132,6 +132,11 @@ struct _ptr_core< Deleter, typelist< T > > : deleter_box< Deleter >
         {
         }
 
+        friend void swap( _ptr_core& lh, _ptr_core& rh ) noexcept
+        {
+                std::swap( lh.ptr, rh.ptr );
+        }
+
         template < typename U >
                 requires( vconvertible_to< typelist< U >, typelist< T > > )
         constexpr void set( U& val ) noexcept
@@ -156,17 +161,11 @@ struct _ptr_core< Deleter, typelist< T > > : deleter_box< Deleter >
                 return _dispatch_fun( *ptr, (Fs&&) fs... );
         }
 
-        template <
-            template < typename... >
-            typename ArgTempl,
-            template < typename... >
-            typename ConvTempl,
-            typename... Fs >
+        template < template < typename... > typename ArgTempl, typename... Fs >
         decltype( auto ) take_impl( Fs&&... fs ) const
         {
-                using ArgType  = ArgTempl< T >;
-                using ConvType = ConvTempl< T >;
-                return _dispatch_fun( ArgType( ConvType( *ptr ) ), (Fs&&) fs... );
+                using ArgType = ArgTempl< Deleter, T >;
+                return _dispatch_fun( ArgType( *ptr ), (Fs&&) fs... );
         }
 
         void delete_ptr()

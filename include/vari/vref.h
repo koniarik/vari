@@ -35,6 +35,8 @@ class _vref
 public:
         using types = typelist< Ts... >;
 
+        using pointer = _vptr< Ts... >;
+
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
         _vref( _vref< Us... > p ) noexcept
@@ -76,6 +78,13 @@ public:
                 return *_core.ptr;
         }
 
+        pointer vptr() const& noexcept
+        {
+                pointer res;
+                res._core = _core;
+                return res;
+        }
+
         template < typename... Fs >
         decltype( auto ) visit( Fs&&... fs ) const
         {
@@ -86,7 +95,7 @@ public:
 
         friend void swap( _vref& lh, _vref& rh ) noexcept
         {
-                std::swap( lh._core, rh._core );
+                swap( lh._core, rh._core );
         }
 
         friend auto operator<=>( _vref const& lh, _vref const& rh ) = default;

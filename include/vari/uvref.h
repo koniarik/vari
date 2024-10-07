@@ -35,8 +35,10 @@ class _uvref
 public:
         using types = typelist< Ts... >;
 
-        using core_type = _ptr_core< Deleter, types >;
-        using reference = _vref< Ts... >;
+        using core_type      = _ptr_core< Deleter, types >;
+        using reference      = _vref< Ts... >;
+        using pointer        = _vptr< Ts... >;
+        using owning_pointer = _vptr< Deleter, Ts... >;
 
         _uvref( _uvref const& )            = delete;
         _uvref& operator=( _uvref const& ) = delete;
@@ -44,8 +46,8 @@ public:
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
         _uvref( _uvref< Deleter, Us... >&& p ) noexcept
-          : _core( p._core )
         {
+                _core = std::move( p._core );
                 p._core.reset();
         }
 
@@ -60,7 +62,6 @@ public:
                 requires( vconvertible_to< typelist< Us... >, types > )
         _uvref& operator=( _uvref< Deleter, Us... >&& p ) noexcept
         {
-                using std::swap;
                 _uvref tmp{ std::move( p ) };
                 swap( _core, tmp._core );
                 return *this;
@@ -106,6 +107,20 @@ public:
                 return res;
         }
 
+        pointer vptr() const& noexcept
+        {
+                pointer res;
+                res._core = _core;
+                return res;
+        }
+
+        owning_pointer vptr() && noexcept
+        {
+                owning_pointer res;
+                swap( res._core, _core );
+                return res;
+        }
+
         template < typename... Fs >
         decltype( auto ) visit( Fs&&... f ) const
         {
@@ -123,12 +138,12 @@ public:
                 assert( _core.ptr );
                 auto tmp = _core;
                 _core.reset();
-                return tmp.template take_impl< _uvref, _vref >( (Fs&&) fs... );
+                return tmp.template take_impl< _uvref >( (Fs&&) fs... );
         }
 
         friend void swap( _uvref& lh, _uvref& rh ) noexcept
         {
-                std::swap( lh._ref, rh._ref );
+                swap( lh._core, rh._core );
         }
 
         ~_uvref()
