@@ -44,17 +44,17 @@ struct _ptr_core : private deleter_box< Deleter >
         void*      ptr   = nullptr;
 
 
-        _ptr_core() noexcept = default;
+        constexpr _ptr_core() noexcept = default;
 
         template < typename UL >
                 requires( vconvertible_to< UL, TL > )
-        _ptr_core( _ptr_core< Deleter, UL > other ) noexcept
+        constexpr _ptr_core( _ptr_core< Deleter, UL > other ) noexcept
           : index( _vptr_cnv_map< TL, UL >::conv( other.get_index() ) )
           , ptr( to_void_cast( other.ptr ) )
         {
         }
 
-        friend void swap( _ptr_core& lh, _ptr_core& rh ) noexcept
+        friend constexpr void swap( _ptr_core& lh, _ptr_core& rh ) noexcept
         {
                 std::swap( lh.ptr, rh.ptr );
                 std::swap( lh.index, rh.index );
@@ -79,7 +79,7 @@ struct _ptr_core : private deleter_box< Deleter >
         }
 
         template < typename... Fs >
-        decltype( auto ) visit_impl( Fs&&... fs ) const
+        constexpr decltype( auto ) visit_impl( Fs&&... fs ) const
         {
                 return _dispatch_index< 0, TL::size >(
                     index, [&]< index_type j >() -> decltype( auto ) {
@@ -90,7 +90,7 @@ struct _ptr_core : private deleter_box< Deleter >
         }
 
         template < template < typename... > typename ArgTempl, typename... Fs >
-        decltype( auto ) take_impl( Fs&&... fs ) const
+        constexpr decltype( auto ) take_impl( Fs&&... fs ) const
         {
                 return _dispatch_index< 0, TL::size >(
                     index, [&]< index_type j >() -> decltype( auto ) {
@@ -101,7 +101,7 @@ struct _ptr_core : private deleter_box< Deleter >
                     } );
         }
 
-        void delete_ptr()
+        constexpr void delete_ptr()
         {
                 if ( index == null_index )
                         return;
@@ -118,21 +118,21 @@ struct _ptr_core< Deleter, typelist< T > > : deleter_box< Deleter >
 
         T* ptr = nullptr;
 
-        _ptr_core() noexcept = default;
+        constexpr _ptr_core() noexcept = default;
 
-        _ptr_core( _ptr_core< Deleter, typelist<> > ) noexcept
+        constexpr _ptr_core( _ptr_core< Deleter, typelist<> > ) noexcept
           : ptr( nullptr )
         {
         }
 
         template < typename U >
                 requires( std::same_as< U, T > || std::same_as< U const, T > )
-        _ptr_core( _ptr_core< Deleter, typelist< U > > other ) noexcept
+        constexpr _ptr_core( _ptr_core< Deleter, typelist< U > > other ) noexcept
           : ptr( other.ptr )
         {
         }
 
-        friend void swap( _ptr_core& lh, _ptr_core& rh ) noexcept
+        friend constexpr void swap( _ptr_core& lh, _ptr_core& rh ) noexcept
         {
                 std::swap( lh.ptr, rh.ptr );
         }
@@ -156,19 +156,19 @@ struct _ptr_core< Deleter, typelist< T > > : deleter_box< Deleter >
         }
 
         template < typename... Fs >
-        decltype( auto ) visit_impl( Fs&&... fs ) const
+        constexpr decltype( auto ) visit_impl( Fs&&... fs ) const
         {
                 return _dispatch_fun( *ptr, (Fs&&) fs... );
         }
 
         template < template < typename... > typename ArgTempl, typename... Fs >
-        decltype( auto ) take_impl( Fs&&... fs ) const
+        constexpr decltype( auto ) take_impl( Fs&&... fs ) const
         {
                 using ArgType = ArgTempl< Deleter, T >;
                 return _dispatch_fun( ArgType( *ptr ), (Fs&&) fs... );
         }
 
-        void delete_ptr()
+        constexpr void delete_ptr()
         {
                 if ( ptr != nullptr )
                         deleter_box< Deleter >::get()( ptr );

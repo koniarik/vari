@@ -41,12 +41,12 @@ public:
         using pointer        = _vptr< Ts... >;
         using owning_pointer = _vptr< Deleter, Ts... >;
 
-        _uvref( _uvref const& )            = delete;
-        _uvref& operator=( _uvref const& ) = delete;
+        constexpr _uvref( _uvref const& )            = delete;
+        constexpr _uvref& operator=( _uvref const& ) = delete;
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _uvref( _uvref< Deleter, Us... >&& p ) noexcept
+        constexpr _uvref( _uvref< Deleter, Us... >&& p ) noexcept
         {
                 _core = std::move( p._core );
                 p._core.reset();
@@ -54,31 +54,31 @@ public:
 
         template < typename U >
                 requires( vconvertible_to< typelist< U >, types > )
-        explicit _uvref( U& u ) noexcept
+        constexpr explicit _uvref( U& u ) noexcept
         {
                 _core.set( u );
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _uvref& operator=( _uvref< Deleter, Us... >&& p ) noexcept
+        constexpr _uvref& operator=( _uvref< Deleter, Us... >&& p ) noexcept
         {
                 _uvref tmp{ std::move( p ) };
                 swap( _core, tmp._core );
                 return *this;
         }
 
-        auto& operator*() const noexcept
+        constexpr auto& operator*() const noexcept
         {
                 return *_core.ptr;
         }
 
-        auto* operator->() const noexcept
+        constexpr auto* operator->() const noexcept
         {
                 return _core.ptr;
         }
 
-        reference get() const noexcept
+        constexpr reference get() const noexcept
         {
                 reference res;
                 res._core = _core;
@@ -92,7 +92,7 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
-        operator _vref< Us... >() const noexcept
+        constexpr operator _vref< Us... >() const noexcept
         {
                 _vref< Us... > res;
                 res._core = _core;
@@ -101,21 +101,21 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
-        operator _vptr< Us... >() const noexcept
+        constexpr operator _vptr< Us... >() const noexcept
         {
                 _vptr< Us... > res;
                 res._core = _core;
                 return res;
         }
 
-        pointer vptr() const& noexcept
+        constexpr pointer vptr() const& noexcept
         {
                 pointer res;
                 res._core = _core;
                 return res;
         }
 
-        owning_pointer vptr() && noexcept
+        constexpr owning_pointer vptr() && noexcept
         {
                 owning_pointer res;
                 swap( res._core, _core );
@@ -123,7 +123,7 @@ public:
         }
 
         template < typename... Fs >
-        decltype( auto ) visit( Fs&&... f ) const
+        constexpr decltype( auto ) visit( Fs&&... f ) const
         {
                 typename check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
                 assert( _core.ptr );
@@ -131,7 +131,7 @@ public:
         }
 
         template < typename... Fs >
-        decltype( auto ) take( Fs&&... fs ) &&
+        constexpr decltype( auto ) take( Fs&&... fs ) &&
         {
                 typename check_unique_invocability< types >::template with_deleter<
                     Deleter >::template with_uvref< Fs... >
@@ -142,17 +142,17 @@ public:
                 return tmp.template take_impl< _uvref >( (Fs&&) fs... );
         }
 
-        friend void swap( _uvref& lh, _uvref& rh ) noexcept
+        friend constexpr void swap( _uvref& lh, _uvref& rh ) noexcept
         {
                 swap( lh._core, rh._core );
         }
 
-        ~_uvref()
+        constexpr ~_uvref()
         {
                 _core.delete_ptr();
         }
 
-        friend auto operator<=>( _uvref const& lh, _uvref const& rh ) = default;
+        friend constexpr auto operator<=>( _uvref const& lh, _uvref const& rh ) = default;
 
 private:
         constexpr _uvref() noexcept = default;
@@ -173,7 +173,7 @@ template < typename... Ts >
 using uvref = _define_variadic< _uvref, typelist< Ts... >, def_del >;
 
 template < typename T >
-uvref< T > uwrap( T item )
+constexpr uvref< T > uwrap( T item )
 {
         return uvref< T >( *new T( std::move( item ) ) );
 }

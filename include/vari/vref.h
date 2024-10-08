@@ -39,29 +39,29 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _vref( _vref< Us... > p ) noexcept
+        constexpr _vref( _vref< Us... > p ) noexcept
           : _core( p._core )
         {
         }
 
         template < typename U >
                 requires( vconvertible_to< typelist< U >, types > )
-        _vref( U& u ) noexcept
+        constexpr _vref( U& u ) noexcept
         {
                 _core.set( u );
         }
 
-        auto& operator*() const noexcept
+        constexpr auto& operator*() const noexcept
         {
                 return *_core.ptr;
         }
 
-        auto* operator->() const noexcept
+        constexpr auto* operator->() const noexcept
         {
                 return _core.ptr;
         }
 
-        auto* get() const noexcept
+        constexpr auto* get() const noexcept
         {
                 return _core.ptr;
         }
@@ -73,12 +73,12 @@ public:
 
         template < typename U >
                 requires( vconvertible_to< types, typelist< U > > )
-        operator U&() const noexcept
+        constexpr operator U&() const noexcept
         {
                 return *_core.ptr;
         }
 
-        pointer vptr() const& noexcept
+        constexpr pointer vptr() const& noexcept
         {
                 pointer res;
                 res._core = _core;
@@ -86,19 +86,19 @@ public:
         }
 
         template < typename... Fs >
-        decltype( auto ) visit( Fs&&... fs ) const
+        constexpr decltype( auto ) visit( Fs&&... fs ) const
         {
                 typename check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
                 assert( _core.ptr );
                 return _core.visit_impl( (Fs&&) fs... );
         }
 
-        friend void swap( _vref& lh, _vref& rh ) noexcept
+        friend constexpr void swap( _vref& lh, _vref& rh ) noexcept
         {
                 swap( lh._core, rh._core );
         }
 
-        friend auto operator<=>( _vref const& lh, _vref const& rh ) = default;
+        friend constexpr auto operator<=>( _vref const& lh, _vref const& rh ) = default;
 
 private:
         constexpr _vref() noexcept = default;

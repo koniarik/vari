@@ -217,7 +217,7 @@ struct deleter_box : private Deleter
         {
         }
 
-        Deleter& get()
+        constexpr Deleter& get()
         {
                 return *this;
         }
@@ -225,7 +225,7 @@ struct deleter_box : private Deleter
 
 struct def_del
 {
-        void operator()( auto* item ) const
+        constexpr void operator()( auto* item ) const
         {
                 std::destroy_at( item );
         }
