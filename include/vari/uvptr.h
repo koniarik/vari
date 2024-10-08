@@ -120,7 +120,7 @@ public:
 
         [[nodiscard]] constexpr index_type index() const noexcept
         {
-                return _core.index;
+                return _core.get_index();
         }
 
         template < typename... Us >
@@ -208,6 +208,9 @@ private:
 
         template < typename Deleter2, typename... Us >
         friend class _uvptr;
+
+        template < typename Deleter2, typename... Us >
+        friend class _uvref;
 };
 
 template < typename... Ts >

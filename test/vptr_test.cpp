@@ -244,6 +244,12 @@ TEST_CASE( "uvref" )
         swap( p5, p4 );
         CHECK_EQ( *p4, 42 );
         CHECK_EQ( *p5, 666 );
+
+        uvref< int > p6 = uwrap( 666 );
+        CHECK_EQ( p6.vptr().index(), 0 );
+
+        uvptr< int > p7 = std::move( p6 ).vptr();
+        CHECK_EQ( p7.index(), 0 );
 }
 
 TEST_CASE( "dispatch" )

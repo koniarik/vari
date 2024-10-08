@@ -31,6 +31,9 @@ namespace vari
 {
 
 template < typename Deleter, typename... Ts >
+class _uvptr;
+
+template < typename Deleter, typename... Ts >
 class _uvref
 {
 public:
@@ -39,7 +42,7 @@ public:
         using core_type      = _ptr_core< Deleter, types >;
         using reference      = _vref< Ts... >;
         using pointer        = _vptr< Ts... >;
-        using owning_pointer = _vptr< Deleter, Ts... >;
+        using owning_pointer = _uvptr< Deleter, Ts... >;
 
         constexpr _uvref( _uvref const& )            = delete;
         constexpr _uvref& operator=( _uvref const& ) = delete;
