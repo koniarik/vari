@@ -83,11 +83,11 @@ class VPtrPrinter(VWrapperPrinter):
 
 class UVPtrPrinter(VWrapperPrinter):
     def __init__(self, val):
-        super().__init__(val, val["_ptr"]["_core"])
+        super().__init__(val, val["_core"])
 
 class UVRefPrinter(VWrapperPrinter):
     def __init__(self, val):
-        super().__init__(val, val["_ref"]["_core"])
+        super().__init__(val, val["_core"])
 
 
 def build_pretty_printer():
