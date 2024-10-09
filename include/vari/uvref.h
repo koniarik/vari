@@ -34,12 +34,15 @@ template < typename Deleter, typename... Ts >
 class _uvptr;
 
 template < typename Deleter, typename... Ts >
-class _uvref
+class _uvref : private deleter_box< Deleter >
 {
+        template < typename... Us >
+        using same_uvref = _uvref< Deleter, Us... >;
+
 public:
         using types = typelist< Ts... >;
 
-        using core_type      = _ptr_core< Deleter, types >;
+        using core_type      = _ptr_core< types >;
         using reference      = _vref< Ts... >;
         using pointer        = _vptr< Ts... >;
         using owning_pointer = _uvptr< Deleter, Ts... >;
@@ -142,7 +145,7 @@ public:
                 assert( _core.ptr );
                 auto tmp = _core;
                 _core.reset();
-                return tmp.template take_impl< _uvref >( (Fs&&) fs... );
+                return tmp.template take_impl< same_uvref >( (Fs&&) fs... );
         }
 
         friend constexpr void swap( _uvref& lh, _uvref& rh ) noexcept
@@ -152,7 +155,7 @@ public:
 
         constexpr ~_uvref()
         {
-                _core.delete_ptr();
+                _core.delete_ptr( deleter_box< Deleter >::get() );
         }
 
         friend constexpr auto operator<=>( _uvref const& lh, _uvref const& rh ) = default;

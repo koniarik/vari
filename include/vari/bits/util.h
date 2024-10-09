@@ -221,6 +221,8 @@ struct deleter_box : private Deleter
         {
                 return *this;
         }
+
+        friend constexpr auto operator<=>( deleter_box const&, deleter_box const& ) = default;
 };
 
 struct def_del
@@ -229,6 +231,8 @@ struct def_del
         {
                 std::destroy_at( item );
         }
+
+        friend constexpr auto operator<=>( def_del const&, def_del const& ) = default;
 };
 
 }  // namespace vari

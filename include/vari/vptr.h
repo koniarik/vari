@@ -126,7 +126,7 @@ public:
         friend constexpr auto operator<=>( _vptr const& lh, _vptr const& rh ) = default;
 
 private:
-        _ptr_core< def_del, types > _core;
+        _ptr_core< types > _core;
 
         template < typename... Us >
         friend class _vref;
