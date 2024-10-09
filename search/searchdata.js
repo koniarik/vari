@@ -1,12 +1,12 @@
 var indexSectionsWithContent =
 {
   0: "_abcdefgilmnoprstuvw~",
-  1: "_acefintuw",
+  1: "_acdefintuw",
   2: "v",
-  3: "dprtuv",
-  4: "_acdegioprtuv~",
+  3: "dfprtuv",
+  4: "_acdegioprstuv~",
   5: "bcfilpsv",
-  6: "_bfiloprstuv",
+  6: "_bcfiloprstuv",
   7: "_mos",
   8: "v",
   9: "v",

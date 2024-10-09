@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['index_5ftype_0',['index_type',['../namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce',1,'vari']]]
+  ['flatten_5ft_0',['flatten_t',['../namespacevari.html#ab99ffc8a5afd4acbc960e1b940b9c53d',1,'vari']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>vari: vari::_uvptr&lt; Ts &gt; Class Template Reference</title>
+<title>vari: vari::_uvptr&lt; Deleter, Ts &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,155 +95,185 @@ $(document).ready(function(){initNavTree('classvari_1_1__uvptr.html',''); initRe
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classvari_1_1__uvptr-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">vari::_uvptr&lt; Ts &gt; Class Template Reference</div></div>
+  <div class="headertitle"><div class="title">vari::_uvptr&lt; Deleter, Ts &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="uvptr_8h_source.html">uvptr.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for vari::_uvptr&lt; Deleter, Ts &gt;:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classvari_1_1__uvptr.png" usemap="#vari::_5Fuvptr_3C_20Deleter_2C_20Ts_20_3E_map" alt=""/>
+  <map id="vari::_5Fuvptr_3C_20Deleter_2C_20Ts_20_3E_map" name="vari::_5Fuvptr_3C_20Deleter_2C_20Ts_20_3E_map">
+<area href="structvari_1_1deleter__box.html" alt="vari::deleter_box&lt; Deleter &gt;" shape="rect" coords="0,0,171,24"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a5c1c7160c0d01fd197445c47df1faf65"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a> = <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt;</td></tr>
-<tr class="separator:a5c1c7160c0d01fd197445c47df1faf65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62687606225b479b4c88e6b9f64af6bf"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a62687606225b479b4c88e6b9f64af6bf">pointer</a> = <a class="el" href="classvari_1_1__vptr.html">_vptr</a>&lt; Ts... &gt;</td></tr>
-<tr class="separator:a62687606225b479b4c88e6b9f64af6bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9bb4ce214279e3e1d8b98c6a83f097f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#ae9bb4ce214279e3e1d8b98c6a83f097f">reference</a> = <a class="el" href="classvari_1_1__vref.html">_vref</a>&lt; Ts... &gt;</td></tr>
-<tr class="separator:ae9bb4ce214279e3e1d8b98c6a83f097f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a108b30f70215626e25854ce8a4b14afe"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a108b30f70215626e25854ce8a4b14afe">owning_reference</a> = <a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Ts... &gt;</td></tr>
-<tr class="separator:a108b30f70215626e25854ce8a4b14afe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31be6e2bc0bee4bbe15db20c7a22c8a6"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a> = <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt;</td></tr>
+<tr class="separator:a31be6e2bc0bee4bbe15db20c7a22c8a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6598368f065f2a1fe246ad0ec0e3c4e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#ae6598368f065f2a1fe246ad0ec0e3c4e">core_type</a> = <a class="el" href="structvari_1_1__ptr__core.html">_ptr_core</a>&lt; <a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a> &gt;</td></tr>
+<tr class="separator:ae6598368f065f2a1fe246ad0ec0e3c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ce116aab98d2c04ce8489fae3d0389f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a0ce116aab98d2c04ce8489fae3d0389f">pointer</a> = <a class="el" href="classvari_1_1__vptr.html">_vptr</a>&lt; Ts... &gt;</td></tr>
+<tr class="separator:a0ce116aab98d2c04ce8489fae3d0389f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08da5d23bcc4d55fd4e4abb1e2b8cdf7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a08da5d23bcc4d55fd4e4abb1e2b8cdf7">reference</a> = <a class="el" href="classvari_1_1__vref.html">_vref</a>&lt; Ts... &gt;</td></tr>
+<tr class="separator:a08da5d23bcc4d55fd4e4abb1e2b8cdf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f9d4fc93a4f0ed13d6a8cd2ad73e64d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a6f9d4fc93a4f0ed13d6a8cd2ad73e64d">owning_reference</a> = <a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Deleter, Ts... &gt;</td></tr>
+<tr class="separator:a6f9d4fc93a4f0ed13d6a8cd2ad73e64d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1d8ea1ecef8e4c5a32a7d4607aa125e4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a1d8ea1ecef8e4c5a32a7d4607aa125e4">_uvptr</a> () noexcept=default</td></tr>
-<tr class="separator:a1d8ea1ecef8e4c5a32a7d4607aa125e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb06de87aef369400c457322778b996c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#adb06de87aef369400c457322778b996c">_uvptr</a> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> const &amp;)=delete</td></tr>
-<tr class="separator:adb06de87aef369400c457322778b996c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a0ecb5877438f9963b9a0b2fe36a7e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a9a0ecb5877438f9963b9a0b2fe36a7e8">operator=</a> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> const &amp;)=delete</td></tr>
-<tr class="separator:a9a0ecb5877438f9963b9a0b2fe36a7e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a428109f201cb66489d0ea180e8887098"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a428109f201cb66489d0ea180e8887098">_uvptr</a> (std::nullptr_t) noexcept</td></tr>
-<tr class="separator:a428109f201cb66489d0ea180e8887098"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad40ca2b09632de447fe3dd56fd2d37c8"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a> &gt; )</td></tr>
-<tr class="memitem:ad40ca2b09632de447fe3dd56fd2d37c8"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#ad40ca2b09632de447fe3dd56fd2d37c8">_uvptr</a> (<a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Us... &gt; &amp;&amp;p) noexcept</td></tr>
-<tr class="separator:ad40ca2b09632de447fe3dd56fd2d37c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0241d8503b4cca6e48ad4a1d50202b4"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a> &gt; )</td></tr>
-<tr class="memitem:ab0241d8503b4cca6e48ad4a1d50202b4"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#ab0241d8503b4cca6e48ad4a1d50202b4">_uvptr</a> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Us... &gt; &amp;&amp;p) noexcept</td></tr>
-<tr class="separator:ab0241d8503b4cca6e48ad4a1d50202b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a015e54bb66a3f9845d7116acc11907"><td class="memTemplParams" colspan="2">template&lt;typename U &gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; U &gt;, <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a> &gt; )</td></tr>
-<tr class="memitem:a1a015e54bb66a3f9845d7116acc11907"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a1a015e54bb66a3f9845d7116acc11907">_uvptr</a> (U *u) noexcept</td></tr>
-<tr class="separator:a1a015e54bb66a3f9845d7116acc11907"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0bf0c9857132fd86091608768ece625"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#aa0bf0c9857132fd86091608768ece625">operator=</a> (std::nullptr_t) noexcept</td></tr>
-<tr class="separator:aa0bf0c9857132fd86091608768ece625"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe474a6e9f5962003f08f845bf6a8d2d"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a> &gt; )</td></tr>
-<tr class="memitem:afe474a6e9f5962003f08f845bf6a8d2d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#afe474a6e9f5962003f08f845bf6a8d2d">operator=</a> (<a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Us... &gt; &amp;&amp;p) noexcept</td></tr>
-<tr class="separator:afe474a6e9f5962003f08f845bf6a8d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e108a833ac389e2e48bf4c168438a1b"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a> &gt; )</td></tr>
-<tr class="memitem:a5e108a833ac389e2e48bf4c168438a1b"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a5e108a833ac389e2e48bf4c168438a1b">operator=</a> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Us... &gt; &amp;&amp;p) noexcept</td></tr>
-<tr class="separator:a5e108a833ac389e2e48bf4c168438a1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9abcfaef1893cffd49d8307c2150b702"><td class="memItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a9abcfaef1893cffd49d8307c2150b702">operator*</a> () const noexcept</td></tr>
-<tr class="separator:a9abcfaef1893cffd49d8307c2150b702"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2474bc3bbf30d5b7a20c3bf4c12e050"><td class="memItemLeft" align="right" valign="top">auto *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#ae2474bc3bbf30d5b7a20c3bf4c12e050">operator-&gt;</a> () const noexcept</td></tr>
-<tr class="separator:ae2474bc3bbf30d5b7a20c3bf4c12e050"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3efd778ea21158e05bb23fef1ae1486d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classvari_1_1__uvptr.html#a62687606225b479b4c88e6b9f64af6bf">pointer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a3efd778ea21158e05bb23fef1ae1486d">get</a> () const noexcept</td></tr>
-<tr class="separator:a3efd778ea21158e05bb23fef1ae1486d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09a54f0cdcdf48659baf0e7e485882eb"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a09a54f0cdcdf48659baf0e7e485882eb">index</a> () const noexcept</td></tr>
-<tr class="separator:a09a54f0cdcdf48659baf0e7e485882eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af75d8861ba46409fcbf2e27339c969ec"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt; &gt; )</td></tr>
-<tr class="memitem:af75d8861ba46409fcbf2e27339c969ec"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#af75d8861ba46409fcbf2e27339c969ec">operator _vptr&lt; Us... &gt;</a> () const noexcept</td></tr>
-<tr class="separator:af75d8861ba46409fcbf2e27339c969ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69b12b7a67067fb456af3a0d7181d502"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a69b12b7a67067fb456af3a0d7181d502">reset</a> (<a class="el" href="classvari_1_1__uvptr.html#a62687606225b479b4c88e6b9f64af6bf">pointer</a> ptr=<a class="el" href="classvari_1_1__uvptr.html#a62687606225b479b4c88e6b9f64af6bf">pointer</a>())</td></tr>
-<tr class="separator:a69b12b7a67067fb456af3a0d7181d502"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d3e775673c40203bd0608bf89e840fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvari_1_1__uvptr.html#a62687606225b479b4c88e6b9f64af6bf">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a6d3e775673c40203bd0608bf89e840fe">release</a> () noexcept</td></tr>
-<tr class="separator:a6d3e775673c40203bd0608bf89e840fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a395a2c4ad23a7dc2b24344eaefb722d2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a395a2c4ad23a7dc2b24344eaefb722d2">operator bool</a> () const noexcept</td></tr>
-<tr class="separator:a395a2c4ad23a7dc2b24344eaefb722d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a219e839fe0595f526ec54f0a99557409"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvari_1_1__uvptr.html#ae9bb4ce214279e3e1d8b98c6a83f097f">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a219e839fe0595f526ec54f0a99557409">vref</a> () const &amp;noexcept</td></tr>
-<tr class="separator:a219e839fe0595f526ec54f0a99557409"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abde0bb81872e31f65d39e560264d835e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvari_1_1__uvptr.html#a108b30f70215626e25854ce8a4b14afe">owning_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#abde0bb81872e31f65d39e560264d835e">vref</a> () &amp;&amp;noexcept</td></tr>
-<tr class="separator:abde0bb81872e31f65d39e560264d835e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15e4c566c6df2a7286d586891cd3934c"><td class="memTemplParams" colspan="2">template&lt;typename... Fs&gt; </td></tr>
-<tr class="memitem:a15e4c566c6df2a7286d586891cd3934c"><td class="memTemplItemLeft" align="right" valign="top">decltype(auto)&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a15e4c566c6df2a7286d586891cd3934c">visit</a> (Fs &amp;&amp;... f) const</td></tr>
-<tr class="separator:a15e4c566c6df2a7286d586891cd3934c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a140d2bc5bd66dc974d176ef6b5ce4616"><td class="memTemplParams" colspan="2">template&lt;typename... Fs&gt; </td></tr>
-<tr class="memitem:a140d2bc5bd66dc974d176ef6b5ce4616"><td class="memTemplItemLeft" align="right" valign="top">decltype(auto)&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a140d2bc5bd66dc974d176ef6b5ce4616">take</a> (Fs &amp;&amp;... fs) &amp;&amp;</td></tr>
-<tr class="separator:a140d2bc5bd66dc974d176ef6b5ce4616"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a013c3afabbd32e4edaef427a649d8b8d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a013c3afabbd32e4edaef427a649d8b8d">~_uvptr</a> ()</td></tr>
-<tr class="separator:a013c3afabbd32e4edaef427a649d8b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ffb226f9254f69678c49e38fe4e9e80"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a9ffb226f9254f69678c49e38fe4e9e80">_uvptr</a> () noexcept=default</td></tr>
+<tr class="separator:a9ffb226f9254f69678c49e38fe4e9e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08ce1e1836ece22924ee061123885721"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a08ce1e1836ece22924ee061123885721">_uvptr</a> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> const &amp;)=delete</td></tr>
+<tr class="separator:a08ce1e1836ece22924ee061123885721"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c08b961588748676e641a774afb4d18"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a1c08b961588748676e641a774afb4d18">operator=</a> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> const &amp;)=delete</td></tr>
+<tr class="separator:a1c08b961588748676e641a774afb4d18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad68f51509febd7e80c4ea036ca8b14a0"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#ad68f51509febd7e80c4ea036ca8b14a0">_uvptr</a> (std::nullptr_t) noexcept</td></tr>
+<tr class="separator:ad68f51509febd7e80c4ea036ca8b14a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb5ad8d976133b45ba70f1f9a85f0abd"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
+requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a> &gt; )</td></tr>
+<tr class="memitem:afb5ad8d976133b45ba70f1f9a85f0abd"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#afb5ad8d976133b45ba70f1f9a85f0abd">_uvptr</a> (<a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Deleter, Us... &gt; &amp;&amp;p) noexcept</td></tr>
+<tr class="separator:afb5ad8d976133b45ba70f1f9a85f0abd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a772b55d517808be2459050de76556543"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
+requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a> &gt; )</td></tr>
+<tr class="memitem:a772b55d517808be2459050de76556543"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a772b55d517808be2459050de76556543">_uvptr</a> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter, Us... &gt; &amp;&amp;p) noexcept</td></tr>
+<tr class="separator:a772b55d517808be2459050de76556543"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e09b722199c8b0e0240fbbc9c8717fd"><td class="memTemplParams" colspan="2">template&lt;typename U &gt; <br />
+requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; U &gt;, <a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a> &gt; )</td></tr>
+<tr class="memitem:a4e09b722199c8b0e0240fbbc9c8717fd"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a4e09b722199c8b0e0240fbbc9c8717fd">_uvptr</a> (U *u) noexcept</td></tr>
+<tr class="separator:a4e09b722199c8b0e0240fbbc9c8717fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42bb03e9901676c26545859c3f224b78"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a42bb03e9901676c26545859c3f224b78">operator=</a> (std::nullptr_t) noexcept</td></tr>
+<tr class="separator:a42bb03e9901676c26545859c3f224b78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a749da531ff06767f468e504ad93c9444"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
+requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a> &gt; )</td></tr>
+<tr class="memitem:a749da531ff06767f468e504ad93c9444"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a749da531ff06767f468e504ad93c9444">operator=</a> (<a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Deleter, Us... &gt; &amp;&amp;p) noexcept</td></tr>
+<tr class="separator:a749da531ff06767f468e504ad93c9444"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af829e6bfdf57fca4a9848b6c72793288"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
+requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a> &gt; )</td></tr>
+<tr class="memitem:af829e6bfdf57fca4a9848b6c72793288"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#af829e6bfdf57fca4a9848b6c72793288">operator=</a> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter, Us... &gt; &amp;&amp;p) noexcept</td></tr>
+<tr class="separator:af829e6bfdf57fca4a9848b6c72793288"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af898aa6e888912a05692cd17d7313aaf"><td class="memItemLeft" align="right" valign="top">constexpr auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#af898aa6e888912a05692cd17d7313aaf">operator*</a> () const noexcept</td></tr>
+<tr class="separator:af898aa6e888912a05692cd17d7313aaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6659faeaded10de7d246178683fc3a71"><td class="memItemLeft" align="right" valign="top">constexpr auto *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a6659faeaded10de7d246178683fc3a71">operator-&gt;</a> () const noexcept</td></tr>
+<tr class="separator:a6659faeaded10de7d246178683fc3a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6889939070b3cbec40b638da5095e358"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__uvptr.html#a0ce116aab98d2c04ce8489fae3d0389f">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a6889939070b3cbec40b638da5095e358">get</a> () const noexcept</td></tr>
+<tr class="separator:a6889939070b3cbec40b638da5095e358"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a793e60a27132226f6654282aaaf5aa78"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a793e60a27132226f6654282aaaf5aa78">index</a> () const noexcept</td></tr>
+<tr class="separator:a793e60a27132226f6654282aaaf5aa78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0dc1b8ae19fada0d8d8e6b6361883b5"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
+requires ( vconvertible_to&lt; <a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt; &gt; )</td></tr>
+<tr class="memitem:ab0dc1b8ae19fada0d8d8e6b6361883b5"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#ab0dc1b8ae19fada0d8d8e6b6361883b5">operator _vptr&lt; Us... &gt;</a> () const noexcept</td></tr>
+<tr class="separator:ab0dc1b8ae19fada0d8d8e6b6361883b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d232de216fd22646bb7aecbae2c7b9e"><td class="memItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a7d232de216fd22646bb7aecbae2c7b9e">reset</a> (<a class="el" href="classvari_1_1__uvptr.html#a0ce116aab98d2c04ce8489fae3d0389f">pointer</a> ptr=<a class="el" href="classvari_1_1__uvptr.html#a0ce116aab98d2c04ce8489fae3d0389f">pointer</a>())</td></tr>
+<tr class="separator:a7d232de216fd22646bb7aecbae2c7b9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2bfd950948698457ceecbc2de3cb3fa"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__uvptr.html#a0ce116aab98d2c04ce8489fae3d0389f">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#aa2bfd950948698457ceecbc2de3cb3fa">release</a> () noexcept</td></tr>
+<tr class="separator:aa2bfd950948698457ceecbc2de3cb3fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2446c380006917e32ab75525472ff7ec"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a2446c380006917e32ab75525472ff7ec">operator bool</a> () const noexcept</td></tr>
+<tr class="separator:a2446c380006917e32ab75525472ff7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0268f96d4c0db70603d21f28246cbd2"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__uvptr.html#a08da5d23bcc4d55fd4e4abb1e2b8cdf7">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#ab0268f96d4c0db70603d21f28246cbd2">vref</a> () const &amp;noexcept</td></tr>
+<tr class="separator:ab0268f96d4c0db70603d21f28246cbd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa58a859121832d5b3237542dc07ef41b"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__uvptr.html#a6f9d4fc93a4f0ed13d6a8cd2ad73e64d">owning_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#aa58a859121832d5b3237542dc07ef41b">vref</a> () &amp;&amp;noexcept</td></tr>
+<tr class="separator:aa58a859121832d5b3237542dc07ef41b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66185129027ae6c7b77e669398bb3119"><td class="memTemplParams" colspan="2">template&lt;typename... Fs&gt; </td></tr>
+<tr class="memitem:a66185129027ae6c7b77e669398bb3119"><td class="memTemplItemLeft" align="right" valign="top">constexpr decltype(auto)&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a66185129027ae6c7b77e669398bb3119">visit</a> (Fs &amp;&amp;... f) const</td></tr>
+<tr class="separator:a66185129027ae6c7b77e669398bb3119"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b2b1c49a9d83bf17c1527ed51a408c6"><td class="memTemplParams" colspan="2">template&lt;typename... Fs&gt; </td></tr>
+<tr class="memitem:a4b2b1c49a9d83bf17c1527ed51a408c6"><td class="memTemplItemLeft" align="right" valign="top">constexpr decltype(auto)&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a4b2b1c49a9d83bf17c1527ed51a408c6">take</a> (Fs &amp;&amp;... fs) &amp;&amp;</td></tr>
+<tr class="separator:a4b2b1c49a9d83bf17c1527ed51a408c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05d29c37a44638722ab67b98f8fe4759"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a05d29c37a44638722ab67b98f8fe4759">~_uvptr</a> ()</td></tr>
+<tr class="separator:a05d29c37a44638722ab67b98f8fe4759"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:a084c210fba0df2f86f434eb10fd9ea7d"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; </td></tr>
-<tr class="memitem:a084c210fba0df2f86f434eb10fd9ea7d"><td class="memTemplItemLeft" align="right" valign="top">class&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a084c210fba0df2f86f434eb10fd9ea7d">_uvptr</a></td></tr>
-<tr class="separator:a084c210fba0df2f86f434eb10fd9ea7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a358ff353599abae12606a00402201e1b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a358ff353599abae12606a00402201e1b">swap</a> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;lh, <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;rh) noexcept</td></tr>
-<tr class="separator:a358ff353599abae12606a00402201e1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44ee8311cb4654228d8830cfba7b9867"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a44ee8311cb4654228d8830cfba7b9867">operator&lt;=&gt;</a> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> const &amp;lh, <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> const &amp;rh)=default</td></tr>
-<tr class="separator:a44ee8311cb4654228d8830cfba7b9867"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8de5a4481b564b6296eeea02a85f1acf"><td class="memTemplParams" colspan="2">template&lt;typename Deleter2 , typename... Us&gt; </td></tr>
+<tr class="memitem:a8de5a4481b564b6296eeea02a85f1acf"><td class="memTemplItemLeft" align="right" valign="top">class&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a8de5a4481b564b6296eeea02a85f1acf">_uvptr</a></td></tr>
+<tr class="separator:a8de5a4481b564b6296eeea02a85f1acf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2cdf6d990a908d5c71daf9ae2fed83e"><td class="memTemplParams" colspan="2">template&lt;typename Deleter2 , typename... Us&gt; </td></tr>
+<tr class="memitem:ab2cdf6d990a908d5c71daf9ae2fed83e"><td class="memTemplItemLeft" align="right" valign="top">class&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#ab2cdf6d990a908d5c71daf9ae2fed83e">_uvref</a></td></tr>
+<tr class="separator:ab2cdf6d990a908d5c71daf9ae2fed83e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2790ca25b8fd1115acc82742325b725c"><td class="memItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a2790ca25b8fd1115acc82742325b725c">swap</a> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;lh, <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;rh) noexcept</td></tr>
+<tr class="separator:a2790ca25b8fd1115acc82742325b725c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab784b2f360c8e8c351bfec7ec80b2dd6"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#ab784b2f360c8e8c351bfec7ec80b2dd6">operator&lt;=&gt;</a> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> const &amp;lh, <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> const &amp;rh)=default</td></tr>
+<tr class="separator:ab784b2f360c8e8c351bfec7ec80b2dd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a108b30f70215626e25854ce8a4b14afe" name="a108b30f70215626e25854ce8a4b14afe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a108b30f70215626e25854ce8a4b14afe">&#9670;&#160;</a></span>owning_reference</h2>
+<a id="ae6598368f065f2a1fe246ad0ec0e3c4e" name="ae6598368f065f2a1fe246ad0ec0e3c4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6598368f065f2a1fe246ad0ec0e3c4e">&#9670;&#160;</a></span>core_type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::owning_reference =  <a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Ts... &gt;</td>
+          <td class="memname">using <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::core_type =  <a class="el" href="structvari_1_1__ptr__core.html">_ptr_core</a>&lt; <a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a> &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a62687606225b479b4c88e6b9f64af6bf" name="a62687606225b479b4c88e6b9f64af6bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62687606225b479b4c88e6b9f64af6bf">&#9670;&#160;</a></span>pointer</h2>
+<a id="a6f9d4fc93a4f0ed13d6a8cd2ad73e64d" name="a6f9d4fc93a4f0ed13d6a8cd2ad73e64d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f9d4fc93a4f0ed13d6a8cd2ad73e64d">&#9670;&#160;</a></span>owning_reference</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::pointer =  <a class="el" href="classvari_1_1__vptr.html">_vptr</a>&lt; Ts... &gt;</td>
+          <td class="memname">using <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::owning_reference =  <a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Deleter, Ts... &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ae9bb4ce214279e3e1d8b98c6a83f097f" name="ae9bb4ce214279e3e1d8b98c6a83f097f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9bb4ce214279e3e1d8b98c6a83f097f">&#9670;&#160;</a></span>reference</h2>
+<a id="a0ce116aab98d2c04ce8489fae3d0389f" name="a0ce116aab98d2c04ce8489fae3d0389f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ce116aab98d2c04ce8489fae3d0389f">&#9670;&#160;</a></span>pointer</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::reference =  <a class="el" href="classvari_1_1__vref.html">_vref</a>&lt; Ts... &gt;</td>
+          <td class="memname">using <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::pointer =  <a class="el" href="classvari_1_1__vptr.html">_vptr</a>&lt; Ts... &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a5c1c7160c0d01fd197445c47df1faf65" name="a5c1c7160c0d01fd197445c47df1faf65"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c1c7160c0d01fd197445c47df1faf65">&#9670;&#160;</a></span>types</h2>
+<a id="a08da5d23bcc4d55fd4e4abb1e2b8cdf7" name="a08da5d23bcc4d55fd4e4abb1e2b8cdf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08da5d23bcc4d55fd4e4abb1e2b8cdf7">&#9670;&#160;</a></span>reference</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::types =  <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt;</td>
+          <td class="memname">using <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::reference =  <a class="el" href="classvari_1_1__vref.html">_vref</a>&lt; Ts... &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a31be6e2bc0bee4bbe15db20c7a22c8a6" name="a31be6e2bc0bee4bbe15db20c7a22c8a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31be6e2bc0bee4bbe15db20c7a22c8a6">&#9670;&#160;</a></span>types</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Deleter , typename... Ts&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::types =  <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -251,19 +281,19 @@ template&lt;typename... Ts&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a1d8ea1ecef8e4c5a32a7d4607aa125e4" name="a1d8ea1ecef8e4c5a32a7d4607aa125e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d8ea1ecef8e4c5a32a7d4607aa125e4">&#9670;&#160;</a></span>_uvptr() <span class="overload">[1/6]</span></h2>
+<a id="a9ffb226f9254f69678c49e38fe4e9e80" name="a9ffb226f9254f69678c49e38fe4e9e80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ffb226f9254f69678c49e38fe4e9e80">&#9670;&#160;</a></span>_uvptr() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::_uvptr </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::_uvptr </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -271,54 +301,54 @@ template&lt;typename... Ts&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">default</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">default</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="adb06de87aef369400c457322778b996c" name="adb06de87aef369400c457322778b996c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb06de87aef369400c457322778b996c">&#9670;&#160;</a></span>_uvptr() <span class="overload">[2/6]</span></h2>
+<a id="a08ce1e1836ece22924ee061123885721" name="a08ce1e1836ece22924ee061123885721"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08ce1e1836ece22924ee061123885721">&#9670;&#160;</a></span>_uvptr() <span class="overload">[2/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::_uvptr </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::_uvptr </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Ts &gt; const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter, Ts &gt; const &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">delete</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a428109f201cb66489d0ea180e8887098" name="a428109f201cb66489d0ea180e8887098"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a428109f201cb66489d0ea180e8887098">&#9670;&#160;</a></span>_uvptr() <span class="overload">[3/6]</span></h2>
+<a id="ad68f51509febd7e80c4ea036ca8b14a0" name="ad68f51509febd7e80c4ea036ca8b14a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad68f51509febd7e80c4ea036ca8b14a0">&#9670;&#160;</a></span>_uvptr() <span class="overload">[3/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::_uvptr </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::_uvptr </td>
           <td>(</td>
           <td class="paramtype">std::nullptr_t&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -327,91 +357,91 @@ template&lt;typename... Ts&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ad40ca2b09632de447fe3dd56fd2d37c8" name="ad40ca2b09632de447fe3dd56fd2d37c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad40ca2b09632de447fe3dd56fd2d37c8">&#9670;&#160;</a></span>_uvptr() <span class="overload">[4/6]</span></h2>
+<a id="afb5ad8d976133b45ba70f1f9a85f0abd" name="afb5ad8d976133b45ba70f1f9a85f0abd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb5ad8d976133b45ba70f1f9a85f0abd">&#9670;&#160;</a></span>_uvptr() <span class="overload">[4/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <div class="memtemplate">
 template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a> &gt; )</div>
+requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a> &gt; )</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::_uvptr </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::_uvptr </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Us... &gt; &amp;&amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Deleter, Us... &gt; &amp;&amp;&#160;</td>
           <td class="paramname"><em>p</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ab0241d8503b4cca6e48ad4a1d50202b4" name="ab0241d8503b4cca6e48ad4a1d50202b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0241d8503b4cca6e48ad4a1d50202b4">&#9670;&#160;</a></span>_uvptr() <span class="overload">[5/6]</span></h2>
+<a id="a772b55d517808be2459050de76556543" name="a772b55d517808be2459050de76556543"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a772b55d517808be2459050de76556543">&#9670;&#160;</a></span>_uvptr() <span class="overload">[5/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <div class="memtemplate">
 template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a> &gt; )</div>
+requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a> &gt; )</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::_uvptr </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::_uvptr </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Us... &gt; &amp;&amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter, Us... &gt; &amp;&amp;&#160;</td>
           <td class="paramname"><em>p</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a1a015e54bb66a3f9845d7116acc11907" name="a1a015e54bb66a3f9845d7116acc11907"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a015e54bb66a3f9845d7116acc11907">&#9670;&#160;</a></span>_uvptr() <span class="overload">[6/6]</span></h2>
+<a id="a4e09b722199c8b0e0240fbbc9c8717fd" name="a4e09b722199c8b0e0240fbbc9c8717fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e09b722199c8b0e0240fbbc9c8717fd">&#9670;&#160;</a></span>_uvptr() <span class="overload">[6/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <div class="memtemplate">
 template&lt;typename U &gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; U &gt;, <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a> &gt; )</div>
+requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; U &gt;, <a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a> &gt; )</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::_uvptr </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::_uvptr </td>
           <td>(</td>
           <td class="paramtype">U *&#160;</td>
           <td class="paramname"><em>u</em></td><td>)</td>
@@ -420,26 +450,26 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a013c3afabbd32e4edaef427a649d8b8d" name="a013c3afabbd32e4edaef427a649d8b8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a013c3afabbd32e4edaef427a649d8b8d">&#9670;&#160;</a></span>~_uvptr()</h2>
+<a id="a05d29c37a44638722ab67b98f8fe4759" name="a05d29c37a44638722ab67b98f8fe4759"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05d29c37a44638722ab67b98f8fe4759">&#9670;&#160;</a></span>~_uvptr()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::~<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::~<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -447,7 +477,7 @@ template&lt;typename... Ts&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -455,46 +485,19 @@ template&lt;typename... Ts&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3efd778ea21158e05bb23fef1ae1486d" name="a3efd778ea21158e05bb23fef1ae1486d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3efd778ea21158e05bb23fef1ae1486d">&#9670;&#160;</a></span>get()</h2>
+<a id="a6889939070b3cbec40b638da5095e358" name="a6889939070b3cbec40b638da5095e358"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6889939070b3cbec40b638da5095e358">&#9670;&#160;</a></span>get()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classvari_1_1__uvptr.html#a62687606225b479b4c88e6b9f64af6bf">pointer</a> &amp; <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::get </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a09a54f0cdcdf48659baf0e7e485882eb" name="a09a54f0cdcdf48659baf0e7e485882eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09a54f0cdcdf48659baf0e7e485882eb">&#9670;&#160;</a></span>index()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr <a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::index </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html#a0ce116aab98d2c04ce8489fae3d0389f">pointer</a> <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::get </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -509,22 +512,49 @@ template&lt;typename... Ts&gt; </div>
 
 </div>
 </div>
-<a id="af75d8861ba46409fcbf2e27339c969ec" name="af75d8861ba46409fcbf2e27339c969ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af75d8861ba46409fcbf2e27339c969ec">&#9670;&#160;</a></span>operator _vptr&lt; Us... &gt;()</h2>
+<a id="a793e60a27132226f6654282aaaf5aa78" name="a793e60a27132226f6654282aaaf5aa78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a793e60a27132226f6654282aaaf5aa78">&#9670;&#160;</a></span>index()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr <a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::index </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab0dc1b8ae19fada0d8d8e6b6361883b5" name="ab0dc1b8ae19fada0d8d8e6b6361883b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0dc1b8ae19fada0d8d8e6b6361883b5">&#9670;&#160;</a></span>operator _vptr&lt; Us... &gt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <div class="memtemplate">
 template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt; &gt; )</div>
+requires ( vconvertible_to&lt; <a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt; &gt; )</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::operator <a class="el" href="classvari_1_1__vptr.html">_vptr</a>&lt; Us... &gt; </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::operator <a class="el" href="classvari_1_1__vptr.html">_vptr</a>&lt; Us... &gt; </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -532,26 +562,26 @@ requires ( vconvertible_to&lt; <a class="el" href="classvari_1_1__uvptr.html#a5c
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a395a2c4ad23a7dc2b24344eaefb722d2" name="a395a2c4ad23a7dc2b24344eaefb722d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a395a2c4ad23a7dc2b24344eaefb722d2">&#9670;&#160;</a></span>operator bool()</h2>
+<a id="a2446c380006917e32ab75525472ff7ec" name="a2446c380006917e32ab75525472ff7ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2446c380006917e32ab75525472ff7ec">&#9670;&#160;</a></span>operator bool()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::operator bool </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::operator bool </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -559,26 +589,26 @@ template&lt;typename... Ts&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a9abcfaef1893cffd49d8307c2150b702" name="a9abcfaef1893cffd49d8307c2150b702"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9abcfaef1893cffd49d8307c2150b702">&#9670;&#160;</a></span>operator*()</h2>
+<a id="af898aa6e888912a05692cd17d7313aaf" name="af898aa6e888912a05692cd17d7313aaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af898aa6e888912a05692cd17d7313aaf">&#9670;&#160;</a></span>operator*()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto &amp; <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::operator* </td>
+          <td class="memname">constexpr auto &amp; <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::operator* </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -586,26 +616,26 @@ template&lt;typename... Ts&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ae2474bc3bbf30d5b7a20c3bf4c12e050" name="ae2474bc3bbf30d5b7a20c3bf4c12e050"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2474bc3bbf30d5b7a20c3bf4c12e050">&#9670;&#160;</a></span>operator-&gt;()</h2>
+<a id="a6659faeaded10de7d246178683fc3a71" name="a6659faeaded10de7d246178683fc3a71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6659faeaded10de7d246178683fc3a71">&#9670;&#160;</a></span>operator-&gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto * <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::operator-&gt; </td>
+          <td class="memname">constexpr auto * <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::operator-&gt; </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -613,116 +643,116 @@ template&lt;typename... Ts&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a9a0ecb5877438f9963b9a0b2fe36a7e8" name="a9a0ecb5877438f9963b9a0b2fe36a7e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a0ecb5877438f9963b9a0b2fe36a7e8">&#9670;&#160;</a></span>operator=() <span class="overload">[1/4]</span></h2>
+<a id="a1c08b961588748676e641a774afb4d18" name="a1c08b961588748676e641a774afb4d18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c08b961588748676e641a774afb4d18">&#9670;&#160;</a></span>operator=() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp; <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::operator= </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp; <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Ts &gt; const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter, Ts &gt; const &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">delete</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a5e108a833ac389e2e48bf4c168438a1b" name="a5e108a833ac389e2e48bf4c168438a1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e108a833ac389e2e48bf4c168438a1b">&#9670;&#160;</a></span>operator=() <span class="overload">[2/4]</span></h2>
+<a id="af829e6bfdf57fca4a9848b6c72793288" name="af829e6bfdf57fca4a9848b6c72793288"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af829e6bfdf57fca4a9848b6c72793288">&#9670;&#160;</a></span>operator=() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <div class="memtemplate">
 template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a> &gt; )</div>
+requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a> &gt; )</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp; <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::operator= </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp; <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Us... &gt; &amp;&amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter, Us... &gt; &amp;&amp;&#160;</td>
           <td class="paramname"><em>p</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="afe474a6e9f5962003f08f845bf6a8d2d" name="afe474a6e9f5962003f08f845bf6a8d2d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe474a6e9f5962003f08f845bf6a8d2d">&#9670;&#160;</a></span>operator=() <span class="overload">[3/4]</span></h2>
+<a id="a749da531ff06767f468e504ad93c9444" name="a749da531ff06767f468e504ad93c9444"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a749da531ff06767f468e504ad93c9444">&#9670;&#160;</a></span>operator=() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <div class="memtemplate">
 template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a5c1c7160c0d01fd197445c47df1faf65">types</a> &gt; )</div>
+requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__uvptr.html#a31be6e2bc0bee4bbe15db20c7a22c8a6">types</a> &gt; )</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp; <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::operator= </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp; <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Us... &gt; &amp;&amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Deleter, Us... &gt; &amp;&amp;&#160;</td>
           <td class="paramname"><em>p</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aa0bf0c9857132fd86091608768ece625" name="aa0bf0c9857132fd86091608768ece625"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0bf0c9857132fd86091608768ece625">&#9670;&#160;</a></span>operator=() <span class="overload">[4/4]</span></h2>
+<a id="a42bb03e9901676c26545859c3f224b78" name="a42bb03e9901676c26545859c3f224b78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42bb03e9901676c26545859c3f224b78">&#9670;&#160;</a></span>operator=() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp; <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::operator= </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp; <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::operator= </td>
           <td>(</td>
           <td class="paramtype">std::nullptr_t&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -731,26 +761,26 @@ template&lt;typename... Ts&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a6d3e775673c40203bd0608bf89e840fe" name="a6d3e775673c40203bd0608bf89e840fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d3e775673c40203bd0608bf89e840fe">&#9670;&#160;</a></span>release()</h2>
+<a id="aa2bfd950948698457ceecbc2de3cb3fa" name="aa2bfd950948698457ceecbc2de3cb3fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2bfd950948698457ceecbc2de3cb3fa">&#9670;&#160;</a></span>release()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html#a62687606225b479b4c88e6b9f64af6bf">pointer</a> <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::release </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html#a0ce116aab98d2c04ce8489fae3d0389f">pointer</a> <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::release </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -758,48 +788,48 @@ template&lt;typename... Ts&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a69b12b7a67067fb456af3a0d7181d502" name="a69b12b7a67067fb456af3a0d7181d502"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a69b12b7a67067fb456af3a0d7181d502">&#9670;&#160;</a></span>reset()</h2>
+<a id="a7d232de216fd22646bb7aecbae2c7b9e" name="a7d232de216fd22646bb7aecbae2c7b9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d232de216fd22646bb7aecbae2c7b9e">&#9670;&#160;</a></span>reset()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::reset </td>
+          <td class="memname">constexpr void <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::reset </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html#a62687606225b479b4c88e6b9f64af6bf">pointer</a>&#160;</td>
-          <td class="paramname"><em>ptr</em> = <code><a class="el" href="classvari_1_1__uvptr.html#a62687606225b479b4c88e6b9f64af6bf">pointer</a>()</code></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html#a0ce116aab98d2c04ce8489fae3d0389f">pointer</a>&#160;</td>
+          <td class="paramname"><em>ptr</em> = <code><a class="el" href="classvari_1_1__uvptr.html#a0ce116aab98d2c04ce8489fae3d0389f">pointer</a>()</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a140d2bc5bd66dc974d176ef6b5ce4616" name="a140d2bc5bd66dc974d176ef6b5ce4616"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a140d2bc5bd66dc974d176ef6b5ce4616">&#9670;&#160;</a></span>take()</h2>
+<a id="a4b2b1c49a9d83bf17c1527ed51a408c6" name="a4b2b1c49a9d83bf17c1527ed51a408c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b2b1c49a9d83bf17c1527ed51a408c6">&#9670;&#160;</a></span>take()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <div class="memtemplate">
 template&lt;typename... Fs&gt; </div>
 <table class="mlabels">
@@ -807,7 +837,7 @@ template&lt;typename... Fs&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">decltype(auto) <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::take </td>
+          <td class="memname">constexpr decltype(auto) <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::take </td>
           <td>(</td>
           <td class="paramtype">Fs &amp;&amp;...&#160;</td>
           <td class="paramname"><em>fs</em></td><td>)</td>
@@ -816,20 +846,20 @@ template&lt;typename... Fs&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a15e4c566c6df2a7286d586891cd3934c" name="a15e4c566c6df2a7286d586891cd3934c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15e4c566c6df2a7286d586891cd3934c">&#9670;&#160;</a></span>visit()</h2>
+<a id="a66185129027ae6c7b77e669398bb3119" name="a66185129027ae6c7b77e669398bb3119"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66185129027ae6c7b77e669398bb3119">&#9670;&#160;</a></span>visit()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <div class="memtemplate">
 template&lt;typename... Fs&gt; </div>
 <table class="mlabels">
@@ -837,7 +867,7 @@ template&lt;typename... Fs&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">decltype(auto) <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::visit </td>
+          <td class="memname">constexpr decltype(auto) <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::visit </td>
           <td>(</td>
           <td class="paramtype">Fs &amp;&amp;...&#160;</td>
           <td class="paramname"><em>f</em></td><td>)</td>
@@ -846,26 +876,26 @@ template&lt;typename... Fs&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="abde0bb81872e31f65d39e560264d835e" name="abde0bb81872e31f65d39e560264d835e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abde0bb81872e31f65d39e560264d835e">&#9670;&#160;</a></span>vref() <span class="overload">[1/2]</span></h2>
+<a id="aa58a859121832d5b3237542dc07ef41b" name="aa58a859121832d5b3237542dc07ef41b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa58a859121832d5b3237542dc07ef41b">&#9670;&#160;</a></span>vref() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html#a108b30f70215626e25854ce8a4b14afe">owning_reference</a> <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::vref </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html#a6f9d4fc93a4f0ed13d6a8cd2ad73e64d">owning_reference</a> <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::vref </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> &amp;&amp;</td>
@@ -873,26 +903,26 @@ template&lt;typename... Ts&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a219e839fe0595f526ec54f0a99557409" name="a219e839fe0595f526ec54f0a99557409"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a219e839fe0595f526ec54f0a99557409">&#9670;&#160;</a></span>vref() <span class="overload">[2/2]</span></h2>
+<a id="ab0268f96d4c0db70603d21f28246cbd2" name="ab0268f96d4c0db70603d21f28246cbd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0268f96d4c0db70603d21f28246cbd2">&#9670;&#160;</a></span>vref() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvari_1_1__uvptr.html#ae9bb4ce214279e3e1d8b98c6a83f097f">reference</a> <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Ts &gt;::vref </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html#a08da5d23bcc4d55fd4e4abb1e2b8cdf7">reference</a> <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::vref </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const &amp;</td>
@@ -900,7 +930,7 @@ template&lt;typename... Ts&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -908,15 +938,15 @@ template&lt;typename... Ts&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Friends And Related Function Documentation</h2>
-<a id="a084c210fba0df2f86f434eb10fd9ea7d" name="a084c210fba0df2f86f434eb10fd9ea7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a084c210fba0df2f86f434eb10fd9ea7d">&#9670;&#160;</a></span>_uvptr</h2>
+<a id="a8de5a4481b564b6296eeea02a85f1acf" name="a8de5a4481b564b6296eeea02a85f1acf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8de5a4481b564b6296eeea02a85f1acf">&#9670;&#160;</a></span>_uvptr</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <div class="memtemplate">
-template&lt;typename... Us&gt; </div>
+template&lt;typename Deleter2 , typename... Us&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -934,27 +964,53 @@ template&lt;typename... Us&gt; </div>
 
 </div>
 </div>
-<a id="a44ee8311cb4654228d8830cfba7b9867" name="a44ee8311cb4654228d8830cfba7b9867"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a44ee8311cb4654228d8830cfba7b9867">&#9670;&#160;</a></span>operator&lt;=&gt;</h2>
+<a id="ab2cdf6d990a908d5c71daf9ae2fed83e" name="ab2cdf6d990a908d5c71daf9ae2fed83e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2cdf6d990a908d5c71daf9ae2fed83e">&#9670;&#160;</a></span>_uvref</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
+<div class="memtemplate">
+template&lt;typename Deleter2 , typename... Us&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto operator&lt;=&gt; </td>
+          <td class="memname">friend class <a class="el" href="structvari_1_1__uvref.html">_uvref</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab784b2f360c8e8c351bfec7ec80b2dd6" name="ab784b2f360c8e8c351bfec7ec80b2dd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab784b2f360c8e8c351bfec7ec80b2dd6">&#9670;&#160;</a></span>operator&lt;=&gt;</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Deleter , typename... Ts&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto operator&lt;=&gt; </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Ts &gt; const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter, Ts &gt; const &amp;&#160;</td>
           <td class="paramname"><em>lh</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Ts &gt; const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter, Ts &gt; const &amp;&#160;</td>
           <td class="paramname"><em>rh</em>&#160;</td>
         </tr>
         <tr>
@@ -972,27 +1028,27 @@ template&lt;typename... Ts&gt; </div>
 
 </div>
 </div>
-<a id="a358ff353599abae12606a00402201e1b" name="a358ff353599abae12606a00402201e1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a358ff353599abae12606a00402201e1b">&#9670;&#160;</a></span>swap</h2>
+<a id="a2790ca25b8fd1115acc82742325b725c" name="a2790ca25b8fd1115acc82742325b725c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2790ca25b8fd1115acc82742325b725c">&#9670;&#160;</a></span>swap</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
+template&lt;typename Deleter , typename... Ts&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void swap </td>
+          <td class="memname">constexpr void swap </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Ts &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter, Ts &gt; &amp;&#160;</td>
           <td class="paramname"><em>lh</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Ts &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter, Ts &gt; &amp;&#160;</td>
           <td class="paramname"><em>rh</em>&#160;</td>
         </tr>
         <tr>
@@ -1010,7 +1066,8 @@ template&lt;typename... Ts&gt; </div>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>include/vari/<a class="el" href="forward_8h_source.html">forward.h</a></li>
 <li>include/vari/<a class="el" href="uvptr_8h_source.html">uvptr.h</a></li>
 </ul>
 </div><!-- contents -->

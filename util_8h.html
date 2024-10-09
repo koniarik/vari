@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('util_8h.html',''); initResizable(); })
 <div class="textblock"><code>#include &quot;<a class="el" href="typelist_8h_source.html">vari/bits/typelist.h</a>&quot;</code><br />
 <code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;limits&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;utility&gt;</code><br />
 </div>
 <p><a href="util_8h_source.html">Go to the source code of this file.</a></p>
@@ -109,7 +110,7 @@ $(document).ready(function(){initNavTree('util_8h.html',''); initResizable(); })
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1empty__t.html">vari::empty_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__vptr__apply_3_01T_00_01typelist_3_01Ts_8_8_8_01_4_01_4.html">vari::_vptr_apply&lt; T, typelist&lt; Ts... &gt; &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__vptr__apply_3_01T_00_01typelist_3_01Ts_8_8_8_01_4_00_01Us_8_8_8_01_4.html">vari::_vptr_apply&lt; T, typelist&lt; Ts... &gt;, Us... &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4.html">vari::check_unique_invocability&lt; typelist&lt; Ts... &gt; &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,9 +120,11 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__pure__cref.html">vari::check_unique_invocability&lt; typelist&lt; Ts... &gt; &gt;::with_pure_cref&lt; Fs &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__uvref.html">vari::check_unique_invocability&lt; typelist&lt; Ts... &gt; &gt;::with_uvref&lt; Fs &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__deleter.html">vari::check_unique_invocability&lt; typelist&lt; Ts... &gt; &gt;::with_deleter&lt; Deleter &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__nullable__uvref.html">vari::check_unique_invocability&lt; typelist&lt; Ts... &gt; &gt;::with_nullable_uvref&lt; Fs &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__deleter_1_1with__uvref.html">vari::check_unique_invocability&lt; typelist&lt; Ts... &gt; &gt;::with_deleter&lt; Deleter &gt;::with_uvref&lt; Fs &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__deleter_1_1with__nullable__uvref.html">vari::check_unique_invocability&lt; typelist&lt; Ts... &gt; &gt;::with_deleter&lt; Deleter &gt;::with_nullable_uvref&lt; Fs &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__function__picker.html">vari::_function_picker&lt; Args &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,6 +133,10 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__split__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html">vari::_split_impl&lt; typelist&lt; Us... &gt;, typelist&lt; T, Ts... &gt; &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__split__impl_3_01typelist_3_4_00_01typelist_3_4_01_4.html">vari::_split_impl&lt; typelist&lt;&gt;, typelist&lt;&gt; &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1deleter__box.html">vari::deleter_box&lt; Deleter &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1def__del.html">vari::def_del</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -152,12 +159,12 @@ Concepts</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a27f0cb184dbab9be3139f54135eef7c6"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; typename T, typename TL &gt; </td></tr>
-<tr class="memitem:a27f0cb184dbab9be3139f54135eef7c6"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a27f0cb184dbab9be3139f54135eef7c6">vari::_vptr_apply_t</a> = typename _vptr_apply&lt; T, TL &gt;::type</td></tr>
-<tr class="separator:a27f0cb184dbab9be3139f54135eef7c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad811f25a7115c12184565db0473a5a93"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; typename T, typename TL &gt; </td></tr>
-<tr class="memitem:ad811f25a7115c12184565db0473a5a93"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">vari::_define_variadic</a> = _vptr_apply_t&lt; T, unique_typelist_t&lt; flatten_t&lt; TL &gt; &gt; &gt;</td></tr>
-<tr class="separator:ad811f25a7115c12184565db0473a5a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a352924fac93056c566636380a68ad809"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; typename T, typename TL , typename... Us&gt; </td></tr>
+<tr class="memitem:a352924fac93056c566636380a68ad809"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a352924fac93056c566636380a68ad809">vari::_vptr_apply_t</a> = typename _vptr_apply&lt; T, TL, Us... &gt;::type</td></tr>
+<tr class="separator:a352924fac93056c566636380a68ad809"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a235fc059a5b337c532472b917b9d391d"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; typename T, typename TL , typename... Us&gt; </td></tr>
+<tr class="memitem:a235fc059a5b337c532472b917b9d391d"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a235fc059a5b337c532472b917b9d391d">vari::_define_variadic</a> = _vptr_apply_t&lt; T, unique_typelist_t&lt; flatten_t&lt; TL &gt; &gt;, Us... &gt;</td></tr>
+<tr class="separator:a235fc059a5b337c532472b917b9d391d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c4b642a120de6f97cef24c8b60fb2ce"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">vari::index_type</a> = uint32_t</td></tr>
 <tr class="separator:a4c4b642a120de6f97cef24c8b60fb2ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad950dff4783054330b8276997d72fde2"><td class="memTemplParams" colspan="2">template&lt;typename TL &gt; </td></tr>

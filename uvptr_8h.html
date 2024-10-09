@@ -100,16 +100,16 @@ $(document).ready(function(){initNavTree('uvptr_8h.html',''); initResizable(); }
 <div class="textblock"><code>#include &quot;<a class="el" href="ptr__core_8h_source.html">vari/bits/ptr_core.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="typelist_8h_source.html">vari/bits/typelist.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="util_8h_source.html">vari/bits/util.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="forward_8h_source.html">vari/forward.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="vptr_8h_source.html">vari/vptr.h</a>&quot;</code><br />
 <code>#include &lt;cassert&gt;</code><br />
 <code>#include &lt;cstddef&gt;</code><br />
-<code>#include &lt;optional&gt;</code><br />
 </div>
 <p><a href="uvptr_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr&lt; Ts &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr&lt; Deleter, Ts &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -119,9 +119,9 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ad82d68f165b27cedcbdf385779eacb69"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:ad82d68f165b27cedcbdf385779eacb69"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#ad82d68f165b27cedcbdf385779eacb69">vari::uvptr</a> = _define_variadic&lt; _uvptr, typelist&lt; Ts... &gt; &gt;</td></tr>
-<tr class="separator:ad82d68f165b27cedcbdf385779eacb69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3be05c6f854dc1b903a2a85e244bbdc5"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:a3be05c6f854dc1b903a2a85e244bbdc5"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr</a> = _define_variadic&lt; _uvptr, typelist&lt; Ts... &gt;, def_del &gt;</td></tr>
+<tr class="separator:a3be05c6f854dc1b903a2a85e244bbdc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

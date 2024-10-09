@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['vptr_0',['vptr',['../namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725',1,'vari']]],
-  ['vref_1',['vref',['../namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0',1,'vari']]],
-  ['vval_2',['vval',['../namespacevari.html#a2723aaf6449b2f8fb597a7baad0173db',1,'vari']]]
+  ['unique_5ftypelist_5ft_0',['unique_typelist_t',['../namespacevari.html#aaa07eec3b32603b583fe8baf576e14ee',1,'vari']]],
+  ['uvptr_1',['uvptr',['../namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5',1,'vari']]],
+  ['uvref_2',['uvref',['../namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0',1,'vari']]]
 ];

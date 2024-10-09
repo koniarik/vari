@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['flatten_5ft_0',['flatten_t',['../namespacevari.html#ab99ffc8a5afd4acbc960e1b940b9c53d',1,'vari']]]
+  ['core_5ftype_0',['core_type',['../classvari_1_1__uvptr.html#ae6598368f065f2a1fe246ad0ec0e3c4e',1,'vari::_uvptr::core_type()'],['../structvari_1_1__uvref.html#a80e11f4c16140432f291ab3aee6051f0',1,'vari::_uvref::core_type()']]]
 ];

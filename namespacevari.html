@@ -159,7 +159,7 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__vptr__apply.html">_vptr_apply</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__vptr__apply_3_01T_00_01typelist_3_01Ts_8_8_8_01_4_01_4.html">_vptr_apply&lt; T, typelist&lt; Ts... &gt; &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__vptr__apply_3_01T_00_01typelist_3_01Ts_8_8_8_01_4_00_01Us_8_8_8_01_4.html">_vptr_apply&lt; T, typelist&lt; Ts... &gt;, Us... &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__vptr__cnv__map.html">_vptr_cnv_map</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -208,6 +208,10 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1contains__type.html">contains_type</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1contains__type_3_01T_00_01typelist_3_01Ts_8_8_8_01_4_01_4.html">contains_type&lt; T, typelist&lt; Ts... &gt; &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1def__del.html">def_del</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1deleter__box.html">deleter_box</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1empty__t.html">empty_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -286,31 +290,31 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ab99ffc8a5afd4acbc960e1b940b9c53d"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
 <tr class="memitem:ab99ffc8a5afd4acbc960e1b940b9c53d"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#ab99ffc8a5afd4acbc960e1b940b9c53d">flatten_t</a> = typename <a class="el" href="structvari_1_1flatten__impl.html">flatten_impl</a>&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt;&gt;, Ts... &gt;::type</td></tr>
 <tr class="separator:ab99ffc8a5afd4acbc960e1b940b9c53d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27f0cb184dbab9be3139f54135eef7c6"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; typename T, typename TL &gt; </td></tr>
-<tr class="memitem:a27f0cb184dbab9be3139f54135eef7c6"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a27f0cb184dbab9be3139f54135eef7c6">_vptr_apply_t</a> = typename <a class="el" href="structvari_1_1__vptr__apply.html">_vptr_apply</a>&lt; T, TL &gt;::type</td></tr>
-<tr class="separator:a27f0cb184dbab9be3139f54135eef7c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad811f25a7115c12184565db0473a5a93"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; typename T, typename TL &gt; </td></tr>
-<tr class="memitem:ad811f25a7115c12184565db0473a5a93"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">_define_variadic</a> = <a class="el" href="namespacevari.html#a27f0cb184dbab9be3139f54135eef7c6">_vptr_apply_t</a>&lt; T, <a class="el" href="namespacevari.html#aaa07eec3b32603b583fe8baf576e14ee">unique_typelist_t</a>&lt; <a class="el" href="namespacevari.html#ab99ffc8a5afd4acbc960e1b940b9c53d">flatten_t</a>&lt; TL &gt; &gt; &gt;</td></tr>
-<tr class="separator:ad811f25a7115c12184565db0473a5a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a352924fac93056c566636380a68ad809"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; typename T, typename TL , typename... Us&gt; </td></tr>
+<tr class="memitem:a352924fac93056c566636380a68ad809"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a352924fac93056c566636380a68ad809">_vptr_apply_t</a> = typename <a class="el" href="structvari_1_1__vptr__apply.html">_vptr_apply</a>&lt; T, TL, Us... &gt;::type</td></tr>
+<tr class="separator:a352924fac93056c566636380a68ad809"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a235fc059a5b337c532472b917b9d391d"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; typename T, typename TL , typename... Us&gt; </td></tr>
+<tr class="memitem:a235fc059a5b337c532472b917b9d391d"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a235fc059a5b337c532472b917b9d391d">_define_variadic</a> = <a class="el" href="namespacevari.html#a352924fac93056c566636380a68ad809">_vptr_apply_t</a>&lt; T, <a class="el" href="namespacevari.html#aaa07eec3b32603b583fe8baf576e14ee">unique_typelist_t</a>&lt; <a class="el" href="namespacevari.html#ab99ffc8a5afd4acbc960e1b940b9c53d">flatten_t</a>&lt; TL &gt; &gt;, Us... &gt;</td></tr>
+<tr class="separator:a235fc059a5b337c532472b917b9d391d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c4b642a120de6f97cef24c8b60fb2ce"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> = uint32_t</td></tr>
 <tr class="separator:a4c4b642a120de6f97cef24c8b60fb2ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad950dff4783054330b8276997d72fde2"><td class="memTemplParams" colspan="2">template&lt;typename TL &gt; </td></tr>
 <tr class="memitem:ad950dff4783054330b8276997d72fde2"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#ad950dff4783054330b8276997d72fde2">split</a> = <a class="el" href="structvari_1_1__split__impl.html">_split_impl</a>&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt;&gt;, TL &gt;</td></tr>
 <tr class="separator:ad950dff4783054330b8276997d72fde2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad82d68f165b27cedcbdf385779eacb69"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:ad82d68f165b27cedcbdf385779eacb69"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#ad82d68f165b27cedcbdf385779eacb69">uvptr</a> = <a class="el" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td></tr>
-<tr class="separator:ad82d68f165b27cedcbdf385779eacb69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53e8ed5b1956a1a8da2dd92ccd1249c9"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:a53e8ed5b1956a1a8da2dd92ccd1249c9"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a53e8ed5b1956a1a8da2dd92ccd1249c9">uvref</a> = <a class="el" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">_define_variadic</a>&lt; <a class="el" href="structvari_1_1__uvref.html">_uvref</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td></tr>
-<tr class="separator:a53e8ed5b1956a1a8da2dd92ccd1249c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3be05c6f854dc1b903a2a85e244bbdc5"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:a3be05c6f854dc1b903a2a85e244bbdc5"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">uvptr</a> = <a class="el" href="namespacevari.html#a235fc059a5b337c532472b917b9d391d">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt;, <a class="el" href="structvari_1_1def__del.html">def_del</a> &gt;</td></tr>
+<tr class="separator:a3be05c6f854dc1b903a2a85e244bbdc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2388c0eb42106efee2d8ed10243b69a0"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:a2388c0eb42106efee2d8ed10243b69a0"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">uvref</a> = <a class="el" href="namespacevari.html#a235fc059a5b337c532472b917b9d391d">_define_variadic</a>&lt; <a class="el" href="structvari_1_1__uvref.html">_uvref</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt;, <a class="el" href="structvari_1_1def__del.html">def_del</a> &gt;</td></tr>
+<tr class="separator:a2388c0eb42106efee2d8ed10243b69a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50c11a69a9d782e1ccaa6ebd7be73725"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:a50c11a69a9d782e1ccaa6ebd7be73725"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vptr</a> = <a class="el" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__vptr.html">_vptr</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td></tr>
+<tr class="memitem:a50c11a69a9d782e1ccaa6ebd7be73725"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vptr</a> = <a class="el" href="namespacevari.html#a235fc059a5b337c532472b917b9d391d">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__vptr.html">_vptr</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td></tr>
 <tr class="separator:a50c11a69a9d782e1ccaa6ebd7be73725"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b711b10138e06f9d5b455ff55c663d0"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:a0b711b10138e06f9d5b455ff55c663d0"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vref</a> = <a class="el" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__vref.html">_vref</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td></tr>
+<tr class="memitem:a0b711b10138e06f9d5b455ff55c663d0"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vref</a> = <a class="el" href="namespacevari.html#a235fc059a5b337c532472b917b9d391d">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__vref.html">_vref</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td></tr>
 <tr class="separator:a0b711b10138e06f9d5b455ff55c663d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2723aaf6449b2f8fb597a7baad0173db"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:a2723aaf6449b2f8fb597a7baad0173db"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a2723aaf6449b2f8fb597a7baad0173db">vval</a> = <a class="el" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__vval.html">_vval</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td></tr>
+<tr class="memitem:a2723aaf6449b2f8fb597a7baad0173db"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a2723aaf6449b2f8fb597a7baad0173db">vval</a> = <a class="el" href="namespacevari.html#a235fc059a5b337c532472b917b9d391d">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__vval.html">_vval</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td></tr>
 <tr class="separator:a2723aaf6449b2f8fb597a7baad0173db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -330,12 +334,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ae8df00bdd5143f042044d66b329246a6"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ae8df00bdd5143f042044d66b329246a6"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#ae8df00bdd5143f042044d66b329246a6">operator==</a> (<a class="el" href="structvari_1_1__ptr__core.html">_ptr_core</a>&lt; T &gt; const &amp;lh, <a class="el" href="structvari_1_1__ptr__core.html">_ptr_core</a>&lt; T &gt; const &amp;rh) noexcept</td></tr>
 <tr class="separator:ae8df00bdd5143f042044d66b329246a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9678fedda24e0632bd16d490e05e7a74"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a9678fedda24e0632bd16d490e05e7a74"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacevari.html#a53e8ed5b1956a1a8da2dd92ccd1249c9">uvref</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a9678fedda24e0632bd16d490e05e7a74">uwrap</a> (T item)</td></tr>
-<tr class="separator:a9678fedda24e0632bd16d490e05e7a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabcc039fc2056089681b1006e588c4de"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:aabcc039fc2056089681b1006e588c4de"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Ts... &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#aabcc039fc2056089681b1006e588c4de">to_uvref</a> (<a class="el" href="classvari_1_1__vval.html">_vval</a>&lt; Ts... &gt; v)</td></tr>
-<tr class="separator:aabcc039fc2056089681b1006e588c4de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ebcd20c8226cf02de56c175cd7fdac6"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a4ebcd20c8226cf02de56c175cd7fdac6"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">uvref</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a4ebcd20c8226cf02de56c175cd7fdac6">uwrap</a> (T item)</td></tr>
+<tr class="separator:a4ebcd20c8226cf02de56c175cd7fdac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab96f35b9e3275716e644a1b62ef83531"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:ab96f35b9e3275716e644a1b62ef83531"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; <a class="el" href="structvari_1_1def__del.html">def_del</a>, Ts... &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#ab96f35b9e3275716e644a1b62ef83531">to_uvref</a> (<a class="el" href="classvari_1_1__vval.html">_vval</a>&lt; Ts... &gt; v)</td></tr>
+<tr class="separator:ab96f35b9e3275716e644a1b62ef83531"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Copyright (C) 2020 Jan Veverak Koniarik</p>
@@ -343,32 +347,32 @@ Functions</h2></td></tr>
 <p >The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
 <p >THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="ad811f25a7115c12184565db0473a5a93" name="ad811f25a7115c12184565db0473a5a93"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad811f25a7115c12184565db0473a5a93">&#9670;&#160;</a></span>_define_variadic</h2>
+<a id="a235fc059a5b337c532472b917b9d391d" name="a235fc059a5b337c532472b917b9d391d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a235fc059a5b337c532472b917b9d391d">&#9670;&#160;</a></span>_define_variadic</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;template&lt; typename... &gt; typename T, typename TL &gt; </div>
+template&lt;template&lt; typename... &gt; typename T, typename TL , typename... Us&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">vari::_define_variadic</a> = typedef <a class="el" href="namespacevari.html#a27f0cb184dbab9be3139f54135eef7c6">_vptr_apply_t</a>&lt; T, <a class="el" href="namespacevari.html#aaa07eec3b32603b583fe8baf576e14ee">unique_typelist_t</a>&lt; <a class="el" href="namespacevari.html#ab99ffc8a5afd4acbc960e1b940b9c53d">flatten_t</a>&lt; TL &gt; &gt; &gt;</td>
+          <td class="memname">using <a class="el" href="namespacevari.html#a235fc059a5b337c532472b917b9d391d">vari::_define_variadic</a> = typedef <a class="el" href="namespacevari.html#a352924fac93056c566636380a68ad809">_vptr_apply_t</a>&lt; T, <a class="el" href="namespacevari.html#aaa07eec3b32603b583fe8baf576e14ee">unique_typelist_t</a>&lt; <a class="el" href="namespacevari.html#ab99ffc8a5afd4acbc960e1b940b9c53d">flatten_t</a>&lt; TL &gt; &gt;, Us... &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a27f0cb184dbab9be3139f54135eef7c6" name="a27f0cb184dbab9be3139f54135eef7c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27f0cb184dbab9be3139f54135eef7c6">&#9670;&#160;</a></span>_vptr_apply_t</h2>
+<a id="a352924fac93056c566636380a68ad809" name="a352924fac93056c566636380a68ad809"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a352924fac93056c566636380a68ad809">&#9670;&#160;</a></span>_vptr_apply_t</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;template&lt; typename... &gt; typename T, typename TL &gt; </div>
+template&lt;template&lt; typename... &gt; typename T, typename TL , typename... Us&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacevari.html#a27f0cb184dbab9be3139f54135eef7c6">vari::_vptr_apply_t</a> = typedef typename <a class="el" href="structvari_1_1__vptr__apply.html">_vptr_apply</a>&lt; T, TL &gt;::type</td>
+          <td class="memname">using <a class="el" href="namespacevari.html#a352924fac93056c566636380a68ad809">vari::_vptr_apply_t</a> = typedef typename <a class="el" href="structvari_1_1__vptr__apply.html">_vptr_apply</a>&lt; T, TL, Us... &gt;::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -453,8 +457,8 @@ template&lt;typename TL &gt; </div>
 
 </div>
 </div>
-<a id="ad82d68f165b27cedcbdf385779eacb69" name="ad82d68f165b27cedcbdf385779eacb69"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad82d68f165b27cedcbdf385779eacb69">&#9670;&#160;</a></span>uvptr</h2>
+<a id="a3be05c6f854dc1b903a2a85e244bbdc5" name="a3be05c6f854dc1b903a2a85e244bbdc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3be05c6f854dc1b903a2a85e244bbdc5">&#9670;&#160;</a></span>uvptr</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -462,15 +466,15 @@ template&lt;typename TL &gt; </div>
 template&lt;typename... Ts&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacevari.html#ad82d68f165b27cedcbdf385779eacb69">vari::uvptr</a> = typedef <a class="el" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td>
+          <td class="memname">using <a class="el" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr</a> = typedef <a class="el" href="namespacevari.html#a235fc059a5b337c532472b917b9d391d">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt;, <a class="el" href="structvari_1_1def__del.html">def_del</a> &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a53e8ed5b1956a1a8da2dd92ccd1249c9" name="a53e8ed5b1956a1a8da2dd92ccd1249c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53e8ed5b1956a1a8da2dd92ccd1249c9">&#9670;&#160;</a></span>uvref</h2>
+<a id="a2388c0eb42106efee2d8ed10243b69a0" name="a2388c0eb42106efee2d8ed10243b69a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2388c0eb42106efee2d8ed10243b69a0">&#9670;&#160;</a></span>uvref</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -478,7 +482,7 @@ template&lt;typename... Ts&gt; </div>
 template&lt;typename... Ts&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacevari.html#a53e8ed5b1956a1a8da2dd92ccd1249c9">vari::uvref</a> = typedef <a class="el" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">_define_variadic</a>&lt; <a class="el" href="structvari_1_1__uvref.html">_uvref</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td>
+          <td class="memname">using <a class="el" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref</a> = typedef <a class="el" href="namespacevari.html#a235fc059a5b337c532472b917b9d391d">_define_variadic</a>&lt; <a class="el" href="structvari_1_1__uvref.html">_uvref</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt;, <a class="el" href="structvari_1_1def__del.html">def_del</a> &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -494,7 +498,7 @@ template&lt;typename... Ts&gt; </div>
 template&lt;typename... Ts&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a> = typedef <a class="el" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__vptr.html">_vptr</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td>
+          <td class="memname">using <a class="el" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a> = typedef <a class="el" href="namespacevari.html#a235fc059a5b337c532472b917b9d391d">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__vptr.html">_vptr</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -510,7 +514,7 @@ template&lt;typename... Ts&gt; </div>
 template&lt;typename... Ts&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a> = typedef <a class="el" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__vref.html">_vref</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td>
+          <td class="memname">using <a class="el" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a> = typedef <a class="el" href="namespacevari.html#a235fc059a5b337c532472b917b9d391d">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__vref.html">_vref</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -526,7 +530,7 @@ template&lt;typename... Ts&gt; </div>
 template&lt;typename... Ts&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacevari.html#a2723aaf6449b2f8fb597a7baad0173db">vari::vval</a> = typedef <a class="el" href="namespacevari.html#ad811f25a7115c12184565db0473a5a93">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__vval.html">_vval</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td>
+          <td class="memname">using <a class="el" href="namespacevari.html#a2723aaf6449b2f8fb597a7baad0173db">vari::vval</a> = typedef <a class="el" href="namespacevari.html#a235fc059a5b337c532472b917b9d391d">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__vval.html">_vval</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Ts... &gt; &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -686,8 +690,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aabcc039fc2056089681b1006e588c4de" name="aabcc039fc2056089681b1006e588c4de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabcc039fc2056089681b1006e588c4de">&#9670;&#160;</a></span>to_uvref()</h2>
+<a id="ab96f35b9e3275716e644a1b62ef83531" name="ab96f35b9e3275716e644a1b62ef83531"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab96f35b9e3275716e644a1b62ef83531">&#9670;&#160;</a></span>to_uvref()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -695,7 +699,7 @@ template&lt;typename T &gt; </div>
 template&lt;typename... Ts&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Ts... &gt; vari::to_uvref </td>
+          <td class="memname"><a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; <a class="el" href="structvari_1_1def__del.html">def_del</a>, Ts... &gt; vari::to_uvref </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classvari_1_1__vval.html">_vval</a>&lt; Ts... &gt;&#160;</td>
           <td class="paramname"><em>v</em></td><td>)</td>
@@ -734,22 +738,30 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a9678fedda24e0632bd16d490e05e7a74" name="a9678fedda24e0632bd16d490e05e7a74"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9678fedda24e0632bd16d490e05e7a74">&#9670;&#160;</a></span>uwrap()</h2>
+<a id="a4ebcd20c8226cf02de56c175cd7fdac6" name="a4ebcd20c8226cf02de56c175cd7fdac6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ebcd20c8226cf02de56c175cd7fdac6">&#9670;&#160;</a></span>uwrap()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacevari.html#a53e8ed5b1956a1a8da2dd92ccd1249c9">uvref</a>&lt; T &gt; vari::uwrap </td>
+          <td class="memname">constexpr <a class="el" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">uvref</a>&lt; T &gt; vari::uwrap </td>
           <td>(</td>
           <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>item</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
