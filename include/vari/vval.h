@@ -17,9 +17,16 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ///
 
-#include "vari/bits/dispatch.h"
+#include "vari/bits/typelist.h"
+#include "vari/bits/util.h"
 #include "vari/bits/val_core.h"
+#include "vari/forward.h"
 #include "vari/uvref.h"
+#include "vari/vptr.h"
+#include "vari/vref.h"
+
+#include <type_traits>
+#include <utility>
 
 #pragma once
 
@@ -171,14 +178,14 @@ public:
                 requires( vconvertible_to< types, typelist< Us... > > )
         constexpr operator _vptr< Us... >() & noexcept
         {
-                return _vref< Us... >{ *this };
+                return _vref< Us... >{ *this }.vptr();
         }
 
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
         constexpr operator _vptr< Us... >() const& noexcept
         {
-                return _vref< Us... >{ *this };
+                return _vref< Us... >{ *this }.vptr();
         }
 
 
@@ -230,9 +237,9 @@ template < typename... Ts >
 using vval = _define_variadic< _vval, typelist< Ts... > >;
 
 template < typename... Ts >
-_uvref< Ts... > to_uvref( _vval< Ts... > v )
+_uvref< def_del, Ts... > to_uvref( _vval< Ts... > v )
 {
-        using R = _uvref< Ts... >;
+        using R = _uvref< def_del, Ts... >;
         return v.visit( [&]< typename U >( U& item ) -> R {
                 return R{ *new U{ std::move( item ) } };
         } );

@@ -22,61 +22,63 @@
 #include "vari/bits/ptr_core.h"
 #include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
+#include "vari/forward.h"
 #include "vari/vptr.h"
 
 #include <cassert>
 #include <cstddef>
-#include <optional>
 
 namespace vari
 {
 
-template < typename... Ts >
-class _uvref;
-
-template < typename... Ts >
-class _uvptr
+template < typename Deleter, typename... Ts >
+class _uvptr : private deleter_box< Deleter >
 {
+        template < typename... Us >
+        using same_uvref = _uvref< Deleter, Us... >;
+
 public:
         using types = typelist< Ts... >;
 
+        using core_type        = _ptr_core< types >;
         using pointer          = _vptr< Ts... >;
         using reference        = _vref< Ts... >;
-        using owning_reference = _uvref< Ts... >;
+        using owning_reference = _uvref< Deleter, Ts... >;
 
-        _uvptr() noexcept = default;
+        constexpr _uvptr() noexcept = default;
 
-        _uvptr( _uvptr const& )            = delete;
-        _uvptr& operator=( _uvptr const& ) = delete;
+        constexpr _uvptr( _uvptr const& )            = delete;
+        constexpr _uvptr& operator=( _uvptr const& ) = delete;
 
-        _uvptr( std::nullptr_t ) noexcept
+        constexpr _uvptr( std::nullptr_t ) noexcept
         {
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _uvptr( _uvref< Us... >&& p ) noexcept
+        constexpr explicit _uvptr( _uvref< Deleter, Us... >&& p ) noexcept
         {
-                _ptr._core   = std::move( p._ref._core );
-                p._ref._core = _ptr_core< typelist< Us... > >{};
+                _core = std::move( p._core );
+                p._core.reset();
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _uvptr( _uvptr< Us... >&& p ) noexcept
-          : _ptr( p.release() )
+        constexpr _uvptr( _uvptr< Deleter, Us... >&& p ) noexcept
         {
+                _core = std::move( p._core );
+                p._core.reset();
         }
 
         template < typename U >
                 requires( vconvertible_to< typelist< U >, types > )
-        explicit _uvptr( U* u ) noexcept
+        constexpr _uvptr( U* u ) noexcept
         {
                 if ( u )
-                        _ptr = pointer{ *u };
+                        _core.set( *u );
         }
 
-        _uvptr& operator=( std::nullptr_t ) noexcept
+        constexpr _uvptr& operator=( std::nullptr_t ) noexcept
         {
                 reset( nullptr );
                 return *this;
@@ -84,125 +86,135 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _uvptr& operator=( _uvref< Us... >&& p ) noexcept
+        constexpr _uvptr& operator=( _uvref< Deleter, Us... >&& p ) noexcept
         {
-                using std::swap;
                 _uvptr tmp{ std::move( p ) };
-                swap( _ptr._core, tmp._ptr._core );
+                swap( _core, tmp._core );
                 return *this;
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _uvptr& operator=( _uvptr< Us... >&& p ) noexcept
+        constexpr _uvptr& operator=( _uvptr< Deleter, Us... >&& p ) noexcept
         {
-                using std::swap;
                 _uvptr tmp{ std::move( p ) };
-                swap( _ptr._core, tmp._ptr._core );
+                swap( _core, tmp._core );
                 return *this;
         }
 
-        auto& operator*() const noexcept
+        constexpr auto& operator*() const noexcept
         {
-                return *_ptr;
+                return *_core.ptr;
         }
 
-        auto* operator->() const noexcept
+        constexpr auto* operator->() const noexcept
         {
-                return _ptr.get();
+                return _core.ptr;
         }
 
-        const pointer& get() const noexcept
+        constexpr pointer get() const noexcept
         {
-                return _ptr;
+                pointer res;
+                res._core = _core;
+                return res;
         }
 
         [[nodiscard]] constexpr index_type index() const noexcept
         {
-                return _ptr.index();
+                return _core.get_index();
         }
 
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
-        operator _vptr< Us... >() const noexcept
+        constexpr operator _vptr< Us... >() const noexcept
         {
-                return _ptr;
-        }
-
-        void reset( pointer ptr = pointer() )
-        {
-                auto tmp = _ptr;
-                _ptr     = ptr;
-                tmp._core.delete_ptr();
-        }
-
-        pointer release() noexcept
-        {
-                using std::swap;
-                pointer res;
-                swap( res, _ptr );
+                _vptr< Us... > res;
+                res._core = _core;
                 return res;
         }
 
-        operator bool() const noexcept
+        constexpr void reset( pointer ptr = pointer() )
         {
-                return _ptr;
+                auto tmp = _core;
+                _core    = std::move( ptr._core );
+                tmp.delete_ptr( deleter_box< Deleter >::get() );
         }
 
-        reference vref() const& noexcept
+        constexpr pointer release() noexcept
         {
-                assert( _ptr );
-                return _ptr.vref();
+                pointer res;
+                swap( res._core, _core );
+                return res;
         }
 
-        owning_reference vref() && noexcept
+        constexpr operator bool() const noexcept
         {
-                assert( _ptr );
-                auto p = release();
-                return owning_reference{ p.vref() };
+                return _core.get_index() != null_index;
+        }
+
+        constexpr reference vref() const& noexcept
+        {
+                assert( _core.get_index() != null_index );
+                reference res;
+                res._core = _core;
+                return res;
+        }
+
+        constexpr owning_reference vref() && noexcept
+        {
+                assert( _core.get_index() != null_index );
+                owning_reference res;
+                swap( res._core, _core );
+                return res;
         }
 
         template < typename... Fs >
-        decltype( auto ) visit( Fs&&... f ) const
+        constexpr decltype( auto ) visit( Fs&&... f ) const
         {
 
                 typename check_unique_invocability< types >::template with_nullable_pure_ref<
                     Fs... >
                     _{};
-                return _ptr.visit( (Fs&&) f... );
+                if ( _core.ptr == nullptr )
+                        return _dispatch_fun( empty, (Fs&&) f... );
+                return _core.visit_impl( (Fs&&) f... );
         }
 
         template < typename... Fs >
-        decltype( auto ) take( Fs&&... fs ) &&
+        constexpr decltype( auto ) take( Fs&&... fs ) &&
         {
-                typename check_unique_invocability< types >::template with_nullable_uvref< Fs... >
+                typename check_unique_invocability< types >::template with_deleter<
+                    Deleter >::template with_nullable_uvref< Fs... >
                      _{};
                 auto p = release();
                 if ( p._core.ptr == nullptr )
                         return _dispatch_fun( empty, (Fs&&) fs... );
-                return p._core.template take_impl< _uvref, _vref >( (Fs&&) fs... );
+                return p._core.template take_impl< same_uvref >( (Fs&&) fs... );
         }
 
-        friend void swap( _uvptr& lh, _uvptr& rh ) noexcept
+        friend constexpr void swap( _uvptr& lh, _uvptr& rh ) noexcept
         {
-                std::swap( lh._ptr, rh._ptr );
+                swap( lh._core, rh._core );
         }
 
-        ~_uvptr()
+        constexpr ~_uvptr()
         {
-                _ptr._core.delete_ptr();
+                _core.delete_ptr( deleter_box< Deleter >::get() );
         }
 
-        friend auto operator<=>( _uvptr const& lh, _uvptr const& rh ) = default;
+        friend constexpr auto operator<=>( _uvptr const& lh, _uvptr const& rh ) = default;
 
 private:
-        pointer _ptr;
+        core_type _core;
 
-        template < typename... Us >
+        template < typename Deleter2, typename... Us >
         friend class _uvptr;
+
+        template < typename Deleter2, typename... Us >
+        friend class _uvref;
 };
 
 template < typename... Ts >
-using uvptr = _define_variadic< _uvptr, typelist< Ts... > >;
+using uvptr = _define_variadic< _uvptr, typelist< Ts... >, def_del >;
 
 }  // namespace vari

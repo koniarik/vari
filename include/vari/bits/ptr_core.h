@@ -44,22 +44,33 @@ struct _ptr_core
         void*      ptr   = nullptr;
 
 
-        _ptr_core() noexcept = default;
+        constexpr _ptr_core() noexcept = default;
 
         template < typename UL >
                 requires( vconvertible_to< UL, TL > )
-        _ptr_core( _ptr_core< UL > other ) noexcept
+        constexpr _ptr_core( _ptr_core< UL > other ) noexcept
           : index( _vptr_cnv_map< TL, UL >::conv( other.get_index() ) )
           , ptr( to_void_cast( other.ptr ) )
         {
         }
 
+        friend constexpr void swap( _ptr_core& lh, _ptr_core& rh ) noexcept
+        {
+                std::swap( lh.ptr, rh.ptr );
+                std::swap( lh.index, rh.index );
+        }
+
         template < typename U >
                 requires( vconvertible_to< typelist< U >, TL > )
-        _ptr_core( U& val ) noexcept
-          : index( index_of_t_or_const_t_v< U, TL > )
-          , ptr( to_void_cast( &val ) )
+        constexpr void set( U& val ) noexcept
         {
+                index = index_of_t_or_const_t_v< U, TL >;
+                ptr   = to_void_cast( &val );
+        }
+
+        constexpr void reset() noexcept
+        {
+                *this = _ptr_core{};
         }
 
         [[nodiscard]] constexpr index_type get_index() const noexcept
@@ -68,7 +79,7 @@ struct _ptr_core
         }
 
         template < typename... Fs >
-        decltype( auto ) visit_impl( Fs&&... fs ) const
+        constexpr decltype( auto ) visit_impl( Fs&&... fs ) const
         {
                 return _dispatch_index< 0, TL::size >(
                     index, [&]< index_type j >() -> decltype( auto ) {
@@ -78,31 +89,25 @@ struct _ptr_core
                     } );
         }
 
-        template <
-            template < typename... >
-            typename ArgTempl,
-            template < typename... >
-            typename ConvTempl,
-            typename... Fs >
-        decltype( auto ) take_impl( Fs&&... fs ) const
+        template < template < typename... > typename ArgTempl, typename... Fs >
+        constexpr decltype( auto ) take_impl( Fs&&... fs ) const
         {
                 return _dispatch_index< 0, TL::size >(
                     index, [&]< index_type j >() -> decltype( auto ) {
-                            using U        = type_at_t< j, TL >;
-                            using ArgType  = ArgTempl< U >;
-                            using ConvType = ConvTempl< U >;
-                            U* p           = static_cast< U* >( ptr );
-                            return _dispatch_fun( ArgType{ ConvType{ *p } }, (Fs&&) fs... );
+                            using U       = type_at_t< j, TL >;
+                            using ArgType = ArgTempl< U >;
+                            U* p          = static_cast< U* >( ptr );
+                            return _dispatch_fun( ArgType{ *p }, (Fs&&) fs... );
                     } );
         }
 
-        void delete_ptr()
+        constexpr void delete_ptr( auto&& del )
         {
                 if ( index == null_index )
                         return;
                 _dispatch_index< 0, TL::size >( index, [&]< index_type j > {
                         using U = type_at_t< j, TL >;
-                        delete static_cast< U* >( ptr );
+                        del( static_cast< U* >( ptr ) );
                 } );
         }
 };
@@ -113,24 +118,37 @@ struct _ptr_core< typelist< T > >
 
         T* ptr = nullptr;
 
-        _ptr_core() noexcept = default;
+        constexpr _ptr_core() noexcept = default;
 
-        _ptr_core( _ptr_core< typelist<> > ) noexcept
+        constexpr _ptr_core( _ptr_core< typelist<> > ) noexcept
           : ptr( nullptr )
         {
         }
 
         template < typename U >
                 requires( std::same_as< U, T > || std::same_as< U const, T > )
-        _ptr_core( _ptr_core< typelist< U > > other ) noexcept
+        constexpr _ptr_core( _ptr_core< typelist< U > > other ) noexcept
           : ptr( other.ptr )
         {
         }
 
-        _ptr_core( T& val ) noexcept
-          : ptr( &val )
+        friend constexpr void swap( _ptr_core& lh, _ptr_core& rh ) noexcept
         {
+                std::swap( lh.ptr, rh.ptr );
         }
+
+        template < typename U >
+                requires( vconvertible_to< typelist< U >, typelist< T > > )
+        constexpr void set( U& val ) noexcept
+        {
+                ptr = &val;
+        }
+
+        constexpr void reset() noexcept
+        {
+                *this = _ptr_core{};
+        }
+
 
         [[nodiscard]] constexpr index_type get_index() const noexcept
         {
@@ -138,28 +156,22 @@ struct _ptr_core< typelist< T > >
         }
 
         template < typename... Fs >
-        decltype( auto ) visit_impl( Fs&&... fs ) const
+        constexpr decltype( auto ) visit_impl( Fs&&... fs ) const
         {
                 return _dispatch_fun( *ptr, (Fs&&) fs... );
         }
 
-        template <
-            template < typename... >
-            typename ArgTempl,
-            template < typename... >
-            typename ConvTempl,
-            typename... Fs >
-        decltype( auto ) take_impl( Fs&&... fs ) const
+        template < template < typename... > typename ArgTempl, typename... Fs >
+        constexpr decltype( auto ) take_impl( Fs&&... fs ) const
         {
-                using ArgType  = ArgTempl< T >;
-                using ConvType = ConvTempl< T >;
-                return _dispatch_fun( ArgType( ConvType( *ptr ) ), (Fs&&) fs... );
+                using ArgType = ArgTempl< T >;
+                return _dispatch_fun( ArgType( *ptr ), (Fs&&) fs... );
         }
 
-        void delete_ptr()
+        constexpr void delete_ptr( auto&& del )
         {
                 if ( ptr != nullptr )
-                        delete ptr;
+                        del( ptr );
         }
 };
 

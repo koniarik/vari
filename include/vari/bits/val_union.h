@@ -22,6 +22,8 @@
 #include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
 
+#include <concepts>
+
 namespace vari
 {
 

@@ -22,6 +22,7 @@
 #include "vari/bits/ptr_core.h"
 #include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
+#include "vari/forward.h"
 #include "vari/vptr.h"
 
 #include <cassert>
@@ -35,31 +36,33 @@ class _vref
 public:
         using types = typelist< Ts... >;
 
+        using pointer = _vptr< Ts... >;
+
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        _vref( _vref< Us... > p ) noexcept
+        constexpr _vref( _vref< Us... > p ) noexcept
           : _core( p._core )
         {
         }
 
         template < typename U >
                 requires( vconvertible_to< typelist< U >, types > )
-        _vref( U& u ) noexcept
-          : _core( u )
+        constexpr _vref( U& u ) noexcept
         {
+                _core.set( u );
         }
 
-        auto& operator*() const noexcept
+        constexpr auto& operator*() const noexcept
         {
                 return *_core.ptr;
         }
 
-        auto* operator->() const noexcept
+        constexpr auto* operator->() const noexcept
         {
                 return _core.ptr;
         }
 
-        auto* get() const noexcept
+        constexpr auto* get() const noexcept
         {
                 return _core.ptr;
         }
@@ -71,28 +74,35 @@ public:
 
         template < typename U >
                 requires( vconvertible_to< types, typelist< U > > )
-        operator U&() const noexcept
+        constexpr operator U&() const noexcept
         {
                 return *_core.ptr;
         }
 
+        constexpr pointer vptr() const& noexcept
+        {
+                pointer res;
+                res._core = _core;
+                return res;
+        }
+
         template < typename... Fs >
-        decltype( auto ) visit( Fs&&... fs ) const
+        constexpr decltype( auto ) visit( Fs&&... fs ) const
         {
                 typename check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
                 assert( _core.ptr );
                 return _core.visit_impl( (Fs&&) fs... );
         }
 
-        friend void swap( _vref& lh, _vref& rh ) noexcept
+        friend constexpr void swap( _vref& lh, _vref& rh ) noexcept
         {
-                std::swap( lh._core, rh._core );
+                swap( lh._core, rh._core );
         }
 
-        friend auto operator<=>( _vref const& lh, _vref const& rh ) = default;
+        friend constexpr auto operator<=>( _vref const& lh, _vref const& rh ) = default;
 
 private:
-        _vref() = default;
+        constexpr _vref() noexcept = default;
 
         _ptr_core< types > _core;
 
@@ -100,9 +110,9 @@ private:
         friend class _vref;
         template < typename... Us >
         friend class _vptr;
-        template < typename... Us >
+        template < typename Deleter, typename... Us >
         friend class _uvref;
-        template < typename... Us >
+        template < typename Deleter, typename... Us >
         friend class _uvptr;
 };
 
