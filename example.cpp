@@ -25,6 +25,7 @@
 #include <charconv>
 #include <iostream>
 #include <map>
+#include <optional>
 #include <set>
 #include <span>
 #include <string_view>
