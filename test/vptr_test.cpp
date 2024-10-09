@@ -27,6 +27,7 @@
 #include "vari/vref.h"
 
 #include <doctest/doctest.h>
+#include <optional>
 #include <string>
 #include <vector>
 
