@@ -22,15 +22,13 @@
 #include "vari/bits/ptr_core.h"
 #include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
+#include "vari/forward.h"
 
 #include <cassert>
 #include <cstddef>
 
 namespace vari
 {
-
-template < typename... Ts >
-class _vref;
 
 template < typename... Ts >
 class _vptr

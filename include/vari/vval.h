@@ -20,6 +20,7 @@
 #include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
 #include "vari/bits/val_core.h"
+#include "vari/forward.h"
 #include "vari/uvref.h"
 #include "vari/vptr.h"
 #include "vari/vref.h"

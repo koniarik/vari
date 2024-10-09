@@ -229,7 +229,7 @@ struct def_del
 {
         constexpr void operator()( auto* item ) const
         {
-                std::destroy_at( item );
+                delete item;
         }
 
         friend constexpr auto operator<=>( def_del const&, def_del const& ) = default;

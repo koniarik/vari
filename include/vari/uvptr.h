@@ -22,6 +22,7 @@
 #include "vari/bits/ptr_core.h"
 #include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
+#include "vari/forward.h"
 #include "vari/vptr.h"
 
 #include <cassert>
@@ -29,9 +30,6 @@
 
 namespace vari
 {
-
-template < typename Deleter, typename... Ts >
-class _uvref;
 
 template < typename Deleter, typename... Ts >
 class _uvptr : private deleter_box< Deleter >
