@@ -11,7 +11,6 @@ var structvari_1_1__uvref =
     [ "~_uvref", "structvari_1_1__uvref.html#ac2de862a2e6fe223aa2ba7a27eafa13f", null ],
     [ "get", "structvari_1_1__uvref.html#a5685997d981c288ab5d2aae3de101a6e", null ],
     [ "index", "structvari_1_1__uvref.html#aa95ff8c3744b3ae0e85187c61c64ac47", null ],
-    [ "operator _vptr< Us... >", "structvari_1_1__uvref.html#af8f26d79dd226254060d57d0b12958da", null ],
     [ "operator _vref< Us... >", "structvari_1_1__uvref.html#a1574ed0e24abd7719cfb0ce3a4fc4a4b", null ],
     [ "operator*", "structvari_1_1__uvref.html#a4cc2c12212dfb205b11c0e78f1b3bfad", null ],
     [ "operator->", "structvari_1_1__uvref.html#adbdf4dd3aa7c4eed359ec584e89c3bb1", null ],
