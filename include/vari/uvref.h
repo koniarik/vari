@@ -98,18 +98,7 @@ public:
                 requires( vconvertible_to< types, typelist< Us... > > )
         constexpr operator _vref< Us... >() const noexcept
         {
-                _vref< Us... > res;
-                res._core = _core;
-                return res;
-        }
-
-        template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
-        constexpr operator _vptr< Us... >() const noexcept
-        {
-                _vptr< Us... > res;
-                res._core = _core;
-                return res;
+                return vptr().vref();
         }
 
         constexpr pointer vptr() const& noexcept
