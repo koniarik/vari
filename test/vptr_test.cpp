@@ -41,34 +41,58 @@ TEST_CASE( "vptr" )
         using V = vptr< int, float, std::string >;
         static_assert( valid_null_variadic< V > );
 
-        V p0;
+        int         i1 = 42;
+        std::string s1{ "123456" };
+        float       f1 = 0.42;
 
-        p0 = V{ nullptr };
-        CHECK_FALSE( p0 );
-        int i = 42;
+        SUBCASE( "construction" )
+        {
+                V p0;
+                CHECK( !p0 );
+                p0 = &i1;
+                CHECK( p0 );
+                p0 = V{ nullptr };
+                CHECK( !p0 );
+                p0 = &s1;
+                CHECK( p0 );
+                p0 = nullptr;
+                CHECK( !p0 );
+        }
 
-        V p1{ &i };
-        check_nullable_visit( p1, i );
+        SUBCASE( "visit int" )
+        {
+                V p1{ &i1 };
+                check_nullable_visit( p1, i1 );
+        }
 
-        vptr< float > p2;
-        CHECK_FALSE( p2 );
+        SUBCASE( "visit single type" )
+        {
+                vptr< float > p3 = &f1;
+                check_nullable_visit( p3, f1 );
+        }
 
-        p1 = p2;
-        CHECK_FALSE( p1 );
+        SUBCASE( "swap int" )
+        {
+                vptr< int > p1{ &i1 }, p2{ &i1 }, p3;
+                check_swap( p1, p2, p3 );
+                CHECK( !p2 );
+                CHECK( p3 );
+        }
 
-        float         f1 = 0.42;
-        vptr< float > p3 = &f1;
-        check_nullable_visit( p3, f1 );
+        SUBCASE( "swap str" )
+        {
+                vptr< std::string, int > p1{ &s1 }, p2{ &s1 }, p3;
+                check_swap( p1, p2, p3 );
+                CHECK( !p2 );
+                CHECK( p3 );
+        }
 
-        vptr< int > p4{ &i };
-        p4 = nullptr;
-        CHECK_FALSE( p4 );
-
-        vptr< int > p5{ &i };
-        vptr< int > p6;
-        swap( p5, p6 );
-        CHECK_FALSE( p5 );
-        CHECK_EQ( *p6, i );
+        SUBCASE( "complex type" )
+        {
+                std::vector< int >         vec = { 1, 2, 3, 4 };
+                vptr< std::vector< int > > p4( &vec );
+                check_nullable_visit( p4, vec );
+        }
 }
 
 TEST_CASE( "vref" )
@@ -76,39 +100,70 @@ TEST_CASE( "vref" )
         using V = vref< int, float, std::string >;
         static_assert( valid_variadic< V > );
 
+        int         i1 = 42;
         std::string s1{ "123456" };
-        V           p1{ s1 };
 
-        check_visit( p1, s1 );
-        check_swap( p1 );
+        SUBCASE( "visit" )
+        {
+                V p1{ s1 };
+                check_visit( p1, s1 );
+        }
 
-        vptr< int, float, std::string > p2{ p1 };
-        CHECK_EQ( p2.get(), p1.get() );
+        SUBCASE( "visit single type" )
+        {
+                vref< std::string > p1{ s1 };
+                check_visit( p1, s1 );
+        }
 
-        std::vector< int >         vec = { 1, 2, 3, 4 };
-        vptr< std::vector< int > > p4( &vec );
-        check_nullable_visit( p4, vec );
-        check_nullable_swap( p4 );
+        SUBCASE( "swap" )
+        {
+                V p1{ s1 }, p2{ s1 }, p3{ i1 };
 
-        vref< std::string > v1{ s1 };
+                check_swap( p1, p2, p3 );
+        }
 
-        std::string& s2 = v1;
-        CHECK_EQ( s2.c_str(), v1->c_str() );
-        std::string const& s3 = v1;
-        CHECK_EQ( s3.c_str(), v1->c_str() );
+        SUBCASE( "get" )
+        {
+                V p1{ s1 }, p2{ p1 };
+                CHECK_EQ( p2.get(), p1.get() );
+        }
 
-        using tset = typename V::types;
+        SUBCASE( "complex type" )
+        {
+                std::vector< int >         vec = { 1, 2, 3, 4 };
+                vref< std::vector< int > > p1( vec );
+                check_visit( p1, vec );
+                vref< std::vector< int > > p2( vec );
 
-        vref< const std::string > v2{ s1 };
-        vref< const tset >        v3 = v2;
+                std::vector< int >         vec2 = { 42 };
+                vref< std::vector< int > > p3( vec2 );
+                check_swap( p1, p2, p3 );
+        }
 
-        v3 = v2;
+        SUBCASE( "reference conversion" )
+        {
+                vref< std::string > v1{ s1 };
 
-        vptr< std::string > p5{ &s1 };
-        vptr< std::string > p6;
-        swap( p5, p6 );
-        CHECK_FALSE( p5 );
-        CHECK_EQ( *p6, s1 );
+                std::string& s2 = v1;
+                CHECK_EQ( s2.c_str(), v1->c_str() );
+                std::string const& s3 = v1;
+                CHECK_EQ( s3.c_str(), v1->c_str() );
+        }
+
+        SUBCASE( "types" )
+        {
+                // XXX: candidate for generalization over all variadics
+                using tset = typename V::types;
+                static_assert( std::same_as< tset, typelist< int, float, std::string > > );
+
+                vref< const std::string > v1{ s1 };
+
+                std::string        s2 = "baz";
+                vref< const tset > v2 = s2;
+
+                v2 = v1;
+                CHECK_EQ( v1, v2 );
+        }
 }
 
 TEST_CASE( "uvptr" )
@@ -116,89 +171,145 @@ TEST_CASE( "uvptr" )
         using V = uvptr< int, float, std::string >;
         static_assert( valid_null_owning_variadic< V > );
 
-        std::string inpt{ "s" };
+        std::string s1{ "s" };
+        int         i1 = 42;
 
-        V p1{ uwrap( inpt ) };
-        check_nullable_visit( p1, inpt );
-        // check_nullable_swap( p1 );
+        SUBCASE( "visit" )
+        {
+                V p1{ uwrap( s1 ) };
+                check_nullable_visit( p1, s1 );
+        }
 
-        p1 = std::move( p1 ).take(
-            [&]( empty_t ) -> V {
-                    FAIL( "incorrect overload" );
-                    return V{};
-            },
-            [&]( uvref< int > ) -> V {
-                    FAIL( "incorrect overload" );
-                    return V{};
-            },
-            [&]( uvref< float, std::string > p ) -> V {
-                    return V{ std::move( p ) };
-            } );
+        SUBCASE( "swap" )
+        {
+                V p1, p2, p3{ uwrap( s1 ) };
+                check_swap( p1, p2, p3 );
+                CHECK( !p3 );
+                CHECK( p2 );
+        }
 
-        std::optional< vref< int, float, std::string > > opt_ref = p1.vref();
-        CHECK( opt_ref );
-        opt_ref->visit( [&]( int& ) {}, [&]( float& ) {}, [&]( std::string& ) {} );
+        SUBCASE( "simple swap" )
+        {
+                uvptr< int > p1, p2, p3{ uwrap( 666 ) };
+                check_swap( p1, p2, p3 );
+                CHECK( !p3 );
+                CHECK( p2 );
+        }
 
-        vptr< int, float, std::string > p2 = p1.get();
-        CHECK_EQ( p2.get(), p1.get().get() );
+        SUBCASE( "take" )
+        {
+                V p1{ uwrap( s1 ) };
+                p1 = std::move( p1 ).take(
+                    [&]( empty_t ) -> V {
+                            FAIL( "incorrect overload" );
+                            return V{};
+                    },
+                    [&]( uvref< int > ) -> V {
+                            FAIL( "incorrect overload" );
+                            return V{};
+                    },
+                    [&]( uvref< float, std::string > p ) -> V {
+                            return V{ std::move( p ) };
+                    } );
+                CHECK( p1 );
+                check_nullable_visit( p1, s1 );
+        }
 
-        CHECK( p1 );
-        p1 = nullptr;
-        CHECK_FALSE( p1 );
+        SUBCASE( "empty take" )
+        {
+                V p3 = V();
+                std::move( p3 ).take(
+                    [&]( empty_t ) {},
+                    [&]( uvref< int > ) {
+                            FAIL( "incorrect overload" );
+                    },
+                    [&]( uvref< float, std::string > ) {
+                            FAIL( "incorrect overload" );
+                    } );
+                CHECK( !p3 );
+        }
 
-        V p3 = V();
+        SUBCASE( "vref" )
+        {
+                V p1{ uwrap( s1 ) };
+                check_vref( p1, s1 );
 
-        std::move( p3 ).take(
-            [&]( empty_t ) {},
-            [&]( uvref< int > ) {
-                    FAIL( "incorrect overload" );
-            },
-            [&]( uvref< float, std::string > ) {
-                    FAIL( "incorrect overload" );
-            } );
+                uvptr< int > p2{ uwrap( i1 ) };
+                check_vref( p2, i1 );
+        }
 
-        p3 = std::move( p3 );
+        SUBCASE( "uvref" )
+        {
+                V p1{ uwrap( s1 ) };
+                check_uvref( p1, s1 );
 
-        uvref< int > r1 = uwrap( int{ 42 } );
+                uvptr< int > p2{ uwrap( i1 ) };
+                check_uvref( p2, i1 );
+        }
 
-        CHECK_FALSE( p3 );
-        p3 = std::move( r1 );
-        CHECK( p3 );
+        SUBCASE( "get" )
+        {
+                V p1{ uwrap( s1 ) };
 
-        uvptr< int > p4{ new int{ 33 } };
-        CHECK_EQ( *p4, 33 );
+                vptr< int, float, std::string > p2 = p1.get();
+                CHECK_EQ( p2.get(), p1.get().get() );
+        }
 
-        uvptr< int > p5{ (int*) nullptr };
-        CHECK_FALSE( p5 );
+        SUBCASE( "nullable" )
+        {
+                V p1{ uwrap( s1 ) };
+                CHECK( p1 );
+                p1 = nullptr;
+                CHECK_FALSE( p1 );
+        }
 
-        uvptr< std::string > p6{ new std::string{ "wololo" } };
-        CHECK_EQ( p6->front(), 'w' );
+        SUBCASE( "selfmove" )
+        {
+                V p1{ uwrap( s1 ) };
+                CHECK( p1 );
+                p1 = std::move( p1 );
+                CHECK( p1 );
 
-        vptr< std::string > p7 = p6;
-        CHECK_EQ( p7->c_str(), p6->c_str() );
+                V p2;
+                CHECK( !p2 );
+                p2 = std::move( p2 );
+                CHECK( !p2 );
+        }
 
-        uvref< std::string > r8 = std::move( p6 ).vref();
-        r8.visit( [&]( auto& ) {} );
+        SUBCASE( "uvref move" )
+        {
+                V            p1;
+                uvref< int > r1 = uwrap( int{ 42 } );
 
-        p1 = uwrap( int{ 42 } );
-        p1 = std::move( p6 );
+                CHECK( !p1 );
+                p1 = std::move( r1 );
+                CHECK( p1 );
+        }
 
-        uvptr< int > p9{ uwrap( 42 ) };
-        std::move( p9 ).take(
-            [&]( empty_t ) {},
-            [&]( uvref< int > u ) {
-                    CHECK_EQ( *u, 42 );
-            } );
+        SUBCASE( "deref" )
+        {
+                uvptr< int > p1{ new int{ 33 } };
+                CHECK_EQ( *p1, 33 );
 
-        uvptr< int, float > p10{ uwrap( 42 ) };
-        vptr< int, float >  p11;
-        p11 = p10;
+                uvptr< int > p2{ (int*) nullptr };
+                CHECK( !p2 );
+                uvptr< int > p3{ nullptr };
+                CHECK( !p3 );
 
-        uvptr< int > p12{ uwrap( 666 ) };
-        uvptr< int > p13;
-        swap( p12, p13 );
-        CHECK_FALSE( p12 );
-        CHECK_EQ( *p13, 666 );
+                uvptr< std::string > p4{ new std::string{ "wololo" } };
+                CHECK_EQ( p4->front(), 'w' );
+        }
+
+        SUBCASE( "vptr" )
+        {
+                uvptr< std::string > p1{ new std::string{ "wololo" } };
+                vptr< std::string >  p2 = p1;
+                CHECK_EQ( p2->c_str(), p1->c_str() );
+
+                vptr< std::string > p3;
+                p3 = p1;
+                CHECK_EQ( p3->c_str(), p1->c_str() );
+        }
 }
 
 TEST_CASE( "uvref" )
@@ -421,34 +532,45 @@ TEST_CASE( "const vptr" )
 {
         using V = vptr< const int, const float, const std::string >;
 
-        int         i = 0;
+        int         i = -1;
         vptr< int > tmp{ &i };
-        V           p1{ tmp };
 
-        CHECK( p1 );
+        SUBCASE( "visit" )
+        {
+                V p1{ tmp };
+                CHECK( p1 );
 
-        check_nullable_visit( p1, std::as_const( i ) );
-        check_nullable_swap( p1 );
+                check_nullable_visit( p1, std::as_const( i ) );
+        }
 
-        vptr< float const > p2;
+        SUBCASE( "swap" )
+        {
+                V p1{ tmp }, p2{ tmp }, p3;
+                check_swap( p1, p2, p3 );
+                CHECK( !p2 );
+                CHECK( p3 );
+        }
 
-        p1 = p2;
+        SUBCASE( "assign" )
+        {
+                V                   p1{ tmp };
+                vptr< float const > p2;
 
-        CHECK_FALSE( p1 );
+                p1 = p2;
 
-        vptr< float const > p3;
-        p3.visit( []( empty_t ) {}, []( float const& ) {} );
-        p3.visit( []( empty_t ) {}, []( vref< float const > ) {} );
+                CHECK( !p1 );
+        }
 
-        p3 = p2;
+        SUBCASE( "compile conversions" )
+        {
+                vptr< float const > p3;
+                p3.visit( []( empty_t ) {}, []( float const& ) {} );
+                p3.visit( []( empty_t ) {}, []( vref< float const > ) {} );
 
-        CHECK_EQ( p2, p3 );
-        CHECK_EQ( p2.get(), p3.get() );
-
-        auto f = []( vref< const int > ) {};
-
-        vref< int > r1{ i };
-        f( r1 );
+                auto        f = []( vref< const int > ) {};
+                vref< int > r1{ i };
+                f( r1 );
+        }
 }
 
 }  // namespace vari

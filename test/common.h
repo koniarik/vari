@@ -1,5 +1,6 @@
 #include "vari/bits/typelist.h"
-#include "vari/vptr.h"
+#include "vari/forward.h"
+#include "vari/uvref.h"
 #include "vari/vref.h"
 
 #include <doctest/doctest.h>
@@ -68,32 +69,15 @@ decltype( auto ) check_visit_ref_return( V& variadic, T& val )
 }
 
 template < typename V >
-void check_swap( V& variadic )
+void check_swap( V& a, V& b, V& c )
 {
+        CHECK_EQ( a, b );
+        CHECK_NE( a, c );
 
-        V n  = variadic;
-        V nn = variadic;
-        CHECK_EQ( n, nn );
-        swap( n, nn );
-        CHECK_EQ( n, nn );
-}
+        swap( b, c );
 
-template < typename V >
-void check_nullable_swap( V& variadic )
-{
-        check_swap( variadic );
-
-        V n = variadic;
-        V nn;
-
-        n = variadic;
-        CHECK( n );
-        CHECK_NE( n, nn );
-
-        nn = n;
-        CHECK_EQ( n, nn );
-        swap( n, nn );
-        CHECK_EQ( n, nn );
+        CHECK_NE( a, b );
+        CHECK_EQ( a, c );
 }
 
 template < visitable V, typename T >
@@ -130,6 +114,22 @@ void check_visit( V& variadic, T& val )
                     } );
                 CHECK_EQ( c, 3 );
         }
+}
+
+template < typename V, typename T >
+void check_vref( V& variadic, T& val )
+{
+        using VT = vref< typename std::decay_t< V >::types >;
+        VT v     = variadic.vref();
+        check_visit( v, val );
+}
+
+template < typename V, typename T >
+void check_uvref( V& variadic, T& val )
+{
+        using VT = uvref< typename std::decay_t< V >::types >;
+        VT v     = std::move( variadic ).vref();
+        check_visit( v, val );
 }
 
 template < null_visitable V, typename T >

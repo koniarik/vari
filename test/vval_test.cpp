@@ -280,10 +280,15 @@ TEST_CASE( "vval_visit" )
         vval< std::vector< float > > v5{ vv };
         check_visit( v5, vv );
 
-        check_swap( v5 );
-
         vval< std::vector< float >, int >        v6{ v5 };
         vval< std::vector< float >, int, float > v7{ std::move( v6 ) };
+}
+
+TEST_CASE( "vval_swap" )
+{
+        vval< int, float > v1{ 42 }, v2{ 42 }, v3{ 3.141592f };
+
+        check_swap( v1, v2, v3 );
 }
 
 
