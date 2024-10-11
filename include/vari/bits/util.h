@@ -79,6 +79,16 @@ struct check_unique_invocability;
 template < typename... Ts >
 struct check_unique_invocability< typelist< Ts... > >
 {
+        template < typename... Fs >
+        struct with_pure_value
+        {
+                static_assert(
+                    ( invocable_for_one< Ts, Fs... > && ... ),
+                    "For each type, there has to be one and only one callable" );
+                static_assert(
+                    ( invocable_with_any< Fs, Ts... > && ... ),
+                    "For each function, there has to be at least one type it is invocable with" );
+        };
 
         template < typename... Fs >
         struct with_pure_ref

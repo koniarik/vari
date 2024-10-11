@@ -317,4 +317,26 @@ template < typename TL >
 static constexpr bool all_nothrow_equality_comparable_v =
     all_nothrow_equality_comparable< TL >::value;
 
+/// ---
+
+template < typename TL, std::size_t N, typename Fac >
+struct factory_result_types_impl;
+
+template < typename... Ts, typename Fac >
+struct factory_result_types_impl< typelist< Ts... >, 0, Fac >
+{
+        using type = typelist< Ts... >;
+};
+
+template < typename... Ts, std::size_t N, typename Fac >
+struct factory_result_types_impl< typelist< Ts... >, N, Fac >
+{
+        using n_type = decltype( std::declval< Fac >().template operator()< N - 1 >() );
+        using type =
+            typename factory_result_types_impl< typelist< Ts..., n_type >, N - 1, Fac >::type;
+};
+
+template < std::size_t N, typename Fac >
+using factory_result_types_t = typename factory_result_types_impl< typelist<>, N, Fac >::type;
+
 }  // namespace vari
