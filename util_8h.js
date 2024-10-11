@@ -3,6 +3,7 @@ var util_8h =
     [ "vari::empty_t", "structvari_1_1empty__t.html", null ],
     [ "vari::_vptr_apply< T, typelist< Ts... >, Us... >", "structvari_1_1__vptr__apply_3_01T_00_01typelist_3_01Ts_8_8_8_01_4_00_01Us_8_8_8_01_4.html", "structvari_1_1__vptr__apply_3_01T_00_01typelist_3_01Ts_8_8_8_01_4_00_01Us_8_8_8_01_4" ],
     [ "vari::check_unique_invocability< typelist< Ts... > >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4.html", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4" ],
+    [ "vari::check_unique_invocability< typelist< Ts... > >::with_pure_value< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__pure__value.html", null ],
     [ "vari::check_unique_invocability< typelist< Ts... > >::with_pure_ref< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__pure__ref.html", null ],
     [ "vari::check_unique_invocability< typelist< Ts... > >::with_nullable_pure_ref< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__nullable__pure__ref.html", null ],
     [ "vari::check_unique_invocability< typelist< Ts... > >::with_pure_cref< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__pure__cref.html", null ],

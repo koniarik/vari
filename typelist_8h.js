@@ -26,8 +26,11 @@ var typelist_8h =
     [ "vari::all_nothrow_destructible< typelist< Us... > >", "structvari_1_1all__nothrow__destructible_3_01typelist_3_01Us_8_8_8_01_4_01_4.html", null ],
     [ "vari::all_nothrow_three_way_comparable< typelist< Us... > >", "structvari_1_1all__nothrow__three__way__comparable_3_01typelist_3_01Us_8_8_8_01_4_01_4.html", null ],
     [ "vari::all_nothrow_equality_comparable< typelist< Us... > >", "structvari_1_1all__nothrow__equality__comparable_3_01typelist_3_01Us_8_8_8_01_4_01_4.html", null ],
+    [ "vari::factory_result_types_impl< typelist< Ts... >, 0, Fac >", "structvari_1_1factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_010_00_01Fac_01_4.html", "structvari_1_1factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_010_00_01Fac_01_4" ],
+    [ "vari::factory_result_types_impl< typelist< Ts... >, N, Fac >", "structvari_1_1factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_01N_00_01Fac_01_4.html", "structvari_1_1factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_01N_00_01Fac_01_4" ],
     [ "vari::nothrow_three_way_comparable", "conceptvari_1_1nothrow__three__way__comparable.html", null ],
     [ "vari::nothrow_equality_comparable", "conceptvari_1_1nothrow__equality__comparable.html", null ],
+    [ "factory_result_types_t", "typelist_8h.html#a50268e4f42556ca6a2642766b4c8c1f6", null ],
     [ "flatten_t", "typelist_8h.html#ab99ffc8a5afd4acbc960e1b940b9c53d", null ],
     [ "type_at_t", "typelist_8h.html#a0f6f548188eb04730b105fe27135fa24", null ],
     [ "unique_typelist_t", "typelist_8h.html#aaa07eec3b32603b583fe8baf576e14ee", null ]

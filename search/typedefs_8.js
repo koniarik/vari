@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['reference_0',['reference',['../classvari_1_1__uvptr.html#a08da5d23bcc4d55fd4e4abb1e2b8cdf7',1,'vari::_uvptr::reference()'],['../structvari_1_1__uvref.html#a8c78dc2fabd0735f1cbd6f79b48b6d73',1,'vari::_uvref::reference()'],['../classvari_1_1__vptr.html#a828d3311051d5705e4c8358ef5d4c2f8',1,'vari::_vptr::reference()']]],
-  ['rh_1',['rh',['../structvari_1_1__split__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html#a18675d9e73e5a9f283c31840677f06df',1,'vari::_split_impl&lt; typelist&lt; Us... &gt;, typelist&lt; T, Ts... &gt; &gt;::rh()'],['../structvari_1_1__split__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html#a08c7903d66efe2939bb83c88ace80000',1,'vari::_split_impl&lt; typelist&lt; Us... &gt;, typelist&lt; T, Ts... &gt; &gt;::rh()'],['../structvari_1_1__split__impl_3_01typelist_3_4_00_01typelist_3_4_01_4.html#a6973ef617b8fb77e64e74d2ce0a2c7a1',1,'vari::_split_impl&lt; typelist&lt;&gt;, typelist&lt;&gt; &gt;::rh()']]]
+  ['pointer_0',['pointer',['../classvari_1_1__uvptr.html#a0ce116aab98d2c04ce8489fae3d0389f',1,'vari::_uvptr::pointer()'],['../structvari_1_1__uvref.html#a68c74178a9b86b623b0229988e755c0b',1,'vari::_uvref::pointer()'],['../classvari_1_1__vref.html#a12c94515621bc3398e4e0fe77913d6c0',1,'vari::_vref::pointer()']]]
 ];

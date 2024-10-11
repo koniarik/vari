@@ -6,7 +6,7 @@ var indexSectionsWithContent =
   3: "dfprtuv",
   4: "_acdegioprstuv~",
   5: "bcfilpsv",
-  6: "_bcfiloprstuv",
+  6: "_bcfilnoprstuv",
   7: "_mos",
   8: "v",
   9: "v",

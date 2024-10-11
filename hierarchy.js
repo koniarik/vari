@@ -67,6 +67,9 @@ var hierarchy =
       ] ]
     ] ],
     [ "vari::empty_t", "structvari_1_1empty__t.html", null ],
+    [ "vari::factory_result_types_impl< TL, N, Fac >", "structvari_1_1factory__result__types__impl.html", null ],
+    [ "vari::factory_result_types_impl< typelist< Ts... >, 0, Fac >", "structvari_1_1factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_010_00_01Fac_01_4.html", null ],
+    [ "vari::factory_result_types_impl< typelist< Ts... >, N, Fac >", "structvari_1_1factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_01N_00_01Fac_01_4.html", null ],
     [ "vari::flatten_impl< TL, Ts >", "structvari_1_1flatten__impl.html", null ],
     [ "vari::flatten_impl< TL >", "structvari_1_1flatten__impl_3_01TL_01_4.html", null ],
     [ "vari::flatten_impl< typelist< Us... >, T, Ts... >", "structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01T_00_01Ts_8_8_8_01_4.html", null ],
@@ -95,5 +98,6 @@ var hierarchy =
     [ "vari::check_unique_invocability< typelist< Ts... > >::with_deleter< Deleter >::with_nullable_uvref< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__deleter_1_1with__nullable__uvref.html", null ],
     [ "vari::check_unique_invocability< typelist< Ts... > >::with_pure_cref< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__pure__cref.html", null ],
     [ "vari::check_unique_invocability< typelist< Ts... > >::with_pure_ref< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__pure__ref.html", null ],
+    [ "vari::check_unique_invocability< typelist< Ts... > >::with_pure_value< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__pure__value.html", null ],
     [ "vari::check_unique_invocability< typelist< Ts... > >::with_deleter< Deleter >::with_uvref< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__deleter_1_1with__uvref.html", null ]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['owning_5fpointer_0',['owning_pointer',['../structvari_1_1__uvref.html#a28204bdd3aae8f7a9356cd781762e246',1,'vari::_uvref']]],
-  ['owning_5freference_1',['owning_reference',['../classvari_1_1__uvptr.html#a6f9d4fc93a4f0ed13d6a8cd2ad73e64d',1,'vari::_uvptr']]]
+  ['n_5ftype_0',['n_type',['../structvari_1_1factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_01N_00_01Fac_01_4.html#ad01cff4a27e1d8ea791a582e8db05d46',1,'vari::factory_result_types_impl&lt; typelist&lt; Ts... &gt;, N, Fac &gt;']]]
 ];

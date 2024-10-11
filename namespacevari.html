@@ -215,6 +215,12 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1empty__t.html">empty_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1factory__result__types__impl.html">factory_result_types_impl</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_010_00_01Fac_01_4.html">factory_result_types_impl&lt; typelist&lt; Ts... &gt;, 0, Fac &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_01N_00_01Fac_01_4.html">factory_result_types_impl&lt; typelist&lt; Ts... &gt;, N, Fac &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1flatten__impl.html">flatten_impl</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1flatten__impl_3_01TL_01_4.html">flatten_impl&lt; TL &gt;</a></td></tr>
@@ -290,6 +296,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ab99ffc8a5afd4acbc960e1b940b9c53d"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
 <tr class="memitem:ab99ffc8a5afd4acbc960e1b940b9c53d"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#ab99ffc8a5afd4acbc960e1b940b9c53d">flatten_t</a> = typename <a class="el" href="structvari_1_1flatten__impl.html">flatten_impl</a>&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt;&gt;, Ts... &gt;::type</td></tr>
 <tr class="separator:ab99ffc8a5afd4acbc960e1b940b9c53d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50268e4f42556ca6a2642766b4c8c1f6"><td class="memTemplParams" colspan="2">template&lt;std::size_t N, typename Fac &gt; </td></tr>
+<tr class="memitem:a50268e4f42556ca6a2642766b4c8c1f6"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a50268e4f42556ca6a2642766b4c8c1f6">factory_result_types_t</a> = typename <a class="el" href="structvari_1_1factory__result__types__impl.html">factory_result_types_impl</a>&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt;&gt;, N, Fac &gt;::type</td></tr>
+<tr class="separator:a50268e4f42556ca6a2642766b4c8c1f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a352924fac93056c566636380a68ad809"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; typename T, typename TL , typename... Us&gt; </td></tr>
 <tr class="memitem:a352924fac93056c566636380a68ad809"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a352924fac93056c566636380a68ad809">_vptr_apply_t</a> = typename <a class="el" href="structvari_1_1__vptr__apply.html">_vptr_apply</a>&lt; T, TL, Us... &gt;::type</td></tr>
 <tr class="separator:a352924fac93056c566636380a68ad809"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -334,6 +343,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ae8df00bdd5143f042044d66b329246a6"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ae8df00bdd5143f042044d66b329246a6"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#ae8df00bdd5143f042044d66b329246a6">operator==</a> (<a class="el" href="structvari_1_1__ptr__core.html">_ptr_core</a>&lt; T &gt; const &amp;lh, <a class="el" href="structvari_1_1__ptr__core.html">_ptr_core</a>&lt; T &gt; const &amp;rh) noexcept</td></tr>
 <tr class="separator:ae8df00bdd5143f042044d66b329246a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92099510e47cb6e84c5463cbc11215c8"><td class="memTemplParams" colspan="2">template&lt;std::size_t N, typename Cnv , typename... Fn&gt; </td></tr>
+<tr class="memitem:a92099510e47cb6e84c5463cbc11215c8"><td class="memTemplItemLeft" align="right" valign="top">constexpr decltype(auto)&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a92099510e47cb6e84c5463cbc11215c8">dispatch</a> (<a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> i, Cnv &amp;&amp;cnv, Fn &amp;&amp;... fn)</td></tr>
+<tr class="separator:a92099510e47cb6e84c5463cbc11215c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ebcd20c8226cf02de56c175cd7fdac6"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a4ebcd20c8226cf02de56c175cd7fdac6"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">uvref</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#a4ebcd20c8226cf02de56c175cd7fdac6">uwrap</a> (T item)</td></tr>
 <tr class="separator:a4ebcd20c8226cf02de56c175cd7fdac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -373,6 +385,22 @@ template&lt;template&lt; typename... &gt; typename T, typename TL , typename... 
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="namespacevari.html#a352924fac93056c566636380a68ad809">vari::_vptr_apply_t</a> = typedef typename <a class="el" href="structvari_1_1__vptr__apply.html">_vptr_apply</a>&lt; T, TL, Us... &gt;::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a50268e4f42556ca6a2642766b4c8c1f6" name="a50268e4f42556ca6a2642766b4c8c1f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50268e4f42556ca6a2642766b4c8c1f6">&#9670;&#160;</a></span>factory_result_types_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::size_t N, typename Fac &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacevari.html#a50268e4f42556ca6a2642766b4c8c1f6">vari::factory_result_types_t</a> = typedef typename <a class="el" href="structvari_1_1factory__result__types__impl.html">factory_result_types_impl</a>&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt;&gt;, N, Fac &gt;::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -598,6 +626,50 @@ template&lt;<a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60f
           <td></td>
           <td class="paramtype">F &amp;&amp;&#160;</td>
           <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a92099510e47cb6e84c5463cbc11215c8" name="a92099510e47cb6e84c5463cbc11215c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92099510e47cb6e84c5463cbc11215c8">&#9670;&#160;</a></span>dispatch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::size_t N, typename Cnv , typename... Fn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr decltype(auto) vari::dispatch </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a>&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Cnv &amp;&amp;&#160;</td>
+          <td class="paramname"><em>cnv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Fn &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>fn</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
