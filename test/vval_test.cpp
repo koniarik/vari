@@ -78,18 +78,6 @@ struct throw_const : move_constructible< nothrow::NO >, copy_constructible< noth
 {
 };
 
-/*
-    typelist< int >,
-    typelist< float, int >,
-    typelist< throw_const >,
-    typelist< int, throw_const >,
-    typelist< throw_mv_const >,
-    typelist< int, throw_mv_const >,
-    typelist< throw_cp_const >,
-    typelist< int, throw_cp_const >,
-    big_set )
-*/
-
 template < typename T, typename U >
 void vval_construct_test(
     U&&                  thing,

@@ -38,7 +38,7 @@ class _uvptr : private deleter_box< Deleter >
         using same_uvref = _uvref< Deleter, Us... >;
 
 public:
-        using types = typelist< Ts... >;
+        using types = unique_typelist_t< flatten_t< typelist< Ts... > > >;
 
         using core_type        = _ptr_core< types >;
         using pointer          = _vptr< Ts... >;
@@ -55,7 +55,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _uvref< Deleter, Us... >::types, types > )
         constexpr explicit _uvptr( _uvref< Deleter, Us... >&& p ) noexcept
         {
                 _core = std::move( p._core );
@@ -63,7 +63,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _uvptr< Deleter, Us... >::types, types > )
         constexpr _uvptr( _uvptr< Deleter, Us... >&& p ) noexcept
         {
                 _core = std::move( p._core );
@@ -85,7 +85,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _uvref< Deleter, Us... >::types, types > )
         constexpr _uvptr& operator=( _uvref< Deleter, Us... >&& p ) noexcept
         {
                 _uvptr tmp{ std::move( p ) };
@@ -94,7 +94,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _uvptr< Deleter, Us... >::types, types > )
         constexpr _uvptr& operator=( _uvptr< Deleter, Us... >&& p ) noexcept
         {
                 _uvptr tmp{ std::move( p ) };
@@ -125,7 +125,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
+                requires( vconvertible_to< types, typename _vptr< Us... >::types > )
         constexpr operator _vptr< Us... >() const noexcept
         {
                 _vptr< Us... > res;

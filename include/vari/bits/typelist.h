@@ -180,6 +180,32 @@ struct unique_tl_impl< typelist< Us... >, typelist< T, Ts... > >
 template < typename TL >
 using unique_typelist_t = typename unique_tl_impl< typelist<>, TL >::type;
 
+template < typename TL1, typename TL2 >
+struct shallow_unique_tl_impl;
+
+template < typename... Ts >
+struct shallow_unique_tl_impl< typelist< Ts... >, typelist<> >
+{
+        using type = typelist< Ts... >;
+};
+
+template < typename TL1, typename T, typename... Ts >
+        requires( contains_type_v< T, typelist< Ts... > > )
+struct shallow_unique_tl_impl< TL1, typelist< T, Ts... > >
+  : shallow_unique_tl_impl< TL1, typelist< Ts... > >
+{
+};
+
+template < typename... Us, typename T, typename... Ts >
+        requires( !contains_type_v< T, typelist< Ts... > > )
+struct shallow_unique_tl_impl< typelist< Us... >, typelist< T, Ts... > >
+  : shallow_unique_tl_impl< typelist< Us..., T >, typelist< Ts... > >
+{
+};
+
+template < typename TL >
+using shallow_unique_typelist_t = typename shallow_unique_tl_impl< typelist<>, TL >::type;
+
 /// ---
 
 template < typename TL, typename... Ts >
@@ -216,6 +242,36 @@ struct flatten_impl< typelist< Us... >, typelist< Ks... > const, Ts... >
 
 template < typename... Ts >
 using flatten_t = typename flatten_impl< typelist<>, Ts... >::type;
+
+template < typename TL, typename... Ts >
+struct shallow_flatten_impl;
+
+template < typename TL >
+struct shallow_flatten_impl< TL >
+{
+        using type = TL;
+};
+
+template < typename... Us, typename T, typename... Ts >
+struct shallow_flatten_impl< typelist< Us... >, T, Ts... >
+  : shallow_flatten_impl< typelist< Us..., T >, Ts... >
+{
+};
+
+template < typename... Us, typename... Ks, typename... Ts >
+struct shallow_flatten_impl< typelist< Us... >, typelist< Ks... >, Ts... >
+  : shallow_flatten_impl< typelist< Us... >, Ks..., Ts... >
+{
+};
+
+template < typename... Us, typename... Ks, typename... Ts >
+struct shallow_flatten_impl< typelist< Us... >, typelist< Ks... > const, Ts... >
+  : shallow_flatten_impl< typelist< Us... >, Ks const..., Ts... >
+{
+};
+
+template < typename... Ts >
+using shallow_flatten_t = typename shallow_flatten_impl< typelist<>, Ts... >::type;
 
 /// ---
 

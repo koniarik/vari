@@ -49,7 +49,8 @@ template < template < typename... > typename T, typename TL, typename... Us >
 using _vptr_apply_t = typename _vptr_apply< T, TL, Us... >::type;
 
 template < template < typename... > typename T, typename TL, typename... Us >
-using _define_variadic = _vptr_apply_t< T, unique_typelist_t< flatten_t< TL > >, Us... >;
+using _define_variadic =
+    _vptr_apply_t< T, shallow_unique_typelist_t< shallow_flatten_t< TL > >, Us... >;
 
 template < typename F, typename... Args >
 concept invocable = requires( F&& f, Args&&... args ) { ( (F&&) f )( (Args&&) args... ); };
