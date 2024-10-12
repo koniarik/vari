@@ -266,6 +266,20 @@ Const</h1>
 <div class="line"><span class="keyword">using </span>vp_b = <a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;const a_t, const b_t&gt;</a>;</div>
 </div><!-- fragment --><p> Both types <code>vp_a</code> and <code>vp_b</code> are equal.</p>
 <h1><a class="anchor" id="autotoc_md12"></a>
+Typelist compatibility</h1>
+<p >Library can be extended by using other types than just <code><a class="el" href="structvari_1_1typelist.html">vari::typelist</a></code> to represent set of types. There are two common options.</p>
+<h2><a class="anchor" id="autotoc_md13"></a>
+is_vari_compatible_typelist</h2>
+<p >Any type that contains static member named <code>is_vari_compatible_typelist</code> which evaluates to true, is considered as a typelist. It shall contain member named <code>types</code>, which is vari-compatible typelist. (Note: beware of recursion, most propably <code>types</code> should be alias to <code><a class="el" href="structvari_1_1typelist.html">vari::typelist</a></code>)</p>
+<p ><code><a class="el" href="structvari_1_1typelist.html">vari::typelist</a></code> itself contains all these attributes so that typelist can be defined by inheriting from it:</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>expr : <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist</a>&lt; binary_expr, unary_expr, constant &gt;</div>
+<div class="line">{};</div>
+</div><!-- fragment --><p >Note that this is implemented as default behavior of traits system which takes precedence.</p>
+<h2><a class="anchor" id="autotoc_md14"></a>
+traits</h2>
+<p >Whenever type is typelist is dertermined by <code><a class="el" href="structvari_1_1typelist__traits.html">vari::typelist_traits</a>&lt;T&gt;</code>. In case <code><a class="el" href="structvari_1_1typelist__traits.html">vari::typelist_traits</a>&lt;T&gt;:::is_compatible</code> evaluates to <code>true</code>, library considers <code>T</code> to be typelist-like type which shall be flattened.</p>
+<p >In such a case, <code><a class="el" href="structvari_1_1typelist__traits.html">vari::typelist_traits</a>&lt;T&gt;::types</code> should be a type which by itself is vari-compatible typelist. Transtively, this should eventually resolve into <code><a class="el" href="structvari_1_1typelist.html">vari::typelist</a></code> itself which is used by the library directly.</p>
+<h1><a class="anchor" id="autotoc_md15"></a>
 Credits</h1>
 <p >Credits for the idea for this should go to <code>avakar</code>, live long and prosper. </p>
 </div></div><!-- PageDoc -->

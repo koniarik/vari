@@ -1,4 +1,0 @@
-var structvari_1_1unique__tl__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4 =
-[
-    [ "type", "structvari_1_1unique__tl__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html#afd3ec640218fc5d5b78fd216acdcabd8", null ]
-];
