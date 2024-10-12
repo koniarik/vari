@@ -36,9 +36,18 @@ namespace vari
 
 using namespace std::string_literals;
 
-TEST_CASE( "vptr" )
+struct tset : typelist< std::string, int, float >
 {
-        using V = vptr< int, float, std::string >;
+};
+
+TEST_CASE_TEMPLATE(
+    "vptr",
+    T,
+    typelist< int, float, std::string >,
+    typelist< std::string, float, int >,
+    tset )
+{
+        using V = vptr< T >;
         static_assert( valid_null_variadic< V > );
 
         int         i1 = 42;
@@ -95,9 +104,14 @@ TEST_CASE( "vptr" )
         }
 }
 
-TEST_CASE( "vref" )
+TEST_CASE_TEMPLATE(
+    "vref",
+    T,
+    typelist< int, float, std::string >,
+    typelist< std::string, float, int >,
+    tset )
 {
-        using V = vref< int, float, std::string >;
+        using V = vref< T >;
         static_assert( valid_variadic< V > );
 
         int         i1 = 42;
@@ -153,22 +167,26 @@ TEST_CASE( "vref" )
         SUBCASE( "types" )
         {
                 // XXX: candidate for generalization over all variadics
-                using tset = typename V::types;
-                static_assert( std::same_as< tset, typelist< int, float, std::string > > );
+                static_assert( std::same_as< typename V::types, typename T::types > );
 
                 vref< const std::string > v1{ s1 };
 
-                std::string        s2 = "baz";
-                vref< const tset > v2 = s2;
+                std::string                     s2 = "baz";
+                vref< const typename V::types > v2 = s2;
 
                 v2 = v1;
                 CHECK_EQ( v1, v2 );
         }
 }
 
-TEST_CASE( "uvptr" )
+TEST_CASE_TEMPLATE(
+    "uvptr",
+    T,
+    typelist< int, float, std::string >,
+    typelist< std::string, float, int >,
+    tset )
 {
-        using V = uvptr< int, float, std::string >;
+        using V = uvptr< T >;
         static_assert( valid_null_owning_variadic< V > );
 
         std::string s1{ "s" };
@@ -312,9 +330,14 @@ TEST_CASE( "uvptr" )
         }
 }
 
-TEST_CASE( "uvref" )
+TEST_CASE_TEMPLATE(
+    "uvref",
+    T,
+    typelist< int, float, std::string >,
+    typelist< std::string, float, int >,
+    tset )
 {
-        using V = uvref< int, float, std::string >;
+        using V = uvref< T >;
 
         std::string inpt{ "s" };
         V           p1 = uwrap( inpt );
@@ -528,9 +551,14 @@ TEST_CASE( "moved functor" )
         CHECK_EQ( f.count, 4 );
 }
 
-TEST_CASE( "const vptr" )
+TEST_CASE_TEMPLATE(
+    "const vptr",
+    T,
+    typelist< int const, float const, std::string const >,
+    typelist< std::string const, float const, int const >,
+    tset const )
 {
-        using V = vptr< const int, const float, const std::string >;
+        using V = vptr< T >;
 
         int         i = -1;
         vptr< int > tmp{ &i };

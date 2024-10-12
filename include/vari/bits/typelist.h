@@ -30,13 +30,51 @@ namespace vari
 template < typename... Ts >
 struct typelist
 {
+        using types                       = typelist< Ts... >;
         static constexpr std::size_t size = sizeof...( Ts );
+
+        static constexpr bool is_vari_compatible_typelist = true;
 };
+
+template < typename T >
+struct typelist_traits
+{
+        static constexpr bool is_compatible = false;
+};
+
+template < typename T >
+        requires( T::is_vari_compatible_typelist )
+struct typelist_traits< T >
+{
+        static constexpr bool is_compatible = true;
+
+        using types = typename T::types;
+};
+
+template < typename T >
+        requires( T::is_vari_compatible_typelist )
+struct typelist_traits< const T >
+{
+        static constexpr bool is_compatible = true;
+
+        using types = const typename T::types;
+};
+
+template < typename T >
+using typelist_traits_types = typename typelist_traits< T >::types;
+
+template < typename T >
+concept typelist_compatible = typelist_traits< T >::is_compatible;
 
 /// ---
 
 template < typename T, typename TL >
 struct index_of_t_or_const_t;
+
+template < typename T, typelist_compatible TL >
+struct index_of_t_or_const_t< T, TL > : index_of_t_or_const_t< typelist_traits_types< T >, TL >
+{
+};
 
 template < typename T >
 struct index_of_t_or_const_t< T, typelist<> >
@@ -71,6 +109,11 @@ static constexpr std::size_t index_of_t_or_const_t_v = index_of_t_or_const_t< T,
 template < std::size_t j, typename TL >
 struct type_at;
 
+template < std::size_t j, typelist_compatible TL >
+struct type_at< j, TL > : type_at< j, typelist_traits_types< TL > >
+{
+};
+
 template < std::size_t j, typename T, typename... Ts >
 struct type_at< j, typelist< T, Ts... > >
 {
@@ -91,6 +134,11 @@ using type_at_t = typename type_at< j, TL >::type;
 template < typename T, typename TL >
 struct contains_type;
 
+template < typename T, typelist_compatible TL >
+struct contains_type< T, TL > : contains_type< T, typelist_traits_types< TL > >
+{
+};
+
 template < typename T, typename... Ts >
 struct contains_type< T, typelist< Ts... > >
 {
@@ -105,6 +153,11 @@ static constexpr bool contains_type_v = contains_type< T, TL >::value;
 template < typename TL1, typename TL2 >
 struct unique_tl_impl;
 
+template < typename TL1, typelist_compatible TL2 >
+struct unique_tl_impl< TL1, TL2 > : unique_tl_impl< TL1, typelist_traits_types< TL2 > >
+{
+};
+
 template < typename... Ts >
 struct unique_tl_impl< typelist< Ts... >, typelist<> >
 {
@@ -113,16 +166,15 @@ struct unique_tl_impl< typelist< Ts... >, typelist<> >
 
 template < typename TL1, typename T, typename... Ts >
         requires( contains_type_v< T, typelist< Ts... > > )
-struct unique_tl_impl< TL1, typelist< T, Ts... > >
+struct unique_tl_impl< TL1, typelist< T, Ts... > > : unique_tl_impl< TL1, typelist< Ts... > >
 {
-        using type = typename unique_tl_impl< TL1, typelist< Ts... > >::type;
 };
 
 template < typename... Us, typename T, typename... Ts >
         requires( !contains_type_v< T, typelist< Ts... > > )
 struct unique_tl_impl< typelist< Us... >, typelist< T, Ts... > >
+  : unique_tl_impl< typelist< Us..., T >, typelist< Ts... > >
 {
-        using type = typename unique_tl_impl< typelist< Us..., T >, typelist< Ts... > >::type;
 };
 
 template < typename TL >
@@ -139,22 +191,27 @@ struct flatten_impl< TL >
         using type = TL;
 };
 
-template < typename... Us, typename T, typename... Ts >
+template < typename... Us, typelist_compatible T, typename... Ts >
 struct flatten_impl< typelist< Us... >, T, Ts... >
+  : flatten_impl< typelist< Us... >, typelist_traits_types< T >, Ts... >
 {
-        using type = typename flatten_impl< typelist< Us..., T >, Ts... >::type;
+};
+
+template < typename... Us, typename T, typename... Ts >
+struct flatten_impl< typelist< Us... >, T, Ts... > : flatten_impl< typelist< Us..., T >, Ts... >
+{
 };
 
 template < typename... Us, typename... Ks, typename... Ts >
 struct flatten_impl< typelist< Us... >, typelist< Ks... >, Ts... >
+  : flatten_impl< typelist< Us... >, Ks..., Ts... >
 {
-        using type = typename flatten_impl< typelist< Us... >, Ks..., Ts... >::type;
 };
 
 template < typename... Us, typename... Ks, typename... Ts >
 struct flatten_impl< typelist< Us... >, typelist< Ks... > const, Ts... >
+  : flatten_impl< typelist< Us... >, Ks const..., Ts... >
 {
-        using type = typename flatten_impl< typelist< Us... >, Ks const..., Ts... >::type;
 };
 
 template < typename... Ts >
@@ -185,6 +242,11 @@ static constexpr bool is_subset_v = is_subset< LH, RH >::value;
 template < typename TL >
 struct any_is_const;
 
+template < typelist_compatible TL >
+struct any_is_const< TL > : any_is_const< typelist_traits_types< TL > >
+{
+};
+
 template < typename... Us >
 struct any_is_const< typelist< Us... > >
 {
@@ -198,6 +260,11 @@ static constexpr bool any_is_const_v = any_is_const< TL >::value;
 
 template < typename TL >
 struct all_is_const;
+
+template < typelist_compatible TL >
+struct all_is_const< TL > : all_is_const< typelist_traits_types< TL > >
+{
+};
 
 template < typename... Us >
 struct all_is_const< typelist< Us... > >
@@ -213,6 +280,11 @@ static constexpr bool all_is_const_v = all_is_const< TL >::value;
 template < typename TL >
 struct none_is_const;
 
+template < typelist_compatible TL >
+struct none_is_const< TL > : none_is_const< typelist_traits_types< TL > >
+{
+};
+
 template < typename... Us >
 struct none_is_const< typelist< Us... > >
 {
@@ -227,6 +299,11 @@ static constexpr bool none_is_const_v = none_is_const< TL >::value;
 template < typename TL >
 struct all_nothrow_swappable;
 
+template < typelist_compatible TL >
+struct all_nothrow_swappable< TL > : all_nothrow_swappable< typelist_traits_types< TL > >
+{
+};
+
 template < typename... Us >
 struct all_nothrow_swappable< typelist< Us... > >
 {
@@ -240,6 +317,12 @@ static constexpr bool all_nothrow_swappable_v = all_nothrow_swappable< TL >::val
 
 template < typename TL >
 struct all_nothrow_move_constructible;
+
+template < typelist_compatible TL >
+struct all_nothrow_move_constructible< TL >
+  : all_nothrow_move_constructible< typelist_traits_types< TL > >
+{
+};
 
 template < typename... Us >
 struct all_nothrow_move_constructible< typelist< Us... > >
@@ -256,6 +339,12 @@ static constexpr bool all_nothrow_move_constructible_v =
 template < typename TL >
 struct all_nothrow_copy_constructible;
 
+template < typelist_compatible TL >
+struct all_nothrow_copy_constructible< TL >
+  : all_nothrow_copy_constructible< typelist_traits_types< TL > >
+{
+};
+
 template < typename... Us >
 struct all_nothrow_copy_constructible< typelist< Us... > >
 {
@@ -270,6 +359,11 @@ static constexpr bool all_nothrow_copy_constructible_v =
 
 template < typename TL >
 struct all_nothrow_destructible;
+
+template < typelist_compatible TL >
+struct all_nothrow_destructible< TL > : all_nothrow_destructible< typelist_traits_types< TL > >
+{
+};
 
 template < typename... Us >
 struct all_nothrow_destructible< typelist< Us... > >
@@ -289,6 +383,12 @@ concept nothrow_three_way_comparable = noexcept( std::declval< U >() <=> std::de
 template < typename TL >
 struct all_nothrow_three_way_comparable;
 
+template < typelist_compatible TL >
+struct all_nothrow_three_way_comparable< TL >
+  : all_nothrow_three_way_comparable< typelist_traits_types< TL > >
+{
+};
+
 template < typename... Us >
 struct all_nothrow_three_way_comparable< typelist< Us... > >
 {
@@ -306,6 +406,12 @@ concept nothrow_equality_comparable = noexcept( std::declval< U >() == std::decl
 
 template < typename TL >
 struct all_nothrow_equality_comparable;
+
+template < typelist_compatible TL >
+struct all_nothrow_equality_comparable< TL >
+  : all_nothrow_copy_constructible< typelist_traits_types< TL > >
+{
+};
 
 template < typename... Us >
 struct all_nothrow_equality_comparable< typelist< Us... > >
