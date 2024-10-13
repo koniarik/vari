@@ -39,7 +39,7 @@ class _vval
         using core_type = _val_core< typelist< Ts... > >;
 
 public:
-        using types = typelist< Ts... >;
+        using types = unique_typelist_t< flatten_t< typelist< Ts... > > >;
 
         template < typename U >
                 requires( vconvertible_to< typelist< std::remove_reference_t< U > >, types > )
@@ -62,7 +62,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vval< Us... >::types, types > )
         constexpr _vval( _vval< Us... >&& p ) noexcept(
             std::is_nothrow_constructible_v< core_type, typename _vval< Us... >::core_type&& > )
           : _core( std::move( p._core ) )
@@ -76,7 +76,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vval< Us... >::types, types > )
         constexpr _vval( _vval< Us... > const& p ) noexcept(
             std::
                 is_nothrow_constructible_v< core_type, typename _vval< Us... >::core_type const& > )
@@ -102,7 +102,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vval< Us... >::types, types > )
         constexpr _vval& operator=( _vval< Us... >&& p ) noexcept(
             core_type::template is_nothrow_assignable< typename _vval< Us... >::core_type&& > )
         {
@@ -118,7 +118,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vval< Us... >::types, types > )
         constexpr _vval& operator=( _vval< Us... > const& p ) noexcept(
             core_type::template is_nothrow_assignable< typename _vval< Us... >::core_type const& > )
         {
@@ -165,7 +165,7 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
+                requires( vconvertible_to< types, typename _vref< Us... >::types > )
         constexpr operator _vref< Us... >() const& noexcept
         {
                 static_assert( all_is_const_v< typelist< Us... > > );
@@ -175,14 +175,14 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
+                requires( vconvertible_to< types, typename _vptr< Us... >::types > )
         constexpr operator _vptr< Us... >() & noexcept
         {
                 return _vref< Us... >{ *this }.vptr();
         }
 
         template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
+                requires( vconvertible_to< types, typename _vptr< Us... >::types > )
         constexpr operator _vptr< Us... >() const& noexcept
         {
                 return _vref< Us... >{ *this }.vptr();

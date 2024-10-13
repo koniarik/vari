@@ -34,12 +34,12 @@ template < typename... Ts >
 class _vref
 {
 public:
-        using types = typelist< Ts... >;
+        using types = unique_typelist_t< flatten_t< typelist< Ts... > > >;
 
         using pointer = _vptr< Ts... >;
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vref< Us... >::types, types > )
         constexpr _vref( _vref< Us... > p ) noexcept
           : _core( p._core )
         {

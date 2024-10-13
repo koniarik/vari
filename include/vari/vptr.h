@@ -34,7 +34,7 @@ template < typename... Ts >
 class _vptr
 {
 public:
-        using types = typelist< Ts... >;
+        using types = unique_typelist_t< flatten_t< typelist< Ts... > > >;
 
         using reference = _vref< Ts... >;
 
@@ -49,14 +49,14 @@ public:
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vref< Us... >::types, types > )
         constexpr explicit _vptr( _vref< Us... > r ) noexcept
           : _core( std::move( r._core ) )
         {
         }
 
         template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
+                requires( vconvertible_to< typename _vptr< Us... >::types, types > )
         constexpr _vptr( _vptr< Us... > p ) noexcept
           : _core( std::move( p._core ) )
         {
