@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['to_5fuvref_0',['to_uvref',['../namespacevari.html#ab96f35b9e3275716e644a1b62ef83531',1,'vari']]]
+  ['emplace_0',['emplace',['../structvari_1_1__val__core.html#a4e3014001eb74f6f4747db84483a52fb',1,'vari::_val_core::emplace()'],['../classvari_1_1__vval.html#a4d3c539029dcd34473bc121c547d3c61',1,'vari::_vval::emplace()']]]
 ];

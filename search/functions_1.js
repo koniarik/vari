@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['dispatch_0',['dispatch',['../namespacevari.html#a92099510e47cb6e84c5463cbc11215c8',1,'vari']]]
+  ['assign_0',['assign',['../structvari_1_1__val__core.html#a29de3f1b1e46b4d355d7738fb18eb310',1,'vari::_val_core']]]
 ];
