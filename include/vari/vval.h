@@ -33,6 +33,7 @@
 namespace vari
 {
 
+// WARNING: experimental
 template < typename... Ts >
 class _vval
 {

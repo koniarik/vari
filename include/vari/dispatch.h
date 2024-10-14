@@ -6,6 +6,10 @@
 namespace vari
 {
 
+// Given `i` calls `Cnv` callable with `i` as _template argument_ and passes the result into best
+// match of callable out of `fn` set.
+//
+// `i` has to fit in range 0..N-1, any other value is undefined behavior.
 template < std::size_t N, typename Cnv, typename... Fn >
 constexpr decltype( auto ) dispatch( index_type i, Cnv&& cnv, Fn&&... fn )
 {

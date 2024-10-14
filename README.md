@@ -1,54 +1,41 @@
+<div align="center">
 
 # Variadic library
 
-Variadic pointers, references for C++20.
+[Example](/example.cpp) - [Documentation](https://koniarik.github.io/vari/)
 
-`std::variant<Ts...>` is C++20s form of tagged union which stores types by
-value. This library introduces an alternative that stores items allocated
-and extends the tagged union concept with type-sets, sub-typing and other forms of
-API access, making it more pleasant to use.
+</div>
 
-Library provides 4 templated types as an alternative to variant:
+C++ has `std::variant<Ts...>` as a tagged union, but we find it lacking in capabilities and just plain ... bad.
+
+`vari` contains alternatives with more advanced API, ways of definition, or other goodies
+that one would expect in modern approach.
+
+4 basic types introduced by the library:
  - `vref<Ts...>` - reference to any type out of `Ts...`
- - `vptr<Ts...>` - pointer to any type out of `Ts...` (aka: nullable reference)
+ - `vptr<Ts...>` - pointer to any type out of `Ts...`
  - `uvref<Ts...>` - owning reference to any type out of `Ts...`
  - `uvptr<Ts...>` - owning pointer to any type out of `Ts...`
 
-## From std::variant to vptr or vref
+## vref and vptr
 
-Let's say that we want a function, that can accept one of two types, how to model it with `std::variant`?
+`vref` and `vptr` point to any type in specified list of types, `vref` guarantees that it points to something
+while `vptr` can be null.
 
 ```cpp
+void foo(vref<int, float>);
 
-struct a_t{};
-struct b_t{};
+int i;
+foo(i); // << vref<int,float> points to `i`
 
-void foo(std::variant<a_t*, b_t*>);
-
-a_t a;
-foo(&a);
-
-```
-
-`vptr` usage is as simple:
-```cpp
-void foo(vari::vptr<a_t, b_t>);
-
-a_t a;
-foo(a);
-```
-
-But, what if we want to express that the pointer can never be null? With variant we can use
-`std::variant<std::reference_wrapper<a_t>, std::reference_wrapper<b_t>>` but that is
-not elegant at all. Here, `vref` comes to the rescue:
-```cpp
-void foo(vari::vref<a_t, b_t>);
+float f;
+foo(f); // << vref<int, float> points to `f`
 ```
 
 ## uvptr and uvref
 
 `u` prefixed variants imply ownership (unique), this way we can use them to
-manage lifetimes of objects - in same way as `std::variant` does.
+manage lifetimes of allocated objects.
 
 ```cpp
 struct a_t;
@@ -62,17 +49,16 @@ Similar (bot not same) to `std::make_unique`, we have a friendly function to bui
 the unique variants: `uwrap`
 
 ```cpp
-uvptr<std::string, int> p = uwrap(std::string{"wololo"});
+uvref<std::string, int> p = uwrap(std::string{"wololo"});
 ```
-Note that signature of uwrap is `uvref<T> uwrap(T item)`, this works as we allow natural conversion of `uvref` to `uvptr`, but not the other way around.
 
 WARNING: `uvref` is movable object, once moved-from, it is put into `null` state - something not
 possible otherwise. It shall not be used in this state in any matter except to be assigned-to.
 
 ## Access API
 
-Given that we do have a `vptr`, how to access it? All variants share the same approach to API, so the name of methods are the same.
-All have `visit` method. `uvptr` and `uvref` also has `take`.
+How to access the internal type? `vptr`, `vref`, `uvptr`, and `uvref` have `visit` method as the main interface.
+`u` variants also have `take` to steal ownership.
 
 ### Visit
 
@@ -89,6 +75,8 @@ void foo( vari::vref< std::vector< std::string >, std::list< std::string > > r )
             } );
 }
 ```
+For each type of variadic, the `visit` expects to get one and only one callable accepting reference to that type.
+
 In case of pointers, we opted to introduce empty branch for cases when it is null.
 ```cpp
 void foo(vari::vptr<a_t, b_t> r)
@@ -104,7 +92,7 @@ Variadic references are constructible with references - all of the possible type
 a_t a;
 vari::vref<a_t, b_t> r = a;
 ```
-However, this also means that we can combine this with visit - the callable can handle multiple types:
+This also means that we can combine this with visit - the callable can handle multiple types:
 ```cpp
 void foo(vari::uvptr<a_t, b_t> r)
 {
@@ -135,9 +123,47 @@ void foo(vari::uvref<a_t, b_t> r)
 }
 ```
 
-### Concepts checks
+## Sub-typing
 
-Access methods are subjected to same sanity checking of the set of callbacks: For each type in the set, one and only one callbacks can be called.
+All variadic types support sub-typing - any variadic type can be converted to a type representing superset of types:
+```cpp
+a_t a;
+vari::vref<a_t> p{a};
+
+// allowed as {a_t, b_t} is superset of {a_t}
+vari::vref<a_t, b_t> p2 = p;
+
+// not allowed, as {a_t} is not superset of {a_t, b_t}
+vari::vref<a_t> p3 = p2;
+```
+
+There are multiple ways this bring in a lot of convenience, want to have type-coherency?
+```cpp
+vari::uvptr<a_t> gen_a();
+vari::uvref<b_t> gen_b();
+
+std::vector<vari::uvptr<a_t, b_t>> data = {gen_a(), gen_b().vptr(), nullptr};
+```
+
+This also interacts well with `take`:
+```cpp
+struct c_t;
+struct d_t;
+
+void foo(vari::uvptr<a_t, b_t, c_t, d_t> p)
+{
+    p.take([&](vari::empty_t){},
+           [&](vari::uvref<a_t, b_t>){},
+           [&](vari::uvref<c_t, d_t>){});
+}
+```
+The way we can imagine this is: `p` can represent set of 4 types, `take` splits that into four unique references, each representing one type, *sub-typing* allows merging these references together - into two subsets, each made of two types.
+
+Note: As a side-effect of this, `vptr<a_t, b_t>` is naturally convertible to `vptr<b_t, a_t>`
+
+## Concepts checks
+
+Access methods are subjected to sanity checking of the set of callbacks: For each type in the set of types, one and only one callback can be called.
 
 That is, following would fail to compile due to concept check:
 ```cpp
@@ -158,6 +184,16 @@ void foo(vari::uvref<a_t, b_t> r)
 }
 ```
 
+As a second check: For each callable, there has to be at least one type it is callable with.
+```cpp
+void foo(vari::vref<int, float> v)
+{
+    v.visit([&](int&){},
+            [&](std::string&){}, // compiler error
+            [&](float&){});
+}
+```
+
 ## Single-type extension
 
 To make work with variants a bit more convenient, all allow direct access to pointed-to type in
@@ -174,49 +210,10 @@ p->val = 42;
 
 That is, in case there is only one type allowed, the signature of common methods is:
 `T* vptr<T>::operator()`
-This makes `take` API calls much more convenient to use.
-
-## Sub-typing
-
-All variadic types support sub-typing - any variadic type can be converted to a type representing superset of types:
-```cpp
-a_t a;
-vari::vref<a_t> p{a};
-
-// allowed as {a_t, b_t} is superset of {a_t}
-vari::vref<a_t, b_t> p2 = p;
-
-// not allowed, as {a_t} is not superset of {a_t, b_t}
-vari::vref<a_t> p3 = p2;
-```
-
-There are multiple ways this bring in a lot of convenience, want to have type-coherency?
-```cpp
-vari::uvref<a_t> gen_a();
-vari::uvref<b_t> gen_b();
-
-std::vector<vari::uvptr<a_t, b_t>> data = {gen_a(), gen_b(), nullptr};
-```
-
-This also interacts well with `take`:
-```cpp
-struct c_t;
-struct d_t;
-
-void foo(vari::uvptr<a_t, b_t, c_t, d_t> p)
-{
-    p.take([&](vari::empty_t){},
-           [&](vari::vref<a_t, b_t>){},
-           [&](vari::vref<c_t, d_t>){});
-}
-```
-The way we can imagine this is: `p` can represent set of 4 types, `take` splits that into four unique references, each representing one type, *sub-typing* allows merging these references together - into two subsets, each made of two types.
-
-Note: As a side-effect of this, `vptr<a_t, b_t>` is naturally convertible to `vptr<b_t, a_t>`
 
 ## Type-sets
 
-To bring in even more convenience and capability, the template argument list of variadics is capable of flattening and filtering the types for uniqueness. (Note that to implement this we opted for aliasing, for example: `vari::vptr` is actually alias to `vari::_vptr`)
+To bring in even more convenience and capability, the template argument list of variadics is capable of flattening and filtering the types for uniqueness.
 
 Given the following type sets:
 ```cpp
@@ -275,15 +272,35 @@ using set_a = vari::typelist<a_t, b_t>;
 using vp_a = vari::vptr<const set_a>;
 using vp_b = vari::vptr<const a_t, const b_t>;
 ```
-Both types `vp_a` and `vp_b` are equal.
+Both types `vp_a` and `vp_b` are compatible.
 
 ## Typelist compatibility
 
 Library can be extended by using other types than just `vari::typelist` to represent set of types.
 
-Whenever type is typelist is dertermined by `vari::typelist_traits<T>`. In case `vari::typelist_traits<T>:::is_compatible` evaluates to `true`, library considers `T` to be typelist-like type which shall be flattened.
+Whenever type is typelist is determined by `vari::typelist_traits<T>`. In case `vari::typelist_traits<T>:::is_compatible` evaluates to `true`, library considers `T` to be typelist-like type.
 
 In such a case, `vari::typelist_traits<T>::types` should be a type which by itself is vari-compatible typelist. Transtively, this should eventually resolve into `vari::typelist` itself which is used by the library directly.
+
+## Dispatch
+
+We also ship free function `dispatch` for dispatching a runtime value into compile-time value. It uses all
+the safety checks of `visit`:
+
+```cpp
+// factory used by the library to create instances of types
+auto factory = [&]<vari::index_type i>{
+    return std::integral_constant<i, std::size_t>{};
+};
+// runtime index
+vari::index_type v = 4;
+vari::dispatch<42>(
+    v,
+    factory,
+    [&]<std::size_t j>(std::integral_constant<j, std::size_t>){
+        // `j` matches value of `v`
+    });
+```
 
 ## Credits
 
