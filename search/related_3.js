@@ -1,4 +1,0 @@
-var searchData=
-[
-  ['swap_0',['swap',['../structvari_1_1__ptr__core.html#ae76bbfb1ac76bb41010d3ee4ce6ae778',1,'vari::_ptr_core::swap()'],['../structvari_1_1__ptr__core_3_01typelist_3_01T_01_4_01_4.html#ae76bbfb1ac76bb41010d3ee4ce6ae778',1,'vari::_ptr_core&lt; typelist&lt; T &gt; &gt;::swap()'],['../structvari_1_1__val__core.html#a5a94bfa0ac864fe513e1c00e6eaa3a40',1,'vari::_val_core::swap()'],['../classvari_1_1__uvptr.html#a2790ca25b8fd1115acc82742325b725c',1,'vari::_uvptr::swap()'],['../structvari_1_1__uvref.html#a3238dd471dad38f11769eb681dfd6d33',1,'vari::_uvref::swap()'],['../classvari_1_1__vptr.html#afa84cea14739396e9204046b0727e4c9',1,'vari::_vptr::swap()'],['../classvari_1_1__vref.html#aef7c446f86d8479b71878979955c74b1',1,'vari::_vref::swap()'],['../classvari_1_1__vval.html#a37aa45b3cd49f28c5a0f0d687e23d5df',1,'vari::_vval::swap()']]]
-];

@@ -30,6 +30,5 @@ var searchData=
   ['any_5fis_5fconst_27',['any_is_const',['../structvari_1_1any__is__const.html',1,'vari']]],
   ['any_5fis_5fconst_3c_20tl_20_3e_28',['any_is_const&lt; TL &gt;',['../structvari_1_1any__is__const_3_01TL_01_4.html',1,'vari']]],
   ['any_5fis_5fconst_3c_20typelist_3c_20us_2e_2e_2e_20_3e_20_3e_29',['any_is_const&lt; typelist&lt; Us... &gt; &gt;',['../structvari_1_1any__is__const_3_01typelist_3_01Us_8_8_8_01_4_01_4.html',1,'vari']]],
-  ['any_5fis_5fconst_3c_20typelist_5ftraits_5ftypes_3c_20tl_20_3e_20_3e_30',['any_is_const&lt; typelist_traits_types&lt; TL &gt; &gt;',['../structvari_1_1any__is__const.html',1,'vari']]],
-  ['assign_31',['assign',['../structvari_1_1__val__core.html#a29de3f1b1e46b4d355d7738fb18eb310',1,'vari::_val_core']]]
+  ['any_5fis_5fconst_3c_20typelist_5ftraits_5ftypes_3c_20tl_20_3e_20_3e_30',['any_is_const&lt; typelist_traits_types&lt; TL &gt; &gt;',['../structvari_1_1any__is__const.html',1,'vari']]]
 ];
