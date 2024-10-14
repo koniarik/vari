@@ -38,11 +38,8 @@ var NAVTREE =
       [ "Type-sets", "index.html#autotoc_md9", null ],
       [ "Lvalue conversion from unique", "index.html#autotoc_md10", null ],
       [ "Const", "index.html#autotoc_md11", null ],
-      [ "Typelist compatibility", "index.html#autotoc_md12", [
-        [ "is_vari_compatible_typelist", "index.html#autotoc_md13", null ],
-        [ "traits", "index.html#autotoc_md14", null ]
-      ] ],
-      [ "Credits", "index.html#autotoc_md15", null ]
+      [ "Typelist compatibility", "index.html#autotoc_md12", null ],
+      [ "Credits", "index.html#autotoc_md13", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -80,9 +77,9 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "functions_i.html",
-"structvari_1_1all__nothrow__destructible_3_01typelist_3_01Us_8_8_8_01_4_01_4.html",
-"unionvari_1_1__val__union_3_01typelist_3_01T0_00_01T1_00_01T2_00_01T3_00_01T4_00_01T5_00_01T6_0090d1f26fba15c07340eb844bf58e0d53.html#a750fdad5310affd3b9f0fe45f120d4a4",
-"unionvari_1_1__val__union_3_01typelist_3_01T0_00_01T1_00_01T2_00_01T3_01_4_01_4.html#a69c08aadd543e41eb4cb00f455f58b5c"
+"structvari_1_1all__nothrow__equality__comparable.html",
+"unionvari_1_1__val__union_3_01typelist_3_01T0_00_01T1_00_01T2_00_01T3_00_01T4_00_01T5_00_01T6_0090d1f26fba15c07340eb844bf58e0d53.html#a9740f29a549c50793714454cbf2130be",
+"unionvari_1_1__val__union_3_01typelist_3_01T0_00_01T1_00_01T2_01_4_01_4.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

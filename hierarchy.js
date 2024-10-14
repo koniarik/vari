@@ -110,7 +110,7 @@ var hierarchy =
       [ "vari::flatten_impl< typelist< Us... >, T, Ts... >", "structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01T_00_01Ts_8_8_8_01_4.html", null ]
     ] ],
     [ "vari::index_of_t_or_const_t< T, TL >", "structvari_1_1index__of__t__or__const__t.html", null ],
-    [ "vari::index_of_t_or_const_t< T, typelist< const T, Ts... > >", "structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_01const_01T_00_01Ts_8_8_8_01_4_01_4.html", null ],
+    [ "vari::index_of_t_or_const_t< T, typelist< T const, Ts... > >", "structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_01T_01const_00_01Ts_8_8_8_01_4_01_4.html", null ],
     [ "vari::index_of_t_or_const_t< T, typelist< T, Ts... > >", "structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html", null ],
     [ "vari::index_of_t_or_const_t< T, typelist< U, Ts... > >", "structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_01U_00_01Ts_8_8_8_01_4_01_4.html", null ],
     [ "vari::index_of_t_or_const_t< T, typelist<> >", "structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_4_01_4.html", null ],
@@ -133,8 +133,7 @@ var hierarchy =
     ] ],
     [ "vari::typelist< Ts >", "structvari_1_1typelist.html", null ],
     [ "vari::typelist_traits< T >", "structvari_1_1typelist__traits.html", null ],
-    [ "vari::typelist_traits< const T >", "structvari_1_1typelist__traits_3_01const_01T_01_4.html", null ],
-    [ "vari::typelist_traits< T >", "structvari_1_1typelist__traits_3_01T_01_4.html", null ],
+    [ "vari::typelist_traits< typelist< Ts... > >", "structvari_1_1typelist__traits_3_01typelist_3_01Ts_8_8_8_01_4_01_4.html", null ],
     [ "vari::unique_tl_impl< TL1, TL2 >", "structvari_1_1unique__tl__impl.html", null ],
     [ "vari::unique_tl_impl< TL1, typelist< Ts... > >", "structvari_1_1unique__tl__impl.html", [
       [ "vari::unique_tl_impl< TL1, typelist< T, Ts... > >", "structvari_1_1unique__tl__impl_3_01TL1_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html", null ]
