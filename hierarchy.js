@@ -1,5 +1,24 @@
 var hierarchy =
 [
+    [ "vari::_check_unique_invocability< T >", "structvari_1_1__check__unique__invocability.html", null ],
+    [ "vari::_check_unique_invocability< typelist< Ts... > >", "structvari_1_1__check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4.html", null ],
+    [ "vari::_factory_result_types_impl< TL, N, Fac >", "structvari_1_1__factory__result__types__impl.html", null ],
+    [ "vari::_factory_result_types_impl< typelist< Ts... >, 0, Fac >", "structvari_1_1__factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_010_00_01Fac_01_4.html", null ],
+    [ "vari::_factory_result_types_impl< typelist< Ts... >, N, Fac >", "structvari_1_1__factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_01N_00_01Fac_01_4.html", null ],
+    [ "vari::_flatten_impl< TL, Ts >", "structvari_1_1__flatten__impl.html", null ],
+    [ "vari::_flatten_impl< TL >", "structvari_1_1__flatten__impl_3_01TL_01_4.html", null ],
+    [ "vari::_flatten_impl< typelist< Us... >, Ks const ..., Ts... >", "structvari_1_1__flatten__impl.html", [
+      [ "vari::_flatten_impl< typelist< Us... >, typelist< Ks... > const, Ts... >", "structvari_1_1__flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01Ks_8_8_8_01_4_01const_00_01Ts_8_8_8_01_4.html", null ]
+    ] ],
+    [ "vari::_flatten_impl< typelist< Us... >, Ks..., Ts... >", "structvari_1_1__flatten__impl.html", [
+      [ "vari::_flatten_impl< typelist< Us... >, typelist< Ks... >, Ts... >", "structvari_1_1__flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01Ks_8_8_8_01_4_00_01Ts_8_8_8_01_4.html", null ]
+    ] ],
+    [ "vari::_flatten_impl< typelist< Us... >, typelist_traits_types< T >, Ts... >", "structvari_1_1__flatten__impl.html", [
+      [ "vari::_flatten_impl< typelist< Us... >, T, Ts... >", "structvari_1_1__flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01T_00_01Ts_8_8_8_01_4.html", null ]
+    ] ],
+    [ "vari::_flatten_impl< typelist< Us..., T >, Ts... >", "structvari_1_1__flatten__impl.html", [
+      [ "vari::_flatten_impl< typelist< Us... >, T, Ts... >", "structvari_1_1__flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01T_00_01Ts_8_8_8_01_4.html", null ]
+    ] ],
     [ "vari::_function_picker< Args >", "structvari_1_1__function__picker.html", null ],
     [ "vari::_ptr_core< TL >", "structvari_1_1__ptr__core.html", null ],
     [ "vari::_ptr_core< typelist< T > >", "structvari_1_1__ptr__core_3_01typelist_3_01T_01_4_01_4.html", null ],
@@ -8,6 +27,17 @@ var hierarchy =
     [ "vari::_split_impl< UL, TL >", "structvari_1_1__split__impl.html", null ],
     [ "vari::_split_impl< typelist< Us... >, typelist< T, Ts... > >", "structvari_1_1__split__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html", null ],
     [ "vari::_split_impl< typelist<>, typelist<> >", "structvari_1_1__split__impl_3_01typelist_3_4_00_01typelist_3_4_01_4.html", null ],
+    [ "vari::_unique_tl_impl< TL1, TL2 >", "structvari_1_1__unique__tl__impl.html", null ],
+    [ "vari::_unique_tl_impl< TL1, typelist< Ts... > >", "structvari_1_1__unique__tl__impl.html", [
+      [ "vari::_unique_tl_impl< TL1, typelist< T, Ts... > >", "structvari_1_1__unique__tl__impl_3_01TL1_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html", null ]
+    ] ],
+    [ "vari::_unique_tl_impl< TL1, typelist_traits_types< TL2 > >", "structvari_1_1__unique__tl__impl.html", [
+      [ "vari::_unique_tl_impl< TL1, TL2 >", "structvari_1_1__unique__tl__impl_3_01TL1_00_01TL2_01_4.html", null ]
+    ] ],
+    [ "vari::_unique_tl_impl< typelist< Ts... >, typelist<> >", "structvari_1_1__unique__tl__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_01typelist_3_4_01_4.html", null ],
+    [ "vari::_unique_tl_impl< typelist< Us..., T >, typelist< Ts... > >", "structvari_1_1__unique__tl__impl.html", [
+      [ "vari::_unique_tl_impl< typelist< Us... >, typelist< T, Ts... > >", "structvari_1_1__unique__tl__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html", null ]
+    ] ],
     [ "vari::_val_core< TL >", "structvari_1_1__val__core.html", null ],
     [ "vari::_val_core< typelist< Ts... > >", "structvari_1_1__val__core.html", null ],
     [ "vari::_val_union< TL >", "unionvari_1_1__val__union.html", null ],
@@ -77,8 +107,6 @@ var hierarchy =
     [ "vari::any_is_const< typelist_traits_types< TL > >", "structvari_1_1any__is__const.html", [
       [ "vari::any_is_const< TL >", "structvari_1_1any__is__const_3_01TL_01_4.html", null ]
     ] ],
-    [ "vari::check_unique_invocability< T >", "structvari_1_1check__unique__invocability.html", null ],
-    [ "vari::check_unique_invocability< typelist< Ts... > >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4.html", null ],
     [ "vari::contains_type< T, TL >", "structvari_1_1contains__type.html", null ],
     [ "vari::contains_type< T, typelist< Ts... > >", "structvari_1_1contains__type_3_01T_00_01typelist_3_01Ts_8_8_8_01_4_01_4.html", null ],
     [ "vari::contains_type< T, typelist_traits_types< TL > >", "structvari_1_1contains__type.html", [
@@ -86,29 +114,12 @@ var hierarchy =
     ] ],
     [ "vari::def_del", "structvari_1_1def__del.html", null ],
     [ "Deleter", null, [
-      [ "vari::deleter_box< Deleter >", "structvari_1_1deleter__box.html", [
+      [ "vari::_deleter_box< Deleter >", "structvari_1_1__deleter__box.html", [
         [ "vari::_uvptr< Deleter, Ts >", "classvari_1_1__uvptr.html", null ],
         [ "vari::_uvref< Deleter, Ts >", "structvari_1_1__uvref.html", null ]
       ] ]
     ] ],
     [ "vari::empty_t", "structvari_1_1empty__t.html", null ],
-    [ "vari::factory_result_types_impl< TL, N, Fac >", "structvari_1_1factory__result__types__impl.html", null ],
-    [ "vari::factory_result_types_impl< typelist< Ts... >, 0, Fac >", "structvari_1_1factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_010_00_01Fac_01_4.html", null ],
-    [ "vari::factory_result_types_impl< typelist< Ts... >, N, Fac >", "structvari_1_1factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_01N_00_01Fac_01_4.html", null ],
-    [ "vari::flatten_impl< TL, Ts >", "structvari_1_1flatten__impl.html", null ],
-    [ "vari::flatten_impl< TL >", "structvari_1_1flatten__impl_3_01TL_01_4.html", null ],
-    [ "vari::flatten_impl< typelist< Us... >, Ks const ..., Ts... >", "structvari_1_1flatten__impl.html", [
-      [ "vari::flatten_impl< typelist< Us... >, typelist< Ks... > const, Ts... >", "structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01Ks_8_8_8_01_4_01const_00_01Ts_8_8_8_01_4.html", null ]
-    ] ],
-    [ "vari::flatten_impl< typelist< Us... >, Ks..., Ts... >", "structvari_1_1flatten__impl.html", [
-      [ "vari::flatten_impl< typelist< Us... >, typelist< Ks... >, Ts... >", "structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01Ks_8_8_8_01_4_00_01Ts_8_8_8_01_4.html", null ]
-    ] ],
-    [ "vari::flatten_impl< typelist< Us... >, typelist_traits_types< T >, Ts... >", "structvari_1_1flatten__impl.html", [
-      [ "vari::flatten_impl< typelist< Us... >, T, Ts... >", "structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01T_00_01Ts_8_8_8_01_4.html", null ]
-    ] ],
-    [ "vari::flatten_impl< typelist< Us..., T >, Ts... >", "structvari_1_1flatten__impl.html", [
-      [ "vari::flatten_impl< typelist< Us... >, T, Ts... >", "structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01T_00_01Ts_8_8_8_01_4.html", null ]
-    ] ],
     [ "vari::index_of_t_or_const_t< T, TL >", "structvari_1_1index__of__t__or__const__t.html", null ],
     [ "vari::index_of_t_or_const_t< T, typelist< T const, Ts... > >", "structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_01T_01const_00_01Ts_8_8_8_01_4_01_4.html", null ],
     [ "vari::index_of_t_or_const_t< T, typelist< T, Ts... > >", "structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html", null ],
@@ -134,22 +145,11 @@ var hierarchy =
     [ "vari::typelist< Ts >", "structvari_1_1typelist.html", null ],
     [ "vari::typelist_traits< T >", "structvari_1_1typelist__traits.html", null ],
     [ "vari::typelist_traits< typelist< Ts... > >", "structvari_1_1typelist__traits_3_01typelist_3_01Ts_8_8_8_01_4_01_4.html", null ],
-    [ "vari::unique_tl_impl< TL1, TL2 >", "structvari_1_1unique__tl__impl.html", null ],
-    [ "vari::unique_tl_impl< TL1, typelist< Ts... > >", "structvari_1_1unique__tl__impl.html", [
-      [ "vari::unique_tl_impl< TL1, typelist< T, Ts... > >", "structvari_1_1unique__tl__impl_3_01TL1_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html", null ]
-    ] ],
-    [ "vari::unique_tl_impl< TL1, typelist_traits_types< TL2 > >", "structvari_1_1unique__tl__impl.html", [
-      [ "vari::unique_tl_impl< TL1, TL2 >", "structvari_1_1unique__tl__impl_3_01TL1_00_01TL2_01_4.html", null ]
-    ] ],
-    [ "vari::unique_tl_impl< typelist< Ts... >, typelist<> >", "structvari_1_1unique__tl__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_01typelist_3_4_01_4.html", null ],
-    [ "vari::unique_tl_impl< typelist< Us..., T >, typelist< Ts... > >", "structvari_1_1unique__tl__impl.html", [
-      [ "vari::unique_tl_impl< typelist< Us... >, typelist< T, Ts... > >", "structvari_1_1unique__tl__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html", null ]
-    ] ],
-    [ "vari::check_unique_invocability< typelist< Ts... > >::with_deleter< Deleter >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__deleter.html", null ],
-    [ "vari::check_unique_invocability< typelist< Ts... > >::with_nullable_pure_ref< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__nullable__pure__ref.html", null ],
-    [ "vari::check_unique_invocability< typelist< Ts... > >::with_deleter< Deleter >::with_nullable_uvref< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__deleter_1_1with__nullable__uvref.html", null ],
-    [ "vari::check_unique_invocability< typelist< Ts... > >::with_pure_cref< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__pure__cref.html", null ],
-    [ "vari::check_unique_invocability< typelist< Ts... > >::with_pure_ref< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__pure__ref.html", null ],
-    [ "vari::check_unique_invocability< typelist< Ts... > >::with_pure_value< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__pure__value.html", null ],
-    [ "vari::check_unique_invocability< typelist< Ts... > >::with_deleter< Deleter >::with_uvref< Fs >", "structvari_1_1check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__deleter_1_1with__uvref.html", null ]
+    [ "vari::_check_unique_invocability< typelist< Ts... > >::with_deleter< Deleter >", "structvari_1_1__check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__deleter.html", null ],
+    [ "vari::_check_unique_invocability< typelist< Ts... > >::with_nullable_pure_ref< Fs >", "structvari_1_1__check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__nullable__pure__ref.html", null ],
+    [ "vari::_check_unique_invocability< typelist< Ts... > >::with_deleter< Deleter >::with_nullable_uvref< Fs >", "structvari_1_1__check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__deleter_1_1with__nullable__uvref.html", null ],
+    [ "vari::_check_unique_invocability< typelist< Ts... > >::with_pure_cref< Fs >", "structvari_1_1__check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__pure__cref.html", null ],
+    [ "vari::_check_unique_invocability< typelist< Ts... > >::with_pure_ref< Fs >", "structvari_1_1__check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__pure__ref.html", null ],
+    [ "vari::_check_unique_invocability< typelist< Ts... > >::with_pure_value< Fs >", "structvari_1_1__check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__pure__value.html", null ],
+    [ "vari::_check_unique_invocability< typelist< Ts... > >::with_deleter< Deleter >::with_uvref< Fs >", "structvari_1_1__check__unique__invocability_3_01typelist_3_01Ts_8_8_8_01_4_01_4_1_1with__deleter_1_1with__uvref.html", null ]
 ];

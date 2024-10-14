@@ -1,15 +1,13 @@
 var searchData=
 [
-  ['factory_5fresult_5ftypes_5fimpl_0',['factory_result_types_impl',['../structvari_1_1factory__result__types__impl.html',1,'vari']]],
-  ['factory_5fresult_5ftypes_5fimpl_3c_20typelist_3c_20ts_2e_2e_2e_20_3e_2c_200_2c_20fac_20_3e_1',['factory_result_types_impl&lt; typelist&lt; Ts... &gt;, 0, Fac &gt;',['../structvari_1_1factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_010_00_01Fac_01_4.html',1,'vari']]],
-  ['factory_5fresult_5ftypes_5fimpl_3c_20typelist_3c_20ts_2e_2e_2e_20_3e_2c_20n_2c_20fac_20_3e_2',['factory_result_types_impl&lt; typelist&lt; Ts... &gt;, N, Fac &gt;',['../structvari_1_1factory__result__types__impl_3_01typelist_3_01Ts_8_8_8_01_4_00_01N_00_01Fac_01_4.html',1,'vari']]],
-  ['flatten_5fimpl_3',['flatten_impl',['../structvari_1_1flatten__impl.html',1,'vari']]],
-  ['flatten_5fimpl_3c_20tl_20_3e_4',['flatten_impl&lt; TL &gt;',['../structvari_1_1flatten__impl_3_01TL_01_4.html',1,'vari']]],
-  ['flatten_5fimpl_3c_20typelist_3c_20us_2e_2e_2e_20_3e_2c_20ks_20const_20_2e_2e_2e_2c_20ts_2e_2e_2e_20_3e_5',['flatten_impl&lt; typelist&lt; Us... &gt;, Ks const ..., Ts... &gt;',['../structvari_1_1flatten__impl.html',1,'vari']]],
-  ['flatten_5fimpl_3c_20typelist_3c_20us_2e_2e_2e_20_3e_2c_20ks_2e_2e_2e_2c_20ts_2e_2e_2e_20_3e_6',['flatten_impl&lt; typelist&lt; Us... &gt;, Ks..., Ts... &gt;',['../structvari_1_1flatten__impl.html',1,'vari']]],
-  ['flatten_5fimpl_3c_20typelist_3c_20us_2e_2e_2e_20_3e_2c_20t_2c_20ts_2e_2e_2e_20_3e_7',['flatten_impl&lt; typelist&lt; Us... &gt;, T, Ts... &gt;',['../structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01T_00_01Ts_8_8_8_01_4.html',1,'vari']]],
-  ['flatten_5fimpl_3c_20typelist_3c_20us_2e_2e_2e_20_3e_2c_20typelist_3c_20ks_2e_2e_2e_20_3e_20const_2c_20ts_2e_2e_2e_20_3e_8',['flatten_impl&lt; typelist&lt; Us... &gt;, typelist&lt; Ks... &gt; const, Ts... &gt;',['../structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01Ks_8_8_8_01_4_01const_00_01Ts_8_8_8_01_4.html',1,'vari']]],
-  ['flatten_5fimpl_3c_20typelist_3c_20us_2e_2e_2e_20_3e_2c_20typelist_3c_20ks_2e_2e_2e_20_3e_2c_20ts_2e_2e_2e_20_3e_9',['flatten_impl&lt; typelist&lt; Us... &gt;, typelist&lt; Ks... &gt;, Ts... &gt;',['../structvari_1_1flatten__impl_3_01typelist_3_01Us_8_8_8_01_4_00_01typelist_3_01Ks_8_8_8_01_4_00_01Ts_8_8_8_01_4.html',1,'vari']]],
-  ['flatten_5fimpl_3c_20typelist_3c_20us_2e_2e_2e_20_3e_2c_20typelist_5ftraits_5ftypes_3c_20t_20_3e_2c_20ts_2e_2e_2e_20_3e_10',['flatten_impl&lt; typelist&lt; Us... &gt;, typelist_traits_types&lt; T &gt;, Ts... &gt;',['../structvari_1_1flatten__impl.html',1,'vari']]],
-  ['flatten_5fimpl_3c_20typelist_3c_20us_2e_2e_2e_2c_20t_20_3e_2c_20ts_2e_2e_2e_20_3e_11',['flatten_impl&lt; typelist&lt; Us..., T &gt;, Ts... &gt;',['../structvari_1_1flatten__impl.html',1,'vari']]]
+  ['index_5fof_5ft_5for_5fconst_5ft_0',['index_of_t_or_const_t',['../structvari_1_1index__of__t__or__const__t.html',1,'vari']]],
+  ['index_5fof_5ft_5for_5fconst_5ft_3c_20t_2c_20tl_20_3e_1',['index_of_t_or_const_t&lt; T, TL &gt;',['../structvari_1_1index__of__t__or__const__t_3_01T_00_01TL_01_4.html',1,'vari']]],
+  ['index_5fof_5ft_5for_5fconst_5ft_3c_20t_2c_20typelist_3c_20t_20const_2c_20ts_2e_2e_2e_20_3e_20_3e_2',['index_of_t_or_const_t&lt; T, typelist&lt; T const, Ts... &gt; &gt;',['../structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_01T_01const_00_01Ts_8_8_8_01_4_01_4.html',1,'vari']]],
+  ['index_5fof_5ft_5for_5fconst_5ft_3c_20t_2c_20typelist_3c_20t_2c_20ts_2e_2e_2e_20_3e_20_3e_3',['index_of_t_or_const_t&lt; T, typelist&lt; T, Ts... &gt; &gt;',['../structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_01T_00_01Ts_8_8_8_01_4_01_4.html',1,'vari']]],
+  ['index_5fof_5ft_5for_5fconst_5ft_3c_20t_2c_20typelist_3c_20u_2c_20ts_2e_2e_2e_20_3e_20_3e_4',['index_of_t_or_const_t&lt; T, typelist&lt; U, Ts... &gt; &gt;',['../structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_01U_00_01Ts_8_8_8_01_4_01_4.html',1,'vari']]],
+  ['index_5fof_5ft_5for_5fconst_5ft_3c_20t_2c_20typelist_3c_3e_20_3e_5',['index_of_t_or_const_t&lt; T, typelist&lt;&gt; &gt;',['../structvari_1_1index__of__t__or__const__t_3_01T_00_01typelist_3_4_01_4.html',1,'vari']]],
+  ['index_5fof_5ft_5for_5fconst_5ft_3c_20typelist_5ftraits_5ftypes_3c_20t_20_3e_2c_20tl_20_3e_6',['index_of_t_or_const_t&lt; typelist_traits_types&lt; T &gt;, TL &gt;',['../structvari_1_1index__of__t__or__const__t.html',1,'vari']]],
+  ['is_5fsubset_7',['is_subset',['../structvari_1_1is__subset.html',1,'vari']]],
+  ['is_5fsubset_3c_20typelist_3c_20us_2e_2e_2e_20_3e_20const_2c_20rh_20_3e_8',['is_subset&lt; typelist&lt; Us... &gt; const, RH &gt;',['../structvari_1_1is__subset_3_01typelist_3_01Us_8_8_8_01_4_01const_00_01RH_01_4.html',1,'vari']]],
+  ['is_5fsubset_3c_20typelist_3c_20us_2e_2e_2e_20_3e_2c_20rh_20_3e_9',['is_subset&lt; typelist&lt; Us... &gt;, RH &gt;',['../structvari_1_1is__subset_3_01typelist_3_01Us_8_8_8_01_4_00_01RH_01_4.html',1,'vari']]]
 ];

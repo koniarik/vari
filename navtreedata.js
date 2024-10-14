@@ -78,7 +78,7 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "functions_i.html",
-"structvari_1_1all__nothrow__equality__comparable.html",
+"structvari_1_1__uvref.html#add9556769f4a0f60ad260b7c0804bd17",
 "unionvari_1_1__val__union_3_01typelist_3_01T0_00_01T1_00_01T2_00_01T3_00_01T4_00_01T5_00_01T6_0090d1f26fba15c07340eb844bf58e0d53.html#a90dd5c11c879596bc94e045485e4cb39",
 "unionvari_1_1__val__union_3_01typelist_3_01T0_00_01T1_00_01T2_00_01T3_01_4_01_4.html#aed8caa2f847f5ddcebf7b7de1e79b7fd"
 ];

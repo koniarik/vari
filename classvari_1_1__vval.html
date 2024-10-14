@@ -108,10 +108,10 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2c0322692d3133fbd84f7ab986b98461"><td class="memTemplParams" colspan="2">template&lt;typename U &gt; <br />
+<tr class="memitem:abed31cd023faf744712eea4b309e73d5"><td class="memTemplParams" colspan="2">template&lt;typename U &gt; <br />
 requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; std::remove_reference_t&lt; U &gt; &gt;, <a class="el" href="classvari_1_1__vval.html#af57d9e7f52ea05925bb2d357e59a6878">types</a> &gt; )</td></tr>
-<tr class="memitem:a2c0322692d3133fbd84f7ab986b98461"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__vval.html#a2c0322692d3133fbd84f7ab986b98461">_vval</a> (U &amp;&amp;v) noexcept(forward_nothrow_constructible&lt; U &gt;)</td></tr>
-<tr class="separator:a2c0322692d3133fbd84f7ab986b98461"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abed31cd023faf744712eea4b309e73d5"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__vval.html#abed31cd023faf744712eea4b309e73d5">_vval</a> (U &amp;&amp;v) noexcept(_forward_nothrow_constructible&lt; U &gt;)</td></tr>
+<tr class="separator:abed31cd023faf744712eea4b309e73d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90d80114794e9752c43d9d5386a3bf49"><td class="memTemplParams" colspan="2">template&lt;typename U , typename... Args&gt; <br />
 requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; U &gt;, <a class="el" href="classvari_1_1__vval.html#af57d9e7f52ea05925bb2d357e59a6878">types</a> &gt; )</td></tr>
 <tr class="memitem:a90d80114794e9752c43d9d5386a3bf49"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__vval.html#a90d80114794e9752c43d9d5386a3bf49">_vval</a> (std::in_place_type_t&lt; U &gt;, Args &amp;&amp;... args) noexcept(std::is_nothrow_constructible_v&lt; U, Args... &gt;)</td></tr>
@@ -128,10 +128,10 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
 requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt;, <a class="el" href="classvari_1_1__vval.html#af57d9e7f52ea05925bb2d357e59a6878">types</a> &gt; )</td></tr>
 <tr class="memitem:accb6a01762959925f562e905cb4fbf62"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__vval.html#accb6a01762959925f562e905cb4fbf62">_vval</a> (<a class="el" href="classvari_1_1__vval.html">_vval</a>&lt; Us... &gt; const &amp;p) noexcept(std::is_nothrow_constructible_v&lt; <a class="el" href="structvari_1_1__val__core.html">core_type</a>, typename <a class="el" href="classvari_1_1__vval.html">_vval</a>&lt; Us... &gt;::core_type const &amp; &gt;)</td></tr>
 <tr class="separator:accb6a01762959925f562e905cb4fbf62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afaa4aa7578ffdc0a824191c6ca95f4ad"><td class="memTemplParams" colspan="2">template&lt;typename U &gt; <br />
+<tr class="memitem:a7bc3b69709eb838964f50a9ce725449e"><td class="memTemplParams" colspan="2">template&lt;typename U &gt; <br />
 requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; std::remove_reference_t&lt; U &gt; &gt;, <a class="el" href="classvari_1_1__vval.html#af57d9e7f52ea05925bb2d357e59a6878">types</a> &gt; )</td></tr>
-<tr class="memitem:afaa4aa7578ffdc0a824191c6ca95f4ad"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__vval.html">_vval</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__vval.html#afaa4aa7578ffdc0a824191c6ca95f4ad">operator=</a> (U &amp;&amp;v) noexcept(forward_nothrow_constructible&lt; U &gt;)</td></tr>
-<tr class="separator:afaa4aa7578ffdc0a824191c6ca95f4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bc3b69709eb838964f50a9ce725449e"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__vval.html">_vval</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__vval.html#a7bc3b69709eb838964f50a9ce725449e">operator=</a> (U &amp;&amp;v) noexcept(_forward_nothrow_constructible&lt; U &gt;)</td></tr>
+<tr class="separator:a7bc3b69709eb838964f50a9ce725449e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c1d052a6844708eebb9b8a82191970e"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__vval.html">_vval</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__vval.html#a9c1d052a6844708eebb9b8a82191970e">operator=</a> (<a class="el" href="classvari_1_1__vval.html">_vval</a> &amp;&amp;p) noexcept(core_type::template is_nothrow_assignable&lt; typename <a class="el" href="structvari_1_1__val__core.html">_vval::core_type</a> &amp;&amp; &gt;)</td></tr>
 <tr class="separator:a9c1d052a6844708eebb9b8a82191970e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9470890e8ff93122a8f7ae7f9ac52429"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
@@ -209,8 +209,8 @@ template&lt;typename... Ts&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a2c0322692d3133fbd84f7ab986b98461" name="a2c0322692d3133fbd84f7ab986b98461"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c0322692d3133fbd84f7ab986b98461">&#9670;&#160;</a></span>_vval() <span class="overload">[1/6]</span></h2>
+<a id="abed31cd023faf744712eea4b309e73d5" name="abed31cd023faf744712eea4b309e73d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abed31cd023faf744712eea4b309e73d5">&#9670;&#160;</a></span>_vval() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -777,8 +777,8 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
 
 </div>
 </div>
-<a id="afaa4aa7578ffdc0a824191c6ca95f4ad" name="afaa4aa7578ffdc0a824191c6ca95f4ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afaa4aa7578ffdc0a824191c6ca95f4ad">&#9670;&#160;</a></span>operator=() <span class="overload">[5/5]</span></h2>
+<a id="a7bc3b69709eb838964f50a9ce725449e" name="a7bc3b69709eb838964f50a9ce725449e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bc3b69709eb838964f50a9ce725449e">&#9670;&#160;</a></span>operator=() <span class="overload">[5/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
