@@ -43,9 +43,9 @@ union _val_union< typelist< Ts... > >
         _val_union() noexcept {};
         ~_val_union(){};
 
-        using s1 = _split< typelist< Ts... > >;
-        using s2 = _split< typename s1::lh >;
-        using s3 = _split< typename s1::rh >;
+        using s1 = split< typelist< Ts... > >;
+        using s2 = split< typename s1::lh >;
+        using s3 = split< typename s1::rh >;
 
         using b0 = _val_union< typename s2::lh >;
         using b1 = _val_union< typename s2::rh >;
