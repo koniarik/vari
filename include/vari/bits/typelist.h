@@ -32,8 +32,6 @@ struct typelist
 {
         using types                       = typelist< Ts... >;
         static constexpr std::size_t size = sizeof...( Ts );
-
-        static constexpr bool is_vari_compatible_typelist = true;
 };
 
 template < typename T >
@@ -42,22 +40,12 @@ struct typelist_traits
         static constexpr bool is_compatible = false;
 };
 
-template < typename T >
-        requires( T::is_vari_compatible_typelist )
-struct typelist_traits< T >
+template < typename... Ts >
+struct typelist_traits< typelist< Ts... > >
 {
         static constexpr bool is_compatible = true;
 
-        using types = typename T::types;
-};
-
-template < typename T >
-        requires( T::is_vari_compatible_typelist )
-struct typelist_traits< const T >
-{
-        static constexpr bool is_compatible = true;
-
-        using types = const typename T::types;
+        using types = typelist< Ts... >;
 };
 
 template < typename T >
@@ -89,7 +77,7 @@ struct index_of_t_or_const_t< T, typelist< T, Ts... > >
 };
 
 template < typename T, typename... Ts >
-struct index_of_t_or_const_t< T, typelist< const T, Ts... > >
+struct index_of_t_or_const_t< T, typelist< T const, Ts... > >
 {
         static constexpr std::size_t value = 0;
 };

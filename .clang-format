@@ -74,6 +74,7 @@ SpacesInSquareBrackets: false
 Standard:        c++20
 TabWidth:        4
 UseTab:          Never
+QualifierAlignment: Right
 IncludeCategories:
   - Regex:   '^"'
     Priority: 2

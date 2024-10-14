@@ -96,7 +96,7 @@ namespace parser
 std::vector< definition > parse_defs( std::span< lexer::lex_tok > toks );
 }
 
-std::ostream& operator<<( std::ostream& os, vref< const expr > e )
+std::ostream& operator<<( std::ostream& os, vref< expr const > e )
 {
         e.visit(
             [&]( bin_arithm_op const& aop ) {
@@ -128,7 +128,7 @@ std::ostream& operator<<( std::ostream& os, definition const& d )
 }
 
 using state = std::map< std::string_view, value_type >;
-value_type eval( state& st, vref< const expr > e )
+value_type eval( state& st, vref< expr const > e )
 {
         return e.visit(
             [&]( id const& id ) {
@@ -266,7 +266,7 @@ namespace parser
 
 using lexer::token_type;
 
-const std::vector< std::set< char > > bin_prio = {
+std::vector< std::set< char > > const bin_prio = {
     { '+', '-' },
     { '*', '/' },
 };

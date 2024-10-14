@@ -39,6 +39,18 @@ using namespace std::string_literals;
 struct tset : typelist< std::string, int, float >
 {
 };
+template <>
+struct typelist_traits< tset >
+{
+        static constexpr bool is_compatible = true;
+        using types                         = typename tset::types;
+};
+template <>
+struct typelist_traits< tset const >
+{
+        static constexpr bool is_compatible = true;
+        using types                         = typename tset::types const;
+};
 
 TEST_CASE_TEMPLATE(
     "vptr",
@@ -169,10 +181,10 @@ TEST_CASE_TEMPLATE(
                 // XXX: candidate for generalization over all variadics
                 static_assert( std::same_as< typename V::types, typename T::types > );
 
-                vref< const std::string > v1{ s1 };
+                vref< std::string const > v1{ s1 };
 
                 std::string                     s2 = "baz";
-                vref< const typename V::types > v2 = s2;
+                vref< typename V::types const > v2 = s2;
 
                 v2 = v1;
                 CHECK_EQ( v1, v2 );
@@ -470,9 +482,9 @@ TEST_CASE( "reference to functor" )
         struct foo
         {
                 foo()                        = default;
-                foo( const foo& )            = delete;
+                foo( foo const& )            = delete;
                 foo( foo&& )                 = delete;
-                foo& operator=( const foo& ) = delete;
+                foo& operator=( foo const& ) = delete;
                 foo& operator=( foo&& )      = delete;
 
                 void operator()( empty_t )
@@ -506,9 +518,9 @@ TEST_CASE( "moved functor" )
                 std::size_t count = 0;
 
                 foo()                        = default;
-                foo( const foo& )            = delete;
+                foo( foo const& )            = delete;
                 foo( foo&& )                 = default;
-                foo& operator=( const foo& ) = delete;
+                foo& operator=( foo const& ) = delete;
                 foo& operator=( foo&& )      = default;
 
                 auto&& operator()( empty_t ) &&
@@ -549,6 +561,20 @@ TEST_CASE( "moved functor" )
         f = p2.visit( std::move( f ) );
 
         CHECK_EQ( f.count, 4 );
+}
+
+template < typename T >
+struct rec_tset
+{
+        uvref< T, rec_tset< T > > item;
+};
+
+TEST_CASE_TEMPLATE( "recursive set", T, typelist< int, float >, tset )
+{
+        using V = vref< T, rec_tset< T > >;
+
+        int i1;
+        V   v1{ i1 };
 }
 
 TEST_CASE_TEMPLATE(
@@ -595,7 +621,7 @@ TEST_CASE_TEMPLATE(
                 p3.visit( []( empty_t ) {}, []( float const& ) {} );
                 p3.visit( []( empty_t ) {}, []( vref< float const > ) {} );
 
-                auto        f = []( vref< const int > ) {};
+                auto        f = []( vref< int const > ) {};
                 vref< int > r1{ i };
                 f( r1 );
         }

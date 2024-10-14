@@ -39,9 +39,9 @@ public:
         using reference = _vref< Ts... >;
 
         constexpr _vptr()                              = default;
-        constexpr _vptr( const _vptr& )                = default;
+        constexpr _vptr( _vptr const& )                = default;
         constexpr _vptr( _vptr&& ) noexcept            = default;
-        constexpr _vptr& operator=( const _vptr& )     = default;
+        constexpr _vptr& operator=( _vptr const& )     = default;
         constexpr _vptr& operator=( _vptr&& ) noexcept = default;
 
         constexpr _vptr( std::nullptr_t ) noexcept

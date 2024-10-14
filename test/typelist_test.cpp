@@ -24,6 +24,13 @@ static_assert( !typelist_compatible< int > );
 struct derived_tp : typelist<>
 {
 };
+
+template <>
+struct typelist_traits< derived_tp >
+{
+        static constexpr bool is_compatible = true;
+        using types                         = typelist<>;
+};
 static_assert( typelist_compatible< derived_tp > );
 
 struct traited_tp
@@ -46,15 +53,15 @@ static_assert( index_of_t_or_const_t_v< float, typelist< int, float > > == 1 );
 static_assert( index_of_t_or_const_t_v< float, typelist< float, int > > == 0 );
 static_assert( index_of_t_or_const_t_v< float, typelist< int, float, float > > == 1 );
 
-static_assert( index_of_t_or_const_t_v< float, typelist< const float > > == 0 );
-static_assert( index_of_t_or_const_t_v< float, typelist< int, const float > > == 1 );
-static_assert( index_of_t_or_const_t_v< float, typelist< const float, int > > == 0 );
-static_assert( index_of_t_or_const_t_v< float, typelist< int, const float, float > > == 1 );
+static_assert( index_of_t_or_const_t_v< float, typelist< float const > > == 0 );
+static_assert( index_of_t_or_const_t_v< float, typelist< int, float const > > == 1 );
+static_assert( index_of_t_or_const_t_v< float, typelist< float const, int > > == 0 );
+static_assert( index_of_t_or_const_t_v< float, typelist< int, float const, float > > == 1 );
 
-static_assert( index_of_t_or_const_t_v< const float, typelist< const float > > == 0 );
-static_assert( index_of_t_or_const_t_v< const float, typelist< int, const float > > == 1 );
-static_assert( index_of_t_or_const_t_v< const float, typelist< const float, int > > == 0 );
-static_assert( index_of_t_or_const_t_v< const float, typelist< int, const float, float > > == 1 );
+static_assert( index_of_t_or_const_t_v< float const, typelist< float const > > == 0 );
+static_assert( index_of_t_or_const_t_v< float const, typelist< int, float const > > == 1 );
+static_assert( index_of_t_or_const_t_v< float const, typelist< float const, int > > == 0 );
+static_assert( index_of_t_or_const_t_v< float const, typelist< int, float const, float > > == 1 );
 
 /// ---
 
@@ -69,10 +76,10 @@ static_assert( std::same_as< type_at_t< 1, typelist< float, int > >, int > );
 static_assert( contains_type_v< int, typelist< int, float > > );
 static_assert( contains_type_v< float, typelist< int, float > > );
 static_assert( !contains_type_v< int, typelist< float > > );
-static_assert( !contains_type_v< const int, typelist< int, float > > );
-static_assert( contains_type_v< const int, typelist< const int, float > > );
-static_assert( contains_type_v< const float, typelist< int, const float > > );
-static_assert( !contains_type_v< int, typelist< const int > > );
+static_assert( !contains_type_v< int const, typelist< int, float > > );
+static_assert( contains_type_v< int const, typelist< int const, float > > );
+static_assert( contains_type_v< float const, typelist< int, float const > > );
+static_assert( !contains_type_v< int, typelist< int const > > );
 
 // ---
 
@@ -91,31 +98,43 @@ using uft1 = unique_typelist_t< ft1 >;
 static_assert( std::same_as< uft1, typelist< float, int, std::string > > );
 
 using ft2  = flatten_t<  //
-    typelist< const int >,
+    typelist< int const >,
     int,
     typelist< float, int, typelist< float const > >  //
     >;
 using uft2 = unique_typelist_t< ft2 >;
-static_assert( std::same_as< uft2, typelist< const int, float, int, const float > > );
+static_assert( std::same_as< uft2, typelist< int const, float, int, float const > > );
 
 using ft3  = flatten_t<  //
-    const typelist< int >,
+    typelist< int > const,
     int,
-    typelist< float, int, const typelist< float > >  //
+    typelist< float, int, typelist< float > const >  //
     >;
 using uft3 = unique_typelist_t< ft3 >;
-static_assert( std::same_as< uft3, typelist< const int, float, int, const float > > );
+static_assert( std::same_as< uft3, typelist< int const, float, int, float const > > );
 
-struct ft4 : flatten_t< const ft3 >
+struct ft4 : flatten_t< ft3 const >
 {
 };
+template <>
+struct typelist_traits< ft4 >
+{
+        static constexpr bool is_compatible = true;
+        using types                         = typename ft4::types;
+};
 using uft4 = unique_typelist_t< ft4 >;
-static_assert( std::same_as< uft4, typelist< const int, const float > > );
+static_assert( std::same_as< uft4, typelist< int const, float const > > );
 
 struct ft5 : typelist< int, float >
 {
 };
-static_assert( std::same_as< flatten_t< const ft5 >, typelist< const int, const float > > );
+template <>
+struct typelist_traits< ft5 const >
+{
+        static constexpr bool is_compatible = true;
+        using types                         = typename ft5::types const;
+};
+static_assert( std::same_as< flatten_t< ft5 const >, typelist< int const, float const > > );
 // ---
 
 static_assert( is_subset_v< typelist<>, typelist<> > );
@@ -139,7 +158,7 @@ static_assert( all_is_const_v< typelist<> > );
 static_assert( !all_is_const_v< typelist< int > > );
 static_assert( !all_is_const_v< typelist< float, int > > );
 static_assert( all_is_const_v< typelist< int const > > );
-static_assert( all_is_const_v< typelist< const float, int const > > );
+static_assert( all_is_const_v< typelist< float const, int const > > );
 static_assert( all_is_const_v< typelist< float const, int const, int const > > );
 
 // ---
@@ -148,7 +167,7 @@ static_assert( none_is_const_v< typelist<> > );
 static_assert( none_is_const_v< typelist< int > > );
 static_assert( none_is_const_v< typelist< float, int > > );
 static_assert( !none_is_const_v< typelist< int const > > );
-static_assert( !none_is_const_v< typelist< const float, int > > );
+static_assert( !none_is_const_v< typelist< float const, int > > );
 static_assert( !none_is_const_v< typelist< float, int const, int > > );
 
 // ---
