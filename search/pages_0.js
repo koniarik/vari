@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['variadic_20library_0',['Variadic library',['../index.html',1,'']]]
+  ['vari_0',['vari',['../index.html',1,'']]]
 ];

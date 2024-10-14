@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>vari: Variadic library</title>
+<title>vari: vari</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,51 +90,45 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Variadic library </div></div>
+  <div class="headertitle"><div class="title">vari </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p ><a class="anchor" id="md_README"></a> Variadic pointers, references for C++20.</p>
-<p ><code>std::variant&lt;Ts...&gt;</code> is C++20s form of tagged union which stores types by value. This library introduces an alternative that stores items allocated and extends the tagged union concept with type-sets, sub-typing and other forms of API access, making it more pleasant to use.</p>
-<p >Library provides 4 templated types as an alternative to variant:</p><ul>
+<div class="textblock"><p ><a class="anchor" id="md_README"></a> </p><div align="center"></div><div align="center"></div><h1><a class="anchor" id="autotoc_md0"></a>
+Variadic library</h1>
+<div align="center"> <a href="/example.cpp">Example</a> - <a href="https://koniarik.github.io/vari/">Documentation</a></div><div align="center"></div><p >C++ has <code>std::variant&lt;Ts...&gt;</code> as a tagged union, but we find it lacking in capabilities and just plain ... bad.</p>
+<p ><code>vari</code> contains alternatives with more advanced API, ways of definition, or other goodies that one would expect in modern approach.</p>
+<p >4 basic types introduced by the library:</p><ul>
 <li><code>vref&lt;Ts...&gt;</code> - reference to any type out of <code>Ts...</code></li>
-<li><code>vptr&lt;Ts...&gt;</code> - pointer to any type out of <code>Ts...</code> (aka: nullable reference)</li>
+<li><code>vptr&lt;Ts...&gt;</code> - pointer to any type out of <code>Ts...</code></li>
 <li><code>uvref&lt;Ts...&gt;</code> - owning reference to any type out of <code>Ts...</code></li>
 <li><code>uvptr&lt;Ts...&gt;</code> - owning pointer to any type out of <code>Ts...</code></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1"></a>
-From std::variant to vptr or vref</h1>
-<p >Let's say that we want a function, that can accept one of two types, how to model it with <code>std::variant</code>?</p>
-<div class="fragment"><div class="line"><span class="keyword">struct </span>a_t{};</div>
-<div class="line"><span class="keyword">struct </span>b_t{};</div>
+<h2><a class="anchor" id="autotoc_md1"></a>
+vref and vptr</h2>
+<p ><code>vref</code> and <code>vptr</code> point to any type in specified list of types, <code>vref</code> guarantees that it points to something while <code>vptr</code> can be null.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> foo(vref&lt;int, float&gt;);</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> foo(std::variant&lt;a_t*, b_t*&gt;);</div>
+<div class="line"><span class="keywordtype">int</span> i;</div>
+<div class="line">foo(i); <span class="comment">// &lt;&lt; vref&lt;int,float&gt; points to `i`</span></div>
 <div class="line"> </div>
-<div class="line">a_t a;</div>
-<div class="line">foo(&amp;a);</div>
-</div><!-- fragment --><p ><code>vptr</code> usage is as simple: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> foo(<a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;a_t, b_t&gt;</a>);</div>
-<div class="line"> </div>
-<div class="line">a_t a;</div>
-<div class="line">foo(a);</div>
-<div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdef"><b>Definition:</b> vptr.h:140</div></div>
-</div><!-- fragment --><p >But, what if we want to express that the pointer can never be null? With variant we can use <code>std::variant&lt;std::reference_wrapper&lt;a_t&gt;, std::reference_wrapper&lt;b_t&gt;&gt;</code> but that is not elegant at all. Here, <code>vref</code> comes to the rescue: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> foo(<a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;a_t, b_t&gt;</a>);</div>
-<div class="ttc" id="anamespacevari_html_a0b711b10138e06f9d5b455ff55c663d0"><div class="ttname"><a href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a></div><div class="ttdeci">_define_variadic&lt; _vref, typelist&lt; Ts... &gt; &gt; vref</div><div class="ttdef"><b>Definition:</b> vref.h:120</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
-uvptr and uvref</h1>
-<p ><code>u</code> prefixed variants imply ownership (unique), this way we can use them to manage lifetimes of objects - in same way as <code>std::variant</code> does.</p>
+<div class="line"><span class="keywordtype">float</span> f;</div>
+<div class="line">foo(f); <span class="comment">// &lt;&lt; vref&lt;int, float&gt; points to `f`</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2"></a>
+uvptr and uvref</h2>
+<p ><code>u</code> prefixed variants imply ownership (unique), this way we can use them to manage lifetimes of allocated objects.</p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>a_t;</div>
 <div class="line"><span class="keyword">struct </span>b_t;</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;a_t, b_t&gt;</a> p;</div>
 <div class="ttc" id="anamespacevari_html_a3be05c6f854dc1b903a2a85e244bbdc5"><div class="ttname"><a href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr</a></div><div class="ttdeci">_define_variadic&lt; _uvptr, typelist&lt; Ts... &gt;, def_del &gt; uvptr</div><div class="ttdef"><b>Definition:</b> uvptr.h:218</div></div>
 </div><!-- fragment --><p> Note that the <code>uvptr</code> can accept forward declared struct in friendly manner. Similar (bot not same) to <code>std::make_unique</code>, we have a friendly function to build the unique variants: <code>uwrap</code></p>
-<div class="fragment"><div class="line">uvptr&lt;std::string, int&gt; p = uwrap(std::string{<span class="stringliteral">&quot;wololo&quot;</span>});</div>
-</div><!-- fragment --><p> Note that signature of uwrap is <code>uvref&lt;T&gt; uwrap(T item)</code>, this works as we allow natural conversion of <code>uvref</code> to <code>uvptr</code>, but not the other way around.</p>
-<p >WARNING: <code>uvref</code> is movable object, once moved-from, it is put into <code>null</code> state - something not possible otherwise. It shall not be used in this state in any matter except to be assigned-to.</p>
-<h1><a class="anchor" id="autotoc_md3"></a>
-Access API</h1>
-<p >Given that we do have a <code>vptr</code>, how to access it? All variants share the same approach to API, so the name of methods are the same. All have <code>visit</code> method. <code>uvptr</code> and <code>uvref</code> also has <code>take</code>.</p>
-<h2><a class="anchor" id="autotoc_md4"></a>
-Visit</h2>
+<div class="fragment"><div class="line">uvref&lt;std::string, int&gt; p = uwrap(std::string{<span class="stringliteral">&quot;wololo&quot;</span>});</div>
+</div><!-- fragment --><p >WARNING: <code>uvref</code> is movable object, once moved-from, it is put into <code>null</code> state - something not possible otherwise. It shall not be used in this state in any matter except to be assigned-to.</p>
+<h2><a class="anchor" id="autotoc_md3"></a>
+Access API</h2>
+<p >How to access the internal type? <code>vptr</code>, <code>vref</code>, <code>uvptr</code>, and <code>uvref</code> have <code>visit</code> method as the main interface. <code>u</code> variants also have <code>take</code> to steal ownership.</p>
+<h3><a class="anchor" id="autotoc_md4"></a>
+Visit</h3>
 <p ><code>visit</code> recreates approach similar to <code>std::visit</code>, except that we allow multiple callables instead of multiple variadics, note that we can handle returning from callables: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> foo( <a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a>&lt; std::vector&lt; std::string &gt;, std::list&lt; std::string &gt; &gt; r )</div>
 <div class="line">{</div>
 <div class="line">        std::string&amp; front = r.visit(</div>
@@ -145,16 +139,19 @@ Visit</h2>
 <div class="line">                    <span class="keywordflow">return</span> l.front();</div>
 <div class="line">            } );</div>
 <div class="line">}</div>
-</div><!-- fragment --><p> In case of pointers, we opted to introduce empty branch for cases when it is null. </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> foo(<a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;a_t, b_t&gt;</a> r)</div>
+<div class="ttc" id="anamespacevari_html_a0b711b10138e06f9d5b455ff55c663d0"><div class="ttname"><a href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a></div><div class="ttdeci">_define_variadic&lt; _vref, typelist&lt; Ts... &gt; &gt; vref</div><div class="ttdef"><b>Definition:</b> vref.h:120</div></div>
+</div><!-- fragment --><p> For each type of variadic, the <code>visit</code> expects to get one and only one callable accepting reference to that type.</p>
+<p >In case of pointers, we opted to introduce empty branch for cases when it is null. </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> foo(<a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;a_t, b_t&gt;</a> r)</div>
 <div class="line">{</div>
 <div class="line">    r.visit([&amp;](<a class="code hl_struct" href="structvari_1_1empty__t.html">vari::empty_t</a>){},</div>
 <div class="line">            [&amp;](a_t&amp;){},</div>
 <div class="line">            [&amp;](b_t&amp;){});</div>
 <div class="line">}</div>
+<div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdef"><b>Definition:</b> vptr.h:140</div></div>
 <div class="ttc" id="astructvari_1_1empty__t_html"><div class="ttname"><a href="structvari_1_1empty__t.html">vari::empty_t</a></div><div class="ttdef"><b>Definition:</b> util.h:33</div></div>
 </div><!-- fragment --><p >Variadic references are constructible with references - all of the possible types: </p><div class="fragment"><div class="line">a_t a;</div>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;a_t, b_t&gt;</a> r = a;</div>
-</div><!-- fragment --><p> However, this also means that we can combine this with visit - the callable can handle multiple types: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> foo(<a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;a_t, b_t&gt;</a> r)</div>
+</div><!-- fragment --><p> This also means that we can combine this with visit - the callable can handle multiple types: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> foo(<a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;a_t, b_t&gt;</a> r)</div>
 <div class="line">{</div>
 <div class="line">    r.visit([&amp;](<a class="code hl_struct" href="structvari_1_1empty__t.html">vari::empty_t</a>){},</div>
 <div class="line">            [&amp;](<a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;a_t, b_t&gt;</a>){});</div>
@@ -166,8 +163,8 @@ Visit</h2>
 <div class="line">            [&amp;](a_t&amp;){},</div>
 <div class="line">            [&amp;](<a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;b_t, c_t&gt;</a>){});</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
-Take</h2>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md5"></a>
+Take</h3>
 <p ><code>uvref</code> and <code>uvptr</code> retain ownership of referenced items, <code>take</code> allows stealing the ownership from the owner: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> foo(<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;a_t, b_t&gt;</a> r)</div>
 <div class="line">{</div>
 <div class="line">    std::move(r).take([&amp;](<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;a_t&gt;</a>){},</div>
@@ -175,8 +172,33 @@ Take</h2>
 <div class="line">}</div>
 <div class="ttc" id="anamespacevari_html_a2388c0eb42106efee2d8ed10243b69a0"><div class="ttname"><a href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref</a></div><div class="ttdeci">_define_variadic&lt; _uvref, typelist&lt; Ts... &gt;, def_del &gt; uvref</div><div class="ttdef"><b>Definition:</b> uvref.h:166</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
+Sub-typing</h2>
+<p >All variadic types support sub-typing - any variadic type can be converted to a type representing superset of types: </p><div class="fragment"><div class="line">a_t a;</div>
+<div class="line"><a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;a_t&gt;</a> p{a};</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// allowed as {a_t, b_t} is superset of {a_t}</span></div>
+<div class="line"><a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;a_t, b_t&gt;</a> p2 = p;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// not allowed, as {a_t} is not superset of {a_t, b_t}</span></div>
+<div class="line"><a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;a_t&gt;</a> p3 = p2;</div>
+</div><!-- fragment --><p >There are multiple ways this bring in a lot of convenience, want to have type-coherency? </p><div class="fragment"><div class="line"><a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;a_t&gt;</a> gen_a();</div>
+<div class="line"><a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;b_t&gt;</a> gen_b();</div>
+<div class="line"> </div>
+<div class="line">std::vector&lt;vari::uvptr&lt;a_t, b_t&gt;&gt; data = {gen_a(), gen_b().vptr(), <span class="keyword">nullptr</span>};</div>
+</div><!-- fragment --><p >This also interacts well with <code>take</code>: </p><div class="fragment"><div class="line"><span class="keyword">struct </span>c_t;</div>
+<div class="line"><span class="keyword">struct </span>d_t;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> foo(<a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;a_t, b_t, c_t, d_t&gt;</a> p)</div>
+<div class="line">{</div>
+<div class="line">    p.take([&amp;](<a class="code hl_struct" href="structvari_1_1empty__t.html">vari::empty_t</a>){},</div>
+<div class="line">           [&amp;](<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;a_t, b_t&gt;</a>){},</div>
+<div class="line">           [&amp;](<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;c_t, d_t&gt;</a>){});</div>
+<div class="line">}</div>
+</div><!-- fragment --><p> The way we can imagine this is: <code>p</code> can represent set of 4 types, <code>take</code> splits that into four unique references, each representing one type, <em>sub-typing</em> allows merging these references together - into two subsets, each made of two types.</p>
+<p >Note: As a side-effect of this, <code>vptr&lt;a_t, b_t&gt;</code> is naturally convertible to <code>vptr&lt;b_t, a_t&gt;</code></p>
+<h2><a class="anchor" id="autotoc_md7"></a>
 Concepts checks</h2>
-<p >Access methods are subjected to same sanity checking of the set of callbacks: For each type in the set, one and only one callbacks can be called.</p>
+<p >Access methods are subjected to sanity checking of the set of callbacks: For each type in the set of types, one and only one callback can be called.</p>
 <p >That is, following would fail to compile due to concept check: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> foo(<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;a_t, b_t&gt;</a> r)</div>
 <div class="line">{</div>
 <div class="line">    r.visit([&amp;](a_t&amp;){},</div>
@@ -188,8 +210,14 @@ Concepts checks</h2>
 <div class="line">    r.visit([&amp;](a_t&amp;){},</div>
 <div class="line">            [&amp;](<span class="keyword">auto</span>&amp;){}); <span class="comment">// &lt;&lt; second overload matching a_t, but single for b_t</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
-Single-type extension</h1>
+</div><!-- fragment --><p >As a second check: For each callable, there has to be at least one type it is callable with. </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> foo(<a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;int, float&gt;</a> v)</div>
+<div class="line">{</div>
+<div class="line">    v.visit([&amp;](<span class="keywordtype">int</span>&amp;){},</div>
+<div class="line">            [&amp;](std::string&amp;){}, <span class="comment">// compiler error</span></div>
+<div class="line">            [&amp;](<span class="keywordtype">float</span>&amp;){});</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
+Single-type extension</h2>
 <p >To make work with variants a bit more convenient, all allow direct access to pointed-to type in case it is single type in the type-list: </p><div class="fragment"><div class="line"><span class="keyword">struct </span>boo_t{</div>
 <div class="line">    <span class="keywordtype">int</span> val;</div>
 <div class="line">};</div>
@@ -197,35 +225,10 @@ Single-type extension</h1>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;boo_t&gt;</a> p{b};</div>
 <div class="line"> </div>
 <div class="line">p-&gt;val = 42;</div>
-</div><!-- fragment --><p >That is, in case there is only one type allowed, the signature of common methods is: <code>T* vptr&lt;T&gt;::operator()</code> This makes <code>take</code> API calls much more convenient to use.</p>
-<h1><a class="anchor" id="autotoc_md8"></a>
-Sub-typing</h1>
-<p >All variadic types support sub-typing - any variadic type can be converted to a type representing superset of types: </p><div class="fragment"><div class="line">a_t a;</div>
-<div class="line"><a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;a_t&gt;</a> p{a};</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// allowed as {a_t, b_t} is superset of {a_t}</span></div>
-<div class="line"><a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;a_t, b_t&gt;</a> p2 = p;</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// not allowed, as {a_t} is not superset of {a_t, b_t}</span></div>
-<div class="line"><a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;a_t&gt;</a> p3 = p2;</div>
-</div><!-- fragment --><p >There are multiple ways this bring in a lot of convenience, want to have type-coherency? </p><div class="fragment"><div class="line"><a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;a_t&gt;</a> gen_a();</div>
-<div class="line"><a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;b_t&gt;</a> gen_b();</div>
-<div class="line"> </div>
-<div class="line">std::vector&lt;vari::uvptr&lt;a_t, b_t&gt;&gt; data = {gen_a(), gen_b(), <span class="keyword">nullptr</span>};</div>
-</div><!-- fragment --><p >This also interacts well with <code>take</code>: </p><div class="fragment"><div class="line"><span class="keyword">struct </span>c_t;</div>
-<div class="line"><span class="keyword">struct </span>d_t;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> foo(<a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;a_t, b_t, c_t, d_t&gt;</a> p)</div>
-<div class="line">{</div>
-<div class="line">    p.take([&amp;](<a class="code hl_struct" href="structvari_1_1empty__t.html">vari::empty_t</a>){},</div>
-<div class="line">           [&amp;](<a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;a_t, b_t&gt;</a>){},</div>
-<div class="line">           [&amp;](<a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;c_t, d_t&gt;</a>){});</div>
-<div class="line">}</div>
-</div><!-- fragment --><p> The way we can imagine this is: <code>p</code> can represent set of 4 types, <code>take</code> splits that into four unique references, each representing one type, <em>sub-typing</em> allows merging these references together - into two subsets, each made of two types.</p>
-<p >Note: As a side-effect of this, <code>vptr&lt;a_t, b_t&gt;</code> is naturally convertible to <code>vptr&lt;b_t, a_t&gt;</code></p>
-<h1><a class="anchor" id="autotoc_md9"></a>
-Type-sets</h1>
-<p >To bring in even more convenience and capability, the template argument list of variadics is capable of flattening and filtering the types for uniqueness. (Note that to implement this we opted for aliasing, for example: <code><a class="el" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></code> is actually alias to <code><a class="el" href="classvari_1_1__vptr.html">vari::_vptr</a></code>)</p>
+</div><!-- fragment --><p >That is, in case there is only one type allowed, the signature of common methods is: <code>T* vptr&lt;T&gt;::operator()</code></p>
+<h2><a class="anchor" id="autotoc_md9"></a>
+Type-sets</h2>
+<p >To bring in even more convenience and capability, the template argument list of variadics is capable of flattening and filtering the types for uniqueness.</p>
 <p >Given the following type sets: </p><div class="fragment"><div class="line"><span class="keyword">using </span>set_a = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;a_t, b_t&gt;</a>;</div>
 <div class="line"><span class="keyword">using </span>set_b = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;c_t, d_t&gt;</a>;</div>
 <div class="line"><span class="keyword">using </span>set_s = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;set_a, set_b, d_t&gt;</a>;</div>
@@ -245,8 +248,8 @@ Type-sets</h1>
 <div class="line">                   [&amp;](array_t&amp; pp) -&gt; R { <span class="comment">/* impl */</span> },</div>
 <div class="line">                   [&amp;](object_t&amp; pp) -&gt; R { <span class="comment">/* impl */</span> });</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md10"></a>
-Lvalue conversion from unique</h1>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
+Lvalue conversion from unique</h2>
 <p >To give this even more convenience, we also allow conversion of <code>uvptr</code> and <code>uvref</code> to non-unique variants if and only if the expression is lvalue reference:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> foo(<a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;a_t, b_t&gt;</a>);</div>
 <div class="line"> </div>
@@ -254,8 +257,8 @@ Lvalue conversion from unique</h1>
 <div class="line">foo(p); <span class="comment">// allowed, `p` is lvalue</span></div>
 <div class="line"> </div>
 <div class="line">foo(<a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;a_t&gt;</a>{}) <span class="comment">// forbidden, rvalue used</span></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md11"></a>
-Const</h1>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
+Const</h2>
 <p >All variadic types support conversion from non-const version to const version: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> foo(<a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;const a_t, const b_t&gt;</a>)</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;a_t, b_t&gt;</a> p;</div>
@@ -264,14 +267,30 @@ Const</h1>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using </span>vp_a = <a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;const set_a&gt;</a>;</div>
 <div class="line"><span class="keyword">using </span>vp_b = <a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;const a_t, const b_t&gt;</a>;</div>
-</div><!-- fragment --><p> Both types <code>vp_a</code> and <code>vp_b</code> are equal.</p>
-<h1><a class="anchor" id="autotoc_md12"></a>
-Typelist compatibility</h1>
+</div><!-- fragment --><p> Both types <code>vp_a</code> and <code>vp_b</code> are compatible.</p>
+<h2><a class="anchor" id="autotoc_md12"></a>
+Typelist compatibility</h2>
 <p >Library can be extended by using other types than just <code><a class="el" href="structvari_1_1typelist.html">vari::typelist</a></code> to represent set of types.</p>
-<p >Whenever type is typelist is dertermined by <code><a class="el" href="structvari_1_1typelist__traits.html">vari::typelist_traits</a>&lt;T&gt;</code>. In case <code><a class="el" href="structvari_1_1typelist__traits.html">vari::typelist_traits</a>&lt;T&gt;:::is_compatible</code> evaluates to <code>true</code>, library considers <code>T</code> to be typelist-like type which shall be flattened.</p>
+<p >Whenever type is typelist is determined by <code><a class="el" href="structvari_1_1typelist__traits.html">vari::typelist_traits</a>&lt;T&gt;</code>. In case <code><a class="el" href="structvari_1_1typelist__traits.html">vari::typelist_traits</a>&lt;T&gt;:::is_compatible</code> evaluates to <code>true</code>, library considers <code>T</code> to be typelist-like type.</p>
 <p >In such a case, <code><a class="el" href="structvari_1_1typelist__traits.html">vari::typelist_traits</a>&lt;T&gt;::types</code> should be a type which by itself is vari-compatible typelist. Transtively, this should eventually resolve into <code><a class="el" href="structvari_1_1typelist.html">vari::typelist</a></code> itself which is used by the library directly.</p>
-<h1><a class="anchor" id="autotoc_md13"></a>
-Credits</h1>
+<h2><a class="anchor" id="autotoc_md13"></a>
+Dispatch</h2>
+<p >We also ship free function <code>dispatch</code> for dispatching a runtime value into compile-time value. It uses all the safety checks of <code>visit</code>:</p>
+<div class="fragment"><div class="line"><span class="comment">// factory used by the library to create instances of types</span></div>
+<div class="line"><span class="keyword">auto</span> factory = [&amp;]&lt;<a class="code hl_typedef" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">vari::index_type</a> i&gt;{</div>
+<div class="line">    <span class="keywordflow">return</span> std::integral_constant&lt;i, std::size_t&gt;{};</div>
+<div class="line">};</div>
+<div class="line"><span class="comment">// runtime index</span></div>
+<div class="line"><a class="code hl_typedef" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">vari::index_type</a> v = 4;</div>
+<div class="line">vari::dispatch&lt;42&gt;(</div>
+<div class="line">    v,</div>
+<div class="line">    factory,</div>
+<div class="line">    [&amp;]&lt;std::size_t j&gt;(std::integral_constant&lt;j, std::size_t&gt;){</div>
+<div class="line">        <span class="comment">// `j` matches value of `v`</span></div>
+<div class="line">    });</div>
+<div class="ttc" id="anamespacevari_html_a4c4b642a120de6f97cef24c8b60fb2ce"><div class="ttname"><a href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">vari::index_type</a></div><div class="ttdeci">uint32_t index_type</div><div class="ttdef"><b>Definition:</b> util.h:169</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md14"></a>
+Credits</h2>
 <p >Credits for the idea for this should go to <code>avakar</code>, live long and prosper. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
