@@ -32,7 +32,7 @@ namespace vari
 {
 
 template < typename Deleter, typename... Ts >
-class _uvref : private deleter_box< Deleter >
+class _uvref : private _deleter_box< Deleter >
 {
         template < typename... Us >
         using same_uvref = _uvref< Deleter, Us... >;
@@ -118,7 +118,7 @@ public:
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... f ) const
         {
-                typename check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
+                typename _check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
                 assert( _core.ptr );
                 return _core.visit_impl( (Fs&&) f... );
         }
@@ -126,7 +126,7 @@ public:
         template < typename... Fs >
         constexpr decltype( auto ) take( Fs&&... fs ) &&
         {
-                typename check_unique_invocability< types >::template with_deleter<
+                typename _check_unique_invocability< types >::template with_deleter<
                     Deleter >::template with_uvref< Fs... >
                     _{};
                 assert( _core.ptr );
@@ -142,7 +142,7 @@ public:
 
         constexpr ~_uvref()
         {
-                _core.delete_ptr( deleter_box< Deleter >::get() );
+                _core.delete_ptr( _deleter_box< Deleter >::get() );
         }
 
         friend constexpr auto operator<=>( _uvref const& lh, _uvref const& rh ) = default;

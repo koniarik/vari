@@ -33,7 +33,7 @@ using namespace std::string_literals;
 
 template < typename TL, typename LH, typename RH >
 concept valid_split =
-    std::same_as< typename split< TL >::lh, LH > && std::same_as< typename split< TL >::rh, RH >;
+    std::same_as< typename _split< TL >::lh, LH > && std::same_as< typename _split< TL >::rh, RH >;
 
 static_assert( valid_split< typelist<>, typelist<>, typelist<> > );
 static_assert( valid_split< typelist< int >, typelist<>, typelist< int > > );

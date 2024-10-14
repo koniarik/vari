@@ -59,7 +59,7 @@ concept vconvertible_to = is_subset_v< From_TL, To_TL > || is_subset_v< From_TL 
 
 // XXX: test
 template < typename U >
-concept forward_nothrow_constructible =
+concept _forward_nothrow_constructible =
     ( std::is_lvalue_reference_v< U > ?
           std::is_nothrow_copy_constructible_v< std::remove_reference_t< U > > :
           std::is_nothrow_move_constructible_v< U > );
@@ -74,10 +74,10 @@ template < typename Deleter, typename... Ts >
 struct _uvref;
 
 template < typename T >
-struct check_unique_invocability;
+struct _check_unique_invocability;
 
 template < typename... Ts >
-struct check_unique_invocability< typelist< Ts... > >
+struct _check_unique_invocability< typelist< Ts... > >
 {
         template < typename... Fs >
         struct with_pure_value
@@ -216,13 +216,13 @@ template < typename TL >
 using split = _split_impl< typelist<>, TL >;
 
 template < typename Deleter >
-struct deleter_box : private Deleter
+struct _deleter_box : private Deleter
 {
         static_assert( std::is_nothrow_default_constructible_v< Deleter > );
-        constexpr deleter_box() noexcept = default;
+        constexpr _deleter_box() noexcept = default;
 
         static_assert( std::is_nothrow_move_constructible_v< Deleter > );
-        constexpr deleter_box( Deleter&& d ) noexcept
+        constexpr _deleter_box( Deleter&& d ) noexcept
           : Deleter( std::move( d ) )
         {
         }
@@ -232,7 +232,7 @@ struct deleter_box : private Deleter
                 return *this;
         }
 
-        friend constexpr auto operator<=>( deleter_box const&, deleter_box const& ) = default;
+        friend constexpr auto operator<=>( _deleter_box const&, _deleter_box const& ) = default;
 };
 
 struct def_del

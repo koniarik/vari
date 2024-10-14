@@ -32,7 +32,7 @@ namespace vari
 {
 
 template < typename Deleter, typename... Ts >
-class _uvptr : private deleter_box< Deleter >
+class _uvptr : private _deleter_box< Deleter >
 {
         template < typename... Us >
         using same_uvref = _uvref< Deleter, Us... >;
@@ -137,7 +137,7 @@ public:
         {
                 auto tmp = _core;
                 _core    = std::move( ptr._core );
-                tmp.delete_ptr( deleter_box< Deleter >::get() );
+                tmp.delete_ptr( _deleter_box< Deleter >::get() );
         }
 
         constexpr pointer release() noexcept
@@ -172,7 +172,7 @@ public:
         constexpr decltype( auto ) visit( Fs&&... f ) const
         {
 
-                typename check_unique_invocability< types >::template with_nullable_pure_ref<
+                typename _check_unique_invocability< types >::template with_nullable_pure_ref<
                     Fs... >
                     _{};
                 if ( _core.ptr == nullptr )
@@ -183,7 +183,7 @@ public:
         template < typename... Fs >
         constexpr decltype( auto ) take( Fs&&... fs ) &&
         {
-                typename check_unique_invocability< types >::template with_deleter<
+                typename _check_unique_invocability< types >::template with_deleter<
                     Deleter >::template with_nullable_uvref< Fs... >
                      _{};
                 auto p = release();
@@ -199,7 +199,7 @@ public:
 
         constexpr ~_uvptr()
         {
-                _core.delete_ptr( deleter_box< Deleter >::get() );
+                _core.delete_ptr( _deleter_box< Deleter >::get() );
         }
 
         friend constexpr auto operator<=>( _uvptr const& lh, _uvptr const& rh ) = default;

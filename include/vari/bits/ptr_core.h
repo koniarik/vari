@@ -31,7 +31,7 @@ namespace vari
 {
 
 template < typename T >
-constexpr void* to_void_cast( T* p ) noexcept
+constexpr void* _to_void_cast( T* p ) noexcept
 {
         return static_cast< void* >( const_cast< std::remove_const_t< T >* >( p ) );
 }
@@ -50,7 +50,7 @@ struct _ptr_core
                 requires( vconvertible_to< UL, TL > )
         constexpr _ptr_core( _ptr_core< UL > other ) noexcept
           : index( _vptr_cnv_map< TL, UL >::conv( other.get_index() ) )
-          , ptr( to_void_cast( other.ptr ) )
+          , ptr( _to_void_cast( other.ptr ) )
         {
         }
 
@@ -65,7 +65,7 @@ struct _ptr_core
         constexpr void set( U& val ) noexcept
         {
                 index = index_of_t_or_const_t_v< U, TL >;
-                ptr   = to_void_cast( &val );
+                ptr   = _to_void_cast( &val );
         }
 
         constexpr void reset() noexcept

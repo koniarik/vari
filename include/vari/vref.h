@@ -89,7 +89,7 @@ public:
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... fs ) const
         {
-                typename check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
+                typename _check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
                 assert( _core.ptr );
                 return _core.visit_impl( (Fs&&) fs... );
         }

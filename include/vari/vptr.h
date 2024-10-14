@@ -107,7 +107,7 @@ public:
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... fs ) const
         {
-                typename check_unique_invocability< types >::template with_nullable_pure_ref<
+                typename _check_unique_invocability< types >::template with_nullable_pure_ref<
                     Fs... >
                     _{};
                 if ( _core.ptr == nullptr )

@@ -44,7 +44,7 @@ public:
 
         template < typename U >
                 requires( vconvertible_to< typelist< std::remove_reference_t< U > >, types > )
-        constexpr _vval( U&& v ) noexcept( forward_nothrow_constructible< U > )
+        constexpr _vval( U&& v ) noexcept( _forward_nothrow_constructible< U > )
         {
                 _core.template emplace< std::remove_reference_t< U > >( (U&&) v );
         }
@@ -87,7 +87,7 @@ public:
 
         template < typename U >
                 requires( vconvertible_to< typelist< std::remove_reference_t< U > >, types > )
-        constexpr _vval& operator=( U&& v ) noexcept( forward_nothrow_constructible< U > )
+        constexpr _vval& operator=( U&& v ) noexcept( _forward_nothrow_constructible< U > )
         {
                 if ( _core.index != 0 )
                         _core.destroy();
@@ -193,14 +193,14 @@ public:
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... f ) const
         {
-                typename check_unique_invocability< types >::template with_pure_cref< Fs... > _{};
+                typename _check_unique_invocability< types >::template with_pure_cref< Fs... > _{};
                 return core_type::visit_impl( _core, (Fs&&) f... );
         }
 
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... f )
         {
-                typename check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
+                typename _check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
                 return core_type::visit_impl( _core, (Fs&&) f... );
         }
 

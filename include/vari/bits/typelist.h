@@ -139,71 +139,71 @@ static constexpr bool contains_type_v = contains_type< T, TL >::value;
 /// ---
 
 template < typename TL1, typename TL2 >
-struct unique_tl_impl;
+struct _unique_tl_impl;
 
 template < typename TL1, typelist_compatible TL2 >
-struct unique_tl_impl< TL1, TL2 > : unique_tl_impl< TL1, typelist_traits_types< TL2 > >
+struct _unique_tl_impl< TL1, TL2 > : _unique_tl_impl< TL1, typelist_traits_types< TL2 > >
 {
 };
 
 template < typename... Ts >
-struct unique_tl_impl< typelist< Ts... >, typelist<> >
+struct _unique_tl_impl< typelist< Ts... >, typelist<> >
 {
         using type = typelist< Ts... >;
 };
 
 template < typename TL1, typename T, typename... Ts >
         requires( contains_type_v< T, typelist< Ts... > > )
-struct unique_tl_impl< TL1, typelist< T, Ts... > > : unique_tl_impl< TL1, typelist< Ts... > >
+struct _unique_tl_impl< TL1, typelist< T, Ts... > > : _unique_tl_impl< TL1, typelist< Ts... > >
 {
 };
 
 template < typename... Us, typename T, typename... Ts >
         requires( !contains_type_v< T, typelist< Ts... > > )
-struct unique_tl_impl< typelist< Us... >, typelist< T, Ts... > >
-  : unique_tl_impl< typelist< Us..., T >, typelist< Ts... > >
+struct _unique_tl_impl< typelist< Us... >, typelist< T, Ts... > >
+  : _unique_tl_impl< typelist< Us..., T >, typelist< Ts... > >
 {
 };
 
 template < typename TL >
-using unique_typelist_t = typename unique_tl_impl< typelist<>, TL >::type;
+using unique_typelist_t = typename _unique_tl_impl< typelist<>, TL >::type;
 
 /// ---
 
 template < typename TL, typename... Ts >
-struct flatten_impl;
+struct _flatten_impl;
 
 template < typename TL >
-struct flatten_impl< TL >
+struct _flatten_impl< TL >
 {
         using type = TL;
 };
 
 template < typename... Us, typelist_compatible T, typename... Ts >
-struct flatten_impl< typelist< Us... >, T, Ts... >
-  : flatten_impl< typelist< Us... >, typelist_traits_types< T >, Ts... >
+struct _flatten_impl< typelist< Us... >, T, Ts... >
+  : _flatten_impl< typelist< Us... >, typelist_traits_types< T >, Ts... >
 {
 };
 
 template < typename... Us, typename T, typename... Ts >
-struct flatten_impl< typelist< Us... >, T, Ts... > : flatten_impl< typelist< Us..., T >, Ts... >
+struct _flatten_impl< typelist< Us... >, T, Ts... > : _flatten_impl< typelist< Us..., T >, Ts... >
 {
 };
 
 template < typename... Us, typename... Ks, typename... Ts >
-struct flatten_impl< typelist< Us... >, typelist< Ks... >, Ts... >
-  : flatten_impl< typelist< Us... >, Ks..., Ts... >
+struct _flatten_impl< typelist< Us... >, typelist< Ks... >, Ts... >
+  : _flatten_impl< typelist< Us... >, Ks..., Ts... >
 {
 };
 
 template < typename... Us, typename... Ks, typename... Ts >
-struct flatten_impl< typelist< Us... >, typelist< Ks... > const, Ts... >
-  : flatten_impl< typelist< Us... >, Ks const..., Ts... >
+struct _flatten_impl< typelist< Us... >, typelist< Ks... > const, Ts... >
+  : _flatten_impl< typelist< Us... >, Ks const..., Ts... >
 {
 };
 
 template < typename... Ts >
-using flatten_t = typename flatten_impl< typelist<>, Ts... >::type;
+using flatten_t = typename _flatten_impl< typelist<>, Ts... >::type;
 
 /// ---
 
@@ -414,23 +414,23 @@ static constexpr bool all_nothrow_equality_comparable_v =
 /// ---
 
 template < typename TL, std::size_t N, typename Fac >
-struct factory_result_types_impl;
+struct _factory_result_types_impl;
 
 template < typename... Ts, typename Fac >
-struct factory_result_types_impl< typelist< Ts... >, 0, Fac >
+struct _factory_result_types_impl< typelist< Ts... >, 0, Fac >
 {
         using type = typelist< Ts... >;
 };
 
 template < typename... Ts, std::size_t N, typename Fac >
-struct factory_result_types_impl< typelist< Ts... >, N, Fac >
+struct _factory_result_types_impl< typelist< Ts... >, N, Fac >
 {
         using n_type = decltype( std::declval< Fac >().template operator()< N - 1 >() );
         using type =
-            typename factory_result_types_impl< typelist< Ts..., n_type >, N - 1, Fac >::type;
+            typename _factory_result_types_impl< typelist< Ts..., n_type >, N - 1, Fac >::type;
 };
 
 template < std::size_t N, typename Fac >
-using factory_result_types_t = typename factory_result_types_impl< typelist<>, N, Fac >::type;
+using factory_result_types_t = typename _factory_result_types_impl< typelist<>, N, Fac >::type;
 
 }  // namespace vari
