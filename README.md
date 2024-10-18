@@ -23,7 +23,7 @@ that one would expect in modern approach.
 while `vptr` can be null.
 
 ```cpp
-void foo(vref<int, float>);
+auto foo = [&](vref<int, float>){};
 
 int i;
 foo(i); // << vref<int,float> points to `i`
@@ -38,8 +38,8 @@ foo(f); // << vref<int, float> points to `f`
 manage lifetimes of allocated objects.
 
 ```cpp
-struct a_t;
-struct b_t;
+struct a_t{};
+struct b_t{};
 
 vari::uvptr<a_t, b_t> p;
 
@@ -64,7 +64,7 @@ How to access the internal type? `vptr`, `vref`, `uvptr`, and `uvref` have `visi
 
 `visit` recreates approach similar to `std::visit`, except that we allow multiple callables instead of multiple variadics, note that we can handle returning from callables:
 ```cpp
-void foo( vari::vref< std::vector< std::string >, std::list< std::string > > r )
+auto foo = [&]( vari::vref< std::vector< std::string >, std::list< std::string > > r )
 {
         std::string& front = r.visit(
             [&]( std::vector< std::string >& v ) -> std::string& {
@@ -73,42 +73,43 @@ void foo( vari::vref< std::vector< std::string >, std::list< std::string > > r )
             [&]( std::list< std::string >& l ) -> std::string& {
                     return l.front();
             } );
-}
+};
 ```
 For each type of variadic, the `visit` expects to get one and only one callable accepting reference to that type.
 
 In case of pointers, we opted to introduce empty branch for cases when it is null.
+
 ```cpp
-void foo(vari::vptr<a_t, b_t> r)
-{
-    r.visit([&](vari::empty_t){},
-            [&](a_t&){},
-            [&](b_t&){});
-}
+vari::vptr<int, std::string> r = nullptr;
+
+r.visit([&](vari::empty_t){},
+        [&](int&){},
+        [&](std::string&){});
+
 ```
 
 Variadic references are constructible with references - all of the possible types:
 ```cpp
-a_t a;
-vari::vref<a_t, b_t> r = a;
+std::string a;
+vari::vref<int, std::string> r = a;
 ```
 This also means that we can combine this with visit - the callable can handle multiple types:
 ```cpp
-void foo(vari::uvptr<a_t, b_t> r)
-{
-    r.visit([&](vari::empty_t){},
-            [&](vari::vref<a_t, b_t>){});
-}
+vari::uvptr<int, std::string> r;
+
+r.visit([&](vari::empty_t){},
+        [&](vari::vref<int, std::string>){});
+
 ```
 Or we can mix both approaches:
 
 ```cpp
-void foo(vari::uvptr<a_t, b_t, c_t> r)
-{
-    r.visit([&](vari::empty_t){},
-            [&](a_t&){},
-            [&](vari::vref<b_t, c_t>){});
-}
+vari::uvptr<int, float, std::string> r = nullptr;
+
+r.visit([&](vari::empty_t){},
+        [&](std::string&){},
+        [&](vari::vref<int, float>){});
+
 ```
 
 ### Take
@@ -116,46 +117,40 @@ void foo(vari::uvptr<a_t, b_t, c_t> r)
 `uvref` and `uvptr` retain ownership of referenced items, `take` allows stealing the ownership
 from the owner:
 ```cpp
-void foo(vari::uvref<a_t, b_t> r)
+auto foo = [&](vari::uvref<int, std::string> r)
 {
-    std::move(r).take([&](vari::uvref<a_t>){},
-                      [&](vari::uvref<b_t>){});
-}
+    std::move(r).take([&](vari::uvref<int>){},
+                      [&](vari::uvref<std::string>){});
+};
 ```
 
 ## Sub-typing
 
 All variadic types support sub-typing - any variadic type can be converted to a type representing superset of types:
 ```cpp
-a_t a;
-vari::vref<a_t> p{a};
+std::string a;
+vari::vref<std::string> p{a};
 
-// allowed as {a_t, b_t} is superset of {a_t}
-vari::vref<a_t, b_t> p2 = p;
+// allowed as {int, std::string} is superset of {std::string}
+vari::vref<int, std::string> p2 = p;
 
-// not allowed, as {a_t} is not superset of {a_t, b_t}
-vari::vref<a_t> p3 = p2;
-```
-
-There are multiple ways this bring in a lot of convenience, want to have type-coherency?
-```cpp
-vari::uvptr<a_t> gen_a();
-vari::uvref<b_t> gen_b();
-
-std::vector<vari::uvptr<a_t, b_t>> data = {gen_a(), gen_b().vptr(), nullptr};
+// not allowed, as {int} is not superset of {int, std::string}
+vari::vref<int, std::string> p3 = p2;
 ```
 
 This also interacts well with `take`:
 ```cpp
-struct c_t;
-struct d_t;
+struct a_t{};
+struct b_t{};
+struct c_t{};
+struct d_t{};
 
-void foo(vari::uvptr<a_t, b_t, c_t, d_t> p)
+auto foo = [&](vari::uvptr<a_t, b_t, c_t, d_t> p)
 {
-    p.take([&](vari::empty_t){},
-           [&](vari::uvref<a_t, b_t>){},
-           [&](vari::uvref<c_t, d_t>){});
-}
+    std::move(p).take([&](vari::empty_t){},
+                      [&](vari::uvref<a_t, b_t>){},
+                      [&](vari::uvref<c_t, d_t>){});
+};
 ```
 The way we can imagine this is: `p` can represent set of 4 types, `take` splits that into four unique references, each representing one type, *sub-typing* allows merging these references together - into two subsets, each made of two types.
 
@@ -167,31 +162,31 @@ Access methods are subjected to sanity checking of the set of callbacks: For eac
 
 That is, following would fail to compile due to concept check:
 ```cpp
-void foo(vari::uvref<a_t, b_t> r)
+auto foo = [&](vari::uvref<int, std::string> r)
 {
-    r.visit([&](a_t&){},
-            [&](a_t&){}, // << second overload matching a_t
-            [&](b_t&){});
-}
+    r.visit([&](int&){},
+            [&](int&){}, // error: second overload matching int
+            [&](std::string&){});
+};
 ```
 
 Keep in mind, that this also affects templated arguments:
 ```cpp
-void foo(vari::uvref<a_t, b_t> r)
+auto foo = [&](vari::uvref<int, std::string> r)
 {
-    r.visit([&](a_t&){},
-            [&](auto&){}); // << second overload matching a_t, but single for b_t
-}
+    r.visit([&](int&){},
+            [&](auto&){}, // error: second overload matching int
+            [&](std::string&){});
+};
 ```
 
 As a second check: For each callable, there has to be at least one type it is callable with.
 ```cpp
-void foo(vari::vref<int, float> v)
-{
-    v.visit([&](int&){},
-            [&](std::string&){}, // compiler error
-            [&](float&){});
-}
+int i = 42;
+vari::vref<int, float> v = i;
+v.visit([&](int&){},
+        [&](std::string&){}, // error: callable does not match any type
+        [&](float&){});
 ```
 
 ## Single-type extension
@@ -203,7 +198,7 @@ struct boo_t{
     int val;
 };
 boo_t b;
-vari::vptr<boo_t> p{b};
+vari::vptr<boo_t> p = &b;
 
 p->val = 42;
 ```
@@ -217,29 +212,31 @@ To bring in even more convenience and capability, the template argument list of 
 
 Given the following type sets:
 ```cpp
-using set_a = vari::typelist<a_t, b_t>;
-using set_b = vari::typelist<c_t, d_t>;
-using set_s = vari::typelist<set_a, set_b, d_t>;
+using set_a = vari::typelist<int, std::string>;
+using set_b = vari::typelist<float, int>;
+using set_s = vari::typelist<set_a, set_b, std::string>;
 ```
-The pointer `vptr<set_s>` actually resolves to equivalent of `vptr<a_t, b_t, c_t, d_t>`. The flatenning/filtering mechanism only resolves `vari::typelist`, that means that `void<std::tuple<a_t,b_t>>` would not be resolved to different form.
+The pointer `vptr<set_s>` actually resolves to equivalent of `vptr<int, std::string, float>`. The flatenning/filtering mechanism only resolves `vari::typelist`, that means that `void<std::tuple<a_t,b_t>>` would not be resolved to different form.
 
 Why? well, suddenly one can express complex data structures. Note that the typelists also
 interact well with sub-typing:
 ```cpp
 using simple_types = vari::typelist<std::string, int, bool>;
+struct array_t{};
+struct object_t{};
 using complex_types = vari::typelist<array_t, object_t>;
 using json_types = vari::typelist<simple_types, complex_types>;
 
-std::string simple_to_str(vari::vref<simple_types> p);
+auto simple_to_str = [&](vari::vref<simple_types> p) { return std::string{}; };
 
-std::string to_str(vari::vptr<json_types> p)
+auto to_str = [&](vari::vptr<json_types> p)
 {
     using R = std::string;
     return p.visit([&](vari::empty_t) -> R { return ""; },
-                   [&](vari::vref<simple_types> pp) -> R { return simple_to_str(p); },
+                   [&](vari::vref<simple_types> pp) -> R { return simple_to_str(pp); },
                    [&](array_t& pp) -> R { /* impl */ },
                    [&](object_t& pp) -> R { /* impl */ });
-}
+};
 ```
 
 ## Lvalue conversion from unique
@@ -247,30 +244,30 @@ std::string to_str(vari::vptr<json_types> p)
 To give this even more convenience, we also allow conversion of `uvptr` and `uvref` to non-unique variants if and only if the expression is lvalue reference:
 
 ```cpp
-void foo(vari::vptr<a_t, b_t>);
+auto foo = [&](vari::vptr<int, std::string>){};
 
-vari::uvptr<a_t> p;
+vari::uvptr<int> p;
 foo(p); // allowed, `p` is lvalue
 
-foo(vari::uvptr<a_t>{}) // forbidden, rvalue used
+foo(vari::uvptr<std::string>{}); // forbidden, rvalue used
 ```
 
 ## Const
 
 All variadic types support conversion from non-const version to const version:
 ```cpp
-void foo(vari::vptr<const a_t, const b_t>)
+auto foo = [&](vari::vptr<int const, std::string const>){};
 
-vari::vptr<a_t, b_t> p;
+vari::vptr<int, std::string> p;
 foo(p);
 ```
 
 `const` is also properly propagated during typelist operations:
 ```cpp
-using set_a = vari::typelist<a_t, b_t>;
+using set_a = vari::typelist<int, std::string>;
 
 using vp_a = vari::vptr<const set_a>;
-using vp_b = vari::vptr<const a_t, const b_t>;
+using vp_b = vari::vptr<const int, const std::string>;
 ```
 Both types `vp_a` and `vp_b` are compatible.
 
@@ -290,14 +287,14 @@ the safety checks of `visit`:
 ```cpp
 // factory used by the library to create instances of types
 auto factory = [&]<vari::index_type i>{
-    return std::integral_constant<i, std::size_t>{};
+    return std::integral_constant<std::size_t, i>{};
 };
 // runtime index
 vari::index_type v = 4;
 vari::dispatch<42>(
     v,
     factory,
-    [&]<std::size_t j>(std::integral_constant<j, std::size_t>){
+    [&]<std::size_t j>(std::integral_constant<std::size_t, j>){
         // `j` matches value of `v`
     });
 ```
