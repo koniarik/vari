@@ -1,8 +1,9 @@
 var classvari_1_1__vref =
 [
     [ "pointer", "classvari_1_1__vref.html#a12c94515621bc3398e4e0fe77913d6c0", null ],
+    [ "reference", "classvari_1_1__vref.html#ac853369a6d3c6927313cd5a70dc5d1f1", null ],
     [ "types", "classvari_1_1__vref.html#af6b0203c0694f29db107deac7b1023a8", null ],
-    [ "_vref", "classvari_1_1__vref.html#a3f85869c8302deae7ca7e3108a4fa297", null ],
+    [ "_vref", "classvari_1_1__vref.html#a667f9ba839be9a4e507290614455e775", null ],
     [ "_vref", "classvari_1_1__vref.html#a0e21cba8f38e5df93fd0a1cece2f13a7", null ],
     [ "get", "classvari_1_1__vref.html#a6ed1b58d8695c58c4081fcf572389cdb", null ],
     [ "index", "classvari_1_1__vref.html#a5d224d443de1045e3f57cec361a6a26b", null ],
