@@ -30,21 +30,24 @@
 namespace vari
 {
 
+// Non-nullable pointer to one of types in Ts....
 template < typename... Ts >
 class _vref
 {
 public:
-        using types = typelist< Ts... >;
+        using types     = typelist< Ts... >;
+        using pointer   = _vptr< Ts... >;
+        using reference = _vref< Ts... >;
 
-        using pointer = _vptr< Ts... >;
-
+        // Copy constructor for any compatible vref
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _vref( _vref< Us... > p ) noexcept
+        constexpr _vref( _vref< Us... > const& p ) noexcept
           : _core( p._core )
         {
         }
 
+        // Construct vref from reference to one of types referenceable by vref
         template < typename U >
                 requires( vconvertible_to< typelist< U >, types > )
         constexpr _vref( U& u ) noexcept
@@ -52,26 +55,35 @@ public:
                 _core.set( u );
         }
 
+        // Dereference to pointed-to type, it is T& in case there is only one type in `Ts...`, void&
+        // otherwise
         constexpr auto& operator*() const noexcept
         {
                 return *_core.ptr;
         }
 
+        // Member access to pointed-to type, it is T* in case there is only one type in `Ts...`,
+        // void* otherwise
         constexpr auto* operator->() const noexcept
         {
                 return _core.ptr;
         }
 
+        // Returns pointer to pointed-to type, it is T* in case there is only one type in `Ts...`,
+        // void* otherwise
         constexpr auto* get() const noexcept
         {
                 return _core.ptr;
         }
 
+        // Returns index representing index of type currently being pointed-to by the reference.
+        // Index of first type is 0, rest is sequential from that.
         [[nodiscard]] constexpr index_type index() const noexcept
         {
                 return _core.get_index();
         }
 
+        // If reference can point only to one type, allows conversion into reference to such type.
         template < typename U >
                 requires( vconvertible_to< types, typelist< U > > )
         constexpr operator U&() const noexcept
@@ -79,6 +91,7 @@ public:
                 return *_core.ptr;
         }
 
+        // Creates variadic pointer pointing to same thing as current reference.
         constexpr pointer vptr() const& noexcept
         {
                 pointer res;
@@ -86,6 +99,8 @@ public:
                 return res;
         }
 
+        // With the current pointed-to value, calls callable out of `fs...` list matching the value
+        // type.
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... fs ) const
         {
@@ -94,11 +109,13 @@ public:
                 return _core.visit_impl( (Fs&&) fs... );
         }
 
+        // Swaps current reference with another one
         friend constexpr void swap( _vref& lh, _vref& rh ) noexcept
         {
                 swap( lh._core, rh._core );
         }
 
+        // Compares internal pointers of both references
         friend constexpr auto operator<=>( _vref const& lh, _vref const& rh ) = default;
 
 private:
