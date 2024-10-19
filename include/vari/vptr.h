@@ -30,6 +30,8 @@
 namespace vari
 {
 
+/// A nullable pointer to one of the types in Ts...
+///
 template < typename... Ts >
 class _vptr
 {
@@ -44,24 +46,32 @@ public:
         constexpr _vptr& operator=( _vptr const& )     = default;
         constexpr _vptr& operator=( _vptr&& ) noexcept = default;
 
+        /// Construct pointer in null state.
+        ///
         constexpr _vptr( std::nullptr_t ) noexcept
         {
         }
 
+        /// Copy constructor for any compatible vref.
+        ///
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr explicit _vptr( _vref< Us... > r ) noexcept
-          : _core( std::move( r._core ) )
+        constexpr explicit _vptr( _vref< Us... > const& r ) noexcept
+          : _core( r._core )
         {
         }
 
+        /// Copy constructor for any compatible vref.
+        ///
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _vptr( _vptr< Us... > p ) noexcept
-          : _core( std::move( p._core ) )
+        constexpr _vptr( _vptr< Us... > const& p ) noexcept
+          : _core( p._core )
         {
         }
 
+        /// Constructs a vptr from a pointer to one of the types that vptr can reference.
+        ///
         template < typename U >
                 requires( vconvertible_to< typelist< U >, types > )
         constexpr _vptr( U* u ) noexcept
@@ -70,31 +80,44 @@ public:
                         _core.set( *u );
         }
 
+        /// Dereferences to the pointed-to type. It is `T&` if there is only one type in `Ts...`,
+        /// or `void&` otherwise. UB on null pointer.
         constexpr auto& operator*() const noexcept
         {
                 return *_core.ptr;
         }
 
+        /// Provides member access to the pointed-to type. It is `T*` if there is only one type in
+        /// `Ts...`, or `void*` otherwise. UB on null pointer.
         constexpr auto* operator->() const noexcept
         {
                 return _core.ptr;
         }
 
+        /// Returns a pointer to the pointed-to type. It is `T*` if there is only one type in
+        /// `Ts...`, or `void*` otherwise. Can be null.
         constexpr auto* get() const noexcept
         {
                 return _core.ptr;
         }
 
+        /// Returns the index representing the type currently being referenced.
+        /// The index of the first type is 0, with subsequent types sequentially numbered.
+        /// `null_index` constant is used in case the pointer is null.
         [[nodiscard]] constexpr index_type index() const noexcept
         {
                 return _core.get_index();
         }
 
+        /// Conversion to bool signaling whether pointer is null (false) or points to someting
+        /// (true).
         constexpr operator bool() const noexcept
         {
                 return _core.ptr != nullptr;
         }
 
+        /// Creates a variadic reference that points to the same target as the current reference.
+        /// UB in case this pointer is null.
         constexpr reference vref() const noexcept
         {
                 assert( _core.ptr );
@@ -104,6 +127,8 @@ public:
                 return r;
         }
 
+        /// Calls the appropriate function from the list `fs...`, based on the type of the current
+        /// pointed-to value, or one with `empty_t` in case of null pointer.
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... fs ) const
         {
@@ -116,11 +141,15 @@ public:
         }
 
 
+        /// Swaps the current reference with another one.
+        ///
         friend constexpr void swap( _vptr& lh, _vptr& rh ) noexcept
         {
                 swap( lh._core, rh._core );
         }
 
+        /// Compares the internal pointers of both pointers.
+        ///
         friend constexpr auto operator<=>( _vptr const& lh, _vptr const& rh ) = default;
 
 private:
@@ -136,6 +165,8 @@ private:
         friend class _uvptr;
 };
 
+/// A nullable pointer to types derived out of `Ts...` list by flattening it and filtering for
+/// unique types.
 template < typename... Ts >
 using vptr = _define_variadic< _vptr, typelist< Ts... > >;
 

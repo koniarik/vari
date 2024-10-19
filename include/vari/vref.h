@@ -30,7 +30,7 @@
 namespace vari
 {
 
-/// Non-nullable pointer to one of types in Ts....
+/// A non-nullable pointer to one of the types in Ts...
 ///
 template < typename... Ts >
 class _vref
@@ -40,7 +40,7 @@ public:
         using pointer   = _vptr< Ts... >;
         using reference = _vref< Ts... >;
 
-        /// Copy constructor for any compatible vref
+        /// Copy constructor for any compatible vref.
         ///
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
@@ -49,7 +49,7 @@ public:
         {
         }
 
-        /// Construct vref from reference to one of types referenceable by vref
+        /// Constructs a vref from a reference to one of the types that vref can reference.
         ///
         template < typename U >
                 requires( vconvertible_to< typelist< U >, types > )
@@ -58,36 +58,36 @@ public:
                 _core.set( u );
         }
 
-        /// Dereference to pointed-to type, it is T& in case there is only one type in `Ts...`,
-        /// void& otherwise
+        /// Dereferences to the pointed-to type. It is `T&` if there is only one type in `Ts...`,
+        /// or `void&` otherwise.
         constexpr auto& operator*() const noexcept
         {
                 return *_core.ptr;
         }
 
-        /// Member access to pointed-to type, it is T* in case there is only one type in `Ts...`,
-        /// void* otherwise
+        /// Provides member access to the pointed-to type. It is `T*` if there is only one type in
+        /// `Ts...`, or `void*` otherwise.
         constexpr auto* operator->() const noexcept
         {
                 return _core.ptr;
         }
 
-        /// Returns pointer to pointed-to type, it is T* in case there is only one type in `Ts...`,
-        /// void* otherwise
+        /// Returns a pointer to the pointed-to type. It is `T*` if there is only one type in
+        /// `Ts...`, or `void*` otherwise.
         constexpr auto* get() const noexcept
         {
                 return _core.ptr;
         }
 
-        /// Returns index representing index of type currently being pointed-to by the reference.
-        /// Index of first type is 0, rest is sequential from that.
+        /// Returns the index representing the type currently being referenced.
+        /// The index of the first type is 0, with subsequent types sequentially numbered.
         [[nodiscard]] constexpr index_type index() const noexcept
         {
                 return _core.get_index();
         }
 
-        /// If reference can point only to one type, allows conversion into reference to such type.
-        ///
+        /// If the reference can only point to one type, it allows conversion to a reference of that
+        /// type.
         template < typename U >
                 requires( vconvertible_to< types, typelist< U > > )
         constexpr operator U&() const noexcept
@@ -95,7 +95,7 @@ public:
                 return *_core.ptr;
         }
 
-        /// Creates variadic pointer pointing to same thing as current reference.
+        /// Creates a variadic pointer that points to the same target as the current reference.
         ///
         constexpr pointer vptr() const& noexcept
         {
@@ -104,8 +104,8 @@ public:
                 return res;
         }
 
-        /// With the current pointed-to value, calls callable out of `fs...` list matching the value
-        /// type.
+        /// Calls the appropriate function from the list `fs...`, based on the type of the current
+        /// pointed-to value.
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... fs ) const
         {
@@ -114,14 +114,14 @@ public:
                 return _core.visit_impl( (Fs&&) fs... );
         }
 
-        /// Swaps current reference with another one
+        /// Swaps the current reference with another one.
         ///
         friend constexpr void swap( _vref& lh, _vref& rh ) noexcept
         {
                 swap( lh._core, rh._core );
         }
 
-        /// Compares internal pointers of both references
+        /// Compares the internal pointers of both references.
         ///
         friend constexpr auto operator<=>( _vref const& lh, _vref const& rh ) = default;
 
@@ -140,6 +140,8 @@ private:
         friend class _uvptr;
 };
 
+/// A non-nullable pointer to types derived out of `Ts...` list by flattening it and filtering for
+/// unique types.
 template < typename... Ts >
 using vref = _define_variadic< _vref, typelist< Ts... > >;
 
