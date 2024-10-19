@@ -47,14 +47,16 @@ def gen_cpp(lines):
     namespace vari{{
 
     TEST_CASE("readme"){{
+
+        struct a_t{{}};
+        struct b_t{{}};
+
     """
 
-    i = -1
     for l in lines:
         if l == snippet.START:
-            i += 1
             yield f"""
-                SUBCASE("{i}") {{
+                {{
             """
         elif l == snippet.END:
             yield f"""
