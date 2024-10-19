@@ -157,7 +157,10 @@ Friends</h2></td></tr>
 <tr class="memitem:af4e042982ccc08b168560409b60ac861"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__vref.html#af4e042982ccc08b168560409b60ac861">operator&lt;=&gt;</a> (<a class="el" href="classvari_1_1__vref.html">_vref</a> const &amp;lh, <a class="el" href="classvari_1_1__vref.html">_vref</a> const &amp;rh)=default</td></tr>
 <tr class="separator:af4e042982ccc08b168560409b60ac861"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename... Ts&gt;<br />
+class vari::_vref&lt; Ts &gt;</div><p >Non-nullable pointer to one of types in Ts.... </p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a12c94515621bc3398e4e0fe77913d6c0" name="a12c94515621bc3398e4e0fe77913d6c0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a12c94515621bc3398e4e0fe77913d6c0">&#9670;&#160;</a></span>pointer</h2>
 
@@ -235,6 +238,7 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Copy constructor for any compatible vref </p>
 
 </div>
 </div>
@@ -266,6 +270,7 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Construct vref from reference to one of types referenceable by vref </p>
 
 </div>
 </div>
@@ -294,6 +299,7 @@ template&lt;typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Returns pointer to pointed-to type, it is T* in case there is only one type in <code>Ts...</code>, void* otherwise </p>
 
 </div>
 </div>
@@ -321,6 +327,7 @@ template&lt;typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Returns index representing index of type currently being pointed-to by the reference. Index of first type is 0, rest is sequential from that. </p>
 
 </div>
 </div>
@@ -351,6 +358,7 @@ requires ( vconvertible_to&lt; <a class="el" href="classvari_1_1__vref.html#af6b
   </tr>
 </table>
 </div><div class="memdoc">
+<p >If reference can point only to one type, allows conversion into reference to such type. </p>
 
 </div>
 </div>
@@ -378,6 +386,7 @@ template&lt;typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Dereference to pointed-to type, it is T&amp; in case there is only one type in <code>Ts...</code>, void&amp; otherwise </p>
 
 </div>
 </div>
@@ -405,6 +414,7 @@ template&lt;typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Member access to pointed-to type, it is T* in case there is only one type in <code>Ts...</code>, void* otherwise </p>
 
 </div>
 </div>
@@ -435,6 +445,7 @@ template&lt;typename... Fs&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >With the current pointed-to value, calls callable out of <code>fs...</code> list matching the value type. </p>
 
 </div>
 </div>
@@ -462,6 +473,7 @@ template&lt;typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Creates variadic pointer pointing to same thing as current reference. </p>
 
 </div>
 </div>
@@ -605,6 +617,7 @@ template&lt;typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Compares internal pointers of both references </p>
 
 </div>
 </div>
@@ -643,6 +656,7 @@ template&lt;typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Swaps current reference with another one </p>
 
 </div>
 </div>
