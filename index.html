@@ -164,14 +164,14 @@ Visit</h3>
 <div class="line">            } );</div>
 <div class="line">        <span class="keywordflow">return</span> front;</div>
 <div class="line">};</div>
-<div class="ttc" id="anamespacevari_html_a0b711b10138e06f9d5b455ff55c663d0"><div class="ttname"><a href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a></div><div class="ttdeci">_define_variadic&lt; _vref, typelist&lt; Ts... &gt; &gt; vref</div><div class="ttdef"><b>Definition:</b> vref.h:144</div></div>
+<div class="ttc" id="anamespacevari_html_a0b711b10138e06f9d5b455ff55c663d0"><div class="ttname"><a href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a></div><div class="ttdeci">_define_variadic&lt; _vref, typelist&lt; Ts... &gt; &gt; vref</div><div class="ttdef"><b>Definition:</b> vref.h:146</div></div>
 </div><!-- fragment --><p >For pointers, there must be a callable that accepting <code><a class="el" href="structvari_1_1empty__t.html">vari::empty_t</a></code> to handle cases where the pointer is null:</p>
 <div class="fragment"><div class="line"><a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;int, std::string&gt;</a> r = <span class="keyword">nullptr</span>;</div>
 <div class="line"> </div>
 <div class="line">r.visit([&amp;](<a class="code hl_struct" href="structvari_1_1empty__t.html">vari::empty_t</a>){},</div>
 <div class="line">        [&amp;](<span class="keywordtype">int</span>&amp;){},</div>
 <div class="line">        [&amp;](std::string&amp;){});</div>
-<div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdef"><b>Definition:</b> vptr.h:140</div></div>
+<div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdef"><b>Definition:</b> vptr.h:171</div></div>
 <div class="ttc" id="astructvari_1_1empty__t_html"><div class="ttname"><a href="structvari_1_1empty__t.html">vari::empty_t</a></div><div class="ttdef"><b>Definition:</b> util.h:33</div></div>
 </div><!-- fragment --><p >Variadic references can be constructed with references to any of the possible types:</p>
 <div class="fragment"><div class="line">std::string a;</div>
