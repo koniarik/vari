@@ -10,13 +10,13 @@ Variadic library
 
 C++ has `std::variant<Ts...>` as a tagged union, but we find it lacking in capabilities and just plain ... bad.
 
-`vari` introduces enhanced alternatives with different API, improved way of definition, or more flexible conversion between types.
+`vari` introduces enhanced alternatives with a more advanced API, flexible type conversions, and improved ways to define variadic types.
 
-4 basic types introduced by the library:
- - `vptr<Ts...>` - pointer to any type out of `Ts...` or null pointer
- - `vref<Ts...>` - reference to any type out of `Ts...`
- - `uvptr<Ts...>` - owning pointer to any type out of `Ts...` or null pointer
- - `uvref<Ts...>` - owning reference to any type out of `Ts...`
+The library introduces four basic types:
+ - `vptr<Ts...>` - A pointer to any type out of `Ts...`, which can be null.
+ - `vref<Ts...>` - A reference to any type out of `Ts...`.
+ - `uvptr<Ts...>` - A unique (owning) pointer to any type out of `Ts...`, which can be null.
+ - `uvref<Ts...>` - A unique (owning) reference to any type out of `Ts...`.
 
 ---
 
@@ -38,7 +38,7 @@ C++ has `std::variant<Ts...>` as a tagged union, but we find it lacking in capab
 
 ## vref and vptr
 
-`vref` and `vptr` point to any type in specified list of types, `vref` guarantees that it points to something, while `vptr` can be null.
+`vref` and `vptr` are used to point to any type from a specified list of types. The `vref` always points to a valid object, whereas `vptr` can be null.
 
 ```cpp
 auto foo = [&](vref<int, float> v){
@@ -53,12 +53,11 @@ float f;
 foo(f); // << vref<int, float> points to `f`
 ```
 
-Here `foo` accepts vref that always references either `int` or `float value`.
+Here `foo` accepts a `vref` that references either an `int` or a `float`.
 
 ## uvptr and uvref
 
-`u` prefixed variants imply ownership (unique), this way we can use them to
-manage lifetimes of allocated objects.
+The `u`-prefixed variants (`uvptr` and `uvref`) imply unique ownership, which means they manage the lifetimes of objects.
 
 ```cpp
 struct a_t{};
@@ -68,8 +67,7 @@ vari::uvptr<a_t, b_t> p;
 
 ```
 
-Similar (but not same) to `std::make_unique`, we have a friendly function to build
-the unique variants: `uwrap`
+Similar to `std::make_unique`, we provide a function `uwrap` for construction of unique variants:
 
 ```cpp
 uvref<std::string, int> p = uwrap(std::string{"wololo"});
@@ -77,17 +75,15 @@ uvref<std::string, int> p = uwrap(std::string{"wololo"});
 
 Here `uwrap` creates `uvref<std::string>` which gets converted into `uvref<std::string,int>` due to implicit conversion.
 
-WARNING: `uvref` is movable object, once moved-from, it is put into `null` state - something not
-possible otherwise. It shall not be used in this state in any matter except to be assigned-to.
+WARNING: `uvref` is movable, and when moved from, it enters a null state. It shall not be used in this state except for reassignment.
 
 ## Access API
 
-How to access the internal type? `vptr`, `vref`, `uvptr`, and `uvref` have `visit` method as the main interface.
-`u` variants also have `take` to steal ownership.
+To access the underlying type, `vptr`, `vref`, `uvptr`, and `uvref` use the `visit` method as the  primary interface. The `u` variants also have `take` to transfer ownership.
 
 ### Visit
 
-`visit` recreates approach similar to `std::visit`, except that we allow multiple callables instead of multiple variadics. Note that we can handle returning references from callables:
+The `visit` method works similarly to `std::visit` but allows multiple callables:
 
 ```cpp
 auto foo = [&]( vari::vref< std::vector< std::string >, std::list< std::string > > r ) -> std::string&
@@ -103,9 +99,7 @@ auto foo = [&]( vari::vref< std::vector< std::string >, std::list< std::string >
 };
 ```
 
-For each type of variadic, the `visit` expects to get one and only one callable accepting reference to that type.
-
-In case of pointers, we opted to introduce empty branch for cases when it is null.
+For pointers, there must be a callable that accepting `vari::empty_t` to handle cases where the pointer is null:
 
 ```cpp
 vari::vptr<int, std::string> r = nullptr;
@@ -115,14 +109,14 @@ r.visit([&](vari::empty_t){},
         [&](std::string&){});
 ```
 
-Variadic references are constructible with references - all of the possible types:
+Variadic references can be constructed with references to any of the possible types:
 
 ```cpp
 std::string a;
 vari::vref<int, std::string> r = a;
 ```
 
-This also means that we can combine this with visit - the callable can handle multiple types:
+This also allows us to combine it with `visit`, where the callable can handle multiple types:
 
 ```cpp
 vari::uvptr<int, std::string> r;
@@ -145,8 +139,7 @@ r.visit([&](vari::empty_t){},
 
 ### Take
 
-`uvref` and `uvptr` retain ownership of referenced items, `take` allows stealing the ownership
-from the owner:
+`uvref` and `uvptr` retain ownership of referenced items, the `take` method is used to transfer ownership:
 
 ```cpp
 auto foo = [&](vari::uvref<int, std::string> r)
@@ -158,7 +151,7 @@ auto foo = [&](vari::uvref<int, std::string> r)
 
 ## Sub-typing
 
-All variadic types support sub-typing - any variadic type can be converted to a type representing superset of types:
+All variadic types support sub-typing, meaning any variadic type can be converted into a type that represents a superset of its types:
 
 ```cpp
 std::string a;
@@ -171,7 +164,7 @@ vari::vref<int, std::string> p2 = p;
 vari::vref<int, std::string> p3 = p2;
 ```
 
-This also interacts well with `take`:
+This feature also works seamlessly with `take`:
 
 ```cpp
 struct a_t{};
@@ -187,15 +180,15 @@ auto foo = [&](vari::uvptr<a_t, b_t, c_t, d_t> p)
 };
 ```
 
-The way we can imagine this is: `p` can represent set of 4 types, `take` splits that into four unique references, each representing one type, *sub-typing* allows merging these references together - into two subsets, each made of two types.
+In this example, `p` represents a set of four types. The `take` method allows us to split this set into four unique references, each representing one type. Sub-typing enables us to combine these references into two subsets, each consisting of two types.
 
 Note: As a side-effect of this, `vptr<a_t, b_t>` is naturally convertible to `vptr<b_t, a_t>`
 
 ## Concepts checks
 
-Access methods are subjected to sanity checking of the set of callbacks: For each type in the set of types, one and only one callback can be called.
+Access methods are subject to sanity checks on the set of provided callbacks: for each type in the set, exactly one callback must be callable.
 
-That is, following would fail to compile due to concept check:
+For instance, the following code would fail to compile due to a concept check violation:
 
 ```cpp
 auto foo = [&](vari::uvref<int, std::string> r)
@@ -206,7 +199,7 @@ auto foo = [&](vari::uvref<int, std::string> r)
 };
 ```
 
-Keep in mind, that this also affects templated arguments:
+Note that this rule also applies to templated arguments:
 
 ```cpp
 auto foo = [&](vari::uvref<int, std::string> r)
@@ -217,7 +210,7 @@ auto foo = [&](vari::uvref<int, std::string> r)
 };
 ```
 
-As a second check: For each callable, there has to be at least one type it is callable with.
+Another important check: each callable must be compatible with at least one type in the set.
 
 ```cpp
 int i = 42;
@@ -229,8 +222,7 @@ v.visit([&](int&){},
 
 ## Single-type extension
 
-To make work with variants a bit more convenient, all allow direct access to pointed-to type in
-case it is single type in the type-list:
+To make working with variants more convenient, all variadic types allow direct access to the pointed-to type if there is only a single type in the type list:
 
 ```cpp
 struct boo_t{
@@ -242,20 +234,18 @@ vari::vptr<boo_t> p = &b;
 p->val = 42;
 ```
 
-That is, in case there is only one type allowed, the signature of common methods is:
-`T* vptr<T>::operator()`
+This feature makes `vref` a useful replacement for raw references in structures:
 
-Note that this makes `vref` a convenient replacement for raw references in structures:
 ```cpp
 struct my_type{
     vref<std::string> str;
 };
 ```
-Using `std::string& str` would remove ability to assign into the structure, `vref` does not.
+If you used `std::string& str`, it would prevent the ability to reassign the reference within the structure. `vref`, however, does not have this limitation, allowing reassignment.
 
 ## Type-sets
 
-To bring in even more convenience and capability, the template argument list of variadics is capable of flattening and filtering the types for uniqueness.
+For added convenience and functionality, the template argument list of variadic types can flatten and filter types for uniqueness.
 
 Given the following type sets:
 
@@ -265,10 +255,9 @@ using set_b = vari::typelist<float, int>;
 using set_s = vari::typelist<set_a, set_b, std::string>;
 ```
 
-The pointer `vptr<set_s>` resolves to equivalent of `vptr<int, std::string, float>`. The flatenning/filtering mechanism only resolves `vari::typelist`, `void<std::tuple<a_t,b_t>>` would not be resolved to different form.
+The pointer `vptr<set_s>` resolves to the equivalent of `vptr<int, std::string, float>`. The flattening and filtering mechanism only applies to `vari::typelist`. For example, `void<std::tuple<a_t,b_t>>` would not be automatically resolved to a different form.
 
-Why? well, suddenly one can express complex data structures. Note that the typelists also
-interact well with sub-typing:
+Why is this useful? It allows expressing complex data structures more effectively. Moreover, the typelists also interact well with sub-typing:
 
 ```cpp
 
@@ -290,9 +279,11 @@ auto to_str = [&](vari::vptr<json_types> p)
 };
 ```
 
+This approach makes it easier to handle complex type hierarchies while preserving the flexibility and power of variadic types.
+
 ## Lvalue conversion from unique
 
-To give this even more convenience, we also allow conversion of `uvptr` and `uvref` to non-unique variants if and only if the expression is lvalue reference:
+For added convenience, the library allows converting `uvptr` and `uvref` to their non-unique counterparts, but only if the expression is an lvalue reference:
 
 ```cpp
 auto foo = [&](vari::vptr<int, std::string>){};
@@ -348,13 +339,13 @@ vari::index_type v = 2;
 vari::dispatch<3>(
     v,
     factory,
-    [&](std::integral_constant<std::size_t, 0>&){
+    [&](std::integral_constant<std::size_t, 0>){
         // `j` matches value of `v`
     },
-    [&](std::integral_constant<std::size_t, 1>&){
+    [&](std::integral_constant<std::size_t, 1>){
         // `j` matches value of `v`
     },
-    [&](std::integral_constant<std::size_t, 2>&){
+    [&](std::integral_constant<std::size_t, 2>){
         // `j` matches value of `v`
     });
 ```
