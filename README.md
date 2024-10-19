@@ -1,6 +1,8 @@
 <div align="center">
 
-# Variadic library
+Variadic library
+
+---
 
 [Example](/example.cpp) - [Documentation](https://koniarik.github.io/vari/)
 
@@ -16,21 +18,22 @@ C++ has `std::variant<Ts...>` as a tagged union, but we find it lacking in capab
  - `uvptr<Ts...>` - owning pointer to any type out of `Ts...` or null pointer
  - `uvref<Ts...>` - owning reference to any type out of `Ts...`
 
-- [Variadic library](#variadic-library)
-  - [vref and vptr](#vref-and-vptr)
-  - [uvptr and uvref](#uvptr-and-uvref)
-  - [Access API](#access-api)
-    - [Visit](#visit)
-    - [Take](#take)
-  - [Sub-typing](#sub-typing)
-  - [Concepts checks](#concepts-checks)
-  - [Single-type extension](#single-type-extension)
-  - [Type-sets](#type-sets)
-  - [Lvalue conversion from unique](#lvalue-conversion-from-unique)
-  - [Const](#const)
-  - [Typelist compatibility](#typelist-compatibility)
-  - [Dispatch](#dispatch)
-  - [Credits](#credits)
+---
+
+- [vref and vptr](#vref-and-vptr)
+- [uvptr and uvref](#uvptr-and-uvref)
+- [Access API](#access-api)
+  - [Visit](#visit)
+  - [Take](#take)
+- [Sub-typing](#sub-typing)
+- [Concepts checks](#concepts-checks)
+- [Single-type extension](#single-type-extension)
+- [Type-sets](#type-sets)
+- [Lvalue conversion from unique](#lvalue-conversion-from-unique)
+- [Const](#const)
+- [Typelist compatibility](#typelist-compatibility)
+- [Dispatch](#dispatch)
+- [Credits](#credits)
 
 
 ## vref and vptr
