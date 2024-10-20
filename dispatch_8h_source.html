@@ -93,10 +93,10 @@ $(document).ready(function(){initNavTree('dispatch_8h_source.html',''); initResi
   <div class="headertitle"><div class="title">dispatch.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="dispatch_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="bits_2dispatch_8h.html">vari/bits/dispatch.h</a>&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;vari/bits/dispatch.h&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacevari.html">vari</a></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
@@ -106,33 +106,27 @@ $(document).ready(function(){initNavTree('dispatch_8h_source.html',''); initResi
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">//</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">// `i` has to fit in range 0..N-1, any other value is undefined behavior.</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">template</span> &lt; std::size_t N, <span class="keyword">typename</span> Cnv, <span class="keyword">typename</span>... Fn &gt;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="namespacevari.html#a92099510e47cb6e84c5463cbc11215c8">   14</a></span><span class="keyword">constexpr</span> <span class="keyword">decltype</span>( auto ) <a class="code hl_function" href="namespacevari.html#a92099510e47cb6e84c5463cbc11215c8">dispatch</a>( <a class="code hl_typedef" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> i, Cnv&amp;&amp; cnv, Fn&amp;&amp;... fn )</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">constexpr</span> <span class="keyword">decltype</span>( auto ) dispatch( index_type i, Cnv&amp;&amp; cnv, Fn&amp;&amp;... fn )</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keyword">using </span>types = <a class="code hl_typedef" href="namespacevari.html#aa00d161fa7e1bab2a74805b901403a64">factory_result_types_t&lt; N, Cnv &gt;</a>;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keyword">using </span>types = factory_result_types_t&lt; N, Cnv &gt;;</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keyword">typename</span> <a class="code hl_struct" href="structvari_1_1__check__unique__invocability.html">_check_unique_invocability&lt; types &gt;::template</a> with_pure_value&lt; Fn... &gt; _{};</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keyword">typename</span> _check_unique_invocability&lt; types &gt;::template with_pure_value&lt; Fn... &gt; _{};</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keywordflow">return</span> _dispatch_index&lt; 0, N &gt;( i, [&amp;]&lt; <a class="code hl_typedef" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a> j &gt;() -&gt; <span class="keyword">decltype</span>( <span class="keyword">auto</span> ) {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keywordflow">return</span> _dispatch_index&lt; 0, N &gt;( i, [&amp;]&lt; index_type j &gt;() -&gt; <span class="keyword">decltype</span>( <span class="keyword">auto</span> ) {</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>                <span class="keyword">auto</span>&amp;&amp; item = cnv.template operator()&lt; j &gt;();</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="namespacevari.html#a77d23e28b947e6b21d5e530859632e20">_dispatch_fun</a>( (<span class="keyword">decltype</span>( item )&amp;&amp;) item, (Fn&amp;&amp;) fn... );</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>                <span class="keywordflow">return</span> _dispatch_fun( (<span class="keyword">decltype</span>( item )&amp;&amp;) item, (Fn&amp;&amp;) fn... );</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        } );</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>}</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>}  <span class="comment">// namespace vari</span></div>
-<div class="ttc" id="abits_2dispatch_8h_html"><div class="ttname"><a href="bits_2dispatch_8h.html">dispatch.h</a></div></div>
 <div class="ttc" id="anamespacevari_html"><div class="ttname"><a href="namespacevari.html">vari</a></div><div class="ttdef"><b>Definition:</b> dispatch.h:28</div></div>
-<div class="ttc" id="anamespacevari_html_a4c4b642a120de6f97cef24c8b60fb2ce"><div class="ttname"><a href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">vari::index_type</a></div><div class="ttdeci">uint32_t index_type</div><div class="ttdef"><b>Definition:</b> util.h:169</div></div>
-<div class="ttc" id="anamespacevari_html_a77d23e28b947e6b21d5e530859632e20"><div class="ttname"><a href="namespacevari.html#a77d23e28b947e6b21d5e530859632e20">vari::_dispatch_fun</a></div><div class="ttdeci">constexpr decltype(auto) _dispatch_fun(T &amp;&amp;item, Fs &amp;&amp;... fs)</div><div class="ttdef"><b>Definition:</b> dispatch.h:89</div></div>
-<div class="ttc" id="anamespacevari_html_a92099510e47cb6e84c5463cbc11215c8"><div class="ttname"><a href="namespacevari.html#a92099510e47cb6e84c5463cbc11215c8">vari::dispatch</a></div><div class="ttdeci">constexpr decltype(auto) dispatch(index_type i, Cnv &amp;&amp;cnv, Fn &amp;&amp;... fn)</div><div class="ttdef"><b>Definition:</b> dispatch.h:14</div></div>
-<div class="ttc" id="anamespacevari_html_aa00d161fa7e1bab2a74805b901403a64"><div class="ttname"><a href="namespacevari.html#aa00d161fa7e1bab2a74805b901403a64">vari::factory_result_types_t</a></div><div class="ttdeci">typename _factory_result_types_impl&lt; typelist&lt;&gt;, N, Fac &gt;::type factory_result_types_t</div><div class="ttdef"><b>Definition:</b> typelist.h:434</div></div>
-<div class="ttc" id="astructvari_1_1__check__unique__invocability_html"><div class="ttname"><a href="structvari_1_1__check__unique__invocability.html">vari::_check_unique_invocability</a></div><div class="ttdef"><b>Definition:</b> util.h:77</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_77fe58ad75b6e7ce12eb0d54c41bb7ab.html">vari</a></li><li class="navelem"><a class="el" href="dispatch_8h.html">dispatch.h</a></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_77fe58ad75b6e7ce12eb0d54c41bb7ab.html">vari</a></li><li class="navelem"><b>dispatch.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5 </li>
   </ul>
 </div>

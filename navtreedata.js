@@ -45,7 +45,6 @@ var NAVTREE =
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
         [ "Functions", "namespacemembers_func.html", null ],
-        [ "Variables", "namespacemembers_vars.html", null ],
         [ "Typedefs", "namespacemembers_type.html", null ]
       ] ]
     ] ],
@@ -55,19 +54,13 @@ var NAVTREE =
       [ "Class Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
-        [ "All", "functions.html", "functions_dup" ],
+        [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ],
-        [ "Typedefs", "functions_type.html", null ],
         [ "Related Functions", "functions_rela.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ],
-      [ "File Members", "globals.html", [
-        [ "All", "globals.html", null ],
-        [ "Macros", "globals_defs.html", null ]
-      ] ]
+      [ "File List", "files.html", "files_dup" ]
     ] ]
   ] ]
 ];
@@ -75,10 +68,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"functions_func.html",
-"structvari_1_1__uvref.html#ac2de862a2e6fe223aa2ba7a27eafa13f",
-"unionvari_1_1__val__union_3_01typelist_3_01T0_00_01T1_00_01T2_00_01T3_00_01T4_00_01T5_00_01T6_0090d1f26fba15c07340eb844bf58e0d53.html#a750fdad5310affd3b9f0fe45f120d4a4",
-"unionvari_1_1__val__union_3_01typelist_3_01T0_00_01T1_00_01T2_00_01T3_01_4_01_4.html#a69c08aadd543e41eb4cb00f455f58b5c"
+"structvari_1_1__uvref.html#ae808835f60352862ef79890e91fb2bd1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

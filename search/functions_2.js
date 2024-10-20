@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['compare_0',['compare',['../structvari_1_1__val__core.html#a156f289f0a826e32f428e908404dc4f9',1,'vari::_val_core']]],
-  ['conv_1',['conv',['../structvari_1_1__vptr__cnv__map_3_01TL_00_01typelist_3_01Us_8_8_8_01_4_01_4.html#a4329cd1a433656762d05dd7e48417e66',1,'vari::_vptr_cnv_map&lt; TL, typelist&lt; Us... &gt; &gt;']]]
+  ['index_0',['index',['../classvari_1_1__uvptr.html#a793e60a27132226f6654282aaaf5aa78',1,'vari::_uvptr::index()'],['../structvari_1_1__uvref.html#aa95ff8c3744b3ae0e85187c61c64ac47',1,'vari::_uvref::index()'],['../classvari_1_1__vptr.html#ab6093ade16c20f2edb5ab39a645b0895',1,'vari::_vptr::index()'],['../classvari_1_1__vref.html#a5d224d443de1045e3f57cec361a6a26b',1,'vari::_vref::index()']]]
 ];

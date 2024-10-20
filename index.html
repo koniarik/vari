@@ -142,7 +142,7 @@ uvptr and uvref</h2>
 <div class="line"><span class="keyword">struct </span>b_t{};</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;a_t, b_t&gt;</a> p;</div>
-<div class="ttc" id="anamespacevari_html_a3be05c6f854dc1b903a2a85e244bbdc5"><div class="ttname"><a href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr</a></div><div class="ttdeci">_define_variadic&lt; _uvptr, typelist&lt; Ts... &gt;, def_del &gt; uvptr</div><div class="ttdef"><b>Definition:</b> uvptr.h:218</div></div>
+<div class="ttc" id="anamespacevari_html_a3be05c6f854dc1b903a2a85e244bbdc5"><div class="ttname"><a href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr</a></div><div class="ttdeci">_define_variadic&lt; _uvptr, typelist&lt; Ts... &gt;, def_del &gt; uvptr</div><div class="ttdef"><b>Definition:</b> uvptr.h:281</div></div>
 </div><!-- fragment --><p >Similar to <code>std::make_unique</code>, we provide a function <code>uwrap</code> for construction of unique variants:</p>
 <div class="fragment"><div class="line">uvref&lt;std::string, int&gt; p = uwrap(std::string{<span class="stringliteral">&quot;wololo&quot;</span>});</div>
 </div><!-- fragment --><p >Here <code>uwrap</code> creates <code>uvref&lt;std::string&gt;</code> which gets converted into <code>uvref&lt;std::string,int&gt;</code> due to implicit conversion.</p>
@@ -171,7 +171,7 @@ Visit</h3>
 <div class="line">r.visit([&amp;](<a class="code hl_struct" href="structvari_1_1empty__t.html">vari::empty_t</a>){},</div>
 <div class="line">        [&amp;](<span class="keywordtype">int</span>&amp;){},</div>
 <div class="line">        [&amp;](std::string&amp;){});</div>
-<div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdef"><b>Definition:</b> vptr.h:172</div></div>
+<div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdef"><b>Definition:</b> vptr.h:173</div></div>
 <div class="ttc" id="astructvari_1_1empty__t_html"><div class="ttname"><a href="structvari_1_1empty__t.html">vari::empty_t</a></div><div class="ttdef"><b>Definition:</b> util.h:33</div></div>
 </div><!-- fragment --><p >Variadic references can be constructed with references to any of the possible types:</p>
 <div class="fragment"><div class="line">std::string a;</div>
@@ -195,7 +195,7 @@ Take</h3>
 <div class="line">    std::move(r).take([&amp;](<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;int&gt;</a>){},</div>
 <div class="line">                      [&amp;](<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;std::string&gt;</a>){});</div>
 <div class="line">};</div>
-<div class="ttc" id="anamespacevari_html_a2388c0eb42106efee2d8ed10243b69a0"><div class="ttname"><a href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref</a></div><div class="ttdeci">_define_variadic&lt; _uvref, typelist&lt; Ts... &gt;, def_del &gt; uvref</div><div class="ttdef"><b>Definition:</b> uvref.h:207</div></div>
+<div class="ttc" id="anamespacevari_html_a2388c0eb42106efee2d8ed10243b69a0"><div class="ttname"><a href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref</a></div><div class="ttdeci">_define_variadic&lt; _uvref, typelist&lt; Ts... &gt;, def_del &gt; uvref</div><div class="ttdef"><b>Definition:</b> uvref.h:211</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
 Sub-typing</h2>
 <p >All variadic types support sub-typing, meaning any variadic type can be converted into a type that represents a superset of its types:</p>
@@ -294,7 +294,7 @@ Lvalue conversion from unique</h2>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;int&gt;</a> p;</div>
 <div class="line">foo(p); <span class="comment">// allowed, `p` is lvalue</span></div>
 <div class="line"> </div>
-<div class="line">foo(<a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;std::string&gt;</a>{}); <span class="comment">// forbidden, rvalue used</span></div>
+<div class="line">foo(<a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;std::string&gt;</a>{}); <span class="comment">// error: rvalue conversion forbidden</span></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md12"></a>
 Const</h2>
 <p >All variadic types support conversion from non-const version to const version:</p>
@@ -317,11 +317,11 @@ Typelist compatibility</h2>
 Dispatch</h2>
 <p >We also ship free function <code>dispatch</code> for mapping a runtime value into compile-time value. It uses all the safety checks of <code>visit</code>:</p>
 <div class="fragment"><div class="line"><span class="comment">// factory used by the library to create instances of types</span></div>
-<div class="line"><span class="keyword">auto</span> factory = [&amp;]&lt;<a class="code hl_typedef" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">vari::index_type</a> i&gt;{</div>
+<div class="line"><span class="keyword">auto</span> factory = [&amp;]&lt;vari::index_type i&gt;{</div>
 <div class="line">    <span class="keywordflow">return</span> std::integral_constant&lt;std::size_t, i&gt;{};</div>
 <div class="line">};</div>
 <div class="line"><span class="comment">// runtime index</span></div>
-<div class="line"><a class="code hl_typedef" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">vari::index_type</a> v = 2;</div>
+<div class="line">vari::index_type v = 2;</div>
 <div class="line">vari::dispatch&lt;3&gt;(</div>
 <div class="line">    v,</div>
 <div class="line">    factory,</div>
@@ -334,7 +334,6 @@ Dispatch</h2>
 <div class="line">    [&amp;](std::integral_constant&lt;std::size_t, 2&gt;){</div>
 <div class="line">        <span class="comment">// `j` matches value of `v`</span></div>
 <div class="line">    });</div>
-<div class="ttc" id="anamespacevari_html_a4c4b642a120de6f97cef24c8b60fb2ce"><div class="ttname"><a href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">vari::index_type</a></div><div class="ttdeci">uint32_t index_type</div><div class="ttdef"><b>Definition:</b> util.h:169</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md15"></a>
 Credits</h2>
 <p >Credits for the idea for this should go to <code>avakar</code>, live long and prosper. </p>

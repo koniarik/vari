@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['pick_0',['pick',['../structvari_1_1__function__picker.html#a48e067db0ac511501bfdc36c596113f9',1,'vari::_function_picker']]]
+  ['_7e_5fuvptr_0',['~_uvptr',['../classvari_1_1__uvptr.html#a05d29c37a44638722ab67b98f8fe4759',1,'vari::_uvptr']]],
+  ['_7e_5fuvref_1',['~_uvref',['../structvari_1_1__uvref.html#ac2de862a2e6fe223aa2ba7a27eafa13f',1,'vari::_uvref']]]
 ];
