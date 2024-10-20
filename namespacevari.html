@@ -118,24 +118,28 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:aa40348ea19f55b6deeba5d4ab2adcead"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; typename T, typename TL , typename... Extra&gt; </td></tr>
+<tr class="memitem:aa40348ea19f55b6deeba5d4ab2adcead"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">_define_variadic</a> = _vptr_apply_t&lt; T, unique_typelist_t&lt; flatten_t&lt; TL &gt; &gt;, Extra... &gt;</td></tr>
+<tr class="memdesc:aa40348ea19f55b6deeba5d4ab2adcead"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a templated type <code>T</code> and <code>typelist</code> of types <code>TL</code>, aliases <code>T&lt;Us...&gt;</code> where <code>Us...</code> is flattend version of <code>TL</code> without any duplicates.  <a href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">More...</a><br /></td></tr>
+<tr class="separator:aa40348ea19f55b6deeba5d4ab2adcead"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3be05c6f854dc1b903a2a85e244bbdc5"><td class="memTemplParams" colspan="2"><a id="a3be05c6f854dc1b903a2a85e244bbdc5" name="a3be05c6f854dc1b903a2a85e244bbdc5"></a>
 template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:a3be05c6f854dc1b903a2a85e244bbdc5"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>uvptr</b> = _define_variadic&lt; <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>, typelist&lt; Ts... &gt;, def_del &gt;</td></tr>
+<tr class="memitem:a3be05c6f854dc1b903a2a85e244bbdc5"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>uvptr</b> = <a class="el" href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>, typelist&lt; Ts... &gt;, def_del &gt;</td></tr>
 <tr class="memdesc:a3be05c6f854dc1b903a2a85e244bbdc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">A nullable owning pointer to types derived out of <code>Ts...</code> list by flattening it and filtering for unique types. <br /></td></tr>
 <tr class="separator:a3be05c6f854dc1b903a2a85e244bbdc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2388c0eb42106efee2d8ed10243b69a0"><td class="memTemplParams" colspan="2"><a id="a2388c0eb42106efee2d8ed10243b69a0" name="a2388c0eb42106efee2d8ed10243b69a0"></a>
 template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:a2388c0eb42106efee2d8ed10243b69a0"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>uvref</b> = _define_variadic&lt; <a class="el" href="structvari_1_1__uvref.html">_uvref</a>, typelist&lt; Ts... &gt;, def_del &gt;</td></tr>
+<tr class="memitem:a2388c0eb42106efee2d8ed10243b69a0"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>uvref</b> = <a class="el" href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">_define_variadic</a>&lt; <a class="el" href="structvari_1_1__uvref.html">_uvref</a>, typelist&lt; Ts... &gt;, def_del &gt;</td></tr>
 <tr class="memdesc:a2388c0eb42106efee2d8ed10243b69a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">A non-nullable owning pointer to types derived out of <code>Ts...</code> list by flattening it and filtering for unique types. <br /></td></tr>
 <tr class="separator:a2388c0eb42106efee2d8ed10243b69a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50c11a69a9d782e1ccaa6ebd7be73725"><td class="memTemplParams" colspan="2"><a id="a50c11a69a9d782e1ccaa6ebd7be73725" name="a50c11a69a9d782e1ccaa6ebd7be73725"></a>
 template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:a50c11a69a9d782e1ccaa6ebd7be73725"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>vptr</b> = _define_variadic&lt; <a class="el" href="classvari_1_1__vptr.html">_vptr</a>, typelist&lt; Ts... &gt; &gt;</td></tr>
+<tr class="memitem:a50c11a69a9d782e1ccaa6ebd7be73725"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>vptr</b> = <a class="el" href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__vptr.html">_vptr</a>, typelist&lt; Ts... &gt; &gt;</td></tr>
 <tr class="memdesc:a50c11a69a9d782e1ccaa6ebd7be73725"><td class="mdescLeft">&#160;</td><td class="mdescRight">A nullable pointer to types derived out of <code>Ts...</code> list by flattening it and filtering for unique types. <br /></td></tr>
 <tr class="separator:a50c11a69a9d782e1ccaa6ebd7be73725"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b711b10138e06f9d5b455ff55c663d0"><td class="memTemplParams" colspan="2"><a id="a0b711b10138e06f9d5b455ff55c663d0" name="a0b711b10138e06f9d5b455ff55c663d0"></a>
 template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:a0b711b10138e06f9d5b455ff55c663d0"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>vref</b> = _define_variadic&lt; <a class="el" href="classvari_1_1__vref.html">_vref</a>, typelist&lt; Ts... &gt; &gt;</td></tr>
+<tr class="memitem:a0b711b10138e06f9d5b455ff55c663d0"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>vref</b> = <a class="el" href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__vref.html">_vref</a>, typelist&lt; Ts... &gt; &gt;</td></tr>
 <tr class="memdesc:a0b711b10138e06f9d5b455ff55c663d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">A non-nullable pointer to types derived out of <code>Ts...</code> list by flattening it and filtering for unique types. <br /></td></tr>
 <tr class="separator:a0b711b10138e06f9d5b455ff55c663d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -152,7 +156,27 @@ template&lt;typename T &gt; </td></tr>
 <p >Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
 <p >The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
 <p >THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="aa40348ea19f55b6deeba5d4ab2adcead" name="aa40348ea19f55b6deeba5d4ab2adcead"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa40348ea19f55b6deeba5d4ab2adcead">&#9670;&#160;</a></span>_define_variadic</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;template&lt; typename... &gt; typename T, typename TL , typename... Extra&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">vari::_define_variadic</a> = typedef _vptr_apply_t&lt; T, unique_typelist_t&lt; flatten_t&lt; TL &gt; &gt;, Extra... &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Given a templated type <code>T</code> and <code>typelist</code> of types <code>TL</code>, aliases <code>T&lt;Us...&gt;</code> where <code>Us...</code> is flattend version of <code>TL</code> without any duplicates. </p>
+<p >If <code>Extra...</code> list is provided, it is appended <em>before</em> <code>Us...</code>: <code>T&lt;Extra...,Us...&gt;</code> </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

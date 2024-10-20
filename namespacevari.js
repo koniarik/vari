@@ -12,6 +12,7 @@ var namespacevari =
     [ "_forward_nothrow_constructible", "conceptvari_1_1__forward__nothrow__constructible.html", null ],
     [ "invocable_for_one", "conceptvari_1_1invocable__for__one.html", null ],
     [ "invocable_with_any", "conceptvari_1_1invocable__with__any.html", null ],
+    [ "_define_variadic", "namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead", null ],
     [ "uvptr", "namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5", null ],
     [ "uvref", "namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0", null ],
     [ "vptr", "namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725", null ],
