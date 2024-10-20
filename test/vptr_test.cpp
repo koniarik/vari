@@ -397,6 +397,8 @@ TEST_CASE_TEMPLATE(
 
         uvptr< int > p7 = std::move( p6 ).vptr();
         CHECK_EQ( p7.index(), 0 );
+
+        static_assert( lvalue_reference_convertible_only< vref< int >, uvref< int > > );
 }
 
 TEST_CASE( "dispatch" )

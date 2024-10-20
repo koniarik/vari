@@ -31,6 +31,8 @@
 namespace vari
 {
 
+/// A non-nullable owning pointer to one of the types in Ts...
+///
 template < typename Deleter, typename... Ts >
 class _uvref : private _deleter_box< Deleter >
 {
@@ -48,6 +50,8 @@ public:
         constexpr _uvref( _uvref const& )            = delete;
         constexpr _uvref& operator=( _uvref const& ) = delete;
 
+        /// Constructs an uvref by transfering ownership from uvref with compatible types
+        ///
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
         constexpr _uvref( _uvref< Deleter, Us... >&& p ) noexcept
@@ -56,6 +60,8 @@ public:
                 p._core.reset();
         }
 
+        /// Constructs an uvref which owns a reference to one of the types that uvref can reference.
+        ///
         template < typename U >
                 requires( vconvertible_to< typelist< U >, types > )
         constexpr explicit _uvref( U& u ) noexcept
@@ -63,6 +69,8 @@ public:
                 _core.set( u );
         }
 
+        /// Move assignment operator transfering ownership from uvref with compatible types
+        ///
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
         constexpr _uvref& operator=( _uvref< Deleter, Us... >&& p ) noexcept
@@ -72,16 +80,22 @@ public:
                 return *this;
         }
 
+        /// Dereferences to the pointed-to type. It is `T&` if there is only one type in `Ts...`,
+        /// or `void&` otherwise.
         constexpr auto& operator*() const noexcept
         {
                 return *_core.ptr;
         }
 
+        /// Provides member access to the pointed-to type. It is `T*` if there is only one type in
+        /// `Ts...`, or `void*` otherwise.
         constexpr auto* operator->() const noexcept
         {
                 return _core.ptr;
         }
 
+        /// Returns a `reference` to the pointed-to type. It is `T*` if there is only one type in
+        /// `Ts...`, or `void*` otherwise.
         constexpr reference get() const noexcept
         {
                 reference res;
@@ -89,18 +103,34 @@ public:
                 return res;
         }
 
+        /// Returns the index representing the type currently being referenced.
+        /// The index of the first type is 0, with subsequent types sequentially numbered.
         [[nodiscard]] constexpr index_type index() const noexcept
         {
                 return _core.index;
         }
 
+        /// Conversion operator to types-compatible `vref`, allowed as long as this uvref is a
+        /// reference.
+        /// @{
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
-        constexpr operator _vref< Us... >() const noexcept
+        constexpr operator _vref< Us... >() & noexcept
         {
                 return vptr().vref();
         }
+        template < typename... Us >
+                requires( vconvertible_to< types, typelist< Us... > > )
+        constexpr operator _vref< Us... >() const& noexcept
+        {
+                return vptr().vref();
+        }
+        template < typename... Us >
+        constexpr operator _vref< Us... >() && = delete;
+        /// @}
 
+        /// Constructs a variadic pointer that points to the same target as the current reference.
+        ///
         constexpr pointer vptr() const& noexcept
         {
                 pointer res;
@@ -108,6 +138,8 @@ public:
                 return res;
         }
 
+        /// Constructs an owning variadic pointer and transfers ownership of current target to the
+        /// pointer.
         constexpr owning_pointer vptr() && noexcept
         {
                 owning_pointer res;
@@ -115,6 +147,8 @@ public:
                 return res;
         }
 
+        /// Calls the appropriate function from the list `fs...`, based on the type of the current
+        /// pointed-to value.
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... f ) const
         {
@@ -123,6 +157,8 @@ public:
                 return _core.visit_impl( (Fs&&) f... );
         }
 
+        /// Constructs an owning reference to currently pointed-to type and transfers ownership to
+        /// it. Moves it to the appropriate function from the list `fs...`.
         template < typename... Fs >
         constexpr decltype( auto ) take( Fs&&... fs ) &&
         {
@@ -135,16 +171,21 @@ public:
                 return tmp.template take_impl< same_uvref >( (Fs&&) fs... );
         }
 
+        /// Swaps the current reference with another one.
+        ///
         friend constexpr void swap( _uvref& lh, _uvref& rh ) noexcept
         {
                 swap( lh._core, rh._core );
         }
 
+        /// Destroys the owned object.
         constexpr ~_uvref()
         {
                 _core.delete_ptr( _deleter_box< Deleter >::get() );
         }
 
+        /// Compares the internal pointers of both references.
+        ///
         friend constexpr auto operator<=>( _uvref const& lh, _uvref const& rh ) = default;
 
 private:

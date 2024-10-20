@@ -57,6 +57,10 @@ concept valid_owning_variadic = valid_variadic< T > && owning< T >;
 template < typename T >
 concept valid_null_owning_variadic = valid_null_variadic< T > && owning< T >;
 
+template < typename A, typename B >
+concept lvalue_reference_convertible_only =
+    std::is_constructible_v< A, B& > && std::is_constructible_v< A, B const& > &&
+    !std::is_constructible_v< A, B&& >;
 
 template < typename V, typename T >
 decltype( auto ) check_visit_ref_return( V& variadic, T& val )

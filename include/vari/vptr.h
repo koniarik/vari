@@ -30,6 +30,7 @@
 namespace vari
 {
 
+
 /// A nullable pointer to one of the types in Ts...
 ///
 template < typename... Ts >
@@ -46,7 +47,7 @@ public:
         constexpr _vptr& operator=( _vptr const& )     = default;
         constexpr _vptr& operator=( _vptr&& ) noexcept = default;
 
-        /// Construct pointer in null state.
+        /// Construct a pointer in a null state.
         ///
         constexpr _vptr( std::nullptr_t ) noexcept
         {
@@ -61,7 +62,7 @@ public:
         {
         }
 
-        /// Copy constructor for any compatible vref.
+        /// Copy constructor for any compatible vptr.
         ///
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
@@ -109,15 +110,15 @@ public:
                 return _core.get_index();
         }
 
-        /// Conversion to bool signaling whether pointer is null (false) or points to someting
-        /// (true).
+        /// Check if the pointer is not null.
+        ///
         constexpr operator bool() const noexcept
         {
                 return _core.ptr != nullptr;
         }
 
-        /// Creates a variadic reference that points to the same target as the current reference.
-        /// UB in case this pointer is null.
+        /// Constructs a variadic reference that points to the same target as the current reference.
+        /// Undefined behavior if the pointer is null.
         constexpr reference vref() const noexcept
         {
                 assert( _core.ptr );
@@ -141,7 +142,7 @@ public:
         }
 
 
-        /// Swaps the current reference with another one.
+        /// Swaps the current pointer with another one.
         ///
         friend constexpr void swap( _vptr& lh, _vptr& rh ) noexcept
         {

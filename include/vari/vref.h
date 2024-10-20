@@ -95,7 +95,7 @@ public:
                 return *_core.ptr;
         }
 
-        /// Creates a variadic pointer that points to the same target as the current reference.
+        /// Constructs a variadic pointer that points to the same target as the current reference.
         ///
         constexpr pointer vptr() const& noexcept
         {
