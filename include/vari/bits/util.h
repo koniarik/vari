@@ -48,8 +48,11 @@ struct _vptr_apply< T, typelist< Ts... >, Us... >
 template < template < typename... > typename T, typename TL, typename... Us >
 using _vptr_apply_t = typename _vptr_apply< T, TL, Us... >::type;
 
-template < template < typename... > typename T, typename TL, typename... Us >
-using _define_variadic = _vptr_apply_t< T, unique_typelist_t< flatten_t< TL > >, Us... >;
+/// Given a templated type `T` and `typelist` of types `TL`, aliases `T<Us...>` where `Us...` is
+/// flattend version of `TL` without any duplicates. If `Extra...` list is provided, it is appended
+/// *before* `Us...`: `T<Extra...,Us...>`
+template < template < typename... > typename T, typename TL, typename... Extra >
+using _define_variadic = _vptr_apply_t< T, unique_typelist_t< flatten_t< TL > >, Extra... >;
 
 template < typename F, typename... Args >
 concept invocable = requires( F&& f, Args&&... args ) { ( (F&&) f )( (Args&&) args... ); };
