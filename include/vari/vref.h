@@ -105,7 +105,7 @@ public:
         }
 
         /// Calls the appropriate function from the list `fs...`, based on the type of the current
-        /// pointed-to value.
+        /// target.
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... fs ) const
         {

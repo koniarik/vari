@@ -50,7 +50,7 @@ public:
         constexpr _uvref( _uvref const& )            = delete;
         constexpr _uvref& operator=( _uvref const& ) = delete;
 
-        /// Constructs an uvref by transfering ownership from uvref with compatible types
+        /// Constructs an `uvref` by transfering ownership from `uvref` with compatible types.
         ///
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
@@ -60,7 +60,8 @@ public:
                 p._core.reset();
         }
 
-        /// Constructs an uvref which owns a reference to one of the types that uvref can reference.
+        /// Constructs an `uvref` which owns a reference to one of the types that `uvref` can
+        /// reference.
         ///
         template < typename U >
                 requires( vconvertible_to< typelist< U >, types > )
@@ -69,7 +70,7 @@ public:
                 _core.set( u );
         }
 
-        /// Move assignment operator transfering ownership from uvref with compatible types
+        /// Move assignment operator transfering ownership from `uvref` with compatible types.
         ///
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
@@ -94,8 +95,7 @@ public:
                 return _core.ptr;
         }
 
-        /// Returns a `reference` to the pointed-to type. It is `T*` if there is only one type in
-        /// `Ts...`, or `void*` otherwise.
+        /// Returns a `reference` to the pointed-to type.
         constexpr reference get() const noexcept
         {
                 reference res;
@@ -110,24 +110,26 @@ public:
                 return _core.index;
         }
 
-        /// Conversion operator to types-compatible `vref`, allowed as long as this uvref is a
-        /// reference.
-        /// @{
+        /// Conversion operator from lvalue reference to types-compatible `vref`
+        ///
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
         constexpr operator _vref< Us... >() & noexcept
         {
                 return vptr().vref();
         }
+        /// Conversion operator from lvalue const reference to types-compatible `vref`
+        ///
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
         constexpr operator _vref< Us... >() const& noexcept
         {
                 return vptr().vref();
         }
+
+        /// Conversion operator from rvalue reference to `vref` is forbidden
         template < typename... Us >
         constexpr operator _vref< Us... >() && = delete;
-        /// @}
 
         /// Constructs a variadic pointer that points to the same target as the current reference.
         ///
@@ -148,7 +150,7 @@ public:
         }
 
         /// Calls the appropriate function from the list `fs...`, based on the type of the current
-        /// pointed-to value.
+        /// target.
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... f ) const
         {
@@ -171,7 +173,7 @@ public:
                 return tmp.template take_impl< same_uvref >( (Fs&&) fs... );
         }
 
-        /// Swaps the current reference with another one.
+        /// Swaps `uvref` with each other.
         ///
         friend constexpr void swap( _uvref& lh, _uvref& rh ) noexcept
         {
@@ -203,9 +205,12 @@ private:
         friend class _uvref;
 };
 
+/// A non-nullable owning pointer to types derived out of `Ts...` list by flattening it and
+/// filtering for unique types.
 template < typename... Ts >
 using uvref = _define_variadic< _uvref, typelist< Ts... >, def_del >;
 
+/// Wraps object `item` into `uvref` of its type.
 template < typename T >
 constexpr uvref< T > uwrap( T item )
 {

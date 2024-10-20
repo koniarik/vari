@@ -291,7 +291,7 @@ auto foo = [&](vari::vptr<int, std::string>){};
 vari::uvptr<int> p;
 foo(p); // allowed, `p` is lvalue
 
-foo(vari::uvptr<std::string>{}); // forbidden, rvalue used
+foo(vari::uvptr<std::string>{}); // error: rvalue conversion forbidden
 ```
 
 ## Const

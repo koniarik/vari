@@ -53,7 +53,7 @@ public:
         {
         }
 
-        /// Copy constructor for any compatible vref.
+        /// Copy constructor for any compatible `vref`.
         ///
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
@@ -62,7 +62,7 @@ public:
         {
         }
 
-        /// Copy constructor for any compatible vptr.
+        /// Copy constructor for any compatible `vptr`.
         ///
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
@@ -71,7 +71,8 @@ public:
         {
         }
 
-        /// Constructs a vptr from a pointer to one of the types that vptr can reference.
+        /// Constructs a `vptr` from a pointer to one of the types that `vptr` can reference.
+        /// If pointer is null, `vptr` is constructed as if `nullptr` was passed.
         ///
         template < typename U >
                 requires( vconvertible_to< typelist< U >, types > )
@@ -82,14 +83,14 @@ public:
         }
 
         /// Dereferences to the pointed-to type. It is `T&` if there is only one type in `Ts...`,
-        /// or `void&` otherwise. UB on null pointer.
+        /// or `void&` otherwise. Undefined behavior on null pointer.
         constexpr auto& operator*() const noexcept
         {
                 return *_core.ptr;
         }
 
         /// Provides member access to the pointed-to type. It is `T*` if there is only one type in
-        /// `Ts...`, or `void*` otherwise. UB on null pointer.
+        /// `Ts...`, or `void*` otherwise. Undefined behavior on null pointer.
         constexpr auto* operator->() const noexcept
         {
                 return _core.ptr;
@@ -102,7 +103,7 @@ public:
                 return _core.ptr;
         }
 
-        /// Returns the index representing the type currently being referenced.
+        /// Returns the index representing the type currently being pointed-to.
         /// The index of the first type is 0, with subsequent types sequentially numbered.
         /// `null_index` constant is used in case the pointer is null.
         [[nodiscard]] constexpr index_type index() const noexcept
@@ -117,7 +118,7 @@ public:
                 return _core.ptr != nullptr;
         }
 
-        /// Constructs a variadic reference that points to the same target as the current reference.
+        /// Constructs a variadic reference that points to the same target as this pointer.
         /// Undefined behavior if the pointer is null.
         constexpr reference vref() const noexcept
         {
@@ -129,7 +130,7 @@ public:
         }
 
         /// Calls the appropriate function from the list `fs...`, based on the type of the current
-        /// pointed-to value, or one with `empty_t` in case of null pointer.
+        /// target, or one with `empty_t` in case of null pointer.
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... fs ) const
         {
@@ -142,7 +143,7 @@ public:
         }
 
 
-        /// Swaps the current pointer with another one.
+        /// Swaps `vptr` with each other.
         ///
         friend constexpr void swap( _vptr& lh, _vptr& rh ) noexcept
         {

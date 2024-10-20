@@ -340,6 +340,8 @@ TEST_CASE_TEMPLATE(
                 p3 = p1;
                 CHECK_EQ( p3->c_str(), p1->c_str() );
         }
+
+        static_assert( lvalue_reference_convertible_only< vptr< int >, uvptr< int > > );
 }
 
 TEST_CASE_TEMPLATE(
