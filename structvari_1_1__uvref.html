@@ -149,10 +149,6 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
 <tr class="separator:a5685997d981c288ab5d2aae3de101a6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa95ff8c3744b3ae0e85187c61c64ac47"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="namespacevari.html#a4c4b642a120de6f97cef24c8b60fb2ce">index_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__uvref.html#aa95ff8c3744b3ae0e85187c61c64ac47">index</a> () const noexcept</td></tr>
 <tr class="separator:aa95ff8c3744b3ae0e85187c61c64ac47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1574ed0e24abd7719cfb0ce3a4fc4a4b"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1__uvref.html#a88aed2f37974a941d1ffa1ce1a6bf7d6">types</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt; &gt; )</td></tr>
-<tr class="memitem:a1574ed0e24abd7719cfb0ce3a4fc4a4b"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structvari_1_1__uvref.html#a1574ed0e24abd7719cfb0ce3a4fc4a4b">operator _vref&lt; Us... &gt;</a> () const noexcept</td></tr>
-<tr class="separator:a1574ed0e24abd7719cfb0ce3a4fc4a4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5205248cbf9a78cf83e6a95bc3f6af76"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structvari_1_1__uvref.html#a68c74178a9b86b623b0229988e755c0b">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__uvref.html#a5205248cbf9a78cf83e6a95bc3f6af76">vptr</a> () const &amp;noexcept</td></tr>
 <tr class="separator:a5205248cbf9a78cf83e6a95bc3f6af76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5ff2f7a33a92c1cecd9fc318e76dad8"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structvari_1_1__uvref.html#a28204bdd3aae8f7a9356cd781762e246">owning_pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__uvref.html#ad5ff2f7a33a92c1cecd9fc318e76dad8">vptr</a> () &amp;&amp;noexcept</td></tr>
@@ -164,7 +160,20 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1__uvref.html#a8
 <tr class="memitem:af62c2afb2aa5bb43db9c584ec884f198"><td class="memTemplItemLeft" align="right" valign="top">constexpr decltype(auto)&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structvari_1_1__uvref.html#af62c2afb2aa5bb43db9c584ec884f198">take</a> (Fs &amp;&amp;... fs) &amp;&amp;</td></tr>
 <tr class="separator:af62c2afb2aa5bb43db9c584ec884f198"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2de862a2e6fe223aa2ba7a27eafa13f"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__uvref.html#ac2de862a2e6fe223aa2ba7a27eafa13f">~_uvref</a> ()</td></tr>
+<tr class="memdesc:ac2de862a2e6fe223aa2ba7a27eafa13f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the owned object.  <a href="structvari_1_1__uvref.html#ac2de862a2e6fe223aa2ba7a27eafa13f">More...</a><br /></td></tr>
 <tr class="separator:ac2de862a2e6fe223aa2ba7a27eafa13f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:a9c5d0a85732b8a9219786d39f3e44b64"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
+requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1__uvref.html#a88aed2f37974a941d1ffa1ce1a6bf7d6">types</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt; &gt; )</td></tr>
+<tr class="memitem:a9c5d0a85732b8a9219786d39f3e44b64"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structvari_1_1__uvref.html#a9c5d0a85732b8a9219786d39f3e44b64">operator _vref&lt; Us... &gt;</a> () &amp;noexcept</td></tr>
+<tr class="separator:a9c5d0a85732b8a9219786d39f3e44b64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5145fb76af76d48aff1e8c39fbb98615"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; <br />
+requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1__uvref.html#a88aed2f37974a941d1ffa1ce1a6bf7d6">types</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt; &gt; )</td></tr>
+<tr class="memitem:a5145fb76af76d48aff1e8c39fbb98615"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structvari_1_1__uvref.html#a5145fb76af76d48aff1e8c39fbb98615">operator _vref&lt; Us... &gt;</a> () const &amp;noexcept</td></tr>
+<tr class="separator:a5145fb76af76d48aff1e8c39fbb98615"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21393e700104d674430d53fd699f472c"><td class="memTemplParams" colspan="2">template&lt;typename... Us&gt; </td></tr>
+<tr class="memitem:a21393e700104d674430d53fd699f472c"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structvari_1_1__uvref.html#a21393e700104d674430d53fd699f472c">operator _vref&lt; Us... &gt;</a> () &amp;&amp;=delete</td></tr>
+<tr class="separator:a21393e700104d674430d53fd699f472c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -182,7 +191,10 @@ Friends</h2></td></tr>
 <tr class="memitem:a968101bb0b9118bc92d437f7a54e4d02"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__uvref.html#a968101bb0b9118bc92d437f7a54e4d02">operator&lt;=&gt;</a> (<a class="el" href="structvari_1_1__uvref.html">_uvref</a> const &amp;lh, <a class="el" href="structvari_1_1__uvref.html">_uvref</a> const &amp;rh)=default</td></tr>
 <tr class="separator:a968101bb0b9118bc92d437f7a54e4d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Deleter, typename... Ts&gt;<br />
+class vari::_uvref&lt; Deleter, Ts &gt;</div><p >A non-nullable owning pointer to one of the types in Ts... </p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a80e11f4c16140432f291ab3aee6051f0" name="a80e11f4c16140432f291ab3aee6051f0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a80e11f4c16140432f291ab3aee6051f0">&#9670;&#160;</a></span>core_type</h2>
 
@@ -320,6 +332,7 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Constructs an uvref by transfering ownership from uvref with compatible types </p>
 
 </div>
 </div>
@@ -351,6 +364,7 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Constructs an uvref which owns a reference to one of the types that uvref can reference. </p>
 
 </div>
 </div>
@@ -379,6 +393,8 @@ template&lt;typename Deleter , typename... Ts&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Destroys the owned object. </p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -406,6 +422,7 @@ template&lt;typename Deleter , typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Returns a <code>reference</code> to the pointed-to type. It is <code>T*</code> if there is only one type in <code>Ts...</code>, or <code>void*</code> otherwise. </p>
 
 </div>
 </div>
@@ -433,11 +450,41 @@ template&lt;typename Deleter , typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Returns the index representing the type currently being referenced. The index of the first type is 0, with subsequent types sequentially numbered. </p>
 
 </div>
 </div>
-<a id="a1574ed0e24abd7719cfb0ce3a4fc4a4b" name="a1574ed0e24abd7719cfb0ce3a4fc4a4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1574ed0e24abd7719cfb0ce3a4fc4a4b">&#9670;&#160;</a></span>operator _vref&lt; Us... &gt;()</h2>
+<a id="a21393e700104d674430d53fd699f472c" name="a21393e700104d674430d53fd699f472c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21393e700104d674430d53fd699f472c">&#9670;&#160;</a></span>operator _vref&lt; Us... &gt;() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Deleter , typename... Ts&gt; </div>
+<div class="memtemplate">
+template&lt;typename... Us&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr <a class="el" href="structvari_1_1__uvref.html">vari::_uvref</a>&lt; Deleter, Ts &gt;::operator <a class="el" href="classvari_1_1__vref.html">_vref</a>&lt; Us... &gt; </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> &amp;&amp;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9c5d0a85732b8a9219786d39f3e44b64" name="a9c5d0a85732b8a9219786d39f3e44b64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c5d0a85732b8a9219786d39f3e44b64">&#9670;&#160;</a></span>operator _vref&lt; Us... &gt;() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -454,7 +501,38 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1__uvref.html#a8
           <td class="memname">constexpr <a class="el" href="structvari_1_1__uvref.html">vari::_uvref</a>&lt; Deleter, Ts &gt;::operator <a class="el" href="classvari_1_1__vref.html">_vref</a>&lt; Us... &gt; </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td> &amp;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Conversion operator to types-compatible <code>vref</code>, allowed as long as this uvref is a reference. </p>
+
+</div>
+</div>
+<a id="a5145fb76af76d48aff1e8c39fbb98615" name="a5145fb76af76d48aff1e8c39fbb98615"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5145fb76af76d48aff1e8c39fbb98615">&#9670;&#160;</a></span>operator _vref&lt; Us... &gt;() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Deleter , typename... Ts&gt; </div>
+<div class="memtemplate">
+template&lt;typename... Us&gt; <br />
+requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1__uvref.html#a88aed2f37974a941d1ffa1ce1a6bf7d6">types</a>, <a class="el" href="structvari_1_1typelist.html">typelist</a>&lt; Us... &gt; &gt; )</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr <a class="el" href="structvari_1_1__uvref.html">vari::_uvref</a>&lt; Deleter, Ts &gt;::operator <a class="el" href="classvari_1_1__vref.html">_vref</a>&lt; Us... &gt; </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const &amp;</td>
         </tr>
       </table>
   </td>
@@ -490,6 +568,7 @@ template&lt;typename Deleter , typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Dereferences to the pointed-to type. It is <code>T&amp;</code> if there is only one type in <code>Ts...</code>, or <code>void&amp;</code> otherwise. </p>
 
 </div>
 </div>
@@ -517,6 +596,7 @@ template&lt;typename Deleter , typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Provides member access to the pointed-to type. It is <code>T*</code> if there is only one type in <code>Ts...</code>, or <code>void*</code> otherwise. </p>
 
 </div>
 </div>
@@ -576,6 +656,7 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Move assignment operator transfering ownership from uvref with compatible types </p>
 
 </div>
 </div>
@@ -606,6 +687,7 @@ template&lt;typename... Fs&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Constructs an owning reference to currently pointed-to type and transfers ownership to it. Moves it to the appropriate function from the list <code>fs...</code>. </p>
 
 </div>
 </div>
@@ -636,6 +718,7 @@ template&lt;typename... Fs&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Calls the appropriate function from the list <code>fs...</code>, based on the type of the current pointed-to value. </p>
 
 </div>
 </div>
@@ -663,6 +746,7 @@ template&lt;typename Deleter , typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Constructs an owning variadic pointer and transfers ownership of current target to the pointer. </p>
 
 </div>
 </div>
@@ -690,6 +774,7 @@ template&lt;typename Deleter , typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Constructs a variadic pointer that points to the same target as the current reference. </p>
 
 </div>
 </div>
@@ -807,6 +892,7 @@ template&lt;typename Deleter , typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Compares the internal pointers of both references. </p>
 
 </div>
 </div>
@@ -845,6 +931,7 @@ template&lt;typename Deleter , typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p >Swaps the current reference with another one. </p>
 
 </div>
 </div>

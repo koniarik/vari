@@ -314,7 +314,7 @@ template&lt;typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Construct pointer in null state. </p>
+<p >Construct a pointer in a null state. </p>
 
 </div>
 </div>
@@ -378,7 +378,7 @@ requires ( vconvertible_to&lt; <a class="el" href="structvari_1_1typelist.html">
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Copy constructor for any compatible vref. </p>
+<p >Copy constructor for any compatible vptr. </p>
 
 </div>
 </div>
@@ -495,7 +495,7 @@ template&lt;typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Conversion to bool signaling whether pointer is null (false) or points to someting (true). </p>
+<p >Check if the pointer is not null. </p>
 
 </div>
 </div>
@@ -666,7 +666,7 @@ template&lt;typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Creates a variadic reference that points to the same target as the current reference. UB in case this pointer is null. </p>
+<p >Constructs a variadic reference that points to the same target as the current reference. Undefined behavior if the pointer is null. </p>
 
 </div>
 </div>
@@ -849,7 +849,7 @@ template&lt;typename... Ts&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Swaps the current reference with another one. </p>
+<p >Swaps the current pointer with another one. </p>
 
 </div>
 </div>
