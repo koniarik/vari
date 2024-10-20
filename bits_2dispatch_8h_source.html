@@ -166,13 +166,12 @@ $(document).ready(function(){initNavTree('bits_2dispatch_8h_source.html',''); in
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span> T, <span class="keyword">typename</span>... Fs &gt;</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="keyword">constexpr</span> <span class="keyword">decltype</span>( auto ) _dispatch_fun( T&amp;&amp; item, Fs&amp;&amp;... fs )</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>{</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        <span class="keyword">auto</span>&amp;&amp; f = <a class="code hl_struct" href="structvari_1_1__function__picker.html">_function_picker&lt; T &gt;::pick</a>( (Fs&amp;&amp;) fs... );</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        <span class="keyword">auto</span>&amp;&amp; f = _function_picker&lt; T &gt;::pick( (Fs&amp;&amp;) fs... );</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        <span class="keywordflow">return</span> std::forward&lt; decltype( f ) &gt;( f )( (T&amp;&amp;) item );</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>}</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>}  <span class="comment">// namespace vari</span></div>
-<div class="ttc" id="anamespacevari_html"><div class="ttname"><a href="namespacevari.html">vari</a></div><div class="ttdef"><b>Definition:</b> dispatch.h:28</div></div>
-<div class="ttc" id="astructvari_1_1__function__picker_html"><div class="ttname"><a href="structvari_1_1__function__picker.html">vari::_function_picker</a></div><div class="ttdef"><b>Definition:</b> util.h:156</div></div>
+<div class="ttc" id="anamespacevari_html"><div class="ttname"><a href="namespacevari.html">vari</a></div><div class="ttdoc">Copyright (C) 2020 Jan Veverak Koniarik.</div><div class="ttdef"><b>Definition:</b> dispatch.h:28</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

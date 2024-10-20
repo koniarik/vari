@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['none_5fis_5fconst_0',['none_is_const',['../structvari_1_1none__is__const.html',1,'vari']]],
-  ['none_5fis_5fconst_3c_20tl_20_3e_1',['none_is_const&lt; TL &gt;',['../structvari_1_1none__is__const_3_01TL_01_4.html',1,'vari']]],
-  ['none_5fis_5fconst_3c_20typelist_3c_20us_2e_2e_2e_20_3e_20_3e_2',['none_is_const&lt; typelist&lt; Us... &gt; &gt;',['../structvari_1_1none__is__const_3_01typelist_3_01Us_8_8_8_01_4_01_4.html',1,'vari']]],
-  ['none_5fis_5fconst_3c_20typelist_5ftraits_5ftypes_3c_20tl_20_3e_20_3e_3',['none_is_const&lt; typelist_traits_types&lt; TL &gt; &gt;',['../structvari_1_1none__is__const.html',1,'vari']]]
+  ['uvptr_0',['uvptr',['../namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5',1,'vari']]],
+  ['uvref_1',['uvref',['../namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0',1,'vari']]],
+  ['uwrap_2',['uwrap',['../namespacevari.html#a4ebcd20c8226cf02de56c175cd7fdac6',1,'vari']]]
 ];

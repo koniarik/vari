@@ -1,13 +1,12 @@
 var indexSectionsWithContent =
 {
-  0: "_acdeginorstuvw~",
-  1: "_acdeintw",
+  0: "_giorstuv~",
+  1: "_",
   2: "v",
   3: "_giortuv~",
   4: "uv",
   5: "os",
-  6: "v",
-  7: "v"
+  6: "v"
 };
 
 var indexSectionNames =
@@ -18,8 +17,7 @@ var indexSectionNames =
   3: "functions",
   4: "typedefs",
   5: "related",
-  6: "pages",
-  7: "concepts"
+  6: "pages"
 };
 
 var indexSectionLabels =
@@ -30,7 +28,6 @@ var indexSectionLabels =
   3: "Functions",
   4: "Typedefs",
   5: "Friends",
-  6: "Pages",
-  7: "Concepts"
+  6: "Pages"
 };
 

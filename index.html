@@ -142,7 +142,7 @@ uvptr and uvref</h2>
 <div class="line"><span class="keyword">struct </span>b_t{};</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;a_t, b_t&gt;</a> p;</div>
-<div class="ttc" id="anamespacevari_html_a3be05c6f854dc1b903a2a85e244bbdc5"><div class="ttname"><a href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr</a></div><div class="ttdeci">_define_variadic&lt; _uvptr, typelist&lt; Ts... &gt;, def_del &gt; uvptr</div><div class="ttdef"><b>Definition:</b> uvptr.h:281</div></div>
+<div class="ttc" id="anamespacevari_html_a3be05c6f854dc1b903a2a85e244bbdc5"><div class="ttname"><a href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr</a></div><div class="ttdeci">_define_variadic&lt; _uvptr, typelist&lt; Ts... &gt;, def_del &gt; uvptr</div><div class="ttdoc">A nullable owning pointer to types derived out of Ts... list by flattening it and filtering for uniqu...</div><div class="ttdef"><b>Definition:</b> uvptr.h:281</div></div>
 </div><!-- fragment --><p >Similar to <code>std::make_unique</code>, we provide a function <code>uwrap</code> for construction of unique variants:</p>
 <div class="fragment"><div class="line">uvref&lt;std::string, int&gt; p = uwrap(std::string{<span class="stringliteral">&quot;wololo&quot;</span>});</div>
 </div><!-- fragment --><p >Here <code>uwrap</code> creates <code>uvref&lt;std::string&gt;</code> which gets converted into <code>uvref&lt;std::string,int&gt;</code> due to implicit conversion.</p>
@@ -164,27 +164,26 @@ Visit</h3>
 <div class="line">            } );</div>
 <div class="line">        <span class="keywordflow">return</span> front;</div>
 <div class="line">};</div>
-<div class="ttc" id="anamespacevari_html_a0b711b10138e06f9d5b455ff55c663d0"><div class="ttname"><a href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a></div><div class="ttdeci">_define_variadic&lt; _vref, typelist&lt; Ts... &gt; &gt; vref</div><div class="ttdef"><b>Definition:</b> vref.h:146</div></div>
-</div><!-- fragment --><p >For pointers, there must be a callable that accepting <code><a class="el" href="structvari_1_1empty__t.html">vari::empty_t</a></code> to handle cases where the pointer is null:</p>
+<div class="ttc" id="anamespacevari_html_a0b711b10138e06f9d5b455ff55c663d0"><div class="ttname"><a href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a></div><div class="ttdeci">_define_variadic&lt; _vref, typelist&lt; Ts... &gt; &gt; vref</div><div class="ttdoc">A non-nullable pointer to types derived out of Ts... list by flattening it and filtering for unique t...</div><div class="ttdef"><b>Definition:</b> vref.h:146</div></div>
+</div><!-- fragment --><p >For pointers, there must be a callable that accepting <code>vari::empty_t</code> to handle cases where the pointer is null:</p>
 <div class="fragment"><div class="line"><a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;int, std::string&gt;</a> r = <span class="keyword">nullptr</span>;</div>
 <div class="line"> </div>
-<div class="line">r.visit([&amp;](<a class="code hl_struct" href="structvari_1_1empty__t.html">vari::empty_t</a>){},</div>
+<div class="line">r.visit([&amp;](vari::empty_t){},</div>
 <div class="line">        [&amp;](<span class="keywordtype">int</span>&amp;){},</div>
 <div class="line">        [&amp;](std::string&amp;){});</div>
-<div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdef"><b>Definition:</b> vptr.h:173</div></div>
-<div class="ttc" id="astructvari_1_1empty__t_html"><div class="ttname"><a href="structvari_1_1empty__t.html">vari::empty_t</a></div><div class="ttdef"><b>Definition:</b> util.h:33</div></div>
+<div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdoc">A nullable pointer to types derived out of Ts... list by flattening it and filtering for unique types...</div><div class="ttdef"><b>Definition:</b> vptr.h:173</div></div>
 </div><!-- fragment --><p >Variadic references can be constructed with references to any of the possible types:</p>
 <div class="fragment"><div class="line">std::string a;</div>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;int, std::string&gt;</a> r = a;</div>
 </div><!-- fragment --><p >This also allows us to combine it with <code>visit</code>, where the callable can handle multiple types:</p>
 <div class="fragment"><div class="line"><a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;int, std::string&gt;</a> r;</div>
 <div class="line"> </div>
-<div class="line">r.visit([&amp;](<a class="code hl_struct" href="structvari_1_1empty__t.html">vari::empty_t</a>){},</div>
+<div class="line">r.visit([&amp;](vari::empty_t){},</div>
 <div class="line">        [&amp;](<a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;int, std::string&gt;</a>){});</div>
 </div><!-- fragment --><p >Or we can mix both approaches:</p>
 <div class="fragment"><div class="line"><a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;int, float, std::string&gt;</a> r = <span class="keyword">nullptr</span>;</div>
 <div class="line"> </div>
-<div class="line">r.visit([&amp;](<a class="code hl_struct" href="structvari_1_1empty__t.html">vari::empty_t</a>){},</div>
+<div class="line">r.visit([&amp;](vari::empty_t){},</div>
 <div class="line">        [&amp;](std::string&amp;){},</div>
 <div class="line">        [&amp;](<a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;int, float&gt;</a>){});</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md6"></a>
@@ -195,7 +194,7 @@ Take</h3>
 <div class="line">    std::move(r).take([&amp;](<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;int&gt;</a>){},</div>
 <div class="line">                      [&amp;](<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;std::string&gt;</a>){});</div>
 <div class="line">};</div>
-<div class="ttc" id="anamespacevari_html_a2388c0eb42106efee2d8ed10243b69a0"><div class="ttname"><a href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref</a></div><div class="ttdeci">_define_variadic&lt; _uvref, typelist&lt; Ts... &gt;, def_del &gt; uvref</div><div class="ttdef"><b>Definition:</b> uvref.h:211</div></div>
+<div class="ttc" id="anamespacevari_html_a2388c0eb42106efee2d8ed10243b69a0"><div class="ttname"><a href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref</a></div><div class="ttdeci">_define_variadic&lt; _uvref, typelist&lt; Ts... &gt;, def_del &gt; uvref</div><div class="ttdoc">A non-nullable owning pointer to types derived out of Ts... list by flattening it and filtering for u...</div><div class="ttdef"><b>Definition:</b> uvref.h:212</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
 Sub-typing</h2>
 <p >All variadic types support sub-typing, meaning any variadic type can be converted into a type that represents a superset of its types:</p>
@@ -215,7 +214,7 @@ Sub-typing</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> foo = [&amp;](<a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;a_t, b_t, c_t, d_t&gt;</a> p)</div>
 <div class="line">{</div>
-<div class="line">    std::move(p).take([&amp;](<a class="code hl_struct" href="structvari_1_1empty__t.html">vari::empty_t</a>){},</div>
+<div class="line">    std::move(p).take([&amp;](vari::empty_t){},</div>
 <div class="line">                      [&amp;](<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;a_t, b_t&gt;</a>){},</div>
 <div class="line">                      [&amp;](<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;c_t, d_t&gt;</a>){});</div>
 <div class="line">};</div>
@@ -263,24 +262,23 @@ Single-type extension</h2>
 Type-sets</h2>
 <p >For added convenience and functionality, the template argument list of variadic types can flatten and filter types for uniqueness.</p>
 <p >Given the following type sets:</p>
-<div class="fragment"><div class="line"><span class="keyword">using </span>set_a = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;int, std::string&gt;</a>;</div>
-<div class="line"><span class="keyword">using </span>set_b = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;float, int&gt;</a>;</div>
-<div class="line"><span class="keyword">using </span>set_s = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;set_a, set_b, std::string&gt;</a>;</div>
-<div class="ttc" id="astructvari_1_1typelist_html"><div class="ttname"><a href="structvari_1_1typelist.html">vari::typelist</a></div><div class="ttdef"><b>Definition:</b> typelist.h:32</div></div>
-</div><!-- fragment --><p >The pointer <code>vptr&lt;set_s&gt;</code> resolves to the equivalent of <code>vptr&lt;int, std::string, float&gt;</code>. The flattening and filtering mechanism only applies to <code><a class="el" href="structvari_1_1typelist.html">vari::typelist</a></code>. For example, <code>void&lt;std::tuple&lt;a_t,b_t&gt;&gt;</code> would not be automatically resolved to a different form.</p>
+<div class="fragment"><div class="line"><span class="keyword">using </span>set_a = vari::typelist&lt;int, std::string&gt;;</div>
+<div class="line"><span class="keyword">using </span>set_b = vari::typelist&lt;float, int&gt;;</div>
+<div class="line"><span class="keyword">using </span>set_s = vari::typelist&lt;set_a, set_b, std::string&gt;;</div>
+</div><!-- fragment --><p >The pointer <code>vptr&lt;set_s&gt;</code> resolves to the equivalent of <code>vptr&lt;int, std::string, float&gt;</code>. The flattening and filtering mechanism only applies to <code>vari::typelist</code>. For example, <code>void&lt;std::tuple&lt;a_t,b_t&gt;&gt;</code> would not be automatically resolved to a different form.</p>
 <p >Why is this useful? It allows expressing complex data structures more effectively. Moreover, the typelists also interact well with sub-typing:</p>
-<div class="fragment"><div class="line"><span class="keyword">using </span>simple_types = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;std::string, int, bool&gt;</a>;</div>
+<div class="fragment"><div class="line"><span class="keyword">using </span>simple_types = vari::typelist&lt;std::string, int, bool&gt;;</div>
 <div class="line"><span class="keyword">struct </span>array_t{};</div>
 <div class="line"><span class="keyword">struct </span>object_t{};</div>
-<div class="line"><span class="keyword">using </span>complex_types = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;array_t, object_t&gt;</a>;</div>
-<div class="line"><span class="keyword">using </span>json_types = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;simple_types, complex_types&gt;</a>;</div>
+<div class="line"><span class="keyword">using </span>complex_types = vari::typelist&lt;array_t, object_t&gt;;</div>
+<div class="line"><span class="keyword">using </span>json_types = vari::typelist&lt;simple_types, complex_types&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> simple_to_str = [&amp;](<a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;simple_types&gt;</a> p) { <span class="keywordflow">return</span> std::string{}; };</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> to_str = [&amp;](<a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;json_types&gt;</a> p)</div>
 <div class="line">{</div>
 <div class="line">    <span class="keyword">using </span>R = std::string;</div>
-<div class="line">    <span class="keywordflow">return</span> p.visit([&amp;](<a class="code hl_struct" href="structvari_1_1empty__t.html">vari::empty_t</a>) -&gt; R { <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>; },</div>
+<div class="line">    <span class="keywordflow">return</span> p.visit([&amp;](vari::empty_t) -&gt; R { <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>; },</div>
 <div class="line">                   [&amp;](<a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;simple_types&gt;</a> pp) -&gt; R { <span class="keywordflow">return</span> simple_to_str(pp); },</div>
 <div class="line">                   [&amp;](array_t&amp; pp) -&gt; R { <span class="comment">/* impl */</span> },</div>
 <div class="line">                   [&amp;](object_t&amp; pp) -&gt; R { <span class="comment">/* impl */</span> });</div>
@@ -303,16 +301,16 @@ Const</h2>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;int, std::string&gt;</a> p;</div>
 <div class="line">foo(p);</div>
 </div><!-- fragment --><p ><code>const</code> is also properly propagated during typelist operations:</p>
-<div class="fragment"><div class="line"><span class="keyword">using </span>set_a = <a class="code hl_struct" href="structvari_1_1typelist.html">vari::typelist&lt;int, std::string&gt;</a>;</div>
+<div class="fragment"><div class="line"><span class="keyword">using </span>set_a = vari::typelist&lt;int, std::string&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using </span>vp_a = <a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;const set_a&gt;</a>;</div>
 <div class="line"><span class="keyword">using </span>vp_b = <a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;const int, const std::string&gt;</a>;</div>
 </div><!-- fragment --><p >Both types <code>vp_a</code> and <code>vp_b</code> are compatible.</p>
 <h2><a class="anchor" id="autotoc_md13"></a>
 Typelist compatibility</h2>
-<p >Library can be extended by using other types than just <code><a class="el" href="structvari_1_1typelist.html">vari::typelist</a></code> to represent set of types.</p>
-<p >Whenever type is typelist is determined by <code><a class="el" href="structvari_1_1typelist__traits.html">vari::typelist_traits</a>&lt;T&gt;</code>. In case <code><a class="el" href="structvari_1_1typelist__traits.html">vari::typelist_traits</a>&lt;T&gt;:::is_compatible</code> evaluates to <code>true</code>, library considers <code>T</code> to be typelist-like type.</p>
-<p >In such a case, <code><a class="el" href="structvari_1_1typelist__traits.html">vari::typelist_traits</a>&lt;T&gt;::types</code> should be a type which by itself is vari-compatible typelist. Transtively, this should eventually resolve into <code><a class="el" href="structvari_1_1typelist.html">vari::typelist</a></code> itself which is used by the library directly.</p>
+<p >Library can be extended by using other types than just <code>vari::typelist</code> to represent set of types.</p>
+<p >Whenever type is typelist is determined by <code>vari::typelist_traits&lt;T&gt;</code>. In case <code>vari::typelist_traits&lt;T&gt;:::is_compatible</code> evaluates to <code>true</code>, library considers <code>T</code> to be typelist-like type.</p>
+<p >In such a case, <code>vari::typelist_traits&lt;T&gt;::types</code> should be a type which by itself is vari-compatible typelist. Transtively, this should eventually resolve into <code>vari::typelist</code> itself which is used by the library directly.</p>
 <h2><a class="anchor" id="autotoc_md14"></a>
 Dispatch</h2>
 <p >We also ship free function <code>dispatch</code> for mapping a runtime value into compile-time value. It uses all the safety checks of <code>visit</code>:</p>
