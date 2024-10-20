@@ -1,21 +1,21 @@
-///
-/// Copyright (C) 2020 Jan Veverak Koniarik
-///
-/// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-/// and associated documentation files (the "Software"), to deal in the Software without
-/// restriction, including without limitation the rights to use, copy, modify, merge, publish,
-/// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-/// Software is furnished to do so, subject to the following conditions:
-///
-/// The above copyright notice and this permission notice shall be included in all copies or
-/// substantial portions of the Software.
-///
-/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-/// BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-/// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-/// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-///
+//
+// Copyright (C) 2020 Jan Veverak Koniarik
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+// BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
 #pragma once
 
@@ -25,7 +25,7 @@
 namespace vari
 {
 
-/// ---
+// ---
 
 template < typename... Ts >
 struct typelist
@@ -54,7 +54,7 @@ using typelist_traits_types = typename typelist_traits< T >::types;
 template < typename T >
 concept typelist_compatible = typelist_traits< T >::is_compatible;
 
-/// ---
+// ---
 
 template < typename T, typename TL >
 struct index_of_t_or_const_t;
@@ -92,7 +92,7 @@ struct index_of_t_or_const_t< T, typelist< U, Ts... > >
 template < typename T, typename TL >
 static constexpr std::size_t index_of_t_or_const_t_v = index_of_t_or_const_t< T, TL >::value;
 
-/// ---
+// ---
 
 template < std::size_t j, typename TL >
 struct type_at;
@@ -117,7 +117,7 @@ struct type_at< 0, typelist< T, Ts... > >
 template < std::size_t j, typename TL >
 using type_at_t = typename type_at< j, TL >::type;
 
-/// ---
+// ---
 
 template < typename T, typename TL >
 struct contains_type;
@@ -136,7 +136,7 @@ struct contains_type< T, typelist< Ts... > >
 template < typename T, typename TL >
 static constexpr bool contains_type_v = contains_type< T, TL >::value;
 
-/// ---
+// ---
 
 template < typename TL1, typename TL2 >
 struct _unique_tl_impl;
@@ -168,7 +168,7 @@ struct _unique_tl_impl< typelist< Us... >, typelist< T, Ts... > >
 template < typename TL >
 using unique_typelist_t = typename _unique_tl_impl< typelist<>, TL >::type;
 
-/// ---
+// ---
 
 template < typename TL, typename... Ts >
 struct _flatten_impl;
@@ -205,7 +205,7 @@ struct _flatten_impl< typelist< Us... >, typelist< Ks... > const, Ts... >
 template < typename... Ts >
 using flatten_t = typename _flatten_impl< typelist<>, Ts... >::type;
 
-/// ---
+// ---
 
 template < typename LH, typename RH >
 struct is_subset;
@@ -225,7 +225,7 @@ struct is_subset< typelist< Us... > const, RH >
 template < typename LH, typename RH >
 static constexpr bool is_subset_v = is_subset< LH, RH >::value;
 
-/// ---
+// ---
 
 template < typename TL >
 struct any_is_const;
@@ -244,7 +244,7 @@ struct any_is_const< typelist< Us... > >
 template < typename TL >
 static constexpr bool any_is_const_v = any_is_const< TL >::value;
 
-/// ---
+// ---
 
 template < typename TL >
 struct all_is_const;
@@ -263,7 +263,7 @@ struct all_is_const< typelist< Us... > >
 template < typename TL >
 static constexpr bool all_is_const_v = all_is_const< TL >::value;
 
-/// ---
+// ---
 
 template < typename TL >
 struct none_is_const;
@@ -282,7 +282,7 @@ struct none_is_const< typelist< Us... > >
 template < typename TL >
 static constexpr bool none_is_const_v = none_is_const< TL >::value;
 
-/// ---
+// ---
 
 template < typename TL >
 struct all_nothrow_swappable;
@@ -301,7 +301,7 @@ struct all_nothrow_swappable< typelist< Us... > >
 template < typename TL >
 static constexpr bool all_nothrow_swappable_v = all_nothrow_swappable< TL >::value;
 
-/// ---
+// ---
 
 template < typename TL >
 struct all_nothrow_move_constructible;
@@ -322,7 +322,7 @@ template < typename TL >
 static constexpr bool all_nothrow_move_constructible_v =
     all_nothrow_move_constructible< TL >::value;
 
-/// ---
+// ---
 
 template < typename TL >
 struct all_nothrow_copy_constructible;
@@ -343,7 +343,7 @@ template < typename TL >
 static constexpr bool all_nothrow_copy_constructible_v =
     all_nothrow_copy_constructible< TL >::value;
 
-/// ---
+// ---
 
 template < typename TL >
 struct all_nothrow_destructible;
@@ -363,7 +363,7 @@ template < typename TL >
 static constexpr bool all_nothrow_destructible_v = all_nothrow_destructible< TL >::value;
 
 
-/// ---
+// ---
 
 template < typename U, typename T >
 concept nothrow_three_way_comparable = noexcept( std::declval< U >() <=> std::declval< T >() );
@@ -387,7 +387,7 @@ template < typename TL >
 static constexpr bool all_nothrow_three_way_comparable_v =
     all_nothrow_three_way_comparable< TL >::value;
 
-/// ---
+// ---
 
 template < typename U, typename T >
 concept nothrow_equality_comparable = noexcept( std::declval< U >() == std::declval< T >() );
@@ -411,7 +411,7 @@ template < typename TL >
 static constexpr bool all_nothrow_equality_comparable_v =
     all_nothrow_equality_comparable< TL >::value;
 
-/// ---
+// ---
 
 template < typename TL, std::size_t N, typename Fac >
 struct _factory_result_types_impl;

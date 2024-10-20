@@ -181,6 +181,7 @@ public:
         }
 
         /// Destroys the owned object.
+        ///
         constexpr ~_uvref()
         {
                 _core.delete_ptr( _deleter_box< Deleter >::get() );
