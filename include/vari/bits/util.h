@@ -57,9 +57,6 @@ using _define_variadic = _vptr_apply_t< T, unique_typelist_t< flatten_t< TL > >,
 template < typename F, typename... Args >
 concept invocable = requires( F&& f, Args&&... args ) { ( (F&&) f )( (Args&&) args... ); };
 
-template < typename From_TL, typename To_TL >
-concept vconvertible_to = is_subset_v< From_TL, To_TL > || is_subset_v< From_TL const, To_TL >;
-
 // XXX: test
 template < typename U >
 concept _forward_nothrow_constructible =
@@ -219,33 +216,60 @@ template < typename TL >
 using split = _split_impl< typelist<>, TL >;
 
 template < typename Deleter >
-struct _deleter_box : private Deleter
+struct _deleter_box;
+
+template < typename Deleter >
+        requires( !std::is_lvalue_reference_v< Deleter > )
+struct _deleter_box< Deleter > : private Deleter
 {
-        static_assert( std::is_nothrow_default_constructible_v< Deleter > );
         constexpr _deleter_box() noexcept = default;
 
-        static_assert( std::is_nothrow_move_constructible_v< Deleter > );
         constexpr _deleter_box( Deleter&& d ) noexcept
           : Deleter( std::move( d ) )
         {
+                static_assert( std::is_nothrow_move_constructible_v< Deleter > );
         }
 
-        constexpr Deleter& get()
+        constexpr Deleter& get() noexcept
         {
                 return *this;
+        }
+
+        friend constexpr void swap( _deleter_box& lh, _deleter_box& rh ) noexcept
+        {
+                using std::swap;
+                swap( (Deleter&) lh, (Deleter&) rh );
         }
 
         friend constexpr auto operator<=>( _deleter_box const&, _deleter_box const& ) = default;
 };
 
-struct def_del
+template < typename Deleter >
+        requires( std::is_lvalue_reference_v< Deleter& > )
+struct _deleter_box< Deleter& >
 {
-        constexpr void operator()( auto* item ) const
+        constexpr _deleter_box() noexcept = delete;
+
+        constexpr _deleter_box( Deleter& d ) noexcept
+          : _del_ref( &d )
         {
-                delete item;
         }
 
-        friend constexpr auto operator<=>( def_del const&, def_del const& ) = default;
+        constexpr Deleter& get() noexcept
+        {
+                return *_del_ref;
+        }
+
+        friend constexpr void swap( _deleter_box& lh, _deleter_box& rh ) noexcept
+        {
+                using std::swap;
+                swap( lh._del_ref, rh._del_ref );
+        }
+
+        friend constexpr auto operator<=>( _deleter_box const&, _deleter_box const& ) = default;
+
+private:
+        Deleter* _del_ref;
 };
 
 }  // namespace vari

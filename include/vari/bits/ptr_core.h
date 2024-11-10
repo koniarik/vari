@@ -22,6 +22,7 @@
 #include "vari/bits/dispatch.h"
 #include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
+#include "vari/concept.h"
 
 #include <compare>
 #include <cstddef>

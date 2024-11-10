@@ -22,6 +22,7 @@
 #include "vari/bits/ptr_core.h"
 #include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
+#include "vari/deleter.h"
 #include "vari/forward.h"
 #include "vari/vptr.h"
 #include "vari/vref.h"
@@ -38,6 +39,7 @@ class _uvref : private _deleter_box< Deleter >
 {
         template < typename... Us >
         using same_uvref = _uvref< Deleter, Us... >;
+        using dbox       = _deleter_box< Deleter >;
 
 public:
         using types = typelist< Ts... >;
@@ -52,9 +54,12 @@ public:
 
         /// Constructs an `uvref` by transfering ownership from `uvref` with compatible types.
         ///
-        template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _uvref( _uvref< Deleter, Us... >&& p ) noexcept
+        template < typename Deleter2, typename... Us >
+                requires(
+                    vconvertible_to< typelist< Us... >, types > &&
+                    convertible_deleter< Deleter2, Deleter > )
+        constexpr _uvref( _uvref< Deleter2, Us... >&& p ) noexcept
+          : dbox( std::move( (dbox&) p ) )
         {
                 _core = std::move( p._core );
                 p._core.reset();
@@ -62,22 +67,48 @@ public:
 
         /// Constructs an `uvref` which owns a reference to one of the types that `uvref` can
         /// reference.
-        ///
         template < typename U >
-                requires( vconvertible_to< typelist< U >, types > )
+                requires( vconvertible_type< U, types > )
         constexpr explicit _uvref( U& u ) noexcept
         {
                 _core.set( u );
         }
 
-        /// Move assignment operator transfering ownership from `uvref` with compatible types.
+        /// Constructs an `uvref` which owns a reference to one of the types that `uvref` can
+        /// reference.
         ///
-        template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _uvref& operator=( _uvref< Deleter, Us... >&& p ) noexcept
+        /// Internal `Deleter` is copy-constructed from `d`.
+        template < typename U >
+                requires( vconvertible_type< U, types > && copy_constructible_deleter< Deleter > )
+        constexpr explicit _uvref( U& u, Deleter const& d ) noexcept
+          : dbox( d )
+        {
+                _core.set( u );
+        }
+
+        /// Constructs an `uvref` which owns a reference to one of the types that `uvref` can
+        /// reference.
+        ///
+        /// Internal `Deleter` is move-constructed from `d`.
+        template < typename U >
+                requires( vconvertible_type< U, types > && move_constructible_deleter< Deleter > )
+        constexpr explicit _uvref( U& u, Deleter&& d ) noexcept
+          : dbox( std::move( d ) )
+        {
+                _core.set( u );
+        }
+
+        /// Move assignment operator transfering ownership from `uvref` with compatible types.
+        /// `Deleter` is move-constructed from the other `uvref`.
+        template < typename Deleter2, typename... Us >
+                requires(
+                    vconvertible_to< typelist< Us... >, types > &&
+                    convertible_deleter< Deleter2, Deleter > )
+        constexpr _uvref& operator=( _uvref< Deleter2, Us... >&& p ) noexcept
         {
                 _uvref tmp{ std::move( p ) };
                 swap( _core, tmp._core );
+                swap( (dbox&) ( *this ), (dbox&) tmp );
                 return *this;
         }
 
@@ -173,18 +204,34 @@ public:
                 return tmp.template take_impl< same_uvref >( (Fs&&) fs... );
         }
 
-        /// Swaps `uvref` with each other.
+        /// Getter to the internal deleter
         ///
-        friend constexpr void swap( _uvref& lh, _uvref& rh ) noexcept
+        Deleter& get_deleter() noexcept
         {
-                swap( lh._core, rh._core );
+                return dbox::get();
         }
+
+        /// Getter to the internal deleter
+        ///
+        Deleter const& get_deleter() const noexcept
+        {
+                return dbox::get();
+        }
+
 
         /// Destroys the owned object.
         ///
         constexpr ~_uvref()
         {
-                _core.delete_ptr( _deleter_box< Deleter >::get() );
+                _core.delete_ptr( dbox::get() );
+        }
+
+        /// Swaps `uvref` with each other.
+        ///
+        friend constexpr void swap( _uvref& lh, _uvref& rh ) noexcept
+        {
+                swap( lh._core, rh._core );
+                swap( (dbox&) lh, (dbox&) rh );
         }
 
         /// Compares the internal pointers of both references.

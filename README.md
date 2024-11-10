@@ -31,6 +31,7 @@ The library introduces four basic types:
 - [Type-sets](#type-sets)
 - [Lvalue conversion from unique](#lvalue-conversion-from-unique)
 - [Const](#const)
+- [Deleter](#deleter)
 - [Typelist compatibility](#typelist-compatibility)
 - [Dispatch](#dispatch)
 - [Credits](#credits)
@@ -315,6 +316,16 @@ using vp_b = vari::vptr<const int, const std::string>;
 ```
 
 Both types `vp_a` and `vp_b` are compatible.
+
+## Deleter
+
+`uvref` and `uvptr` delete objects when appropiate. This can be customized by specifying the deleter type.
+
+This is not possible by the `uvref` and `uvptr` type aliases directly, but by directly using the underlying `_uvref` and `_uvptr` classes, where `Deleter` is the first template argument. (WARNING: `_`-prefixed symbols can be subject to backwards-incompatible changes in future development)
+
+The `Deleter` has to be a callable object. It can be called with a pointer to any of the types referenced to by the variadics. The call signals release of the object by the variadics. Default implementation `vari::def_del` calls `delete` on the pointers.
+
+The API for specifying custom `Deleter` to variadics mirrors the API of `std::unique_ptr`. Construction and assignment of variadics should behave the same way as `std::unique_ptr`.
 
 ## Typelist compatibility
 

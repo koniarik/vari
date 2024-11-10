@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include "vari/concept.h"
+
 namespace vari
 {
 

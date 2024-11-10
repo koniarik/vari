@@ -83,12 +83,12 @@ void run_tests( mode m, auto& st )
 
         vari::uvptr< int > uv1;
         CHECK( m, uv1, "vari::uvptr = {0x0}", st );
-        uv1 = vari::uwrap( i );
+        uv1 = vari::uwrap( i ).vptr();
         CHECK( m, uv1, "vari::uvptr = {42}", st );
 
         vari::uvptr< int, std::string > uv2;
         CHECK( m, uv2, "vari::uvptr = {0x0}", st );
-        uv2 = vari::uwrap( s );
+        uv2 = vari::uwrap( s ).vptr();
         CHECK( m, uv2, "vari::uvptr = {\"wololo\"}", st );
 
         vari::uvref< int > ur1 = vari::uwrap( i );

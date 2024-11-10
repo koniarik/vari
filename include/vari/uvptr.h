@@ -22,6 +22,7 @@
 #include "vari/bits/ptr_core.h"
 #include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
+#include "vari/deleter.h"
 #include "vari/forward.h"
 #include "vari/vptr.h"
 
@@ -38,6 +39,7 @@ class _uvptr : private _deleter_box< Deleter >
 {
         template < typename... Us >
         using same_uvref = _uvref< Deleter, Us... >;
+        using dbox       = _deleter_box< Deleter >;
 
 public:
         using types = typelist< Ts... >;
@@ -60,9 +62,11 @@ public:
 
         /// Constructs an `uvptr` by transfering ownership from `uvref` with compatible types.
         ///
-        template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr explicit _uvptr( _uvref< Deleter, Us... >&& p ) noexcept
+        template < typename Deleter2, typename... Us >
+                requires(
+                    vconvertible_to< typelist< Us... >, types > &&
+                    convertible_deleter< Deleter2, Deleter > )
+        constexpr explicit _uvptr( _uvref< Deleter2, Us... >&& p ) noexcept
         {
                 _core = std::move( p._core );
                 p._core.reset();
@@ -70,9 +74,12 @@ public:
 
         /// Constructs an `uvptr` by transfering ownership from `uvptr` with compatible types.
         ///
-        template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _uvptr( _uvptr< Deleter, Us... >&& p ) noexcept
+        template < typename Deleter2, typename... Us >
+                requires(
+                    vconvertible_to< typelist< Us... >, types > &&
+                    convertible_deleter< Deleter2, Deleter > )
+        constexpr _uvptr( _uvptr< Deleter2, Us... >&& p ) noexcept
+          : dbox( std::move( (dbox&) p ) )
         {
                 _core = std::move( p._core );
                 p._core.reset();
@@ -82,12 +89,39 @@ public:
         /// Constructs an `uvptr` which owns a pointer to one of the types that `uvptr` can
         /// reference. If pointer is null, `uvptr` is constructed as if `nullptr` was passed.
         template < typename U >
-                requires( vconvertible_to< typelist< U >, types > )
+                requires( vconvertible_type< U, types > )
         constexpr _uvptr( U* u ) noexcept
         {
                 if ( u )
                         _core.set( *u );
         }
+
+        /// Constructs an `uvptr` which owns a pointer to one of the types that `uvptr` can
+        /// reference. If pointer is null, `uvptr` is constructed as if `nullptr` was passed.
+        ///
+        /// Internal `Deleter` is copy-constructed from `d`.
+        template < typename U >
+                requires( vconvertible_type< U, types > && copy_constructible_deleter< Deleter > )
+        constexpr _uvptr( U* u, Deleter const& d ) noexcept
+          : dbox( d )
+        {
+                if ( u )
+                        _core.set( *u );
+        }
+
+        /// Constructs an `uvptr` which owns a pointer to one of the types that `uvptr` can
+        /// reference. If pointer is null, `uvptr` is constructed as if `nullptr` was passed.
+        ///
+        /// Internal `Deleter` is move-constructed from `d`.
+        template < typename U >
+                requires( vconvertible_type< U, types > && move_constructible_deleter< Deleter > )
+        constexpr _uvptr( U* u, Deleter&& d ) noexcept
+          : dbox( std::move( d ) )
+        {
+                if ( u )
+                        _core.set( *u );
+        }
+
 
         /// `nullptr` assignment operator resets this pointer.
         ///
@@ -97,25 +131,17 @@ public:
                 return *this;
         }
 
-        /// Move assignment operator transfering ownership from `uvref` with compatible types.
-        ///
-        template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _uvptr& operator=( _uvref< Deleter, Us... >&& p ) noexcept
-        {
-                _uvptr tmp{ std::move( p ) };
-                swap( _core, tmp._core );
-                return *this;
-        }
-
         /// Move assignment operator transfering ownership from `uvptr` with compatible types.
-        ///
-        template < typename... Us >
-                requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _uvptr& operator=( _uvptr< Deleter, Us... >&& p ) noexcept
+        /// `Deleter` is move-constructed from the other `uvptr`.
+        template < typename Deleter2, typename... Us >
+                requires(
+                    vconvertible_to< typelist< Us... >, types > &&
+                    convertible_deleter< Deleter2, Deleter > )
+        constexpr _uvptr& operator=( _uvptr< Deleter2, Us... >&& p ) noexcept
         {
                 _uvptr tmp{ std::move( p ) };
                 swap( _core, tmp._core );
+                swap( (dbox&) ( *this ), (dbox&) tmp );
                 return *this;
         }
 
@@ -247,11 +273,18 @@ public:
                 return p._core.template take_impl< same_uvref >( (Fs&&) fs... );
         }
 
-        /// Swaps `uvptr` with each other.
+        /// Getter to the internal deleter
         ///
-        friend constexpr void swap( _uvptr& lh, _uvptr& rh ) noexcept
+        Deleter& get_deleter() noexcept
         {
-                swap( lh._core, rh._core );
+                return dbox::get();
+        }
+
+        /// Getter to the internal deleter
+        ///
+        Deleter const& get_deleter() const noexcept
+        {
+                return dbox::get();
         }
 
         /// Destroys the owned object, if any.
@@ -259,6 +292,14 @@ public:
         constexpr ~_uvptr()
         {
                 _core.delete_ptr( _deleter_box< Deleter >::get() );
+        }
+
+        /// Swaps `uvptr` with each other.
+        ///
+        friend constexpr void swap( _uvptr& lh, _uvptr& rh ) noexcept
+        {
+                swap( lh._core, rh._core );
+                swap( (dbox&) lh, (dbox&) rh );
         }
 
         /// Compares the internal pointers of both pointers.

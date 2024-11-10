@@ -312,7 +312,7 @@ TEST_CASE_TEMPLATE(
                 uvref< int > r1 = uwrap( int{ 42 } );
 
                 CHECK( !p1 );
-                p1 = std::move( r1 );
+                p1 = std::move( r1 ).vptr();
                 CHECK( p1 );
         }
 

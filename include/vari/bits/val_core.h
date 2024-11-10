@@ -21,6 +21,7 @@
 
 #include "util.h"
 #include "val_union.h"
+#include "vari/concept.h"
 
 #include <compare>
 #include <memory>
