@@ -351,13 +351,10 @@ vari::dispatch<3>(
     v,
     factory,
     [&](std::integral_constant<std::size_t, 0>){
-        // `j` matches value of `v`
     },
     [&](std::integral_constant<std::size_t, 1>){
-        // `j` matches value of `v`
     },
     [&](std::integral_constant<std::size_t, 2>){
-        // `j` matches value of `v`
     });
 ```
 
