@@ -107,31 +107,49 @@ $(document).ready(function(){initNavTree('classvari_1_1__uvptr.html',''); initRe
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a772b55d517808be2459050de76556543"><td class="memTemplParams" colspan="2"><a id="a772b55d517808be2459050de76556543" name="a772b55d517808be2459050de76556543"></a>
-template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; typelist&lt; Us... &gt;, types &gt; )</td></tr>
-<tr class="memitem:a772b55d517808be2459050de76556543"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_uvptr</b> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter, Us... &gt; &amp;&amp;p) noexcept</td></tr>
-<tr class="memdesc:a772b55d517808be2459050de76556543"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <code>uvptr</code> by transfering ownership from <code>uvptr</code> with compatible types. <br /></td></tr>
-<tr class="separator:a772b55d517808be2459050de76556543"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb5ad8d976133b45ba70f1f9a85f0abd"><td class="memTemplParams" colspan="2"><a id="afb5ad8d976133b45ba70f1f9a85f0abd" name="afb5ad8d976133b45ba70f1f9a85f0abd"></a>
-template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; typelist&lt; Us... &gt;, types &gt; )</td></tr>
-<tr class="memitem:afb5ad8d976133b45ba70f1f9a85f0abd"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_uvptr</b> (<a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Deleter, Us... &gt; &amp;&amp;p) noexcept</td></tr>
-<tr class="memdesc:afb5ad8d976133b45ba70f1f9a85f0abd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <code>uvptr</code> by transfering ownership from <code>uvref</code> with compatible types. <br /></td></tr>
-<tr class="separator:afb5ad8d976133b45ba70f1f9a85f0abd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb26ae5f579e834bdd8104a81099aaf9"><td class="memTemplParams" colspan="2"><a id="abb26ae5f579e834bdd8104a81099aaf9" name="abb26ae5f579e834bdd8104a81099aaf9"></a>
+template&lt;typename Deleter2 , typename... Us&gt; <br />
+requires ( vconvertible_to&lt; typelist&lt; Us... &gt;, types &gt; &amp;&amp; convertible_deleter&lt; Deleter2, Deleter &gt; )</td></tr>
+<tr class="memitem:abb26ae5f579e834bdd8104a81099aaf9"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_uvptr</b> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter2, Us... &gt; &amp;&amp;p) noexcept</td></tr>
+<tr class="memdesc:abb26ae5f579e834bdd8104a81099aaf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <code>uvptr</code> by transfering ownership from <code>uvptr</code> with compatible types. <br /></td></tr>
+<tr class="separator:abb26ae5f579e834bdd8104a81099aaf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fbee5f356f022fa386fa61c8e56ed39"><td class="memTemplParams" colspan="2"><a id="a8fbee5f356f022fa386fa61c8e56ed39" name="a8fbee5f356f022fa386fa61c8e56ed39"></a>
+template&lt;typename Deleter2 , typename... Us&gt; <br />
+requires ( vconvertible_to&lt; typelist&lt; Us... &gt;, types &gt; &amp;&amp; convertible_deleter&lt; Deleter2, Deleter &gt; )</td></tr>
+<tr class="memitem:a8fbee5f356f022fa386fa61c8e56ed39"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_uvptr</b> (<a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Deleter2, Us... &gt; &amp;&amp;p) noexcept</td></tr>
+<tr class="memdesc:a8fbee5f356f022fa386fa61c8e56ed39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <code>uvptr</code> by transfering ownership from <code>uvref</code> with compatible types. <br /></td></tr>
+<tr class="separator:a8fbee5f356f022fa386fa61c8e56ed39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad68f51509febd7e80c4ea036ca8b14a0"><td class="memItemLeft" align="right" valign="top"><a id="ad68f51509febd7e80c4ea036ca8b14a0" name="ad68f51509febd7e80c4ea036ca8b14a0"></a>
 constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>_uvptr</b> (std::nullptr_t) noexcept</td></tr>
 <tr class="memdesc:ad68f51509febd7e80c4ea036ca8b14a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a pointer in a null state. <br /></td></tr>
 <tr class="separator:ad68f51509febd7e80c4ea036ca8b14a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e09b722199c8b0e0240fbbc9c8717fd"><td class="memTemplParams" colspan="2">template&lt;typename U &gt; <br />
-requires ( vconvertible_to&lt; typelist&lt; U &gt;, types &gt; )</td></tr>
-<tr class="memitem:a4e09b722199c8b0e0240fbbc9c8717fd"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a4e09b722199c8b0e0240fbbc9c8717fd">_uvptr</a> (U *u) noexcept</td></tr>
-<tr class="memdesc:a4e09b722199c8b0e0240fbbc9c8717fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <code>uvptr</code> which owns a pointer to one of the types that <code>uvptr</code> can reference.  <a href="classvari_1_1__uvptr.html#a4e09b722199c8b0e0240fbbc9c8717fd">More...</a><br /></td></tr>
-<tr class="separator:a4e09b722199c8b0e0240fbbc9c8717fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40c2114d2ab89a0687d3cb208fba0622"><td class="memTemplParams" colspan="2">template&lt;typename U &gt; <br />
+requires ( vconvertible_type&lt; U, types &gt; )</td></tr>
+<tr class="memitem:a40c2114d2ab89a0687d3cb208fba0622"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a40c2114d2ab89a0687d3cb208fba0622">_uvptr</a> (U *u) noexcept</td></tr>
+<tr class="memdesc:a40c2114d2ab89a0687d3cb208fba0622"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <code>uvptr</code> which owns a pointer to one of the types that <code>uvptr</code> can reference.  <a href="classvari_1_1__uvptr.html#a40c2114d2ab89a0687d3cb208fba0622">More...</a><br /></td></tr>
+<tr class="separator:a40c2114d2ab89a0687d3cb208fba0622"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01f5f975efde93c86e50668d1acf54ea"><td class="memTemplParams" colspan="2">template&lt;typename U &gt; <br />
+requires ( vconvertible_type&lt; U, types &gt; &amp;&amp; move_constructible_deleter&lt; Deleter &gt; )</td></tr>
+<tr class="memitem:a01f5f975efde93c86e50668d1acf54ea"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a01f5f975efde93c86e50668d1acf54ea">_uvptr</a> (U *u, Deleter &amp;&amp;d) noexcept</td></tr>
+<tr class="memdesc:a01f5f975efde93c86e50668d1acf54ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <code>uvptr</code> which owns a pointer to one of the types that <code>uvptr</code> can reference.  <a href="classvari_1_1__uvptr.html#a01f5f975efde93c86e50668d1acf54ea">More...</a><br /></td></tr>
+<tr class="separator:a01f5f975efde93c86e50668d1acf54ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85936f52d511fed352a01ce3f36210d9"><td class="memTemplParams" colspan="2">template&lt;typename U &gt; <br />
+requires ( vconvertible_type&lt; U, types &gt; &amp;&amp; copy_constructible_deleter&lt; Deleter &gt; )</td></tr>
+<tr class="memitem:a85936f52d511fed352a01ce3f36210d9"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a85936f52d511fed352a01ce3f36210d9">_uvptr</a> (U *u, Deleter const &amp;d) noexcept</td></tr>
+<tr class="memdesc:a85936f52d511fed352a01ce3f36210d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <code>uvptr</code> which owns a pointer to one of the types that <code>uvptr</code> can reference.  <a href="classvari_1_1__uvptr.html#a85936f52d511fed352a01ce3f36210d9">More...</a><br /></td></tr>
+<tr class="separator:a85936f52d511fed352a01ce3f36210d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6889939070b3cbec40b638da5095e358"><td class="memItemLeft" align="right" valign="top"><a id="a6889939070b3cbec40b638da5095e358" name="a6889939070b3cbec40b638da5095e358"></a>
 constexpr <a class="el" href="classvari_1_1__vptr.html">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> () const noexcept</td></tr>
 <tr class="memdesc:a6889939070b3cbec40b638da5095e358"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <code>pointer</code> to the pointed-to type. <br /></td></tr>
 <tr class="separator:a6889939070b3cbec40b638da5095e358"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73d772b0df0c1a6a343d1a8fd073f3db"><td class="memItemLeft" align="right" valign="top"><a id="a73d772b0df0c1a6a343d1a8fd073f3db" name="a73d772b0df0c1a6a343d1a8fd073f3db"></a>
+Deleter const &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get_deleter</b> () const noexcept</td></tr>
+<tr class="memdesc:a73d772b0df0c1a6a343d1a8fd073f3db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getter to the internal deleter. <br /></td></tr>
+<tr class="separator:a73d772b0df0c1a6a343d1a8fd073f3db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43c6eb4febd8b3df3b5ebde31f61b78a"><td class="memItemLeft" align="right" valign="top"><a id="a43c6eb4febd8b3df3b5ebde31f61b78a" name="a43c6eb4febd8b3df3b5ebde31f61b78a"></a>
+Deleter &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get_deleter</b> () noexcept</td></tr>
+<tr class="memdesc:a43c6eb4febd8b3df3b5ebde31f61b78a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getter to the internal deleter. <br /></td></tr>
+<tr class="separator:a43c6eb4febd8b3df3b5ebde31f61b78a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a793e60a27132226f6654282aaaf5aa78"><td class="memItemLeft" align="right" valign="top">constexpr index_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a793e60a27132226f6654282aaaf5aa78">index</a> () const noexcept</td></tr>
 <tr class="memdesc:a793e60a27132226f6654282aaaf5aa78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the index representing the type currently being pointed-to.  <a href="classvari_1_1__uvptr.html#a793e60a27132226f6654282aaaf5aa78">More...</a><br /></td></tr>
 <tr class="separator:a793e60a27132226f6654282aaaf5aa78"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,18 +180,11 @@ constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>operator bool</b
 <tr class="memitem:a6659faeaded10de7d246178683fc3a71"><td class="memItemLeft" align="right" valign="top">constexpr auto *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a6659faeaded10de7d246178683fc3a71">operator-&gt;</a> () const noexcept</td></tr>
 <tr class="memdesc:a6659faeaded10de7d246178683fc3a71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides member access to the pointed-to type.  <a href="classvari_1_1__uvptr.html#a6659faeaded10de7d246178683fc3a71">More...</a><br /></td></tr>
 <tr class="separator:a6659faeaded10de7d246178683fc3a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af829e6bfdf57fca4a9848b6c72793288"><td class="memTemplParams" colspan="2"><a id="af829e6bfdf57fca4a9848b6c72793288" name="af829e6bfdf57fca4a9848b6c72793288"></a>
-template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; typelist&lt; Us... &gt;, types &gt; )</td></tr>
-<tr class="memitem:af829e6bfdf57fca4a9848b6c72793288"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter, Us... &gt; &amp;&amp;p) noexcept</td></tr>
-<tr class="memdesc:af829e6bfdf57fca4a9848b6c72793288"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment operator transfering ownership from <code>uvptr</code> with compatible types. <br /></td></tr>
-<tr class="separator:af829e6bfdf57fca4a9848b6c72793288"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a749da531ff06767f468e504ad93c9444"><td class="memTemplParams" colspan="2"><a id="a749da531ff06767f468e504ad93c9444" name="a749da531ff06767f468e504ad93c9444"></a>
-template&lt;typename... Us&gt; <br />
-requires ( vconvertible_to&lt; typelist&lt; Us... &gt;, types &gt; )</td></tr>
-<tr class="memitem:a749da531ff06767f468e504ad93c9444"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Deleter, Us... &gt; &amp;&amp;p) noexcept</td></tr>
-<tr class="memdesc:a749da531ff06767f468e504ad93c9444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment operator transfering ownership from <code>uvref</code> with compatible types. <br /></td></tr>
-<tr class="separator:a749da531ff06767f468e504ad93c9444"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8355dbb698ab84a0bf64ed09ec0fed04"><td class="memTemplParams" colspan="2">template&lt;typename Deleter2 , typename... Us&gt; <br />
+requires ( vconvertible_to&lt; typelist&lt; Us... &gt;, types &gt; &amp;&amp; convertible_deleter&lt; Deleter2, Deleter &gt; )</td></tr>
+<tr class="memitem:a8355dbb698ab84a0bf64ed09ec0fed04"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#a8355dbb698ab84a0bf64ed09ec0fed04">operator=</a> (<a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter2, Us... &gt; &amp;&amp;p) noexcept</td></tr>
+<tr class="memdesc:a8355dbb698ab84a0bf64ed09ec0fed04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment operator transfering ownership from <code>uvptr</code> with compatible types.  <a href="classvari_1_1__uvptr.html#a8355dbb698ab84a0bf64ed09ec0fed04">More...</a><br /></td></tr>
+<tr class="separator:a8355dbb698ab84a0bf64ed09ec0fed04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42bb03e9901676c26545859c3f224b78"><td class="memItemLeft" align="right" valign="top"><a id="a42bb03e9901676c26545859c3f224b78" name="a42bb03e9901676c26545859c3f224b78"></a>
 constexpr <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (std::nullptr_t) noexcept</td></tr>
 <tr class="memdesc:a42bb03e9901676c26545859c3f224b78"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>nullptr</code> assignment operator resets this pointer. <br /></td></tr>
@@ -216,8 +227,8 @@ constexpr void&#160;</td><td class="memItemRight" valign="bottom"><b>swap</b> (<
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Deleter, typename... Ts&gt;<br />
 class vari::_uvptr&lt; Deleter, Ts &gt;</div><p >A nullable owning pointer to one of the types in Ts... </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a4e09b722199c8b0e0240fbbc9c8717fd" name="a4e09b722199c8b0e0240fbbc9c8717fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e09b722199c8b0e0240fbbc9c8717fd">&#9670;&#160;</a></span>_uvptr()</h2>
+<a id="a40c2114d2ab89a0687d3cb208fba0622" name="a40c2114d2ab89a0687d3cb208fba0622"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40c2114d2ab89a0687d3cb208fba0622">&#9670;&#160;</a></span>_uvptr() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -225,7 +236,7 @@ class vari::_uvptr&lt; Deleter, Ts &gt;</div><p >A nullable owning pointer to on
 template&lt;typename Deleter , typename... Ts&gt; </div>
 <div class="memtemplate">
 template&lt;typename U &gt; <br />
-requires ( vconvertible_to&lt; typelist&lt; U &gt;, types &gt; )</div>
+requires ( vconvertible_type&lt; U, types &gt; )</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -247,6 +258,96 @@ requires ( vconvertible_to&lt; typelist&lt; U &gt;, types &gt; )</div>
 
 <p>Constructs an <code>uvptr</code> which owns a pointer to one of the types that <code>uvptr</code> can reference. </p>
 <p >If pointer is null, <code>uvptr</code> is constructed as if <code>nullptr</code> was passed. </p>
+
+</div>
+</div>
+<a id="a85936f52d511fed352a01ce3f36210d9" name="a85936f52d511fed352a01ce3f36210d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85936f52d511fed352a01ce3f36210d9">&#9670;&#160;</a></span>_uvptr() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Deleter , typename... Ts&gt; </div>
+<div class="memtemplate">
+template&lt;typename U &gt; <br />
+requires ( vconvertible_type&lt; U, types &gt; &amp;&amp; copy_constructible_deleter&lt; Deleter &gt; )</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::_uvptr </td>
+          <td>(</td>
+          <td class="paramtype">U *&#160;</td>
+          <td class="paramname"><em>u</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Deleter const &amp;&#160;</td>
+          <td class="paramname"><em>d</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs an <code>uvptr</code> which owns a pointer to one of the types that <code>uvptr</code> can reference. </p>
+<p >If pointer is null, <code>uvptr</code> is constructed as if <code>nullptr</code> was passed.</p>
+<p >Internal <code>Deleter</code> is copy-constructed from <code>d</code>. </p>
+
+</div>
+</div>
+<a id="a01f5f975efde93c86e50668d1acf54ea" name="a01f5f975efde93c86e50668d1acf54ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01f5f975efde93c86e50668d1acf54ea">&#9670;&#160;</a></span>_uvptr() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Deleter , typename... Ts&gt; </div>
+<div class="memtemplate">
+template&lt;typename U &gt; <br />
+requires ( vconvertible_type&lt; U, types &gt; &amp;&amp; move_constructible_deleter&lt; Deleter &gt; )</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::_uvptr </td>
+          <td>(</td>
+          <td class="paramtype">U *&#160;</td>
+          <td class="paramname"><em>u</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Deleter &amp;&amp;&#160;</td>
+          <td class="paramname"><em>d</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs an <code>uvptr</code> which owns a pointer to one of the types that <code>uvptr</code> can reference. </p>
+<p >If pointer is null, <code>uvptr</code> is constructed as if <code>nullptr</code> was passed.</p>
+<p >Internal <code>Deleter</code> is move-constructed from <code>d</code>. </p>
 
 </div>
 </div>
@@ -338,6 +439,40 @@ template&lt;typename Deleter , typename... Ts&gt; </div>
 
 <p>Provides member access to the pointed-to type. </p>
 <p >It is <code>T*</code> if there is only one type in <code>Ts...</code>, or <code>void*</code> otherwise. Undefined behavior on null pointer. </p>
+
+</div>
+</div>
+<a id="a8355dbb698ab84a0bf64ed09ec0fed04" name="a8355dbb698ab84a0bf64ed09ec0fed04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8355dbb698ab84a0bf64ed09ec0fed04">&#9670;&#160;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Deleter , typename... Ts&gt; </div>
+<div class="memtemplate">
+template&lt;typename Deleter2 , typename... Us&gt; <br />
+requires ( vconvertible_to&lt; typelist&lt; Us... &gt;, types &gt; &amp;&amp; convertible_deleter&lt; Deleter2, Deleter &gt; )</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvptr.html">_uvptr</a> &amp; <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a>&lt; Deleter2, Us... &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Move assignment operator transfering ownership from <code>uvptr</code> with compatible types. </p>
+<p ><code>Deleter</code> is move-constructed from the other <code>uvptr</code>. </p>
 
 </div>
 </div>

@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['uvptr_0',['uvptr',['../namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5',1,'vari']]],
-  ['uvref_1',['uvref',['../namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0',1,'vari']]],
-  ['uwrap_2',['uwrap',['../namespacevari.html#a4ebcd20c8226cf02de56c175cd7fdac6',1,'vari']]]
+  ['take_0',['take',['../classvari_1_1__uvptr.html#a4b2b1c49a9d83bf17c1527ed51a408c6',1,'vari::_uvptr::take()'],['../structvari_1_1__uvref.html#af62c2afb2aa5bb43db9c584ec884f198',1,'vari::_uvref::take()']]]
 ];

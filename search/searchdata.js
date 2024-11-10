@@ -1,7 +1,7 @@
 var indexSectionsWithContent =
 {
-  0: "_giorstuv~",
-  1: "_",
+  0: "_dgiorstuv~",
+  1: "_d",
   2: "v",
   3: "_giortuv~",
   4: "_uv",

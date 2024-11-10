@@ -1,6 +1,8 @@
 var dir_77fe58ad75b6e7ce12eb0d54c41bb7ab =
 [
     [ "bits", "dir_a2b7c7410be9b8322832dcfaa27a6603.html", "dir_a2b7c7410be9b8322832dcfaa27a6603" ],
+    [ "concept.h", "concept_8h_source.html", null ],
+    [ "deleter.h", "deleter_8h_source.html", null ],
     [ "dispatch.h", "dispatch_8h_source.html", null ],
     [ "forward.h", "forward_8h_source.html", null ],
     [ "uvptr.h", "uvptr_8h_source.html", null ],

@@ -117,6 +117,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <li>Type-sets</li>
 <li>Lvalue conversion from unique</li>
 <li>Const</li>
+<li>Deleter</li>
 <li>Typelist compatibility</li>
 <li>Dispatch</li>
 <li>Credits</li>
@@ -142,7 +143,7 @@ uvptr and uvref</h2>
 <div class="line"><span class="keyword">struct </span>b_t{};</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;a_t, b_t&gt;</a> p;</div>
-<div class="ttc" id="anamespacevari_html_a3be05c6f854dc1b903a2a85e244bbdc5"><div class="ttname"><a href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr</a></div><div class="ttdeci">_define_variadic&lt; _uvptr, typelist&lt; Ts... &gt;, def_del &gt; uvptr</div><div class="ttdoc">A nullable owning pointer to types derived out of Ts... list by flattening it and filtering for uniqu...</div><div class="ttdef"><b>Definition:</b> uvptr.h:281</div></div>
+<div class="ttc" id="anamespacevari_html_a3be05c6f854dc1b903a2a85e244bbdc5"><div class="ttname"><a href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr</a></div><div class="ttdeci">_define_variadic&lt; _uvptr, typelist&lt; Ts... &gt;, def_del &gt; uvptr</div><div class="ttdoc">A nullable owning pointer to types derived out of Ts... list by flattening it and filtering for uniqu...</div><div class="ttdef"><b>Definition:</b> uvptr.h:322</div></div>
 </div><!-- fragment --><p >Similar to <code>std::make_unique</code>, we provide a function <code>uwrap</code> for construction of unique variants:</p>
 <div class="fragment"><div class="line">uvref&lt;std::string, int&gt; p = uwrap(std::string{<span class="stringliteral">&quot;wololo&quot;</span>});</div>
 </div><!-- fragment --><p >Here <code>uwrap</code> creates <code>uvref&lt;std::string&gt;</code> which gets converted into <code>uvref&lt;std::string,int&gt;</code> due to implicit conversion.</p>
@@ -194,7 +195,7 @@ Take</h3>
 <div class="line">    std::move(r).take([&amp;](<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;int&gt;</a>){},</div>
 <div class="line">                      [&amp;](<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;std::string&gt;</a>){});</div>
 <div class="line">};</div>
-<div class="ttc" id="anamespacevari_html_a2388c0eb42106efee2d8ed10243b69a0"><div class="ttname"><a href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref</a></div><div class="ttdeci">_define_variadic&lt; _uvref, typelist&lt; Ts... &gt;, def_del &gt; uvref</div><div class="ttdoc">A non-nullable owning pointer to types derived out of Ts... list by flattening it and filtering for u...</div><div class="ttdef"><b>Definition:</b> uvref.h:212</div></div>
+<div class="ttc" id="anamespacevari_html_a2388c0eb42106efee2d8ed10243b69a0"><div class="ttname"><a href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref</a></div><div class="ttdeci">_define_variadic&lt; _uvref, typelist&lt; Ts... &gt;, def_del &gt; uvref</div><div class="ttdoc">A non-nullable owning pointer to types derived out of Ts... list by flattening it and filtering for u...</div><div class="ttdef"><b>Definition:</b> uvref.h:259</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
 Sub-typing</h2>
 <p >All variadic types support sub-typing, meaning any variadic type can be converted into a type that represents a superset of its types:</p>
@@ -307,11 +308,17 @@ Const</h2>
 <div class="line"><span class="keyword">using </span>vp_b = <a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;const int, const std::string&gt;</a>;</div>
 </div><!-- fragment --><p >Both types <code>vp_a</code> and <code>vp_b</code> are compatible.</p>
 <h2><a class="anchor" id="autotoc_md13"></a>
+Deleter</h2>
+<p ><code>uvref</code> and <code>uvptr</code> delete objects when appropiate. This can be customized by specifying the deleter type.</p>
+<p >This is not possible by the <code>uvref</code> and <code>uvptr</code> type aliases directly, but by directly using the underlying <code>_uvref</code> and <code>_uvptr</code> classes, where <code>Deleter</code> is the first template argument. (WARNING: <code>_</code>-prefixed symbols can be subject to backwards-incompatible changes in future development)</p>
+<p >The <code>Deleter</code> has to be a callable object. It can be called with a pointer to any of the types referenced to by the variadics. The call signals release of the object by the variadics. Default implementation <code><a class="el" href="structvari_1_1def__del.html" title="Default library deleter.">vari::def_del</a></code> calls <code>delete</code> on the pointers.</p>
+<p >The API for specifying custom <code>Deleter</code> to variadics mirrors the API of <code>std::unique_ptr</code>. Construction and assignment of variadics should behave the same way as <code>std::unique_ptr</code>.</p>
+<h2><a class="anchor" id="autotoc_md14"></a>
 Typelist compatibility</h2>
 <p >Library can be extended by using other types than just <code>vari::typelist</code> to represent set of types.</p>
 <p >Whenever type is typelist is determined by <code>vari::typelist_traits&lt;T&gt;</code>. In case <code>vari::typelist_traits&lt;T&gt;:::is_compatible</code> evaluates to <code>true</code>, library considers <code>T</code> to be typelist-like type.</p>
 <p >In such a case, <code>vari::typelist_traits&lt;T&gt;::types</code> should be a type which by itself is vari-compatible typelist. Transtively, this should eventually resolve into <code>vari::typelist</code> itself which is used by the library directly.</p>
-<h2><a class="anchor" id="autotoc_md14"></a>
+<h2><a class="anchor" id="autotoc_md15"></a>
 Dispatch</h2>
 <p >We also ship free function <code>dispatch</code> for mapping a runtime value into compile-time value. It uses all the safety checks of <code>visit</code>:</p>
 <div class="fragment"><div class="line"><span class="comment">// factory used by the library to create instances of types</span></div>
@@ -332,7 +339,7 @@ Dispatch</h2>
 <div class="line">    [&amp;](std::integral_constant&lt;std::size_t, 2&gt;){</div>
 <div class="line">        <span class="comment">// `j` matches value of `v`</span></div>
 <div class="line">    });</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md15"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md16"></a>
 Credits</h2>
 <p >Credits for the idea for this should go to <code>avakar</code>, live long and prosper. </p>
 </div></div><!-- PageDoc -->

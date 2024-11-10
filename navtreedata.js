@@ -38,9 +38,10 @@ var NAVTREE =
       [ "Type-sets", "index.html#autotoc_md10", null ],
       [ "Lvalue conversion from unique", "index.html#autotoc_md11", null ],
       [ "Const", "index.html#autotoc_md12", null ],
-      [ "Typelist compatibility", "index.html#autotoc_md13", null ],
-      [ "Dispatch", "index.html#autotoc_md14", null ],
-      [ "Credits", "index.html#autotoc_md15", null ],
+      [ "Deleter", "index.html#autotoc_md13", null ],
+      [ "Typelist compatibility", "index.html#autotoc_md14", null ],
+      [ "Dispatch", "index.html#autotoc_md15", null ],
+      [ "Credits", "index.html#autotoc_md16", null ],
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
