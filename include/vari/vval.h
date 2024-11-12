@@ -40,17 +40,21 @@ class _vval
         using core_type = _val_core< typelist< Ts... > >;
 
 public:
-        using types = typelist< Ts... >;
+        using types           = typelist< Ts... >;
+        using pointer         = _vptr< Ts... >;
+        using const_pointer   = _vptr< Ts const... >;
+        using reference       = _vref< Ts... >;
+        using const_reference = _vref< Ts const... >;
 
         template < typename U >
-                requires( vconvertible_to< typelist< std::remove_reference_t< U > >, types > )
+                requires( vconvertible_type< std::remove_reference_t< U >, types > )
         constexpr _vval( U&& v ) noexcept( _forward_nothrow_constructible< U > )
         {
                 _core.template emplace< std::remove_reference_t< U > >( (U&&) v );
         }
 
         template < typename U, typename... Args >
-                requires( vconvertible_to< typelist< U >, types > )
+                requires( vconvertible_type< U, types > )
         constexpr _vval( std::in_place_type_t< U >, Args&&... args ) noexcept(
             std::is_nothrow_constructible_v< U, Args... > )
         {
@@ -128,7 +132,7 @@ public:
         }
 
         template < typename T, typename... Args >
-                requires( vconvertible_to< typelist< T >, types > )
+                requires( vconvertible_type< T, types > )
         constexpr T&
         emplace( Args&&... args ) noexcept( std::is_nothrow_constructible_v< T, Args... > )
         {
@@ -175,18 +179,14 @@ public:
                 } );
         }
 
-        template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
-        constexpr operator _vptr< Us... >() & noexcept
+        constexpr pointer vptr() & noexcept
         {
-                return _vref< Us... >{ *this }.vptr();
+                return reference{ *this }.vptr();
         }
 
-        template < typename... Us >
-                requires( vconvertible_to< types, typelist< Us... > > )
-        constexpr operator _vptr< Us... >() const& noexcept
+        constexpr const_pointer vptr() const& noexcept
         {
-                return _vref< Us... >{ *this }.vptr();
+                return const_reference{ *this }.vptr();
         }
 
 

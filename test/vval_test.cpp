@@ -126,19 +126,19 @@ void vval_construct_test(
                 vref< typename T::types > vrf1{ v1 };
                 CHECK_EQ( vrf1.index(), index );
 
-                vptr< typename T::types > vpr1{ v2 };
+                vptr< typename T::types > vpr1{ v2.vptr() };
                 CHECK_EQ( vpr1.index(), index );
 
                 vref< typename T::types const > vrf2{ v1 };
                 CHECK_EQ( vrf2.index(), index );
 
-                vptr< typename T::types const > vpr2{ v2 };
+                vptr< typename T::types const > vpr2{ v2.vptr() };
                 CHECK_EQ( vpr2.index(), index );
 
                 vref< typename T::types const > vrf3{ std::as_const( v1 ) };
                 CHECK_EQ( vrf3.index(), index );
 
-                vptr< typename T::types const > vpr3{ std::as_const( v2 ) };
+                vptr< typename T::types const > vpr3{ std::as_const( v2 ).vptr() };
                 CHECK_EQ( vpr3.index(), index );
         }
 }
