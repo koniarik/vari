@@ -17,6 +17,8 @@ var namespacevari =
     [ "copy_constructible_deleter", "conceptvari_1_1copy__constructible__deleter.html", null ],
     [ "move_constructible_deleter", "conceptvari_1_1move__constructible__deleter.html", null ],
     [ "convertible_deleter", "conceptvari_1_1convertible__deleter.html", null ],
+    [ "variadic_with", "conceptvari_1_1variadic__with.html", null ],
+    [ "variadic_with_type", "conceptvari_1_1variadic__with__type.html", null ],
     [ "_define_variadic", "namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead", null ],
     [ "uvptr", "namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5", null ],
     [ "uvref", "namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0", null ],
