@@ -2,6 +2,9 @@
 #include "vari/bits/typelist.h"
 
 #include "test_types.h"
+#include "vari/concept.h"
+#include "vari/uvptr.h"
+#include "vari/vref.h"
 
 #include <doctest/doctest.h>
 #include <string>
@@ -266,5 +269,16 @@ static_assert( all_nothrow_equality_comparable_v< typelist< equality_yes > > );
 static_assert( !all_nothrow_equality_comparable_v< typelist< equality_no > > );
 static_assert( !all_nothrow_equality_comparable_v< typelist< equality_yes, equality_no > > );
 static_assert( !all_nothrow_equality_comparable_v< typelist< equality_no, equality_yes > > );
+
+// ---
+
+static_assert( variadic_with< vref< int, float >, typelist< float > > );
+static_assert( variadic_with< uvptr< int, float >, typelist< float > > );
+static_assert( !variadic_with< vref< int, float >, typelist< std::string > > );
+static_assert( !variadic_with< uvptr< int, float >, typelist< std::string > > );
+static_assert( variadic_with< vref< int, float >, typelist<> > );
+static_assert( variadic_with< uvptr< int, float >, typelist<> > );
+static_assert( variadic_with_type< vref< int, float >, int > );
+static_assert( variadic_with_type< uvptr< int, float >, int > );
 
 }  // namespace vari

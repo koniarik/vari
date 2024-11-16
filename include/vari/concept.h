@@ -24,5 +24,10 @@ concept move_constructible_deleter =
 template < typename FromDeleter, typename ToDeleter >
 concept convertible_deleter = std::is_nothrow_constructible_v< ToDeleter, FromDeleter >;
 
+template < typename V, typename TL >
+concept variadic_with = is_subset_v< TL, typename V::types >;
+
+template < typename V, typename T >
+concept variadic_with_type = contains_type_v< T, typename V::types >;
 
 }  // namespace vari
