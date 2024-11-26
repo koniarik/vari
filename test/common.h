@@ -136,6 +136,13 @@ void check_uvref( V& variadic, T& val )
         check_visit( v, val );
 }
 
+template < typename V >
+void check_hash( V& variadic )
+{
+        std::size_t h = std::hash< V >()( variadic );
+        CHECK_NE( h, 0x0 );
+}
+
 template < null_visitable V, typename T >
 void check_nullable_visit( V& variadic, T& val )
 {

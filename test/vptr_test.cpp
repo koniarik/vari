@@ -114,6 +114,12 @@ TEST_CASE_TEMPLATE(
                 vptr< std::vector< int > > p4( &vec );
                 check_nullable_visit( p4, vec );
         }
+
+        SUBCASE( "hash" )
+        {
+                V p1{ &s1 };
+                check_hash( p1 );
+        }
 }
 
 TEST_CASE_TEMPLATE(
@@ -188,6 +194,12 @@ TEST_CASE_TEMPLATE(
 
                 v2 = v1;
                 CHECK_EQ( v1, v2 );
+        }
+
+        SUBCASE( "hash" )
+        {
+                V p1{ s1 };
+                check_hash( p1 );
         }
 }
 
@@ -341,6 +353,12 @@ TEST_CASE_TEMPLATE(
                 CHECK_EQ( p3->c_str(), p1->c_str() );
         }
 
+        SUBCASE( "hash" )
+        {
+                V p1{ uwrap( s1 ) };
+                check_hash( p1 );
+        }
+
         static_assert( lvalue_reference_convertible_only< vptr< int >, uvptr< int > > );
 }
 
@@ -401,6 +419,9 @@ TEST_CASE_TEMPLATE(
         CHECK_EQ( p7.index(), 0 );
 
         static_assert( lvalue_reference_convertible_only< vref< int >, uvref< int > > );
+
+        V p10{ uwrap( 666 ) };
+        check_hash( p10 );
 }
 
 TEST_CASE( "dispatch" )

@@ -21,6 +21,7 @@
 
 #include "vari/bits/typelist.h"
 
+#include <bit>
 #include <cstdint>
 #include <limits>
 #include <memory>
@@ -272,4 +273,31 @@ private:
         Deleter* _del_ref;
 };
 
+template < std::size_t Align >
+constexpr std::intptr_t hash_ptr( void* p )
+{
+        return ( std::intptr_t )( p ) >> std::bit_width( Align );
+}
+
 }  // namespace vari
+
+#define VARI_GET_PTR_HASH_SPECIALIZATION( TYPE )                                              \
+        template < typename... Ts >                                                           \
+        struct std::hash< TYPE< Ts... > >                                                     \
+        {                                                                                     \
+                std::size_t operator()( TYPE< Ts... > const& r )                              \
+                {                                                                             \
+                        return vari::hash_ptr< std::min( { alignof( Ts )... } ) >( r.get() ); \
+                }                                                                             \
+        }
+
+#define VARI_REC_GET_HASH_SPECIALIZATION( TYPE )                  \
+        template < typename... Ts >                               \
+        struct std::hash< TYPE< Ts... > >                         \
+        {                                                         \
+                std::size_t operator()( TYPE< Ts... > const& r )  \
+                {                                                 \
+                        auto x = r.get();                         \
+                        return std::hash< decltype( x ) >()( x ); \
+                }                                                 \
+        }

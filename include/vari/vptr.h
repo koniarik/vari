@@ -173,3 +173,5 @@ template < typename... Ts >
 using vptr = _define_variadic< _vptr, typelist< Ts... > >;
 
 }  // namespace vari
+
+VARI_GET_PTR_HASH_SPECIALIZATION( vari::_vptr );

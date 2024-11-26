@@ -272,3 +272,5 @@ constexpr uvref< T > uwrap( T item )
 }
 
 }  // namespace vari
+
+VARI_REC_GET_HASH_SPECIALIZATION( vari::_uvref );

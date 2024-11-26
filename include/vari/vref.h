@@ -146,3 +146,5 @@ template < typename... Ts >
 using vref = _define_variadic< _vref, typelist< Ts... > >;
 
 }  // namespace vari
+
+VARI_GET_PTR_HASH_SPECIALIZATION( vari::_vref );

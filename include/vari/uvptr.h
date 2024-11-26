@@ -322,3 +322,5 @@ template < typename... Ts >
 using uvptr = _define_variadic< _uvptr, typelist< Ts... >, def_del >;
 
 }  // namespace vari
+
+VARI_REC_GET_HASH_SPECIALIZATION( vari::_uvptr );
