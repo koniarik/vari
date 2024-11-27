@@ -4,6 +4,7 @@
 #include "vari/vref.h"
 
 #include <doctest/doctest.h>
+#include <unordered_set>
 
 #pragma once
 
@@ -137,10 +138,13 @@ void check_uvref( V& variadic, T& val )
 }
 
 template < typename V >
-void check_hash( V& variadic )
+void check_hash( V variadic )
 {
         std::size_t h = std::hash< V >()( variadic );
         CHECK_NE( h, 0x0 );
+
+        std::unordered_set< V > s;
+        s.insert( std::move( variadic ) );
 }
 
 template < null_visitable V, typename T >

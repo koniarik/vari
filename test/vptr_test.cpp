@@ -356,7 +356,7 @@ TEST_CASE_TEMPLATE(
         SUBCASE( "hash" )
         {
                 V p1{ uwrap( s1 ) };
-                check_hash( p1 );
+                check_hash( std::move( p1 ) );
         }
 
         static_assert( lvalue_reference_convertible_only< vptr< int >, uvptr< int > > );
@@ -421,7 +421,7 @@ TEST_CASE_TEMPLATE(
         static_assert( lvalue_reference_convertible_only< vref< int >, uvref< int > > );
 
         V p10{ uwrap( 666 ) };
-        check_hash( p10 );
+        check_hash( std::move( p10 ) );
 }
 
 TEST_CASE( "dispatch" )

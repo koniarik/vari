@@ -285,19 +285,19 @@ constexpr std::intptr_t hash_ptr( void* p )
         template < typename... Ts >                                                           \
         struct std::hash< TYPE< Ts... > >                                                     \
         {                                                                                     \
-                std::size_t operator()( TYPE< Ts... > const& r )                              \
+                std::size_t operator()( TYPE< Ts... > const& r ) const                        \
                 {                                                                             \
                         return vari::hash_ptr< std::min( { alignof( Ts )... } ) >( r.get() ); \
                 }                                                                             \
         }
 
-#define VARI_REC_GET_HASH_SPECIALIZATION( TYPE )                  \
-        template < typename... Ts >                               \
-        struct std::hash< TYPE< Ts... > >                         \
-        {                                                         \
-                std::size_t operator()( TYPE< Ts... > const& r )  \
-                {                                                 \
-                        auto x = r.get();                         \
-                        return std::hash< decltype( x ) >()( x ); \
-                }                                                 \
+#define VARI_REC_GET_HASH_SPECIALIZATION( TYPE )                       \
+        template < typename... Ts >                                    \
+        struct std::hash< TYPE< Ts... > >                              \
+        {                                                              \
+                std::size_t operator()( TYPE< Ts... > const& r ) const \
+                {                                                      \
+                        auto x = r.get();                              \
+                        return std::hash< decltype( x ) >()( x );      \
+                }                                                      \
         }
