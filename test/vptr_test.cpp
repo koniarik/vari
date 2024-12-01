@@ -120,6 +120,12 @@ TEST_CASE_TEMPLATE(
                 V p1{ &s1 };
                 check_hash( p1 );
         }
+
+        SUBCASE( "set" )
+        {
+                std::unordered_set< V > s;
+                s.insert( V{ &s1 } );
+        }
 }
 
 TEST_CASE_TEMPLATE(
@@ -200,6 +206,12 @@ TEST_CASE_TEMPLATE(
         {
                 V p1{ s1 };
                 check_hash( p1 );
+        }
+
+        SUBCASE( "set" )
+        {
+                std::unordered_set< V > s;
+                s.insert( V{ s1 } );
         }
 }
 
@@ -357,6 +369,12 @@ TEST_CASE_TEMPLATE(
         {
                 V p1{ uwrap( s1 ) };
                 check_hash( std::move( p1 ) );
+        }
+
+        SUBCASE( "set" )
+        {
+                std::unordered_set< V > s;
+                s.insert( V{ uwrap( s1 ) } );
         }
 
         static_assert( lvalue_reference_convertible_only< vptr< int >, uvptr< int > > );

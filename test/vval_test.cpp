@@ -22,6 +22,7 @@
 
 #include "./common.h"
 #include "test_types.h"
+#include "vari/vopt.h"
 
 #include <doctest/doctest.h>
 #include <source_location>
@@ -123,19 +124,19 @@ void vval_construct_test(
 
         if constexpr ( T::types::size < 32 ) {
 
-                vref< typename T::types > vrf1{ v1 };
+                vref< typename T::types > vrf1{ v1.vref() };
                 CHECK_EQ( vrf1.index(), index );
 
                 vptr< typename T::types > vpr1{ v2.vptr() };
                 CHECK_EQ( vpr1.index(), index );
 
-                vref< typename T::types const > vrf2{ v1 };
+                vref< typename T::types const > vrf2{ v1.vref() };
                 CHECK_EQ( vrf2.index(), index );
 
                 vptr< typename T::types const > vpr2{ v2.vptr() };
                 CHECK_EQ( vpr2.index(), index );
 
-                vref< typename T::types const > vrf3{ std::as_const( v1 ) };
+                vref< typename T::types const > vrf3{ std::as_const( v1 ).vref() };
                 CHECK_EQ( vrf3.index(), index );
 
                 vptr< typename T::types const > vpr3{ std::as_const( v2 ).vptr() };
@@ -143,38 +144,51 @@ void vval_construct_test(
         }
 }
 
-TEST_CASE( "vval_construct" )
+template < template < typename... X > class T >
+void test_construct()
 {
 
         int i = 42;
-        vval_construct_test< vval< int > >( i, nothrow::YES, 0 );
-        vval_construct_test< vval< int > >( 42, nothrow::YES, 0 );
-        vval_construct_test< vval< float, int > >( i, nothrow::YES, 1 );
-        vval_construct_test< vval< float, int > >( 42, nothrow::YES, 1 );
-        vval_construct_test< vval< float, int > >( 42.0F, nothrow::YES, 0 );
+        vval_construct_test< T< int > >( i, nothrow::YES, 0 );
+        vval_construct_test< T< int > >( 42, nothrow::YES, 0 );
+        vval_construct_test< T< float, int > >( i, nothrow::YES, 1 );
+        vval_construct_test< T< float, int > >( 42, nothrow::YES, 1 );
+        vval_construct_test< T< float, int > >( 42.0F, nothrow::YES, 0 );
         throw_const tc;
-        vval_construct_test< vval< throw_const, int > >( tc, nothrow::NO, 0 );
-        vval_construct_test< vval< throw_const, int > >( throw_const{}, nothrow::NO, 0 );
-        vval_construct_test< vval< int, throw_const > >( tc, nothrow::NO, 1 );
-        vval_construct_test< vval< int, throw_const > >( throw_const{}, nothrow::NO, 1 );
-        vval_construct_test< vval< int, throw_const > >( i, nothrow::YES, 0 );
-        vval_construct_test< vval< int, throw_const > >( 42, nothrow::YES, 0 );
+        vval_construct_test< T< throw_const, int > >( tc, nothrow::NO, 0 );
+        vval_construct_test< T< throw_const, int > >( throw_const{}, nothrow::NO, 0 );
+        vval_construct_test< T< int, throw_const > >( tc, nothrow::NO, 1 );
+        vval_construct_test< T< int, throw_const > >( throw_const{}, nothrow::NO, 1 );
+        vval_construct_test< T< int, throw_const > >( i, nothrow::YES, 0 );
+        vval_construct_test< T< int, throw_const > >( 42, nothrow::YES, 0 );
         throw_mv_const mtc;
-        vval_construct_test< vval< throw_mv_const, int > >( mtc, nothrow::YES, 0 );
-        vval_construct_test< vval< throw_mv_const, int > >( throw_mv_const{}, nothrow::NO, 0 );
-        vval_construct_test< vval< int, throw_mv_const > >( mtc, nothrow::YES, 1 );
-        vval_construct_test< vval< int, throw_mv_const > >( throw_mv_const{}, nothrow::NO, 1 );
+        vval_construct_test< T< throw_mv_const, int > >( mtc, nothrow::YES, 0 );
+        vval_construct_test< T< throw_mv_const, int > >( throw_mv_const{}, nothrow::NO, 0 );
+        vval_construct_test< T< int, throw_mv_const > >( mtc, nothrow::YES, 1 );
+        vval_construct_test< T< int, throw_mv_const > >( throw_mv_const{}, nothrow::NO, 1 );
         throw_cp_const ctc;
-        vval_construct_test< vval< throw_cp_const, int > >( ctc, nothrow::NO, 0 );
-        vval_construct_test< vval< throw_cp_const, int > >( throw_cp_const{}, nothrow::YES, 0 );
-        vval_construct_test< vval< int, throw_cp_const > >( ctc, nothrow::NO, 1 );
-        vval_construct_test< vval< int, throw_cp_const > >( throw_cp_const{}, nothrow::YES, 1 );
+        vval_construct_test< T< throw_cp_const, int > >( ctc, nothrow::NO, 0 );
+        vval_construct_test< T< throw_cp_const, int > >( throw_cp_const{}, nothrow::YES, 0 );
+        vval_construct_test< T< int, throw_cp_const > >( ctc, nothrow::NO, 1 );
+        vval_construct_test< T< int, throw_cp_const > >( throw_cp_const{}, nothrow::YES, 1 );
+}
 
+TEST_CASE( "vval_construct" )
+{
+        test_construct< _vval >();
         for ( std::size_t i = 0; i < big_set::size; i++ )
                 _dispatch_index< 0, big_set::size >( i, [&]< std::size_t j >() -> decltype( auto ) {
                         tag< j > tg{};
                         vval_construct_test< vval< big_set, int > >( tg, nothrow::NO, j );
                         vval_construct_test< vval< big_set, int > >( tag< j >{}, nothrow::YES, j );
+                } );
+
+        test_construct< _vopt >();
+        for ( std::size_t i = 0; i < big_set::size; i++ )
+                _dispatch_index< 0, big_set::size >( i, [&]< std::size_t j >() -> decltype( auto ) {
+                        tag< j > tg{};
+                        vval_construct_test< vopt< big_set, int > >( tg, nothrow::NO, j );
+                        vval_construct_test< vopt< big_set, int > >( tag< j >{}, nothrow::YES, j );
                 } );
 }
 

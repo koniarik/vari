@@ -24,6 +24,7 @@
 #include "vari/uvref.h"
 #include "vari/vptr.h"
 #include "vari/vref.h"
+#include "vari/vval.h"
 
 #include <type_traits>
 #include <utility>
@@ -34,8 +35,9 @@ namespace vari
 {
 
 // WARNING: experimental
+// WARNING: untested
 template < typename... Ts >
-class _vval
+class _vopt
 {
         using core_type = _val_core< typelist< Ts... > >;
 
@@ -46,35 +48,45 @@ public:
         using reference       = _vref< Ts... >;
         using const_reference = _vref< Ts const... >;
 
+        constexpr _vopt() noexcept = default;
+
         template < typename U >
                 requires( vconvertible_type< std::remove_reference_t< U >, types > )
-        constexpr _vval( U&& v ) noexcept( _forward_nothrow_constructible< U > )
+        constexpr _vopt( U&& v ) noexcept( _forward_nothrow_constructible< U > )
         {
                 _core.template emplace< std::remove_reference_t< U > >( (U&&) v );
         }
 
         template < typename U, typename... Args >
                 requires( vconvertible_type< U, types > )
-        constexpr _vval( std::in_place_type_t< U >, Args&&... args ) noexcept(
+        constexpr _vopt( std::in_place_type_t< U >, Args&&... args ) noexcept(
             std::is_nothrow_constructible_v< U, Args... > )
         {
                 _core.template emplace< U >( (Args&&) args... );
         }
 
-        constexpr _vval( _vval&& p ) noexcept( std::is_nothrow_move_constructible_v< core_type > )
+        constexpr _vopt( _vopt&& p ) noexcept( std::is_nothrow_move_constructible_v< core_type > )
           : _core( std::move( p._core ) )
         {
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _vval( _vval< Us... >&& p ) noexcept(
+        constexpr _vopt( _vopt< Us... >&& p ) noexcept(
+            std::is_nothrow_constructible_v< core_type, typename _vopt< Us... >::core_type&& > )
+          : _core( std::move( p._core ) )
+        {
+        }
+
+        template < typename... Us >
+                requires( vconvertible_to< typelist< Us... >, types > )
+        constexpr _vopt( _vval< Us... >&& p ) noexcept(
             std::is_nothrow_constructible_v< core_type, typename _vval< Us... >::core_type&& > )
           : _core( std::move( p._core ) )
         {
         }
 
-        constexpr _vval( _vval const& p ) noexcept(
+        constexpr _vopt( _vopt const& p ) noexcept(
             std::is_nothrow_copy_constructible_v< core_type > )
           : _core( p._core )
         {
@@ -82,7 +94,16 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _vval( _vval< Us... > const& p ) noexcept(
+        constexpr _vopt( _vopt< Us... > const& p ) noexcept(
+            std::
+                is_nothrow_constructible_v< core_type, typename _vopt< Us... >::core_type const& > )
+          : _core( p._core )
+        {
+        }
+
+        template < typename... Us >
+                requires( vconvertible_to< typelist< Us... >, types > )
+        constexpr _vopt( _vval< Us... > const& p ) noexcept(
             std::
                 is_nothrow_constructible_v< core_type, typename _vval< Us... >::core_type const& > )
           : _core( p._core )
@@ -91,7 +112,7 @@ public:
 
         template < typename U >
                 requires( vconvertible_to< typelist< std::remove_reference_t< U > >, types > )
-        constexpr _vval& operator=( U&& v ) noexcept( _forward_nothrow_constructible< U > )
+        constexpr _vopt& operator=( U&& v ) noexcept( _forward_nothrow_constructible< U > )
         {
                 if ( _core.index != null_index )
                         _core.destroy();
@@ -99,34 +120,38 @@ public:
                 return *this;
         }
 
-        constexpr _vval& operator=( _vval&& p ) noexcept(
-            core_type::template is_nothrow_assignable< typename _vval::core_type&& > )
+        constexpr _vopt& operator=( _vopt&& p ) noexcept(
+            core_type::template is_nothrow_assignable< typename _vopt::core_type&& > )
         {
+                // XXX not null friendly
                 _core.assign( std::move( p._core ) );
                 return *this;
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _vval& operator=( _vval< Us... >&& p ) noexcept(
-            core_type::template is_nothrow_assignable< typename _vval< Us... >::core_type&& > )
+        constexpr _vopt& operator=( _vopt< Us... >&& p ) noexcept(
+            core_type::template is_nothrow_assignable< typename _vopt< Us... >::core_type&& > )
         {
+                // XXX not null friendly
                 _core.assign( std::move( p._core ) );
                 return *this;
         }
 
-        constexpr _vval& operator=( _vval const& p ) noexcept(
-            core_type::template is_nothrow_assignable< typename _vval::core_type const& > )
+        constexpr _vopt& operator=( _vopt const& p ) noexcept(
+            core_type::template is_nothrow_assignable< typename _vopt::core_type const& > )
         {
+                // XXX not null friendly
                 _core.assign( p._core );
                 return *this;
         }
 
         template < typename... Us >
                 requires( vconvertible_to< typelist< Us... >, types > )
-        constexpr _vval& operator=( _vval< Us... > const& p ) noexcept(
-            core_type::template is_nothrow_assignable< typename _vval< Us... >::core_type const& > )
+        constexpr _vopt& operator=( _vopt< Us... > const& p ) noexcept(
+            core_type::template is_nothrow_assignable< typename _vopt< Us... >::core_type const& > )
         {
+                // XXX not null friendly
                 _core.assign( p._core );
                 return *this;
         }
@@ -136,7 +161,8 @@ public:
         constexpr T&
         emplace( Args&&... args ) noexcept( std::is_nothrow_constructible_v< T, Args... > )
         {
-                _core.destroy();
+                if ( _core.index != null_index )
+                        _core.destroy();
                 return _core.template emplace< T >( (Args&&) args... );
         }
 
@@ -162,93 +188,117 @@ public:
 
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
-        constexpr operator _vref< Us... >() & noexcept
+        constexpr operator _vptr< Us... >() & noexcept
         {
+                if ( _core.index == null_index )
+                        return _vptr< Us... >{};
                 return core_type::visit_impl( _core, [&]( auto& item ) {
-                        return _vref< Us... >( item );
+                        return _vptr< Us... >( &item );
                 } );
         }
 
         template < typename... Us >
                 requires( vconvertible_to< types, typelist< Us... > > )
-        constexpr operator _vref< Us... >() const& noexcept
+        constexpr operator _vptr< Us... >() const& noexcept
         {
                 static_assert( all_is_const_v< typelist< Us... > > );
+                if ( _core.index == null_index )
+                        return _vptr< Us... >{};
                 return core_type::visit_impl( _core, [&]( auto& item ) {
-                        return _vref< Us... >( item );
+                        return _vptr< Us... >( &item );
                 } );
+        }
+
+        constexpr operator bool() const noexcept
+        {
+                return _core.index != null_index;
         }
 
         constexpr reference vref() & noexcept
         {
-                return reference{ *this };
+                assert( *this );
+                return vptr().vref();
         }
 
         constexpr const_reference vref() const& noexcept
         {
-                return const_reference{ *this };
+                assert( *this );
+                return vptr().vref();
         }
 
         constexpr pointer vptr() & noexcept
         {
-                return reference{ *this }.vptr();
+                return pointer{ *this };
         }
 
         constexpr const_pointer vptr() const& noexcept
         {
-                return const_reference{ *this }.vptr();
+                return const_pointer{ *this };
         }
-
 
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... f ) const
         {
-                typename _check_unique_invocability< types >::template with_pure_cref< Fs... > _{};
+                typename _check_unique_invocability< types >::template with_nullable_pure_cref<
+                    Fs... >
+                    _{};
+                if ( _core.ptr == nullptr )
+                        return _dispatch_fun( empty, (Fs&&) f... );
                 return core_type::visit_impl( _core, (Fs&&) f... );
         }
 
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... f )
         {
-                typename _check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
+                typename _check_unique_invocability< types >::template with_nullable_pure_ref<
+                    Fs... >
+                    _{};
+                if ( _core.ptr == nullptr )
+                        return _dispatch_fun( empty, (Fs&&) f... );
                 return core_type::visit_impl( _core, (Fs&&) f... );
         }
 
         constexpr friend void
-        swap( _vval& lh, _vval& rh ) noexcept( std::is_nothrow_swappable_v< core_type > )
+        swap( _vopt& lh, _vopt& rh ) noexcept( std::is_nothrow_swappable_v< core_type > )
         {
+                // XXX: not null friendly
                 swap( lh._core, rh._core );
         }
 
-        constexpr ~_vval() noexcept( std::is_nothrow_destructible_v< core_type > )
+        constexpr ~_vopt() noexcept( std::is_nothrow_destructible_v< core_type > )
         {
-                _core.destroy();
+                if ( _core.index != null_index )
+                        _core.destroy();
         }
 
-        friend constexpr auto operator<=>( _vval const& lh, _vval const& rh ) noexcept(
+        friend constexpr auto operator<=>( _vopt const& lh, _vopt const& rh ) noexcept(
             all_nothrow_three_way_comparable_v< types > )
         {
+                if ( lh._core.index == null_index || rh._core.index == null_index )
+                        return lh._core.index <=> rh._core.index;
                 return core_type::three_way_compare( lh._core, rh._core );
         };
 
-        friend constexpr auto operator==( _vval const& lh, _vval const& rh ) noexcept(
+        friend constexpr auto operator==( _vopt const& lh, _vopt const& rh ) noexcept(
             all_nothrow_equality_comparable_v< types > )
         {
+                if ( lh._core.index == null_index || rh._core.index == null_index )
+                        return lh._core.index == rh._core.index;
                 return core_type::compare( lh._core, rh._core );
         };
 
 private:
         template < typename... Us >
-        friend class _vval;
+        friend class _vopt;
 
         core_type _core;
 };
 
 template < typename... Ts >
-using vval = _define_variadic< _vval, typelist< Ts... > >;
+using vopt = _define_variadic< _vopt, typelist< Ts... > >;
 
 template < typename... Ts >
-_uvref< def_del, Ts... > to_uvref( _vval< Ts... > v )
+_uvref< def_del, Ts... > to_uvptr( _vopt< Ts... > v )
 {
         using R = _uvref< def_del, Ts... >;
         return v.visit( [&]< typename U >( U& item ) -> R {
