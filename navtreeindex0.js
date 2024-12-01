@@ -215,7 +215,8 @@ var NAVTREEINDEX0 =
 "uvref_8h_source.html":[2,0,0,0,6],
 "val__core_8h_source.html":[2,0,0,0,0,4],
 "val__union_8h_source.html":[2,0,0,0,0,5],
-"vptr_8h_source.html":[2,0,0,0,7],
-"vref_8h_source.html":[2,0,0,0,8],
-"vval_8h_source.html":[2,0,0,0,9]
+"vopt_8h_source.html":[2,0,0,0,7],
+"vptr_8h_source.html":[2,0,0,0,8],
+"vref_8h_source.html":[2,0,0,0,9],
+"vval_8h_source.html":[2,0,0,0,10]
 };

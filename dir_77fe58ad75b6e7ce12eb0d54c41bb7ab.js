@@ -7,6 +7,7 @@ var dir_77fe58ad75b6e7ce12eb0d54c41bb7ab =
     [ "forward.h", "forward_8h_source.html", null ],
     [ "uvptr.h", "uvptr_8h_source.html", null ],
     [ "uvref.h", "uvref_8h_source.html", null ],
+    [ "vopt.h", "vopt_8h_source.html", null ],
     [ "vptr.h", "vptr_8h_source.html", null ],
     [ "vref.h", "vref_8h_source.html", null ],
     [ "vval.h", "vval_8h_source.html", null ]
