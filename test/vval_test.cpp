@@ -307,6 +307,9 @@ TEST_CASE( "vopt_visit" )
         vopt< float, int, std::string > v1{ fv };
         vopt< float, int, std::string > v1_5{ 0.1f };
         check_nullable_visit( v1, fv );
+
+        vopt< float, std::string > const v2{ fv };
+        v2.visit( [&]( vari::empty_t ) {}, [&]( float const& ) {}, [&]( std::string const& ) {} );
 }
 
 TEST_CASE( "vval_swap" )

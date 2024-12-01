@@ -124,6 +124,18 @@ struct _check_unique_invocability< typelist< Ts... > >
                     "For each function, there has to be at least one type it is invocable with" );
         };
 
+        template < typename... Fs >
+        struct with_nullable_pure_cref
+        {
+                static_assert(
+                    (invocable_for_one< Ts const&, Fs... > && ... &&
+                     invocable_for_one< empty_t, Fs... >),
+                    "For each type, there has to be one and only one callable" );
+                static_assert(
+                    ( invocable_with_any< Fs, empty_t, Ts const&... > && ... ),
+                    "For each function, there has to be at least one type it is invocable with" );
+        };
+
         template < typename Deleter >
         struct with_deleter
         {
