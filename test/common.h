@@ -147,7 +147,7 @@ void check_hash( V variadic )
         s.insert( std::move( variadic ) );
 }
 
-template < null_visitable V, typename T >
+template < typename V, typename T >
 void check_nullable_visit( V& variadic, T& val )
 {
         static_assert( contains_type_v< T, typename V::types > );

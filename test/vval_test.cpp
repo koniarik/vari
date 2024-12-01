@@ -298,6 +298,17 @@ TEST_CASE( "vval_visit" )
         vval< std::vector< float >, int, float > v7{ std::move( v6 ) };
 }
 
+TEST_CASE( "vopt_visit" )
+{
+        // static_assert( valid_null_variadic< vopt< float, int > > );
+        // static_assert( valid_null_variadic< vopt< float > > );
+
+        float                           fv = 0.1f;
+        vopt< float, int, std::string > v1{ fv };
+        vopt< float, int, std::string > v1_5{ 0.1f };
+        check_nullable_visit( v1, fv );
+}
+
 TEST_CASE( "vval_swap" )
 {
         vval< int, float > v1{ 42 }, v2{ 42 }, v3{ 3.141592f };

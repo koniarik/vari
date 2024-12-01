@@ -242,7 +242,7 @@ public:
                 typename _check_unique_invocability< types >::template with_nullable_pure_cref<
                     Fs... >
                     _{};
-                if ( _core.ptr == nullptr )
+                if ( _core.index == null_index )
                         return _dispatch_fun( empty, (Fs&&) f... );
                 return core_type::visit_impl( _core, (Fs&&) f... );
         }
@@ -253,7 +253,7 @@ public:
                 typename _check_unique_invocability< types >::template with_nullable_pure_ref<
                     Fs... >
                     _{};
-                if ( _core.ptr == nullptr )
+                if ( _core.index == null_index )
                         return _dispatch_fun( empty, (Fs&&) f... );
                 return core_type::visit_impl( _core, (Fs&&) f... );
         }
@@ -271,8 +271,9 @@ public:
                         _core.destroy();
         }
 
-        friend constexpr auto operator<=>( _vopt const& lh, _vopt const& rh ) noexcept(
-            all_nothrow_three_way_comparable_v< types > )
+        friend constexpr std::partial_ordering operator<=>(
+            _vopt const& lh,
+            _vopt const& rh ) noexcept( all_nothrow_three_way_comparable_v< types > )
         {
                 if ( lh._core.index == null_index || rh._core.index == null_index )
                         return lh._core.index <=> rh._core.index;
