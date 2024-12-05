@@ -199,7 +199,6 @@ public:
                 return const_reference{ *this }.vptr();
         }
 
-
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... f ) const
         {
@@ -238,22 +237,17 @@ public:
         };
 
 private:
-        template < typename... Us >
-        friend class _vval;
+        constexpr _vval() noexcept = default;
 
         core_type _core;
+
+        template < typename... Us >
+        friend class _vval;
+        template < typename... Us >
+        friend class _vopt;
 };
 
 template < typename... Ts >
 using vval = _define_variadic< _vval, typelist< Ts... > >;
-
-template < typename... Ts >
-_uvref< def_del, Ts... > to_uvref( _vval< Ts... > v )
-{
-        using R = _uvref< def_del, Ts... >;
-        return v.visit( [&]< typename U >( U& item ) -> R {
-                return R{ *new U{ std::move( item ) } };
-        } );
-}
 
 }  // namespace vari

@@ -209,7 +209,7 @@ public:
                 } );
         }
 
-        constexpr explicit operator bool() const noexcept
+        constexpr operator bool() const noexcept
         {
                 return _core.index != null_index;
         }
@@ -234,6 +234,17 @@ public:
         constexpr const_pointer vptr() const& noexcept
         {
                 return const_pointer{ *this };
+        }
+
+        // XXX: noexcept if possible
+        // XXX: test
+        // XXX: test visit?
+        constexpr _vval< Ts... > vval() &&
+        {
+                assert( !!*this );
+                _vval< Ts... > res;
+                swap( res._core, _core );
+                return res;
         }
 
         template < typename... Fs >
@@ -297,14 +308,5 @@ private:
 
 template < typename... Ts >
 using vopt = _define_variadic< _vopt, typelist< Ts... > >;
-
-template < typename... Ts >
-_uvref< def_del, Ts... > to_uvptr( _vopt< Ts... > v )
-{
-        using R = _uvref< def_del, Ts... >;
-        return v.visit( [&]< typename U >( U& item ) -> R {
-                return R{ *new U{ std::move( item ) } };
-        } );
-}
 
 }  // namespace vari

@@ -300,8 +300,8 @@ TEST_CASE( "vval_visit" )
 
 TEST_CASE( "vopt_visit" )
 {
-        // static_assert( valid_null_variadic< vopt< float, int > > );
-        // static_assert( valid_null_variadic< vopt< float > > );
+        static_assert( valid_null_variadic< vopt< float, int > > );
+        static_assert( valid_null_variadic< vopt< float > > );
 
         float                           fv = 0.1f;
         vopt< float, int, std::string > v1{ fv };
@@ -355,19 +355,17 @@ TEST_CASE( "cmp" )
         CHECK_GT( v4, v2 );
 }
 
-TEST_CASE( "to_uvref" )
+TEST_CASE( "vopt_vval" )
 {
-        vval< int, float > v1{ 42 };
+        float                           fv = 0.1f;
+        vopt< float, int, std::string > v1{ fv };
 
-        uvref< int, float > r = to_uvref( std::move( v1 ) );
-        CHECK_EQ( r.index(), 0 );
-        r.visit(
-            [&]( int& i ) {
-                    CHECK_EQ( i, 42 );
+        vval< float, int, std::string > v2 = std::move( v1 ).vval();
+        v2.visit(
+            [&]( float& f ) {
+                    CHECK_EQ( f, 0.1f );
             },
-            [&]( float& ) {
-                    FAIL( "bad branch" );
-            } );
+            [&]( vref< int, std::string > ) {} );
 }
 
 }  // namespace vari

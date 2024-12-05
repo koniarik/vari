@@ -18,4 +18,10 @@ class _vref;
 template < typename... Ts >
 class _vptr;
 
+template < typename... Ts >
+class _vval;
+
+template < typename... Ts >
+class _vopt;
+
 }  // namespace vari
