@@ -71,6 +71,24 @@ union _val_union< typelist< Ts... > >
         }
 };
 
+template <>
+union _val_union< typelist<> >
+{
+        static constexpr index_type size = 0;
+
+        _val_union() noexcept
+        {
+        }
+        ~_val_union() noexcept
+        {
+        }
+
+        template < index_type i >
+        constexpr static auto& get( auto& s )
+        {
+        }
+};
+
 // VARI VAL UNION GEN START
 
 

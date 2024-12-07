@@ -19,9 +19,10 @@
 
 #pragma once
 
-#include "util.h"
-#include "val_union.h"
-#include "vari/concept.h"
+#include "../concept.h"
+#include "./dispatch.h"
+#include "./util.h"
+#include "./val_union.h"
 
 #include <compare>
 #include <memory>

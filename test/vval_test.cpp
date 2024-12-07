@@ -366,6 +366,17 @@ TEST_CASE( "vopt_vval" )
                     CHECK_EQ( f, 0.1f );
             },
             [&]( vref< int, std::string > ) {} );
+        std::move( v2 ).visit(
+            [&]( float& f ) {
+                    CHECK_EQ( f, 0.1f );
+            },
+            [&]( vref< int, std::string > ) {} );
+}
+
+TEST_CASE( "empty vopt" )
+{
+        vopt<> v;
+        CHECK( !v );
 }
 
 }  // namespace vari
