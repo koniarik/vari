@@ -277,64 +277,58 @@ $(document).ready(function(){initNavTree('vval_8h_source.html',''); initResizabl
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>                <span class="keywordflow">return</span> const_reference{ *<span class="keyword">this</span> }.vptr();</div>
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        }</div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Fs &gt;</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        <span class="keyword">constexpr</span> <span class="keyword">decltype</span>( auto ) visit( Fs&amp;&amp;... f )<span class="keyword"> const</span></div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span><span class="keyword">        </span>{</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                <span class="keyword">typename</span> _check_unique_invocability&lt; types &gt;::template with_pure_cref&lt; Fs... &gt; _{};</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>                <span class="keywordflow">return</span> core_type::visit_impl( _core, (Fs&amp;&amp;) f... );</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        }</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Fs &gt;</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        <span class="keyword">constexpr</span> <span class="keyword">decltype</span>( auto ) visit( Fs&amp;&amp;... f )</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        {</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                <span class="keyword">typename</span> _check_unique_invocability&lt; types &gt;::template with_pure_ref&lt; Fs... &gt; _{};</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                <span class="keywordflow">return</span> core_type::visit_impl( _core, (Fs&amp;&amp;) f... );</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>        }</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        <span class="keyword">constexpr</span> <span class="keyword">friend</span> <span class="keywordtype">void</span></div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        swap( _vval&amp; lh, _vval&amp; rh ) <span class="keyword">noexcept</span>( std::is_nothrow_swappable_v&lt; core_type &gt; )</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        {</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>                swap( lh._core, rh._core );</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        }</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        <span class="keyword">constexpr</span> ~_vval() noexcept( std::is_nothrow_destructible_v&lt; core_type &gt; )</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        {</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                _core.destroy();</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        }</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        <span class="keyword">friend</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> operator&lt;=&gt;( _vval <span class="keyword">const</span>&amp; lh, _vval <span class="keyword">const</span>&amp; rh ) <span class="keyword">noexcept</span>(</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>            all_nothrow_three_way_comparable_v&lt; types &gt; )</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        {</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>                <span class="keywordflow">return</span> core_type::three_way_compare( lh._core, rh._core );</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        };</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        <span class="keyword">friend</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> operator==( _vval <span class="keyword">const</span>&amp; lh, _vval <span class="keyword">const</span>&amp; rh ) <span class="keyword">noexcept</span>(</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>            all_nothrow_equality_comparable_v&lt; types &gt; )</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        {</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>                <span class="keywordflow">return</span> core_type::compare( lh._core, rh._core );</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        };</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> </div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Us &gt;</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        <span class="keyword">friend</span> <span class="keyword">class </span>_vval;</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Fs &gt;</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        <span class="keyword">constexpr</span> <span class="keyword">decltype</span>( auto ) visit( Fs&amp;&amp;... f )<span class="keyword"> const</span></div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span><span class="keyword">        </span>{</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>                <span class="keyword">typename</span> _check_unique_invocability&lt; types &gt;::template with_pure_cref&lt; Fs... &gt; _{};</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                <span class="keywordflow">return</span> core_type::visit_impl( _core, (Fs&amp;&amp;) f... );</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        }</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Fs &gt;</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        <span class="keyword">constexpr</span> <span class="keyword">decltype</span>( auto ) visit( Fs&amp;&amp;... f )</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        {</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>                <span class="keyword">typename</span> _check_unique_invocability&lt; types &gt;::template with_pure_ref&lt; Fs... &gt; _{};</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                <span class="keywordflow">return</span> core_type::visit_impl( _core, (Fs&amp;&amp;) f... );</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        }</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        <span class="keyword">constexpr</span> <span class="keyword">friend</span> <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        swap( _vval&amp; lh, _vval&amp; rh ) <span class="keyword">noexcept</span>( std::is_nothrow_swappable_v&lt; core_type &gt; )</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        {</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                swap( lh._core, rh._core );</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        }</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        <span class="keyword">constexpr</span> ~_vval() noexcept( std::is_nothrow_destructible_v&lt; core_type &gt; )</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        {</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>                _core.destroy();</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        }</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        <span class="keyword">friend</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> operator&lt;=&gt;( _vval <span class="keyword">const</span>&amp; lh, _vval <span class="keyword">const</span>&amp; rh ) <span class="keyword">noexcept</span>(</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>            all_nothrow_three_way_comparable_v&lt; types &gt; )</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        {</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>                <span class="keywordflow">return</span> core_type::three_way_compare( lh._core, rh._core );</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        };</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        <span class="keyword">friend</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> operator==( _vval <span class="keyword">const</span>&amp; lh, _vval <span class="keyword">const</span>&amp; rh ) <span class="keyword">noexcept</span>(</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>            all_nothrow_equality_comparable_v&lt; types &gt; )</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>        {</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>                <span class="keywordflow">return</span> core_type::compare( lh._core, rh._core );</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        };</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        <span class="keyword">constexpr</span> _vval() noexcept = default;</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        core_type _core;</div>
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        core_type _core;</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>};</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span><span class="keyword">using </span>vval = <a class="code hl_typedef" href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">_define_variadic</a>&lt; _vval, typelist&lt; Ts... &gt; &gt;;</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        template &lt; typename... Us &gt;</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        friend class _vval;</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        template &lt; typename... Us &gt;</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        friend class _vopt;</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>};</div>
 <div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> </div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>_uvref&lt; def_del, Ts... &gt; to_uvref( _vval&lt; Ts... &gt; v )</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>{</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        <span class="keyword">using </span>R = _uvref&lt; def_del, Ts... &gt;;</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        <span class="keywordflow">return</span> v.visit( [&amp;]&lt; <span class="keyword">typename</span> U &gt;( U&amp; item ) -&gt; R {</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>                <span class="keywordflow">return</span> R{ *<span class="keyword">new</span> U{ std::move( item ) } };</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>        } );</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>}</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>}  <span class="comment">// namespace vari</span></div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>template &lt; typename... Ts &gt;</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>using vval = <a class="code hl_typedef" href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">_define_variadic</a>&lt; _vval, typelist&lt; Ts... &gt; &gt;;</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> </div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>}  <span class="comment">// namespace vari</span></div>
 <div class="ttc" id="anamespacevari_html"><div class="ttname"><a href="namespacevari.html">vari</a></div><div class="ttdoc">Copyright (C) 2020 Jan Veverak Koniarik.</div><div class="ttdef"><b>Definition:</b> dispatch.h:28</div></div>
 <div class="ttc" id="anamespacevari_html_a0b711b10138e06f9d5b455ff55c663d0"><div class="ttname"><a href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a></div><div class="ttdeci">_define_variadic&lt; _vref, typelist&lt; Ts... &gt; &gt; vref</div><div class="ttdoc">A non-nullable pointer to types derived out of Ts... list by flattening it and filtering for unique t...</div><div class="ttdef"><b>Definition:</b> vref.h:146</div></div>
 <div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdoc">A nullable pointer to types derived out of Ts... list by flattening it and filtering for unique types...</div><div class="ttdef"><b>Definition:</b> vptr.h:173</div></div>
