@@ -19,6 +19,5 @@ var structvari_1_1__uvref =
     [ "visit", "structvari_1_1__uvref.html#ae808835f60352862ef79890e91fb2bd1", null ],
     [ "vptr", "structvari_1_1__uvref.html#ad5ff2f7a33a92c1cecd9fc318e76dad8", null ],
     [ "vptr", "structvari_1_1__uvref.html#a5205248cbf9a78cf83e6a95bc3f6af76", null ],
-    [ "operator<=>", "structvari_1_1__uvref.html#a968101bb0b9118bc92d437f7a54e4d02", null ],
     [ "swap", "structvari_1_1__uvref.html#a3238dd471dad38f11769eb681dfd6d33", null ]
 ];

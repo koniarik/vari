@@ -24,5 +24,13 @@ var namespacevari =
     [ "uvref", "namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0", null ],
     [ "vptr", "namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725", null ],
     [ "vref", "namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0", null ],
+    [ "operator<=>", "namespacevari.html#a7153d864fd4cfb53ecb694bacb29e4b6", null ],
+    [ "operator<=>", "namespacevari.html#a756f7c49230c1cc08ae5bf8e54ae310a", null ],
+    [ "operator<=>", "namespacevari.html#a6b586b2092d1dff0a19c1663a9cf8e38", null ],
+    [ "operator<=>", "namespacevari.html#a7ba5df3c866e779b8bd38b110b234a85", null ],
+    [ "operator==", "namespacevari.html#a836922ad4c7ca8ad3131b70f244625dc", null ],
+    [ "operator==", "namespacevari.html#a718a87115f1ab8c073a82449b7696e18", null ],
+    [ "operator==", "namespacevari.html#a9b3319b203a9e42329a474c873cfad84", null ],
+    [ "operator==", "namespacevari.html#ae124c20b266818fd1eee3481b61c6a58", null ],
     [ "uwrap", "namespacevari.html#a4ebcd20c8226cf02de56c175cd7fdac6", null ]
 ];

@@ -143,7 +143,7 @@ uvptr and uvref</h2>
 <div class="line"><span class="keyword">struct </span>b_t{};</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr&lt;a_t, b_t&gt;</a> p;</div>
-<div class="ttc" id="anamespacevari_html_a3be05c6f854dc1b903a2a85e244bbdc5"><div class="ttname"><a href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr</a></div><div class="ttdeci">_define_variadic&lt; _uvptr, typelist&lt; Ts... &gt;, def_del &gt; uvptr</div><div class="ttdoc">A nullable owning pointer to types derived out of Ts... list by flattening it and filtering for uniqu...</div><div class="ttdef"><b>Definition:</b> uvptr.h:322</div></div>
+<div class="ttc" id="anamespacevari_html_a3be05c6f854dc1b903a2a85e244bbdc5"><div class="ttname"><a href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr</a></div><div class="ttdeci">_define_variadic&lt; _uvptr, typelist&lt; Ts... &gt;, def_del &gt; uvptr</div><div class="ttdoc">A nullable owning pointer to types derived out of Ts... list by flattening it and filtering for uniqu...</div><div class="ttdef"><b>Definition:</b> uvptr.h:334</div></div>
 </div><!-- fragment --><p >Similar to <code>std::make_unique</code>, we provide a function <code>uwrap</code> for construction of unique variants:</p>
 <div class="fragment"><div class="line">uvref&lt;std::string, int&gt; p = uwrap(std::string{<span class="stringliteral">&quot;wololo&quot;</span>});</div>
 </div><!-- fragment --><p >Here <code>uwrap</code> creates <code>uvref&lt;std::string&gt;</code> which gets converted into <code>uvref&lt;std::string,int&gt;</code> due to implicit conversion.</p>
@@ -165,14 +165,14 @@ Visit</h3>
 <div class="line">            } );</div>
 <div class="line">        <span class="keywordflow">return</span> front;</div>
 <div class="line">};</div>
-<div class="ttc" id="anamespacevari_html_a0b711b10138e06f9d5b455ff55c663d0"><div class="ttname"><a href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a></div><div class="ttdeci">_define_variadic&lt; _vref, typelist&lt; Ts... &gt; &gt; vref</div><div class="ttdoc">A non-nullable pointer to types derived out of Ts... list by flattening it and filtering for unique t...</div><div class="ttdef"><b>Definition:</b> vref.h:146</div></div>
+<div class="ttc" id="anamespacevari_html_a0b711b10138e06f9d5b455ff55c663d0"><div class="ttname"><a href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a></div><div class="ttdeci">_define_variadic&lt; _vref, typelist&lt; Ts... &gt; &gt; vref</div><div class="ttdoc">A non-nullable pointer to types derived out of Ts... list by flattening it and filtering for unique t...</div><div class="ttdef"><b>Definition:</b> vref.h:159</div></div>
 </div><!-- fragment --><p >For pointers, there must be a callable that accepting <code>vari::empty_t</code> to handle cases where the pointer is null:</p>
 <div class="fragment"><div class="line"><a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;int, std::string&gt;</a> r = <span class="keyword">nullptr</span>;</div>
 <div class="line"> </div>
 <div class="line">r.visit([&amp;](vari::empty_t){},</div>
 <div class="line">        [&amp;](<span class="keywordtype">int</span>&amp;){},</div>
 <div class="line">        [&amp;](std::string&amp;){});</div>
-<div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdoc">A nullable pointer to types derived out of Ts... list by flattening it and filtering for unique types...</div><div class="ttdef"><b>Definition:</b> vptr.h:173</div></div>
+<div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdoc">A nullable pointer to types derived out of Ts... list by flattening it and filtering for unique types...</div><div class="ttdef"><b>Definition:</b> vptr.h:185</div></div>
 </div><!-- fragment --><p >Variadic references can be constructed with references to any of the possible types:</p>
 <div class="fragment"><div class="line">std::string a;</div>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;int, std::string&gt;</a> r = a;</div>
@@ -195,7 +195,7 @@ Take</h3>
 <div class="line">    std::move(r).take([&amp;](<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;int&gt;</a>){},</div>
 <div class="line">                      [&amp;](<a class="code hl_typedef" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref&lt;std::string&gt;</a>){});</div>
 <div class="line">};</div>
-<div class="ttc" id="anamespacevari_html_a2388c0eb42106efee2d8ed10243b69a0"><div class="ttname"><a href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref</a></div><div class="ttdeci">_define_variadic&lt; _uvref, typelist&lt; Ts... &gt;, def_del &gt; uvref</div><div class="ttdoc">A non-nullable owning pointer to types derived out of Ts... list by flattening it and filtering for u...</div><div class="ttdef"><b>Definition:</b> uvref.h:265</div></div>
+<div class="ttc" id="anamespacevari_html_a2388c0eb42106efee2d8ed10243b69a0"><div class="ttname"><a href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">vari::uvref</a></div><div class="ttdeci">_define_variadic&lt; _uvref, typelist&lt; Ts... &gt;, def_del &gt; uvref</div><div class="ttdoc">A non-nullable owning pointer to types derived out of Ts... list by flattening it and filtering for u...</div><div class="ttdef"><b>Definition:</b> uvref.h:277</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
 Sub-typing</h2>
 <p >All variadic types support sub-typing, meaning any variadic type can be converted into a type that represents a superset of its types:</p>

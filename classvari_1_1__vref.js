@@ -9,6 +9,5 @@ var classvari_1_1__vref =
     [ "operator->", "classvari_1_1__vref.html#a590c86fbe9b627f48273fdf5b1c02b19", null ],
     [ "visit", "classvari_1_1__vref.html#a91672a2746e23cee932cf1a56cfa7bb6", null ],
     [ "vptr", "classvari_1_1__vref.html#a47a618cdbecda9795ab450e763dbe494", null ],
-    [ "operator<=>", "classvari_1_1__vref.html#af4e042982ccc08b168560409b60ac861", null ],
     [ "swap", "classvari_1_1__vref.html#aef7c446f86d8479b71878979955c74b1", null ]
 ];

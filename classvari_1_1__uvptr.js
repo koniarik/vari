@@ -24,6 +24,5 @@ var classvari_1_1__uvptr =
     [ "visit", "classvari_1_1__uvptr.html#a66185129027ae6c7b77e669398bb3119", null ],
     [ "vref", "classvari_1_1__uvptr.html#aa58a859121832d5b3237542dc07ef41b", null ],
     [ "vref", "classvari_1_1__uvptr.html#ab0268f96d4c0db70603d21f28246cbd2", null ],
-    [ "operator<=>", "classvari_1_1__uvptr.html#ab784b2f360c8e8c351bfec7ec80b2dd6", null ],
     [ "swap", "classvari_1_1__uvptr.html#a2790ca25b8fd1115acc82742325b725c", null ]
 ];
