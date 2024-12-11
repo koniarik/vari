@@ -121,10 +121,6 @@ public:
                 swap( lh._core, rh._core );
         }
 
-        /// Compares the internal pointers of both references.
-        ///
-        friend constexpr auto operator<=>( _vref const& lh, _vref const& rh ) = default;
-
 private:
         constexpr _vref() noexcept = default;
 
@@ -139,6 +135,23 @@ private:
         template < typename Deleter, typename... Us >
         friend class _uvptr;
 };
+
+/// Compares the internal pointers of both references.
+///
+template < typename... Lhs, typename... Rhs >
+constexpr auto operator<=>( _vref< Lhs... > const& lh, _vref< Rhs... > const& rh ) noexcept
+{
+        return lh.get() <=> rh.get();
+}
+
+/// Compares the internal pointers of both references.
+///
+template < typename... Lhs, typename... Rhs >
+constexpr bool operator==( _vref< Lhs... > const& lh, _vref< Rhs... > const& rh ) noexcept
+{
+        return lh.get() == rh.get();
+}
+
 
 /// A non-nullable pointer to types derived out of `Ts...` list by flattening it and filtering for
 /// unique types.

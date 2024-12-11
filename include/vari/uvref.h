@@ -240,10 +240,6 @@ public:
                 swap( (dbox&) lh, (dbox&) rh );
         }
 
-        /// Compares the internal pointers of both references.
-        ///
-        friend constexpr auto operator<=>( _uvref const& lh, _uvref const& rh ) = default;
-
 private:
         constexpr _uvref() noexcept = default;
 
@@ -258,6 +254,22 @@ private:
         template < typename Deleter2, typename... Us >
         friend class _uvref;
 };
+
+/// Compares the internal pointers of both references.
+///
+template < typename... Lhs, typename... Rhs >
+constexpr auto operator<=>( _uvref< Lhs... > const& lh, _uvref< Rhs... > const& rh ) noexcept
+{
+        return lh.get() <=> rh.get();
+}
+
+/// Compares the internal pointers of both references.
+///
+template < typename... Lhs, typename... Rhs >
+constexpr bool operator==( _uvref< Lhs... > const& lh, _uvref< Rhs... > const& rh ) noexcept
+{
+        return lh.get() == rh.get();
+}
 
 /// A non-nullable owning pointer to types derived out of `Ts...` list by flattening it and
 /// filtering for unique types.

@@ -209,7 +209,7 @@ public:
                 } );
         }
 
-        constexpr operator bool() const noexcept
+        constexpr explicit operator bool() const noexcept
         {
                 return _core.index != null_index;
         }

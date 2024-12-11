@@ -219,7 +219,7 @@ public:
 
         /// Check if the pointer is not null.
         ///
-        constexpr operator bool() const noexcept
+        constexpr explicit operator bool() const noexcept
         {
                 return _core.get_index() != null_index;
         }
@@ -302,10 +302,6 @@ public:
                 swap( (dbox&) lh, (dbox&) rh );
         }
 
-        /// Compares the internal pointers of both pointers.
-        ///
-        friend constexpr auto operator<=>( _uvptr const& lh, _uvptr const& rh ) = default;
-
 private:
         core_type _core;
 
@@ -315,6 +311,22 @@ private:
         template < typename Deleter2, typename... Us >
         friend class _uvref;
 };
+
+/// Compares the internal pointers of both pointers.
+///
+template < typename... Lhs, typename... Rhs >
+constexpr auto operator<=>( _uvptr< Lhs... > const& lh, _uvptr< Rhs... > const& rh ) noexcept
+{
+        return lh.get() <=> rh.get();
+}
+
+/// Compares the internal pointers of both pointers.
+///
+template < typename... Lhs, typename... Rhs >
+constexpr bool operator==( _uvptr< Lhs... > const& lh, _uvptr< Rhs... > const& rh ) noexcept
+{
+        return lh.get() == rh.get();
+}
 
 /// A nullable owning pointer to types derived out of `Ts...` list by flattening it and
 /// filtering for unique types.

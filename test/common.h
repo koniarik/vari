@@ -32,7 +32,7 @@ concept null_visitable = requires( T t ) {
         typename T::types;
         t.visit( []( empty_t ) {}, []< one_of< typename T::types > U >( U& ) {} );
         {
-                t
+                bool{ t }
         } -> std::convertible_to< bool >;
 } && std::is_default_constructible_v< T >;
 
