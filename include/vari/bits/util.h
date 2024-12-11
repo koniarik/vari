@@ -21,6 +21,7 @@
 
 #include "vari/bits/typelist.h"
 
+#include <algorithm>
 #include <bit>
 #include <cstdint>
 #include <limits>
