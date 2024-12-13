@@ -33,6 +33,7 @@ The library introduces four basic types:
 - [Const](#const)
 - [Deleter](#deleter)
 - [Typelist compatibility](#typelist-compatibility)
+- [vcast](#vcast)
 - [Dispatch](#dispatch)
 - [Credits](#credits)
 
@@ -334,6 +335,21 @@ Library can be extended by using other types than just `vari::typelist` to repre
 Whenever type is typelist is determined by `vari::typelist_traits<T>`. In case `vari::typelist_traits<T>:::is_compatible` evaluates to `true`, library considers `T` to be typelist-like type.
 
 In such a case, `vari::typelist_traits<T>::types` should be a type which by itself is vari-compatible typelist. Transtively, this should eventually resolve into `vari::typelist` itself which is used by the library directly.
+
+## vcast
+
+`vcast<T>(r)` static casts any item of reference `r` to `T`.
+Handy utility to access common base of multiple types:
+
+```cpp
+struct base{};
+struct a : base{};
+struct b : base{};
+
+a a1;
+vari::vref<a, b> p{a1};
+auto& b = vari::vcast<base&>(p);
+```
 
 ## Dispatch
 

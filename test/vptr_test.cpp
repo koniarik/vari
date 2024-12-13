@@ -24,6 +24,7 @@
 #include "./common.h"
 #include "vari/uvptr.h"
 #include "vari/uvref.h"
+#include "vari/vcast.h"
 #include "vari/vref.h"
 
 #include <doctest/doctest.h>
@@ -667,6 +668,40 @@ TEST_CASE_TEMPLATE(
                 auto        f = []( vref< int const > ) {};
                 vref< int > r1{ i };
                 f( r1 );
+        }
+}
+
+struct vcast_base
+{
+};
+
+struct vcast_a : vcast_base
+{
+};
+struct vcast_b : vcast_base
+{
+};
+
+TEST_CASE( "vcast" )
+{
+        int     x = 42;
+        vcast_a va{};
+        SUBCASE( "vref" )
+        {
+                vref< int, int const > r1{ x };
+                int const&             y = vcast< int const& >( r1 );
+                CHECK_EQ( x, y );
+
+                vref< vcast_a, vcast_b > r2{ va };
+                auto&                    x2 = vcast< vcast_base& >( r2 );
+                CHECK_EQ( std::addressof( x2 ), std::addressof( va ) );
+        }
+
+        SUBCASE( "uvref" )
+        {
+                uvref< int, int const > r1 = uwrap( 42 );
+                int const&              y  = vcast< int const& >( r1 );
+                CHECK_EQ( x, y );
         }
 }
 

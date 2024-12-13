@@ -36,6 +36,7 @@ def gen_cpp(lines):
     #include <vari/uvref.h>
     #include <vari/vptr.h>
     #include <vari/vref.h>
+    #include <vari/vcast.h>
     #include <vari/dispatch.h>
 
     #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
