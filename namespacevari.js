@@ -32,5 +32,7 @@ var namespacevari =
     [ "operator==", "namespacevari.html#a718a87115f1ab8c073a82449b7696e18", null ],
     [ "operator==", "namespacevari.html#a9b3319b203a9e42329a474c873cfad84", null ],
     [ "operator==", "namespacevari.html#ae124c20b266818fd1eee3481b61c6a58", null ],
-    [ "uwrap", "namespacevari.html#a4ebcd20c8226cf02de56c175cd7fdac6", null ]
+    [ "uwrap", "namespacevari.html#a4ebcd20c8226cf02de56c175cd7fdac6", null ],
+    [ "vcast", "namespacevari.html#a2bf8a03788166e505fa2068017cf3644", null ],
+    [ "vcast", "namespacevari.html#a7c64350b4a8a7519397a79823267381c", null ]
 ];

@@ -193,6 +193,18 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a4ebcd20c8226cf02de56c175cd7fdac6"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="namespacevari.html#a2388c0eb42106efee2d8ed10243b69a0">uvref</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>uwrap</b> (T item)</td></tr>
 <tr class="memdesc:a4ebcd20c8226cf02de56c175cd7fdac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps object <code>item</code> into <code>uvref</code> of its type. <br /></td></tr>
 <tr class="separator:a4ebcd20c8226cf02de56c175cd7fdac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bf8a03788166e505fa2068017cf3644"><td class="memTemplParams" colspan="2"><a id="a2bf8a03788166e505fa2068017cf3644" name="a2bf8a03788166e505fa2068017cf3644"></a>
+template&lt;typename R , typename Del , typename... Ts&gt; <br />
+requires ( std::convertible_to&lt; Ts&amp;, R &gt; &amp;&amp; ... )</td></tr>
+<tr class="memitem:a2bf8a03788166e505fa2068017cf3644"><td class="memTemplItemLeft" align="right" valign="top">R&#160;</td><td class="memTemplItemRight" valign="bottom"><b>vcast</b> (<a class="el" href="structvari_1_1__uvref.html">vari::_uvref</a>&lt; Del, Ts... &gt; const &amp;r)</td></tr>
+<tr class="memdesc:a2bf8a03788166e505fa2068017cf3644"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies static cast to R to item currently owned by <code>uvref</code> <br /></td></tr>
+<tr class="separator:a2bf8a03788166e505fa2068017cf3644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c64350b4a8a7519397a79823267381c"><td class="memTemplParams" colspan="2"><a id="a7c64350b4a8a7519397a79823267381c" name="a7c64350b4a8a7519397a79823267381c"></a>
+template&lt;typename R , typename... Ts&gt; <br />
+requires ( std::convertible_to&lt; Ts&amp;, R &gt; &amp;&amp; ... )</td></tr>
+<tr class="memitem:a7c64350b4a8a7519397a79823267381c"><td class="memTemplItemLeft" align="right" valign="top">R&#160;</td><td class="memTemplItemRight" valign="bottom"><b>vcast</b> (<a class="el" href="classvari_1_1__vref.html">vari::_vref</a>&lt; Ts... &gt; const &amp;r)</td></tr>
+<tr class="memdesc:a7c64350b4a8a7519397a79823267381c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies static cast to R to item currently referenced by <code>vref</code> <br /></td></tr>
+<tr class="separator:a7c64350b4a8a7519397a79823267381c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Copyright (C) 2020 Jan Veverak Koniarik. </p>

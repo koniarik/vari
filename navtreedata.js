@@ -40,8 +40,9 @@ var NAVTREE =
       [ "Const", "index.html#autotoc_md12", null ],
       [ "Deleter", "index.html#autotoc_md13", null ],
       [ "Typelist compatibility", "index.html#autotoc_md14", null ],
-      [ "Dispatch", "index.html#autotoc_md15", null ],
-      [ "Credits", "index.html#autotoc_md16", null ],
+      [ "vcast", "index.html#autotoc_md15", null ],
+      [ "Dispatch", "index.html#autotoc_md16", null ],
+      [ "Credits", "index.html#autotoc_md17", null ],
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
