@@ -19,13 +19,12 @@
 
 #pragma once
 
+#include "vari/bits/assert.h"
 #include "vari/bits/ptr_core.h"
 #include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
 #include "vari/forward.h"
 #include "vari/vptr.h"
-
-#include <cassert>
 
 namespace vari
 {
@@ -110,7 +109,7 @@ public:
         constexpr decltype( auto ) visit( Fs&&... fs ) const
         {
                 typename _check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
-                assert( _core.ptr );
+                VARI_ASSERT( _core.ptr );
                 return _core.visit_impl( (Fs&&) fs... );
         }
 

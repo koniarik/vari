@@ -216,13 +216,13 @@ public:
 
         constexpr reference vref() & noexcept
         {
-                assert( *this );
+                VARI_ASSERT( *this );
                 return vptr().vref();
         }
 
         constexpr const_reference vref() const& noexcept
         {
-                assert( *this );
+                VARI_ASSERT( *this );
                 return vptr().vref();
         }
 
@@ -241,7 +241,7 @@ public:
         // XXX: test visit?
         constexpr _vval< Ts... > vval() &&
         {
-                assert( !!*this );
+                VARI_ASSERT( !!*this );
                 _vval< Ts... > res;
                 swap( res._core, _core );
                 return res;

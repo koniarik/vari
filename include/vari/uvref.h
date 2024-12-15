@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "vari/bits/assert.h"
 #include "vari/bits/ptr_core.h"
 #include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
@@ -27,7 +28,6 @@
 #include "vari/vptr.h"
 #include "vari/vref.h"
 
-#include <cassert>
 
 namespace vari
 {
@@ -129,7 +129,7 @@ public:
         /// Returns a `reference` to the pointed-to type.
         constexpr reference get() const noexcept
         {
-                assert( _core.ptr );
+                VARI_ASSERT( _core.ptr );
                 reference res;
                 res._core = _core;
                 return res;
@@ -139,7 +139,7 @@ public:
         /// The index of the first type is 0, with subsequent types sequentially numbered.
         [[nodiscard]] constexpr index_type index() const noexcept
         {
-                assert( _core.ptr );
+                VARI_ASSERT( _core.ptr );
                 return _core.index;
         }
 
@@ -149,7 +149,7 @@ public:
                 requires( vconvertible_to< types, typelist< Us... > > )
         constexpr operator _vref< Us... >() & noexcept
         {
-                assert( _core.ptr );
+                VARI_ASSERT( _core.ptr );
                 return vptr().vref();
         }
         /// Conversion operator from lvalue const reference to types-compatible `vref`
@@ -158,7 +158,7 @@ public:
                 requires( vconvertible_to< types, typelist< Us... > > )
         constexpr operator _vref< Us... >() const& noexcept
         {
-                assert( _core.ptr );
+                VARI_ASSERT( _core.ptr );
                 return vptr().vref();
         }
 
@@ -170,7 +170,7 @@ public:
         ///
         constexpr pointer vptr() const& noexcept
         {
-                assert( _core.ptr );
+                VARI_ASSERT( _core.ptr );
                 pointer res;
                 res._core = _core;
                 return res;
@@ -180,7 +180,7 @@ public:
         /// pointer.
         constexpr owning_pointer vptr() && noexcept
         {
-                assert( _core.ptr );
+                VARI_ASSERT( _core.ptr );
                 owning_pointer res;
                 swap( res._core, _core );
                 return res;
@@ -192,7 +192,7 @@ public:
         constexpr decltype( auto ) visit( Fs&&... f ) const
         {
                 typename _check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
-                assert( _core.ptr );
+                VARI_ASSERT( _core.ptr );
                 return _core.visit_impl( (Fs&&) f... );
         }
 
@@ -204,7 +204,7 @@ public:
                 typename _check_unique_invocability< types >::template with_deleter<
                     Deleter >::template with_uvref< Fs... >
                     _{};
-                assert( _core.ptr );
+                VARI_ASSERT( _core.ptr );
                 auto tmp = _core;
                 _core.reset();
                 return tmp.template take_impl< same_uvref >( (Fs&&) fs... );

@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "vari/bits/assert.h"
 #include "vari/bits/ptr_core.h"
 #include "vari/bits/typelist.h"
 #include "vari/bits/util.h"
@@ -26,7 +27,6 @@
 #include "vari/forward.h"
 #include "vari/vptr.h"
 
-#include <cassert>
 #include <cstddef>
 
 namespace vari
@@ -228,7 +228,7 @@ public:
         /// Undefined behavior if the pointer is null.
         constexpr reference vref() const& noexcept
         {
-                assert( _core.get_index() != null_index );
+                VARI_ASSERT( _core.get_index() != null_index );
                 reference res;
                 res._core = _core;
                 return res;
@@ -238,7 +238,7 @@ public:
         /// reference. Undefined behavior if the pointer is null.
         constexpr owning_reference vref() && noexcept
         {
-                assert( _core.get_index() != null_index );
+                VARI_ASSERT( _core.get_index() != null_index );
                 owning_reference res;
                 swap( res._core, _core );
                 return res;
