@@ -97,14 +97,14 @@ $(document).ready(function(){initNavTree('uvptr_8h_source.html',''); initResizab
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;vari/bits/ptr_core.h&quot;</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &quot;vari/bits/typelist.h&quot;</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;vari/bits/util.h&quot;</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &quot;vari/deleter.h&quot;</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &quot;vari/forward.h&quot;</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include &quot;vari/vptr.h&quot;</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#include &lt;cassert&gt;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;vari/bits/assert.h&quot;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &quot;vari/bits/ptr_core.h&quot;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;vari/bits/typelist.h&quot;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &quot;vari/bits/util.h&quot;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &quot;vari/deleter.h&quot;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include &quot;vari/forward.h&quot;</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include &quot;vari/vptr.h&quot;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#include &lt;cstddef&gt;</span></div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacevari.html">vari</a></div>
@@ -265,7 +265,7 @@ $(document).ready(function(){initNavTree('uvptr_8h_source.html',''); initResizab
 <div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
 <div class="line"><a id="l00229" name="l00229"></a><span class="lineno"><a class="line" href="classvari_1_1__uvptr.html#ab0268f96d4c0db70603d21f28246cbd2">  229</a></span>        <span class="keyword">constexpr</span> <a class="code hl_class" href="classvari_1_1__vref.html">reference</a> <a class="code hl_function" href="classvari_1_1__uvptr.html#ab0268f96d4c0db70603d21f28246cbd2">vref</a>() const&amp; noexcept</div>
 <div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        {</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>                assert( _core.get_index() != null_index );</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>                VARI_ASSERT( _core.get_index() != null_index );</div>
 <div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>                <a class="code hl_class" href="classvari_1_1__vref.html">reference</a> res;</div>
 <div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>                res._core = _core;</div>
 <div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>                <span class="keywordflow">return</span> res;</div>
@@ -273,7 +273,7 @@ $(document).ready(function(){initNavTree('uvptr_8h_source.html',''); initResizab
 <div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
 <div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="classvari_1_1__uvptr.html#aa58a859121832d5b3237542dc07ef41b">  239</a></span>        <span class="keyword">constexpr</span> <a class="code hl_class" href="structvari_1_1__uvref.html">owning_reference</a> <a class="code hl_function" href="classvari_1_1__uvptr.html#aa58a859121832d5b3237542dc07ef41b">vref</a>() &amp;&amp; <span class="keyword">noexcept</span></div>
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        {</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>                assert( _core.get_index() != null_index );</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>                VARI_ASSERT( _core.get_index() != null_index );</div>
 <div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>                <a class="code hl_class" href="structvari_1_1__uvref.html">owning_reference</a> res;</div>
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>                <a class="code hl_friend" href="classvari_1_1__uvptr.html#a2790ca25b8fd1115acc82742325b725c">swap</a>( res._core, _core );</div>
 <div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>                <span class="keywordflow">return</span> res;</div>
@@ -374,7 +374,7 @@ $(document).ready(function(){initNavTree('uvptr_8h_source.html',''); initResizab
 <div class="ttc" id="aclassvari_1_1__uvptr_html_ad68f51509febd7e80c4ea036ca8b14a0"><div class="ttname"><a href="classvari_1_1__uvptr.html#ad68f51509febd7e80c4ea036ca8b14a0">vari::_uvptr::_uvptr</a></div><div class="ttdeci">constexpr _uvptr(std::nullptr_t) noexcept</div><div class="ttdoc">Construct a pointer in a null state.</div><div class="ttdef"><b>Definition:</b> uvptr.h:59</div></div>
 <div class="ttc" id="aclassvari_1_1__uvptr_html_af898aa6e888912a05692cd17d7313aaf"><div class="ttname"><a href="classvari_1_1__uvptr.html#af898aa6e888912a05692cd17d7313aaf">vari::_uvptr::operator*</a></div><div class="ttdeci">constexpr auto &amp; operator*() const noexcept</div><div class="ttdoc">Dereferences to the pointed-to type.</div><div class="ttdef"><b>Definition:</b> uvptr.h:150</div></div>
 <div class="ttc" id="aclassvari_1_1__vptr_html"><div class="ttname"><a href="classvari_1_1__vptr.html">vari::_vptr</a></div><div class="ttdoc">A nullable pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> vptr.h:38</div></div>
-<div class="ttc" id="aclassvari_1_1__vref_html"><div class="ttname"><a href="classvari_1_1__vref.html">vari::_vref</a></div><div class="ttdoc">A non-nullable pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> vref.h:37</div></div>
+<div class="ttc" id="aclassvari_1_1__vref_html"><div class="ttname"><a href="classvari_1_1__vref.html">vari::_vref</a></div><div class="ttdoc">A non-nullable pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> vref.h:36</div></div>
 <div class="ttc" id="anamespacevari_html"><div class="ttname"><a href="namespacevari.html">vari</a></div><div class="ttdoc">Copyright (C) 2020 Jan Veverak Koniarik.</div><div class="ttdef"><b>Definition:</b> dispatch.h:28</div></div>
 <div class="ttc" id="anamespacevari_html_a3be05c6f854dc1b903a2a85e244bbdc5"><div class="ttname"><a href="namespacevari.html#a3be05c6f854dc1b903a2a85e244bbdc5">vari::uvptr</a></div><div class="ttdeci">_define_variadic&lt; _uvptr, typelist&lt; Ts... &gt;, def_del &gt; uvptr</div><div class="ttdoc">A nullable owning pointer to types derived out of Ts... list by flattening it and filtering for uniqu...</div><div class="ttdef"><b>Definition:</b> uvptr.h:334</div></div>
 <div class="ttc" id="anamespacevari_html_aa40348ea19f55b6deeba5d4ab2adcead"><div class="ttname"><a href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">vari::_define_variadic</a></div><div class="ttdeci">_vptr_apply_t&lt; T, unique_typelist_t&lt; flatten_t&lt; TL &gt; &gt;, Extra... &gt; _define_variadic</div><div class="ttdoc">Given a templated type T and typelist of types TL, aliases T&lt;Us...&gt; where Us... is flattend version o...</div><div class="ttdef"><b>Definition:</b> util.h:57</div></div>

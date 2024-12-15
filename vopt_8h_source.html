@@ -294,13 +294,13 @@ $(document).ready(function(){initNavTree('vopt_8h_source.html',''); initResizabl
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        <span class="keyword">constexpr</span> reference <a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vref</a>() &amp; <span class="keyword">noexcept</span></div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        {</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                assert( *<span class="keyword">this</span> );</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                VARI_ASSERT( *<span class="keyword">this</span> );</div>
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>                <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vptr</a>().vref();</div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        }</div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
 <div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        <span class="keyword">constexpr</span> const_reference <a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vref</a>() const&amp; noexcept</div>
 <div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        {</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                assert( *<span class="keyword">this</span> );</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                VARI_ASSERT( *<span class="keyword">this</span> );</div>
 <div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vptr</a>().vref();</div>
 <div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        }</div>
 <div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> </div>
@@ -319,7 +319,7 @@ $(document).ready(function(){initNavTree('vopt_8h_source.html',''); initResizabl
 <div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        <span class="comment">// XXX: test visit?</span></div>
 <div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        <span class="keyword">constexpr</span> _vval&lt; Ts... &gt; vval() &amp;&amp;</div>
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        {</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>                assert( !!*<span class="keyword">this</span> );</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>                VARI_ASSERT( !!*<span class="keyword">this</span> );</div>
 <div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>                _vval&lt; Ts... &gt; res;</div>
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>                swap( res._core, _core );</div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>                <span class="keywordflow">return</span> res;</div>
@@ -389,7 +389,7 @@ $(document).ready(function(){initNavTree('vopt_8h_source.html',''); initResizabl
 <div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span> </div>
 <div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>}  <span class="comment">// namespace vari</span></div>
 <div class="ttc" id="anamespacevari_html"><div class="ttname"><a href="namespacevari.html">vari</a></div><div class="ttdoc">Copyright (C) 2020 Jan Veverak Koniarik.</div><div class="ttdef"><b>Definition:</b> dispatch.h:28</div></div>
-<div class="ttc" id="anamespacevari_html_a0b711b10138e06f9d5b455ff55c663d0"><div class="ttname"><a href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a></div><div class="ttdeci">_define_variadic&lt; _vref, typelist&lt; Ts... &gt; &gt; vref</div><div class="ttdoc">A non-nullable pointer to types derived out of Ts... list by flattening it and filtering for unique t...</div><div class="ttdef"><b>Definition:</b> vref.h:159</div></div>
+<div class="ttc" id="anamespacevari_html_a0b711b10138e06f9d5b455ff55c663d0"><div class="ttname"><a href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref</a></div><div class="ttdeci">_define_variadic&lt; _vref, typelist&lt; Ts... &gt; &gt; vref</div><div class="ttdoc">A non-nullable pointer to types derived out of Ts... list by flattening it and filtering for unique t...</div><div class="ttdef"><b>Definition:</b> vref.h:158</div></div>
 <div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdoc">A nullable pointer to types derived out of Ts... list by flattening it and filtering for unique types...</div><div class="ttdef"><b>Definition:</b> vptr.h:185</div></div>
 <div class="ttc" id="anamespacevari_html_aa40348ea19f55b6deeba5d4ab2adcead"><div class="ttname"><a href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">vari::_define_variadic</a></div><div class="ttdeci">_vptr_apply_t&lt; T, unique_typelist_t&lt; flatten_t&lt; TL &gt; &gt;, Extra... &gt; _define_variadic</div><div class="ttdoc">Given a templated type T and typelist of types TL, aliases T&lt;Us...&gt; where Us... is flattend version o...</div><div class="ttdef"><b>Definition:</b> util.h:57</div></div>
 </div><!-- fragment --></div><!-- contents -->
