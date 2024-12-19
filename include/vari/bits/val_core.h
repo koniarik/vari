@@ -80,7 +80,7 @@ struct _val_core
                             using OST                     = typename _val_core< UL >::ST;
 
                             self.index = i;
-                            if ( IS_MOVE )
+                            if constexpr ( IS_MOVE )
                                     std::construct_at(
                                         &ST::template get< i >( self.storage ),
                                         std::move( OST::template get< j >( other.storage ) ) );
