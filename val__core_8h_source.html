@@ -158,7 +158,7 @@ $(document).ready(function(){initNavTree('val__core_8h_source.html',''); initRes
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                            using OST                     = typename _val_core&lt; UL &gt;::ST;</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                            self.index = i;</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                            if ( IS_MOVE )</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                            if constexpr ( IS_MOVE )</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                                    std::construct_at(</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                                        &amp;ST::template get&lt; i &gt;( self.storage ),</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                                        std::move( OST::template get&lt; j &gt;( other.storage ) ) );</div>
