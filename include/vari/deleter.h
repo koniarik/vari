@@ -12,6 +12,9 @@ struct def_del
 {
         constexpr void operator()( auto* item ) const
         {
+                static_assert(
+                    sizeof( *item ) != 0,
+                    "Beware that all types has to be fully defined for delete to work." );
                 delete item;
         }
 
