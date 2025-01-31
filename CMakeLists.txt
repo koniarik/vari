@@ -4,25 +4,27 @@ option(VARI_TESTS_ENABLED "Enable tests" OFF)
 
 project(vari)
 
-add_library(
-  vari
-  INTERFACE
-  include/vari/bits/typelist.h
-  include/vari/bits/util.h
-  include/vari/bits/ptr_core.h
-  include/vari/bits/dispatch.h
-  include/vari/uvptr.h
-  include/vari/vptr.h
-  include/vari/vref.h)
-target_include_directories(vari INTERFACE include)
+file(GLOB VARI_HEADERS include/vari/*.h include/vari/bits/*.h)
+
+include(CMakePackageConfigHelpers)
+
+add_library(vari INTERFACE ${VARI_HEADERS})
+target_include_directories(
+  vari INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                 $<INSTALL_INTERFACE:include>)
 target_compile_features(vari INTERFACE cxx_std_20)
 
-install(DIRECTORY include/ DESTINATION include)
+install(DIRECTORY include/vari/ DESTINATION include/vari/)
 
 install(
   TARGETS vari
+  EXPORT vari
   INCLUDES
-  DESTINATION include)
+  DESTINATION lib/vari/)
+install(
+  EXPORT vari
+  NAMESPACE vari
+  DESTINATION lib/vari/)
 
 if(VARI_TESTS_ENABLED)
   include(CTest)
