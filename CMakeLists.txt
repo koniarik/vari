@@ -20,11 +20,11 @@ install(
   TARGETS vari
   EXPORT vari
   INCLUDES
-  DESTINATION include/)
+  DESTINATION include/vari/)
 install(
   EXPORT vari
   NAMESPACE vari
-  DESTINATION lib/vari/)
+  DESTINATION lib/cmake/vari/)
 
 if(VARI_TESTS_ENABLED)
   include(CTest)
