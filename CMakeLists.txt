@@ -20,7 +20,7 @@ install(
   TARGETS vari
   EXPORT vari
   INCLUDES
-  DESTINATION lib/vari/)
+  DESTINATION include/)
 install(
   EXPORT vari
   NAMESPACE vari
