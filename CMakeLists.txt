@@ -17,6 +17,13 @@ add_library(
 target_include_directories(vari INTERFACE include)
 target_compile_features(vari INTERFACE cxx_std_20)
 
+install(DIRECTORY include/ DESTINATION include)
+
+install(
+  TARGETS vari
+  INCLUDES
+  DESTINATION include)
+
 if(VARI_TESTS_ENABLED)
   include(CTest)
   if(BUILD_TESTING)
