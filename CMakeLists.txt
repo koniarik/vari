@@ -23,7 +23,8 @@ install(
   DESTINATION include/vari/)
 install(
   EXPORT vari
-  NAMESPACE vari
+  FILE vari-config.cmake
+  NAMESPACE vari::
   DESTINATION lib/cmake/vari/)
 
 if(VARI_TESTS_ENABLED)
