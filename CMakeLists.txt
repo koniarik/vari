@@ -14,6 +14,8 @@ target_include_directories(
                  $<INSTALL_INTERFACE:include>)
 target_compile_features(vari INTERFACE cxx_std_20)
 
+add_library(vari::vari ALIAS vari)
+
 install(DIRECTORY include/vari/ DESTINATION include/vari/)
 
 install(
