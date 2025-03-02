@@ -35,6 +35,7 @@ The library introduces four basic types:
 - [Typelist compatibility](#typelist-compatibility)
 - [vcast](#vcast)
 - [Dispatch](#dispatch)
+- [Template deduction](#template-deduction)
 - [Credits](#credits)
 
 
@@ -372,6 +373,27 @@ vari::dispatch<3>(
     },
     [&](std::integral_constant<std::size_t, 2>){
     });
+```
+
+## Template deduction
+
+Usage of template deduction won't work directly with vari types. `vref`, `vptr`, `uvref`, `uvptr` are _aliases_ of their `_` prefixed implementation. This alias is what does the typelist processing and filtering. As a consequence, any attempt at using C++ template argument deduction won't work:
+
+```cpp
+auto foo = [&]<typename ... Ts>(vari::vptr<Ts...> vr){};
+
+vari::vptr<int, std::string> x;
+// foo(x); // won't deduce the parameters as `vptr` is alias
+foo.operator()<int, std::string>(x); // works because types are explicit
+```
+
+If this mechanics is deemed necessary, developers has to match against the underlying template, for which we do not guarantee that it won't change between udpates to library. No guarantees here.
+
+```cpp
+auto foo = [&]<typename ... Ts>(vari::_vptr<Ts...> vr){};
+
+vari::vptr<int, std::string> x;
+foo(x); // works
 ```
 
 ## Credits

@@ -25,8 +25,26 @@
 namespace vari
 {
 
+template < typename T >
+struct _dependent_false : std::false_type
+{
+};
+
+// Most of the templates for typelist specify operation over typelist, which does not have default
+// behavior for non-typelist-types. Any such template is guarded by this template to produce
+// compiler error in case they are given something they are not compatible with. Always consult the
+// documentation of the template to see what is expected.
+template < typename T >
+struct _default_template_guard
+{
+        static_assert(
+            _dependent_false< T >::value,
+            "Default template matched, this implies unexpected usage of the template. Read the documentation of template." );
+};
+
 // ---
 
+// compile time set of types Ts...
 template < typename... Ts >
 struct typelist
 {
@@ -56,8 +74,12 @@ concept typelist_compatible = typelist_traits< T >::is_compatible;
 
 // ---
 
+// Index of type `T` or `T const` in typelist `TL`, exported as ::value. `TL` has to be `typelist`
+// or typelist compatible type.
 template < typename T, typename TL >
-struct index_of_t_or_const_t;
+struct index_of_t_or_const_t : _default_template_guard< T >
+{
+};
 
 template < typename T, typelist_compatible TL >
 struct index_of_t_or_const_t< T, TL > : index_of_t_or_const_t< typelist_traits_types< T >, TL >
@@ -94,8 +116,12 @@ static constexpr std::size_t index_of_t_or_const_t_v = index_of_t_or_const_t< T,
 
 // ---
 
+// Exports type at index `j` in typelist `TL` as ::type. `TL` has to be `typelist` or typelist
+// compatible type.
 template < std::size_t j, typename TL >
-struct type_at;
+struct type_at : _default_template_guard< TL >
+{
+};
 
 template < std::size_t j, typelist_compatible TL >
 struct type_at< j, TL > : type_at< j, typelist_traits_types< TL > >
@@ -119,8 +145,12 @@ using type_at_t = typename type_at< j, TL >::type;
 
 // ---
 
+// ::value is true if type `T` is present in typelist `TL`, false otherwise. `TL` has to be
+// `typelist` or typelist compatible type.
 template < typename T, typename TL >
-struct contains_type;
+struct contains_type : _default_template_guard< T >
+{
+};
 
 template < typename T, typelist_compatible TL >
 struct contains_type< T, TL > : contains_type< T, typelist_traits_types< TL > >
@@ -138,8 +168,13 @@ static constexpr bool contains_type_v = contains_type< T, TL >::value;
 
 // ---
 
+// Filters out duplicates from typelist `TL2`, `TL1` is used as output argument collecting the
+// result typelist as it is filtered. ::type will contain the final filtered typelist. `TL1` and
+// `TL2` has to be `typelist` or typelist compatible type.
 template < typename TL1, typename TL2 >
-struct _unique_tl_impl;
+struct _unique_tl_impl : _default_template_guard< TL1 >
+{
+};
 
 template < typename TL1, typelist_compatible TL2 >
 struct _unique_tl_impl< TL1, TL2 > : _unique_tl_impl< TL1, typelist_traits_types< TL2 > >
@@ -170,8 +205,13 @@ using unique_typelist_t = typename _unique_tl_impl< typelist<>, TL >::type;
 
 // ---
 
+// Flattens any `typelist` or typelist compatible type within the `Ts...` set, producing a single
+// flat set. `TL` is used as output argument collecting the result typelist. ::type will contain the
+// final flattened typelist. `TL` has to be `typelist`.
 template < typename TL, typename... Ts >
-struct _flatten_impl;
+struct _flatten_impl : _default_template_guard< TL >
+{
+};
 
 template < typename TL >
 struct _flatten_impl< TL >
@@ -207,8 +247,12 @@ using flatten_t = typename _flatten_impl< typelist<>, Ts... >::type;
 
 // ---
 
+// ::value is true if all types in `LH` are present in `RH`, false otherwise. `LH` and `RH` has
+// to be `typelist` or typelist compatible type.
 template < typename LH, typename RH >
-struct is_subset;
+struct is_subset : _default_template_guard< LH >
+{
+};
 
 template < typename... Us, typename RH >
 struct is_subset< typelist< Us... >, RH >
@@ -227,8 +271,12 @@ static constexpr bool is_subset_v = is_subset< LH, RH >::value;
 
 // ---
 
+// ::value is true if any type in typelist `TL` is const qualified, false otherwise. `TL` has to be
+// `typelist` or typelist compatible type.
 template < typename TL >
-struct any_is_const;
+struct any_is_const : _default_template_guard< TL >
+{
+};
 
 template < typelist_compatible TL >
 struct any_is_const< TL > : any_is_const< typelist_traits_types< TL > >
@@ -246,8 +294,12 @@ static constexpr bool any_is_const_v = any_is_const< TL >::value;
 
 // ---
 
+// ::value is true if all types in typelist `TL` are const qualified, false otherwise. `TL` has to
+// be `typelist` or typelist compatible type.
 template < typename TL >
-struct all_is_const;
+struct all_is_const : _default_template_guard< TL >
+{
+};
 
 template < typelist_compatible TL >
 struct all_is_const< TL > : all_is_const< typelist_traits_types< TL > >
@@ -265,8 +317,12 @@ static constexpr bool all_is_const_v = all_is_const< TL >::value;
 
 // ---
 
+// ::value is true if none of the types in typelist `TL` are const qualified, false otherwise. `TL`
+// has to be `typelist` or typelist compatible type.
 template < typename TL >
-struct none_is_const;
+struct none_is_const : _default_template_guard< TL >
+{
+};
 
 template < typelist_compatible TL >
 struct none_is_const< TL > : none_is_const< typelist_traits_types< TL > >
@@ -284,8 +340,12 @@ static constexpr bool none_is_const_v = none_is_const< TL >::value;
 
 // ---
 
+// ::value is true if all types in typelist `TL` are nothrow swappable, false otherwise. `TL` has to
+// be `typelist` or typelist compatible type.
 template < typename TL >
-struct all_nothrow_swappable;
+struct all_nothrow_swappable : _default_template_guard< TL >
+{
+};
 
 template < typelist_compatible TL >
 struct all_nothrow_swappable< TL > : all_nothrow_swappable< typelist_traits_types< TL > >
@@ -303,8 +363,12 @@ static constexpr bool all_nothrow_swappable_v = all_nothrow_swappable< TL >::val
 
 // ---
 
+// ::value is true if all types in typelist `TL` are nothrow move constructible, false otherwise.
+// `TL` has to be `typelist` or typelist compatible type.
 template < typename TL >
-struct all_nothrow_move_constructible;
+struct all_nothrow_move_constructible : _default_template_guard< TL >
+{
+};
 
 template < typelist_compatible TL >
 struct all_nothrow_move_constructible< TL >
@@ -324,8 +388,12 @@ static constexpr bool all_nothrow_move_constructible_v =
 
 // ---
 
+// ::value is true if all types in typelist `TL` are nothrow copy constructible, false otherwise.
+// `TL` has to be `typelist` or typelist compatible type.
 template < typename TL >
-struct all_nothrow_copy_constructible;
+struct all_nothrow_copy_constructible : _default_template_guard< TL >
+{
+};
 
 template < typelist_compatible TL >
 struct all_nothrow_copy_constructible< TL >
@@ -345,8 +413,12 @@ static constexpr bool all_nothrow_copy_constructible_v =
 
 // ---
 
+// ::value is true if all types in typelist `TL` are nothrow destructible, false otherwise.
+// `TL` has to be `typelist` or typelist compatible type.
 template < typename TL >
-struct all_nothrow_destructible;
+struct all_nothrow_destructible : _default_template_guard< TL >
+{
+};
 
 template < typelist_compatible TL >
 struct all_nothrow_destructible< TL > : all_nothrow_destructible< typelist_traits_types< TL > >
@@ -368,8 +440,12 @@ static constexpr bool all_nothrow_destructible_v = all_nothrow_destructible< TL 
 template < typename U, typename T >
 concept nothrow_three_way_comparable = noexcept( std::declval< U >() <=> std::declval< T >() );
 
+// ::value is true if all types in typelist `TL` are nothrow three way comparable, false otherwise.
+// `TL` has to be `typelist` or typelist compatible type.
 template < typename TL >
-struct all_nothrow_three_way_comparable;
+struct all_nothrow_three_way_comparable : _default_template_guard< TL >
+{
+};
 
 template < typelist_compatible TL >
 struct all_nothrow_three_way_comparable< TL >
@@ -392,8 +468,12 @@ static constexpr bool all_nothrow_three_way_comparable_v =
 template < typename U, typename T >
 concept nothrow_equality_comparable = noexcept( std::declval< U >() == std::declval< T >() );
 
+// ::value is true if all types in typelist `TL` are nothrow equality comparable, false otherwise.
+// `TL` has to be `typelist` or typelist compatible type.
 template < typename TL >
-struct all_nothrow_equality_comparable;
+struct all_nothrow_equality_comparable : _default_template_guard< TL >
+{
+};
 
 template < typelist_compatible TL >
 struct all_nothrow_equality_comparable< TL >
@@ -413,8 +493,13 @@ static constexpr bool all_nothrow_equality_comparable_v =
 
 // ---
 
+// ::type is a typelist containing all return types of `Fac::operator()< N >()` for `N` going from 0
+// to `N`, exclusive. `TL` has to be `typelist` or typelist compatible type. `Fac` has to be a type
+// with `operator()< N >()` defined for `N` from 0 to `N`, exclusive.
 template < typename TL, std::size_t N, typename Fac >
-struct _factory_result_types_impl;
+struct _factory_result_types_impl : _default_template_guard< TL >
+{
+};
 
 template < typename... Ts, typename Fac >
 struct _factory_result_types_impl< typelist< Ts... >, 0, Fac >
