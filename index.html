@@ -121,6 +121,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <li>Typelist compatibility</li>
 <li>vcast</li>
 <li>Dispatch</li>
+<li>Template deduction</li>
 <li>Credits</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md2"></a>
@@ -348,6 +349,20 @@ Dispatch</h2>
 <div class="line">    [&amp;](std::integral_constant&lt;std::size_t, 2&gt;){</div>
 <div class="line">    });</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md17"></a>
+Template deduction</h2>
+<p >Usage of template deduction won't work directly with vari types. <code>vref</code>, <code>vptr</code>, <code>uvref</code>, <code>uvptr</code> are <em>aliases</em> of their <code>_</code> prefixed implementation. This alias is what does the typelist processing and filtering. As a consequence, any attempt at using C++ template argument deduction won't work:</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> foo = [&amp;]&lt;<span class="keyword">typename</span> ... Ts&gt;(<a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a>&lt;Ts...&gt; vr){};</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;int, std::string&gt;</a> x;</div>
+<div class="line"><span class="comment">// foo(x); // won&#39;t deduce the parameters as `vptr` is alias</span></div>
+<div class="line">foo.operator()&lt;int, std::string&gt;(x); <span class="comment">// works because types are explicit</span></div>
+</div><!-- fragment --><p >If this mechanics is deemed necessary, developers has to match against the underlying template, for which we do not guarantee that it won't change between udpates to library. No guarantees here.</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> foo = [&amp;]&lt;<span class="keyword">typename</span> ... Ts&gt;(<a class="code hl_class" href="classvari_1_1__vptr.html">vari::_vptr</a>&lt;Ts...&gt; vr){};</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;int, std::string&gt;</a> x;</div>
+<div class="line">foo(x); <span class="comment">// works</span></div>
+<div class="ttc" id="aclassvari_1_1__vptr_html"><div class="ttname"><a href="classvari_1_1__vptr.html">vari::_vptr</a></div><div class="ttdoc">A nullable pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> vptr.h:38</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md18"></a>
 Credits</h2>
 <p >Credits for the idea for this should go to <code>avakar</code>, live long and prosper. </p>
 </div></div><!-- PageDoc -->
