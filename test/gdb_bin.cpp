@@ -60,6 +60,18 @@ void check_impl(
 
 #define CHECK( m, var, expected, out ) check_impl( m, #var, expected, out );
 
+struct expr
+{
+        vari::uvptr< expr > e;
+};
+
+expr gen_expr( std::size_t n )
+{
+        if ( n == 1 )
+                return expr{};
+        return expr{ .e = vari::uwrap( gen_expr( n - 1 ) ).vptr() };
+}
+
 void run_tests( mode m, auto& st )
 {
         int         i = 42;
@@ -96,6 +108,9 @@ void run_tests( mode m, auto& st )
 
         vari::uvref< int, std::string > ur2 = vari::uwrap( s );
         CHECK( m, ur2, "vari::uvref = {\"wololo\"}", st );
+
+        vari::uvref< expr > chain = vari::uwrap( gen_expr( 100 ) );
+        CHECK( m, chain, "vari::uvref = {{e = vari::uvptr = {...}}}", st );
 }
 
 int main( int argc, char* argv[] )
@@ -111,6 +126,8 @@ int main( int argc, char* argv[] )
                 out << "set logging overwrite"
                     << "\n";
                 out << "set logging on"
+                    << "\n";
+                out << "set print max-depth 2"
                     << "\n";
                 run_tests( mode::gen, out );
                 out << "run run" << std::endl;
