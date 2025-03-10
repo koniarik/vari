@@ -94,161 +94,161 @@ $(document).ready(function(){initNavTree('vptr_8h_source.html',''); initResizabl
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &quot;vari/bits/assert.h&quot;</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &quot;vari/bits/ptr_core.h&quot;</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;vari/bits/typelist.h&quot;</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &quot;vari/bits/util.h&quot;</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &quot;vari/forward.h&quot;</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include &lt;cstddef&gt;</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacevari.html">vari</a></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>{</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &quot;vari/bits/assert.h&quot;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include &quot;vari/bits/ptr_core.h&quot;</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include &quot;vari/bits/typelist.h&quot;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#include &quot;vari/bits/util.h&quot;</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#include &quot;vari/forward.h&quot;</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#include &lt;cstddef&gt;</span></div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html">   37</a></span><span class="keyword">class </span><a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>{</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keyword">using </span>types = typelist&lt; Ts... &gt;;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keyword">using </span><a class="code hl_class" href="classvari_1_1__vref.html">reference</a> = <a class="code hl_class" href="classvari_1_1__vref.html">_vref</a>&lt; Ts... &gt;;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keyword">constexpr</span> <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>()                              = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keyword">constexpr</span> <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a> <span class="keyword">const</span>&amp; )                = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keyword">constexpr</span> <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>&amp;&amp; ) <span class="keyword">noexcept</span>            = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keyword">constexpr</span> <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>&amp; operator=( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a> <span class="keyword">const</span>&amp; )     = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="keyword">constexpr</span> <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>&amp; operator=( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>&amp;&amp; ) <span class="keyword">noexcept</span> = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#ae8bd4bd6ab808debe28e851593811027">   52</a></span>        <span class="keyword">constexpr</span> <a class="code hl_function" href="classvari_1_1__vptr.html#ae8bd4bd6ab808debe28e851593811027">_vptr</a>( std::nullptr_t ) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        {</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        }</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Us &gt;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                <span class="keyword">requires</span>( vconvertible_to&lt; typelist&lt; Us... &gt;, types &gt; )</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a9c4df17d3753384286ea2c5d0b771803">   60</a></span>        <span class="keyword">constexpr</span> <span class="keyword">explicit</span> <a class="code hl_function" href="classvari_1_1__vptr.html#a9c4df17d3753384286ea2c5d0b771803">_vptr</a>( <a class="code hl_class" href="classvari_1_1__vref.html">_vref&lt; Us... &gt;</a> <span class="keyword">const</span>&amp; r ) noexcept</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>          : _core( r._core )</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        {</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        }</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Us &gt;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                <span class="keyword">requires</span>( vconvertible_to&lt; typelist&lt; Us... &gt;, types &gt; )</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a7cf9484aee6ce5604d907069eaff7334">   69</a></span>        <span class="keyword">constexpr</span> <a class="code hl_function" href="classvari_1_1__vptr.html#a7cf9484aee6ce5604d907069eaff7334">_vptr</a>( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr&lt; Us... &gt;</a> <span class="keyword">const</span>&amp; p ) noexcept</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>          : _core( p._core )</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        {</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        }</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> U &gt;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                <span class="keyword">requires</span>( vconvertible_to&lt; typelist&lt; U &gt;, types &gt; )</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a7558e68bbec9dfe4bddf00a7de382235">   79</a></span>        <span class="keyword">constexpr</span> <a class="code hl_function" href="classvari_1_1__vptr.html#a7558e68bbec9dfe4bddf00a7de382235">_vptr</a>( U* u ) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        {</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                <span class="keywordflow">if</span> ( u )</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                        _core.set( *u );</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        }</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#ae872b900c699da18cb8a4d1f4eb8df82">   87</a></span>        <span class="keyword">constexpr</span> <span class="keyword">auto</span>&amp; <a class="code hl_function" href="classvari_1_1__vptr.html#ae872b900c699da18cb8a4d1f4eb8df82">operator*</a>() const noexcept</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        {</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                <span class="keywordflow">return</span> *_core.ptr;</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        }</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a3cfac30e6f1ee42d5349eea170975fb2">   94</a></span>        <span class="keyword">constexpr</span> <span class="keyword">auto</span>* <a class="code hl_function" href="classvari_1_1__vptr.html#a3cfac30e6f1ee42d5349eea170975fb2">operator-&gt;</a>() const noexcept</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        {</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                <span class="keywordflow">return</span> _core.ptr;</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        }</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a208246e181c2eabf60036717c6fe44cd">  101</a></span>        <span class="keyword">constexpr</span> <span class="keyword">auto</span>* <a class="code hl_function" href="classvari_1_1__vptr.html#a208246e181c2eabf60036717c6fe44cd">get</a>() const noexcept</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        {</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                <span class="keywordflow">return</span> _core.ptr;</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        }</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#ab6093ade16c20f2edb5ab39a645b0895">  109</a></span>        [[nodiscard]] <span class="keyword">constexpr</span> index_type <a class="code hl_function" href="classvari_1_1__vptr.html#ab6093ade16c20f2edb5ab39a645b0895">index</a>() const noexcept</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        {</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                <span class="keywordflow">return</span> _core.get_index();</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        }</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a5029ef62d5abf2ff0a3215b2fd9f9ec7">  116</a></span>        <span class="keyword">constexpr</span> <span class="keyword">explicit</span> <span class="keyword">operator</span> bool() const noexcept</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        {</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>                <span class="keywordflow">return</span> _core.ptr != <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        }</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a20a8fed940b7ede7a8f1b7163f83afdf">  123</a></span>        <span class="keyword">constexpr</span> <a class="code hl_class" href="classvari_1_1__vref.html">reference</a> <a class="code hl_function" href="classvari_1_1__vptr.html#a20a8fed940b7ede7a8f1b7163f83afdf">vref</a>() const noexcept</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        {</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                VARI_ASSERT( _core.ptr );</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>                <a class="code hl_class" href="classvari_1_1__vref.html">reference</a> r;</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>                r._core = _core;</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>                <span class="keywordflow">return</span> r;</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        }</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Fs &gt;</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a0dc6fac71cb54e71d9044b23d1e11d11">  135</a></span>        <span class="keyword">constexpr</span> <span class="keyword">decltype</span>( auto ) <a class="code hl_function" href="classvari_1_1__vptr.html#a0dc6fac71cb54e71d9044b23d1e11d11">visit</a>( Fs&amp;&amp;... fs ) <span class="keyword">const</span></div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        {</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>                <span class="keyword">typename</span> _check_unique_invocability&lt; types &gt;::template with_nullable_pure_ref&lt;</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>                    Fs... &gt;</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>                    _{};</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>                <span class="keywordflow">if</span> ( _core.ptr == <span class="keyword">nullptr</span> )</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                        <span class="keywordflow">return</span> _dispatch_fun( empty, (Fs&amp;&amp;) fs... );</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                <span class="keywordflow">return</span> _core.visit_impl( (Fs&amp;&amp;) fs... );</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        }</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#afa84cea14739396e9204046b0727e4c9">  148</a></span>        <span class="keyword">friend</span> <span class="keyword">constexpr</span> <span class="keywordtype">void</span> <a class="code hl_friend" href="classvari_1_1__vptr.html#afa84cea14739396e9204046b0727e4c9">swap</a>( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>&amp; lh, <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>&amp; rh ) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        {</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>                <a class="code hl_friend" href="classvari_1_1__vptr.html#afa84cea14739396e9204046b0727e4c9">swap</a>( lh._core, rh._core );</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        }</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        _ptr_core&lt; types &gt; _core;</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Us &gt;</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classvari_1_1__vref.html">_vref</a>;</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Us &gt;</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>;</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> Deleter, <span class="keyword">typename</span>... Us &gt;</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="structvari_1_1__uvref.html">_uvref</a>;</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> Deleter, <span class="keyword">typename</span>... Us &gt;</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classvari_1_1__uvptr.html">_uvptr</a>;</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>};</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Lhs, <span class="keyword">typename</span>... Rhs &gt;</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno"><a class="line" href="namespacevari.html#a6b586b2092d1dff0a19c1663a9cf8e38">  169</a></span><span class="keyword">constexpr</span> <span class="keyword">auto</span> operator&lt;=&gt;( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr&lt; Lhs... &gt;</a> <span class="keyword">const</span>&amp; lh, <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr&lt; Rhs... &gt;</a> <span class="keyword">const</span>&amp; rh ) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>{</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        <span class="keywordflow">return</span> lh.get() &lt;=&gt; rh.get();</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>}</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Lhs, <span class="keyword">typename</span>... Rhs &gt;</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno"><a class="line" href="namespacevari.html#a9b3319b203a9e42329a474c873cfad84">  177</a></span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> operator==( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr&lt; Lhs... &gt;</a> <span class="keyword">const</span>&amp; lh, <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr&lt; Rhs... &gt;</a> <span class="keyword">const</span>&amp; rh ) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>{</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        <span class="keywordflow">return</span> lh.get() == rh.get();</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>}</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno"><a class="line" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">  185</a></span><span class="keyword">using </span><a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vptr</a> = <a class="code hl_typedef" href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">_define_variadic</a>&lt; <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>, typelist&lt; Ts... &gt; &gt;;</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>}  <span class="comment">// namespace vari</span></div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>VARI_GET_PTR_HASH_SPECIALIZATION( <a class="code hl_class" href="classvari_1_1__vptr.html">vari::_vptr</a> );</div>
-<div class="ttc" id="aclassvari_1_1__uvptr_html"><div class="ttname"><a href="classvari_1_1__uvptr.html">vari::_uvptr</a></div><div class="ttdoc">A nullable owning pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> uvptr.h:39</div></div>
-<div class="ttc" id="aclassvari_1_1__vptr_html"><div class="ttname"><a href="classvari_1_1__vptr.html">vari::_vptr</a></div><div class="ttdoc">A nullable pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> vptr.h:38</div></div>
-<div class="ttc" id="aclassvari_1_1__vptr_html_a0dc6fac71cb54e71d9044b23d1e11d11"><div class="ttname"><a href="classvari_1_1__vptr.html#a0dc6fac71cb54e71d9044b23d1e11d11">vari::_vptr::visit</a></div><div class="ttdeci">constexpr decltype(auto) visit(Fs &amp;&amp;... fs) const</div><div class="ttdoc">Calls the appropriate function from the list fs..., based on the type of the current target,...</div><div class="ttdef"><b>Definition:</b> vptr.h:135</div></div>
-<div class="ttc" id="aclassvari_1_1__vptr_html_a208246e181c2eabf60036717c6fe44cd"><div class="ttname"><a href="classvari_1_1__vptr.html#a208246e181c2eabf60036717c6fe44cd">vari::_vptr::get</a></div><div class="ttdeci">constexpr auto * get() const noexcept</div><div class="ttdoc">Returns a pointer to the pointed-to type.</div><div class="ttdef"><b>Definition:</b> vptr.h:101</div></div>
-<div class="ttc" id="aclassvari_1_1__vptr_html_a20a8fed940b7ede7a8f1b7163f83afdf"><div class="ttname"><a href="classvari_1_1__vptr.html#a20a8fed940b7ede7a8f1b7163f83afdf">vari::_vptr::vref</a></div><div class="ttdeci">constexpr reference vref() const noexcept</div><div class="ttdoc">Constructs a variadic reference that points to the same target as this pointer.</div><div class="ttdef"><b>Definition:</b> vptr.h:123</div></div>
-<div class="ttc" id="aclassvari_1_1__vptr_html_a3cfac30e6f1ee42d5349eea170975fb2"><div class="ttname"><a href="classvari_1_1__vptr.html#a3cfac30e6f1ee42d5349eea170975fb2">vari::_vptr::operator-&gt;</a></div><div class="ttdeci">constexpr auto * operator-&gt;() const noexcept</div><div class="ttdoc">Provides member access to the pointed-to type.</div><div class="ttdef"><b>Definition:</b> vptr.h:94</div></div>
-<div class="ttc" id="aclassvari_1_1__vptr_html_a7558e68bbec9dfe4bddf00a7de382235"><div class="ttname"><a href="classvari_1_1__vptr.html#a7558e68bbec9dfe4bddf00a7de382235">vari::_vptr::_vptr</a></div><div class="ttdeci">constexpr _vptr(U *u) noexcept</div><div class="ttdoc">Constructs a vptr from a pointer to one of the types that vptr can reference.</div><div class="ttdef"><b>Definition:</b> vptr.h:79</div></div>
-<div class="ttc" id="aclassvari_1_1__vptr_html_a7cf9484aee6ce5604d907069eaff7334"><div class="ttname"><a href="classvari_1_1__vptr.html#a7cf9484aee6ce5604d907069eaff7334">vari::_vptr::_vptr</a></div><div class="ttdeci">constexpr _vptr(_vptr&lt; Us... &gt; const &amp;p) noexcept</div><div class="ttdoc">Copy constructor for any compatible vptr.</div><div class="ttdef"><b>Definition:</b> vptr.h:69</div></div>
-<div class="ttc" id="aclassvari_1_1__vptr_html_a9c4df17d3753384286ea2c5d0b771803"><div class="ttname"><a href="classvari_1_1__vptr.html#a9c4df17d3753384286ea2c5d0b771803">vari::_vptr::_vptr</a></div><div class="ttdeci">constexpr _vptr(_vref&lt; Us... &gt; const &amp;r) noexcept</div><div class="ttdoc">Copy constructor for any compatible vref.</div><div class="ttdef"><b>Definition:</b> vptr.h:60</div></div>
-<div class="ttc" id="aclassvari_1_1__vptr_html_ab6093ade16c20f2edb5ab39a645b0895"><div class="ttname"><a href="classvari_1_1__vptr.html#ab6093ade16c20f2edb5ab39a645b0895">vari::_vptr::index</a></div><div class="ttdeci">constexpr index_type index() const noexcept</div><div class="ttdoc">Returns the index representing the type currently being pointed-to.</div><div class="ttdef"><b>Definition:</b> vptr.h:109</div></div>
-<div class="ttc" id="aclassvari_1_1__vptr_html_ae872b900c699da18cb8a4d1f4eb8df82"><div class="ttname"><a href="classvari_1_1__vptr.html#ae872b900c699da18cb8a4d1f4eb8df82">vari::_vptr::operator*</a></div><div class="ttdeci">constexpr auto &amp; operator*() const noexcept</div><div class="ttdoc">Dereferences to the pointed-to type.</div><div class="ttdef"><b>Definition:</b> vptr.h:87</div></div>
-<div class="ttc" id="aclassvari_1_1__vptr_html_ae8bd4bd6ab808debe28e851593811027"><div class="ttname"><a href="classvari_1_1__vptr.html#ae8bd4bd6ab808debe28e851593811027">vari::_vptr::_vptr</a></div><div class="ttdeci">constexpr _vptr(std::nullptr_t) noexcept</div><div class="ttdoc">Construct a pointer in a null state.</div><div class="ttdef"><b>Definition:</b> vptr.h:52</div></div>
-<div class="ttc" id="aclassvari_1_1__vptr_html_afa84cea14739396e9204046b0727e4c9"><div class="ttname"><a href="classvari_1_1__vptr.html#afa84cea14739396e9204046b0727e4c9">vari::_vptr::swap</a></div><div class="ttdeci">friend constexpr void swap(_vptr &amp;lh, _vptr &amp;rh) noexcept</div><div class="ttdoc">Swaps vptr with each other.</div><div class="ttdef"><b>Definition:</b> vptr.h:148</div></div>
-<div class="ttc" id="aclassvari_1_1__vref_html"><div class="ttname"><a href="classvari_1_1__vref.html">vari::_vref</a></div><div class="ttdoc">A non-nullable pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> vref.h:36</div></div>
-<div class="ttc" id="anamespacevari_html"><div class="ttname"><a href="namespacevari.html">vari</a></div><div class="ttdoc">Copyright (C) 2020 Jan Veverak Koniarik.</div><div class="ttdef"><b>Definition:</b> dispatch.h:28</div></div>
-<div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdoc">A nullable pointer to types derived out of Ts... list by flattening it and filtering for unique types...</div><div class="ttdef"><b>Definition:</b> vptr.h:185</div></div>
-<div class="ttc" id="anamespacevari_html_aa40348ea19f55b6deeba5d4ab2adcead"><div class="ttname"><a href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">vari::_define_variadic</a></div><div class="ttdeci">_vptr_apply_t&lt; T, unique_typelist_t&lt; flatten_t&lt; TL &gt; &gt;, Extra... &gt; _define_variadic</div><div class="ttdoc">Given a templated type T and typelist of types TL, aliases T&lt;Us...&gt; where Us... is flattend version o...</div><div class="ttdef"><b>Definition:</b> util.h:57</div></div>
-<div class="ttc" id="astructvari_1_1__uvref_html"><div class="ttname"><a href="structvari_1_1__uvref.html">vari::_uvref</a></div><div class="ttdoc">A non-nullable owning pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> uvref.h:39</div></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacevari.html">vari</a></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>{</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html">   41</a></span><span class="keyword">class </span><a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>{</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keyword">using </span>types = typelist&lt; Ts... &gt;;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keyword">using </span><a class="code hl_class" href="classvari_1_1__vref.html">reference</a> = <a class="code hl_class" href="classvari_1_1__vref.html">_vref</a>&lt; Ts... &gt;;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="keyword">constexpr</span> <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>()                              = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keyword">constexpr</span> <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a> <span class="keyword">const</span>&amp; )                = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keyword">constexpr</span> <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>&amp;&amp; ) <span class="keyword">noexcept</span>            = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keyword">constexpr</span> <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>&amp; operator=( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a> <span class="keyword">const</span>&amp; )     = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keyword">constexpr</span> <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>&amp; operator=( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>&amp;&amp; ) <span class="keyword">noexcept</span> = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#ae8bd4bd6ab808debe28e851593811027">   56</a></span>        <span class="keyword">constexpr</span> <a class="code hl_function" href="classvari_1_1__vptr.html#ae8bd4bd6ab808debe28e851593811027">_vptr</a>( std::nullptr_t ) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        }</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Us &gt;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                <span class="keyword">requires</span>( vconvertible_to&lt; typelist&lt; Us... &gt;, types &gt; )</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a9c4df17d3753384286ea2c5d0b771803">   64</a></span>        <span class="keyword">constexpr</span> <span class="keyword">explicit</span> <a class="code hl_function" href="classvari_1_1__vptr.html#a9c4df17d3753384286ea2c5d0b771803">_vptr</a>( <a class="code hl_class" href="classvari_1_1__vref.html">_vref&lt; Us... &gt;</a> <span class="keyword">const</span>&amp; r ) noexcept</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>          : _core( r._core )</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        }</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Us &gt;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                <span class="keyword">requires</span>( vconvertible_to&lt; typelist&lt; Us... &gt;, types &gt; )</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a7cf9484aee6ce5604d907069eaff7334">   73</a></span>        <span class="keyword">constexpr</span> <a class="code hl_function" href="classvari_1_1__vptr.html#a7cf9484aee6ce5604d907069eaff7334">_vptr</a>( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr&lt; Us... &gt;</a> <span class="keyword">const</span>&amp; p ) noexcept</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>          : _core( p._core )</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        {</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> U &gt;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                <span class="keyword">requires</span>( vconvertible_to&lt; typelist&lt; U &gt;, types &gt; )</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a7558e68bbec9dfe4bddf00a7de382235">   83</a></span>        <span class="keyword">constexpr</span> <a class="code hl_function" href="classvari_1_1__vptr.html#a7558e68bbec9dfe4bddf00a7de382235">_vptr</a>( U* u ) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        {</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                <span class="keywordflow">if</span> ( u )</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                        _core.set( *u );</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        }</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#ae872b900c699da18cb8a4d1f4eb8df82">   91</a></span>        <span class="keyword">constexpr</span> <span class="keyword">auto</span>&amp; <a class="code hl_function" href="classvari_1_1__vptr.html#ae872b900c699da18cb8a4d1f4eb8df82">operator*</a>() const noexcept</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        {</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                <span class="keywordflow">return</span> *_core.ptr;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        }</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a3cfac30e6f1ee42d5349eea170975fb2">   98</a></span>        <span class="keyword">constexpr</span> <span class="keyword">auto</span>* <a class="code hl_function" href="classvari_1_1__vptr.html#a3cfac30e6f1ee42d5349eea170975fb2">operator-&gt;</a>() const noexcept</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        {</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                <span class="keywordflow">return</span> _core.ptr;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        }</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a208246e181c2eabf60036717c6fe44cd">  105</a></span>        <span class="keyword">constexpr</span> <span class="keyword">auto</span>* <a class="code hl_function" href="classvari_1_1__vptr.html#a208246e181c2eabf60036717c6fe44cd">get</a>() const noexcept</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        {</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                <span class="keywordflow">return</span> _core.ptr;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        }</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#ab6093ade16c20f2edb5ab39a645b0895">  113</a></span>        [[nodiscard]] <span class="keyword">constexpr</span> index_type <a class="code hl_function" href="classvari_1_1__vptr.html#ab6093ade16c20f2edb5ab39a645b0895">index</a>() const noexcept</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        {</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>                <span class="keywordflow">return</span> _core.get_index();</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        }</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a5029ef62d5abf2ff0a3215b2fd9f9ec7">  120</a></span>        <span class="keyword">constexpr</span> <span class="keyword">explicit</span> <span class="keyword">operator</span> bool() const noexcept</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        {</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>                <span class="keywordflow">return</span> _core.ptr != <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        }</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a20a8fed940b7ede7a8f1b7163f83afdf">  127</a></span>        <span class="keyword">constexpr</span> <a class="code hl_class" href="classvari_1_1__vref.html">reference</a> <a class="code hl_function" href="classvari_1_1__vptr.html#a20a8fed940b7ede7a8f1b7163f83afdf">vref</a>() const noexcept</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        {</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>                VARI_ASSERT( _core.ptr );</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>                <a class="code hl_class" href="classvari_1_1__vref.html">reference</a> r;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>                r._core = _core;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>                <span class="keywordflow">return</span> r;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        }</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Fs &gt;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#a0dc6fac71cb54e71d9044b23d1e11d11">  139</a></span>        <span class="keyword">constexpr</span> <span class="keyword">decltype</span>( auto ) <a class="code hl_function" href="classvari_1_1__vptr.html#a0dc6fac71cb54e71d9044b23d1e11d11">visit</a>( Fs&amp;&amp;... fs ) <span class="keyword">const</span></div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        {</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                <span class="keyword">typename</span> _check_unique_invocability&lt; types &gt;::template with_nullable_pure_ref&lt;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                    Fs... &gt;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>                    _{};</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>                <span class="keywordflow">if</span> ( _core.ptr == <span class="keyword">nullptr</span> )</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>                        <span class="keywordflow">return</span> _dispatch_fun( empty, (Fs&amp;&amp;) fs... );</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>                <span class="keywordflow">return</span> _core.visit_impl( (Fs&amp;&amp;) fs... );</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        }</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="classvari_1_1__vptr.html#afa84cea14739396e9204046b0727e4c9">  152</a></span>        <span class="keyword">friend</span> <span class="keyword">constexpr</span> <span class="keywordtype">void</span> <a class="code hl_friend" href="classvari_1_1__vptr.html#afa84cea14739396e9204046b0727e4c9">swap</a>( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>&amp; lh, <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>&amp; rh ) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        {</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>                <a class="code hl_friend" href="classvari_1_1__vptr.html#afa84cea14739396e9204046b0727e4c9">swap</a>( lh._core, rh._core );</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        }</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        _ptr_core&lt; types &gt; _core;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Us &gt;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classvari_1_1__vref.html">_vref</a>;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Us &gt;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>;</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> Deleter, <span class="keyword">typename</span>... Us &gt;</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="structvari_1_1__uvref.html">_uvref</a>;</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> Deleter, <span class="keyword">typename</span>... Us &gt;</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classvari_1_1__uvptr.html">_uvptr</a>;</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>};</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Lhs, <span class="keyword">typename</span>... Rhs &gt;</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno"><a class="line" href="namespacevari.html#a6b586b2092d1dff0a19c1663a9cf8e38">  173</a></span><span class="keyword">constexpr</span> <span class="keyword">auto</span> operator&lt;=&gt;( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr&lt; Lhs... &gt;</a> <span class="keyword">const</span>&amp; lh, <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr&lt; Rhs... &gt;</a> <span class="keyword">const</span>&amp; rh ) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>{</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        <span class="keywordflow">return</span> lh.get() &lt;=&gt; rh.get();</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>}</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Lhs, <span class="keyword">typename</span>... Rhs &gt;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno"><a class="line" href="namespacevari.html#a9b3319b203a9e42329a474c873cfad84">  181</a></span><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> operator==( <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr&lt; Lhs... &gt;</a> <span class="keyword">const</span>&amp; lh, <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr&lt; Rhs... &gt;</a> <span class="keyword">const</span>&amp; rh ) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>{</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        <span class="keywordflow">return</span> lh.get() == rh.get();</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>}</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno"><a class="line" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">  189</a></span><span class="keyword">using </span><a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vptr</a> = <a class="code hl_typedef" href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">_define_variadic</a>&lt; <a class="code hl_class" href="classvari_1_1__vptr.html">_vptr</a>, typelist&lt; Ts... &gt; &gt;;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>}  <span class="comment">// namespace vari</span></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>VARI_GET_PTR_HASH_SPECIALIZATION( <a class="code hl_class" href="classvari_1_1__vptr.html">vari::_vptr</a> );</div>
+<div class="ttc" id="aclassvari_1_1__uvptr_html"><div class="ttname"><a href="classvari_1_1__uvptr.html">vari::_uvptr</a></div><div class="ttdoc">A nullable owning pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> uvptr.h:43</div></div>
+<div class="ttc" id="aclassvari_1_1__vptr_html"><div class="ttname"><a href="classvari_1_1__vptr.html">vari::_vptr</a></div><div class="ttdoc">A nullable pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> vptr.h:42</div></div>
+<div class="ttc" id="aclassvari_1_1__vptr_html_a0dc6fac71cb54e71d9044b23d1e11d11"><div class="ttname"><a href="classvari_1_1__vptr.html#a0dc6fac71cb54e71d9044b23d1e11d11">vari::_vptr::visit</a></div><div class="ttdeci">constexpr decltype(auto) visit(Fs &amp;&amp;... fs) const</div><div class="ttdoc">Calls the appropriate function from the list fs..., based on the type of the current target,...</div><div class="ttdef"><b>Definition:</b> vptr.h:139</div></div>
+<div class="ttc" id="aclassvari_1_1__vptr_html_a208246e181c2eabf60036717c6fe44cd"><div class="ttname"><a href="classvari_1_1__vptr.html#a208246e181c2eabf60036717c6fe44cd">vari::_vptr::get</a></div><div class="ttdeci">constexpr auto * get() const noexcept</div><div class="ttdoc">Returns a pointer to the pointed-to type.</div><div class="ttdef"><b>Definition:</b> vptr.h:105</div></div>
+<div class="ttc" id="aclassvari_1_1__vptr_html_a20a8fed940b7ede7a8f1b7163f83afdf"><div class="ttname"><a href="classvari_1_1__vptr.html#a20a8fed940b7ede7a8f1b7163f83afdf">vari::_vptr::vref</a></div><div class="ttdeci">constexpr reference vref() const noexcept</div><div class="ttdoc">Constructs a variadic reference that points to the same target as this pointer.</div><div class="ttdef"><b>Definition:</b> vptr.h:127</div></div>
+<div class="ttc" id="aclassvari_1_1__vptr_html_a3cfac30e6f1ee42d5349eea170975fb2"><div class="ttname"><a href="classvari_1_1__vptr.html#a3cfac30e6f1ee42d5349eea170975fb2">vari::_vptr::operator-&gt;</a></div><div class="ttdeci">constexpr auto * operator-&gt;() const noexcept</div><div class="ttdoc">Provides member access to the pointed-to type.</div><div class="ttdef"><b>Definition:</b> vptr.h:98</div></div>
+<div class="ttc" id="aclassvari_1_1__vptr_html_a7558e68bbec9dfe4bddf00a7de382235"><div class="ttname"><a href="classvari_1_1__vptr.html#a7558e68bbec9dfe4bddf00a7de382235">vari::_vptr::_vptr</a></div><div class="ttdeci">constexpr _vptr(U *u) noexcept</div><div class="ttdoc">Constructs a vptr from a pointer to one of the types that vptr can reference.</div><div class="ttdef"><b>Definition:</b> vptr.h:83</div></div>
+<div class="ttc" id="aclassvari_1_1__vptr_html_a7cf9484aee6ce5604d907069eaff7334"><div class="ttname"><a href="classvari_1_1__vptr.html#a7cf9484aee6ce5604d907069eaff7334">vari::_vptr::_vptr</a></div><div class="ttdeci">constexpr _vptr(_vptr&lt; Us... &gt; const &amp;p) noexcept</div><div class="ttdoc">Copy constructor for any compatible vptr.</div><div class="ttdef"><b>Definition:</b> vptr.h:73</div></div>
+<div class="ttc" id="aclassvari_1_1__vptr_html_a9c4df17d3753384286ea2c5d0b771803"><div class="ttname"><a href="classvari_1_1__vptr.html#a9c4df17d3753384286ea2c5d0b771803">vari::_vptr::_vptr</a></div><div class="ttdeci">constexpr _vptr(_vref&lt; Us... &gt; const &amp;r) noexcept</div><div class="ttdoc">Copy constructor for any compatible vref.</div><div class="ttdef"><b>Definition:</b> vptr.h:64</div></div>
+<div class="ttc" id="aclassvari_1_1__vptr_html_ab6093ade16c20f2edb5ab39a645b0895"><div class="ttname"><a href="classvari_1_1__vptr.html#ab6093ade16c20f2edb5ab39a645b0895">vari::_vptr::index</a></div><div class="ttdeci">constexpr index_type index() const noexcept</div><div class="ttdoc">Returns the index representing the type currently being pointed-to.</div><div class="ttdef"><b>Definition:</b> vptr.h:113</div></div>
+<div class="ttc" id="aclassvari_1_1__vptr_html_ae872b900c699da18cb8a4d1f4eb8df82"><div class="ttname"><a href="classvari_1_1__vptr.html#ae872b900c699da18cb8a4d1f4eb8df82">vari::_vptr::operator*</a></div><div class="ttdeci">constexpr auto &amp; operator*() const noexcept</div><div class="ttdoc">Dereferences to the pointed-to type.</div><div class="ttdef"><b>Definition:</b> vptr.h:91</div></div>
+<div class="ttc" id="aclassvari_1_1__vptr_html_ae8bd4bd6ab808debe28e851593811027"><div class="ttname"><a href="classvari_1_1__vptr.html#ae8bd4bd6ab808debe28e851593811027">vari::_vptr::_vptr</a></div><div class="ttdeci">constexpr _vptr(std::nullptr_t) noexcept</div><div class="ttdoc">Construct a pointer in a null state.</div><div class="ttdef"><b>Definition:</b> vptr.h:56</div></div>
+<div class="ttc" id="aclassvari_1_1__vptr_html_afa84cea14739396e9204046b0727e4c9"><div class="ttname"><a href="classvari_1_1__vptr.html#afa84cea14739396e9204046b0727e4c9">vari::_vptr::swap</a></div><div class="ttdeci">friend constexpr void swap(_vptr &amp;lh, _vptr &amp;rh) noexcept</div><div class="ttdoc">Swaps vptr with each other.</div><div class="ttdef"><b>Definition:</b> vptr.h:152</div></div>
+<div class="ttc" id="aclassvari_1_1__vref_html"><div class="ttname"><a href="classvari_1_1__vref.html">vari::_vref</a></div><div class="ttdoc">A non-nullable pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> vref.h:40</div></div>
+<div class="ttc" id="anamespacevari_html"><div class="ttname"><a href="namespacevari.html">vari</a></div><div class="ttdoc">MIT License.</div><div class="ttdef"><b>Definition:</b> dispatch.h:32</div></div>
+<div class="ttc" id="anamespacevari_html_a50c11a69a9d782e1ccaa6ebd7be73725"><div class="ttname"><a href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a></div><div class="ttdeci">_define_variadic&lt; _vptr, typelist&lt; Ts... &gt; &gt; vptr</div><div class="ttdoc">A nullable pointer to types derived out of Ts... list by flattening it and filtering for unique types...</div><div class="ttdef"><b>Definition:</b> vptr.h:189</div></div>
+<div class="ttc" id="anamespacevari_html_aa40348ea19f55b6deeba5d4ab2adcead"><div class="ttname"><a href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">vari::_define_variadic</a></div><div class="ttdeci">_vptr_apply_t&lt; T, unique_typelist_t&lt; flatten_t&lt; TL &gt; &gt;, Extra... &gt; _define_variadic</div><div class="ttdoc">Given a templated type T and typelist of types TL, aliases T&lt;Us...&gt; where Us... is flattend version o...</div><div class="ttdef"><b>Definition:</b> util.h:61</div></div>
+<div class="ttc" id="astructvari_1_1__uvref_html"><div class="ttname"><a href="structvari_1_1__uvref.html">vari::_uvref</a></div><div class="ttdoc">A non-nullable owning pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> uvref.h:43</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

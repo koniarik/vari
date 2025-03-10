@@ -93,39 +93,40 @@ $(document).ready(function(){initNavTree('vcast_8h_source.html',''); initResizab
   <div class="headertitle"><div class="title">vcast.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;uvref.h&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;vref.h&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacevari.html">vari</a></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span> R, <span class="keyword">typename</span>... Ts &gt;</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <span class="keyword">requires</span>( std::convertible_to&lt; Ts&amp;, R &gt; &amp;&amp; ... )</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="namespacevari.html#a7c64350b4a8a7519397a79823267381c">   13</a></span>R <a class="code hl_function" href="namespacevari.html#a7c64350b4a8a7519397a79823267381c">vcast</a>( <a class="code hl_class" href="classvari_1_1__vref.html">vari::_vref&lt; Ts... &gt;</a> <span class="keyword">const</span>&amp; r )</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <span class="keywordflow">return</span> r.<a class="code hl_function" href="classvari_1_1__vref.html#a91672a2746e23cee932cf1a56cfa7bb6">visit</a>( [&amp;]( <span class="keyword">auto</span>&amp; item ) -&gt; R {</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span> R <span class="keyword">&gt;</span>( item );</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        } );</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>}</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span> R, <span class="keyword">typename</span> Del, <span class="keyword">typename</span>... Ts &gt;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keyword">requires</span>( std::convertible_to&lt; Ts&amp;, R &gt; &amp;&amp; ... )</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="namespacevari.html#a2bf8a03788166e505fa2068017cf3644">   24</a></span>R <a class="code hl_function" href="namespacevari.html#a7c64350b4a8a7519397a79823267381c">vcast</a>( <a class="code hl_class" href="structvari_1_1__uvref.html">vari::_uvref&lt; Del, Ts... &gt;</a> <span class="keyword">const</span>&amp; r )</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>{</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keywordflow">return</span> r.<a class="code hl_function" href="structvari_1_1__uvref.html#ae808835f60352862ef79890e91fb2bd1">visit</a>( [&amp;]( <span class="keyword">auto</span>&amp; item ) -&gt; R {</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span> R <span class="keyword">&gt;</span>( item );</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        } );</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>}  <span class="comment">// namespace vari</span></div>
-<div class="ttc" id="aclassvari_1_1__vref_html"><div class="ttname"><a href="classvari_1_1__vref.html">vari::_vref</a></div><div class="ttdoc">A non-nullable pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> vref.h:36</div></div>
-<div class="ttc" id="aclassvari_1_1__vref_html_a91672a2746e23cee932cf1a56cfa7bb6"><div class="ttname"><a href="classvari_1_1__vref.html#a91672a2746e23cee932cf1a56cfa7bb6">vari::_vref::visit</a></div><div class="ttdeci">constexpr decltype(auto) visit(Fs &amp;&amp;... fs) const</div><div class="ttdoc">Calls the appropriate function from the list fs..., based on the type of the current target.</div><div class="ttdef"><b>Definition:</b> vref.h:109</div></div>
-<div class="ttc" id="anamespacevari_html"><div class="ttname"><a href="namespacevari.html">vari</a></div><div class="ttdoc">Copyright (C) 2020 Jan Veverak Koniarik.</div><div class="ttdef"><b>Definition:</b> dispatch.h:28</div></div>
-<div class="ttc" id="anamespacevari_html_a7c64350b4a8a7519397a79823267381c"><div class="ttname"><a href="namespacevari.html#a7c64350b4a8a7519397a79823267381c">vari::vcast</a></div><div class="ttdeci">R vcast(vari::_vref&lt; Ts... &gt; const &amp;r)</div><div class="ttdoc">Applies static cast to R to item currently referenced by vref</div><div class="ttdef"><b>Definition:</b> vcast.h:13</div></div>
-<div class="ttc" id="astructvari_1_1__uvref_html"><div class="ttname"><a href="structvari_1_1__uvref.html">vari::_uvref</a></div><div class="ttdoc">A non-nullable owning pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> uvref.h:39</div></div>
-<div class="ttc" id="astructvari_1_1__uvref_html_ae808835f60352862ef79890e91fb2bd1"><div class="ttname"><a href="structvari_1_1__uvref.html#ae808835f60352862ef79890e91fb2bd1">vari::_uvref::visit</a></div><div class="ttdeci">constexpr decltype(auto) visit(Fs &amp;&amp;... f) const</div><div class="ttdoc">Calls the appropriate function from the list fs..., based on the type of the current target.</div><div class="ttdef"><b>Definition:</b> uvref.h:192</div></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;uvref.h&quot;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &quot;vref.h&quot;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacevari.html">vari</a></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>{</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span> R, <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keyword">requires</span>( std::convertible_to&lt; Ts&amp;, R &gt; &amp;&amp; ... )</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="namespacevari.html#a7c64350b4a8a7519397a79823267381c">   34</a></span>R <a class="code hl_function" href="namespacevari.html#a7c64350b4a8a7519397a79823267381c">vcast</a>( <a class="code hl_class" href="classvari_1_1__vref.html">vari::_vref&lt; Ts... &gt;</a> <span class="keyword">const</span>&amp; r )</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>{</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keywordflow">return</span> r.<a class="code hl_function" href="classvari_1_1__vref.html#a91672a2746e23cee932cf1a56cfa7bb6">visit</a>( [&amp;]( <span class="keyword">auto</span>&amp; item ) -&gt; R {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span> R <span class="keyword">&gt;</span>( item );</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        } );</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>}</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span> R, <span class="keyword">typename</span> Del, <span class="keyword">typename</span>... Ts &gt;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keyword">requires</span>( std::convertible_to&lt; Ts&amp;, R &gt; &amp;&amp; ... )</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="namespacevari.html#a2bf8a03788166e505fa2068017cf3644">   45</a></span>R <a class="code hl_function" href="namespacevari.html#a7c64350b4a8a7519397a79823267381c">vcast</a>( <a class="code hl_class" href="structvari_1_1__uvref.html">vari::_uvref&lt; Del, Ts... &gt;</a> <span class="keyword">const</span>&amp; r )</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>{</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keywordflow">return</span> r.<a class="code hl_function" href="structvari_1_1__uvref.html#ae808835f60352862ef79890e91fb2bd1">visit</a>( [&amp;]( <span class="keyword">auto</span>&amp; item ) -&gt; R {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span> R <span class="keyword">&gt;</span>( item );</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        } );</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>}</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}  <span class="comment">// namespace vari</span></div>
+<div class="ttc" id="aclassvari_1_1__vref_html"><div class="ttname"><a href="classvari_1_1__vref.html">vari::_vref</a></div><div class="ttdoc">A non-nullable pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> vref.h:40</div></div>
+<div class="ttc" id="aclassvari_1_1__vref_html_a91672a2746e23cee932cf1a56cfa7bb6"><div class="ttname"><a href="classvari_1_1__vref.html#a91672a2746e23cee932cf1a56cfa7bb6">vari::_vref::visit</a></div><div class="ttdeci">constexpr decltype(auto) visit(Fs &amp;&amp;... fs) const</div><div class="ttdoc">Calls the appropriate function from the list fs..., based on the type of the current target.</div><div class="ttdef"><b>Definition:</b> vref.h:113</div></div>
+<div class="ttc" id="anamespacevari_html"><div class="ttname"><a href="namespacevari.html">vari</a></div><div class="ttdoc">MIT License.</div><div class="ttdef"><b>Definition:</b> dispatch.h:32</div></div>
+<div class="ttc" id="anamespacevari_html_a7c64350b4a8a7519397a79823267381c"><div class="ttname"><a href="namespacevari.html#a7c64350b4a8a7519397a79823267381c">vari::vcast</a></div><div class="ttdeci">R vcast(vari::_vref&lt; Ts... &gt; const &amp;r)</div><div class="ttdoc">Applies static cast to R to item currently referenced by vref</div><div class="ttdef"><b>Definition:</b> vcast.h:34</div></div>
+<div class="ttc" id="astructvari_1_1__uvref_html"><div class="ttname"><a href="structvari_1_1__uvref.html">vari::_uvref</a></div><div class="ttdoc">A non-nullable owning pointer to one of the types in Ts...</div><div class="ttdef"><b>Definition:</b> uvref.h:43</div></div>
+<div class="ttc" id="astructvari_1_1__uvref_html_ae808835f60352862ef79890e91fb2bd1"><div class="ttname"><a href="structvari_1_1__uvref.html#ae808835f60352862ef79890e91fb2bd1">vari::_uvref::visit</a></div><div class="ttdeci">constexpr decltype(auto) visit(Fs &amp;&amp;... f) const</div><div class="ttdoc">Calls the appropriate function from the list fs..., based on the type of the current target.</div><div class="ttdef"><b>Definition:</b> uvref.h:196</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
