@@ -1,4 +1,25 @@
 
+/// MIT License
+///
+/// Copyright (c) 2025 koniarik
+///
+/// Permission is hereby granted, free of charge, to any person obtaining a copy
+/// of this software and associated documentation files (the "Software"), to deal
+/// in the Software without restriction, including without limitation the rights
+/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+/// copies of the Software, and to permit persons to whom the Software is
+/// furnished to do so, subject to the following conditions:
+///
+/// The above copyright notice and this permission notice shall be included in all
+/// copies or substantial portions of the Software.
+///
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+/// SOFTWARE.
 #include "vari/uvptr.h"
 #include "vari/uvref.h"
 #include "vari/vptr.h"
@@ -26,13 +47,10 @@ void check_impl(
         if ( m != mode::gen )
                 return;
         out << "break " << sl.file_name() << ":" << sl.line() << "\n";
-        out << "commands"
-            << "\n";
+        out << "commands" << "\n";
         out << "p " << var << "\n";
-        out << "c "
-            << "\n";
-        out << "end"
-            << "\n";
+        out << "c " << "\n";
+        out << "end" << "\n";
 }
 void check_impl(
     mode                 m,
@@ -50,8 +68,7 @@ void check_impl(
 
         if ( line.ends_with( expected ) )
                 return;
-        std::cerr << "Failed match:"
-                  << "\n";
+        std::cerr << "Failed match:" << "\n";
         std::cerr << "Expected: " << expected << "\n";
         std::cerr << "     Got: " << line << "\n";
         std::cerr << "  Source: " << sl.file_name() << ":" << sl.line() << "\n";
@@ -123,12 +140,9 @@ int main( int argc, char* argv[] )
                 std::string_view pprinter = argv[2];
                 std::ofstream    out{ argv[3] };
                 out << "source " << pprinter << "\n";
-                out << "set logging overwrite"
-                    << "\n";
-                out << "set logging on"
-                    << "\n";
-                out << "set print max-depth 2"
-                    << "\n";
+                out << "set logging overwrite" << "\n";
+                out << "set logging on" << "\n";
+                out << "set print max-depth 2" << "\n";
                 run_tests( mode::gen, out );
                 out << "run run" << std::endl;
         } else if ( mode == "run" ) {
