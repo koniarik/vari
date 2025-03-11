@@ -164,7 +164,7 @@ vari::vref<std::string> p{a};
 vari::vref<int, std::string> p2 = p;
 
 // not allowed, as {int} is not superset of {int, std::string}
-vari::vref<int, std::string> p3 = p2;
+// vari::vref<int> p3 = p2;
 ```
 
 This feature also works seamlessly with `take`:
