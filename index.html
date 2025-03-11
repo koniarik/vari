@@ -208,7 +208,7 @@ Sub-typing</h2>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;int, std::string&gt;</a> p2 = p;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// not allowed, as {int} is not superset of {int, std::string}</span></div>
-<div class="line"><a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;int, std::string&gt;</a> p3 = p2;</div>
+<div class="line"><span class="comment">// vari::vref&lt;int&gt; p3 = p2;</span></div>
 </div><!-- fragment --><p >This feature also works seamlessly with <code>take</code>:</p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>a_t{};</div>
 <div class="line"><span class="keyword">struct </span>b_t{};</div>
