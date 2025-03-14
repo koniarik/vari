@@ -333,7 +333,7 @@ The API for specifying custom `Deleter` to variadics mirrors the API of `std::un
 
 Library can be extended by using other types than just `vari::typelist` to represent set of types.
 
-Whenever type is typelist is determined by `vari::typelist_traits<T>`. In case `vari::typelist_traits<T>:::is_compatible` evaluates to `true`, library considers `T` to be typelist-like type.
+Whenever type `T` is typelist is determined by `vari::typelist_traits<T>`. In case `vari::typelist_traits<T>:::is_compatible` evaluates to `true`, library considers `T` to be typelist-like type.
 
 In such a case, `vari::typelist_traits<T>::types` should be a type which by itself is vari-compatible typelist. Transtively, this should eventually resolve into `vari::typelist` itself which is used by the library directly.
 
