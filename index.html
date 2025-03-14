@@ -318,7 +318,7 @@ Deleter</h2>
 <h2><a class="anchor" id="autotoc_md14"></a>
 Typelist compatibility</h2>
 <p >Library can be extended by using other types than just <code>vari::typelist</code> to represent set of types.</p>
-<p >Whenever type is typelist is determined by <code>vari::typelist_traits&lt;T&gt;</code>. In case <code>vari::typelist_traits&lt;T&gt;:::is_compatible</code> evaluates to <code>true</code>, library considers <code>T</code> to be typelist-like type.</p>
+<p >Whenever type <code>T</code> is typelist is determined by <code>vari::typelist_traits&lt;T&gt;</code>. In case <code>vari::typelist_traits&lt;T&gt;:::is_compatible</code> evaluates to <code>true</code>, library considers <code>T</code> to be typelist-like type.</p>
 <p >In such a case, <code>vari::typelist_traits&lt;T&gt;::types</code> should be a type which by itself is vari-compatible typelist. Transtively, this should eventually resolve into <code>vari::typelist</code> itself which is used by the library directly.</p>
 <h2><a class="anchor" id="autotoc_md15"></a>
 vcast</h2>
