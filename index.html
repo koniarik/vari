@@ -208,7 +208,7 @@ Sub-typing</h2>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;int, std::string&gt;</a> p2 = p;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// not allowed, as {int} is not superset of {int, std::string}</span></div>
-<div class="line"><span class="comment">// vari::vref&lt;int&gt; p3 = p2;</span></div>
+<div class="line"><a class="code hl_typedef" href="namespacevari.html#a0b711b10138e06f9d5b455ff55c663d0">vari::vref&lt;int&gt;</a> p3 = p2; <span class="comment">// error: not allowed</span></div>
 </div><!-- fragment --><p >This feature also works seamlessly with <code>take</code>:</p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>a_t{};</div>
 <div class="line"><span class="keyword">struct </span>b_t{};</div>
@@ -354,7 +354,7 @@ Template deduction</h2>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> foo = [&amp;]&lt;<span class="keyword">typename</span> ... Ts&gt;(<a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr</a>&lt;Ts...&gt; vr){};</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_typedef" href="namespacevari.html#a50c11a69a9d782e1ccaa6ebd7be73725">vari::vptr&lt;int, std::string&gt;</a> x;</div>
-<div class="line"><span class="comment">// foo(x); // won&#39;t deduce the parameters as `vptr` is alias</span></div>
+<div class="line">foo(x); <span class="comment">// error: won&#39;t deduce the parameters as `vptr` is alias</span></div>
 <div class="line">foo.operator()&lt;int, std::string&gt;(x); <span class="comment">// works because types are explicit</span></div>
 </div><!-- fragment --><p >If this mechanics is deemed necessary, developers has to match against the underlying template, for which we do not guarantee that it won't change between udpates to library. No guarantees here.</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> foo = [&amp;]&lt;<span class="keyword">typename</span> ... Ts&gt;(<a class="code hl_class" href="classvari_1_1__vptr.html">vari::_vptr</a>&lt;Ts...&gt; vr){};</div>
