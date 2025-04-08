@@ -284,6 +284,10 @@ auto to_str = [&](vari::vptr<json_types> p)
 
 This approach makes it easier to handle complex type hierarchies while preserving the flexibility and power of variadic types.
 
+## Pretty printer
+
+`./pprinter.py` is pretty printer for `vari` for *gdb*. Just use `source path/to/vari/pprinter.py`.
+
 ## Lvalue conversion from unique
 
 For added convenience, the library allows converting `uvptr` and `uvref` to their non-unique counterparts, but only if the expression is an lvalue reference:
