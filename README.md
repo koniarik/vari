@@ -164,7 +164,7 @@ vari::vref<std::string> p{a};
 vari::vref<int, std::string> p2 = p;
 
 // not allowed, as {int} is not superset of {int, std::string}
-// vari::vref<int> p3 = p2;
+vari::vref<int> p3 = p2; // error: not allowed
 ```
 
 This feature also works seamlessly with `take`:
@@ -383,7 +383,7 @@ Usage of template deduction won't work directly with vari types. `vref`, `vptr`,
 auto foo = [&]<typename ... Ts>(vari::vptr<Ts...> vr){};
 
 vari::vptr<int, std::string> x;
-// foo(x); // won't deduce the parameters as `vptr` is alias
+foo(x); // error: won't deduce the parameters as `vptr` is alias
 foo.operator()<int, std::string>(x); // works because types are explicit
 ```
 
