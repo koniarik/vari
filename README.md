@@ -18,6 +18,8 @@ The library introduces four basic types:
  - `uvptr<Ts...>` - A unique (owning) pointer to any type out of `Ts...`, which can be null.
  - `uvref<Ts...>` - A unique (owning) reference to any type out of `Ts...`.
 
+Do you have any questions? Feel free to contact `veverak` on [#include discord](https://discord.gg/vSYgpmPrra).
+
 ---
 
 - [vref and vptr](#vref-and-vptr)
