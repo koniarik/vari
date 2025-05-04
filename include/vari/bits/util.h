@@ -193,13 +193,13 @@ struct _vptr_cnv_map;
 template < typename TL, typename... Us >
 struct _vptr_cnv_map< TL, typelist< Us... > >
 {
-        static constexpr std::size_t conv( std::size_t i )
+        static constexpr index_type conv( std::size_t i )
         {
                 return i == null_index ? null_index : value[i];
         }
 
 private:
-        static constexpr std::size_t value[sizeof...( Us )] = {
+        static constexpr index_type value[sizeof...( Us )] = {
             index_of_t_or_const_t_v< Us, TL >... };
 };
 
@@ -293,7 +293,7 @@ private:
 template < std::size_t Align >
 constexpr std::intptr_t hash_ptr( void* p )
 {
-        return ( std::intptr_t )( p ) >> std::bit_width( Align );
+        return (std::intptr_t) ( p ) >> std::bit_width( Align );
 }
 
 }  // namespace vari
