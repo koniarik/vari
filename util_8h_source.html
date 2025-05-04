@@ -264,13 +264,13 @@ $(document).ready(function(){initNavTree('util_8h_source.html',''); initResizabl
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span><span class="keyword">template</span> &lt; <span class="keyword">typename</span> TL, <span class="keyword">typename</span>... Us &gt;</div>
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="keyword">struct </span>_vptr_cnv_map&lt; TL, typelist&lt; Us... &gt; &gt;</div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>{</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> std::size_t conv( std::size_t i )</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> index_type conv( std::size_t i )</div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        {</div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                <span class="keywordflow">return</span> i == null_index ? null_index : value[i];</div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        }</div>
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> std::size_t value[<span class="keyword">sizeof</span>...( Us )] = {</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> index_type value[<span class="keyword">sizeof</span>...( Us )] = {</div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>            index_of_t_or_const_t_v&lt; Us, TL &gt;... };</div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>};</div>
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
@@ -364,7 +364,7 @@ $(document).ready(function(){initNavTree('util_8h_source.html',''); initResizabl
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span><span class="keyword">template</span> &lt; std::<span class="keywordtype">size_t</span> Align &gt;</div>
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span><span class="keyword">constexpr</span> std::intptr_t hash_ptr( <span class="keywordtype">void</span>* p )</div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>{</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        <span class="keywordflow">return</span> ( std::intptr_t )( p ) &gt;&gt; std::bit_width( Align );</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        <span class="keywordflow">return</span> (std::intptr_t) ( p ) &gt;&gt; std::bit_width( Align );</div>
 <div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>}</div>
 <div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span> </div>
 <div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>}  <span class="comment">// namespace vari</span></div>
