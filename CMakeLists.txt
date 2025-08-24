@@ -30,5 +30,6 @@ install(
   DESTINATION lib/cmake/vari/)
 
 if(VARI_TESTS_ENABLED)
+  enable_testing()
   add_subdirectory(test)
 endif()
