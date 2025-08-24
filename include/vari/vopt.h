@@ -176,16 +176,13 @@ public:
         }
 
         constexpr auto& operator*() const noexcept
+                requires( types::size == 1 )
         {
-                if constexpr ( types::size == 1 )
-                        return core_type::ST::template get< 0 >( _core.storage );
-                else
-                        return *core_type::visit_impl( _core, [&]( auto& item ) -> void* {
-                                return &item;
-                        } );
+                return core_type::ST::template get< 0 >( _core.storage );
         }
 
         constexpr auto* operator->() const noexcept
+                requires( types::size == 1 )
         {
                 return &**this;
         }
