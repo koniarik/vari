@@ -167,7 +167,7 @@ struct _val_core
         }
 
         template < typename T, typename... Args >
-        constexpr T&
+        constexpr auto&
         emplace( Args&&... args ) noexcept( std::is_nothrow_constructible_v< T, Args... > )
         {
                 constexpr index_type i = index_of_t_or_const_t_v< T, TL >;

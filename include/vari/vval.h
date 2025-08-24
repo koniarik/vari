@@ -51,10 +51,10 @@ public:
         using const_reference = _vref< Ts const... >;
 
         template < typename U >
-                requires( vconvertible_type< std::remove_reference_t< U >, types > )
+                requires( vconvertible_type< std::remove_cvref_t< U >, types > )
         constexpr _vval( U&& v ) noexcept( _forward_nothrow_constructible< U > )
         {
-                _core.template emplace< std::remove_reference_t< U > >( (U&&) v );
+                _core.template emplace< std::remove_cvref_t< U > >( (U&&) v );
         }
 
         template < typename U, typename... Args >
@@ -94,12 +94,12 @@ public:
         }
 
         template < typename U >
-                requires( vconvertible_to< typelist< std::remove_reference_t< U > >, types > )
+                requires( vconvertible_type< std::remove_cvref_t< U >, types > )
         constexpr _vval& operator=( U&& v ) noexcept( _forward_nothrow_constructible< U > )
         {
                 if ( _core.index != null_index )
                         _core.destroy();
-                _core.template emplace< std::remove_reference_t< U > >( (U&&) v );
+                _core.template emplace< std::remove_cvref_t< U > >( (U&&) v );
                 return *this;
         }
 

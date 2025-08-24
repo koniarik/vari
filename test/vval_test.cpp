@@ -400,4 +400,17 @@ TEST_CASE( "empty vopt" )
         CHECK( !v );
 }
 
+TEST_CASE( "vval construct from constref" )
+{
+        float const                    f1 = 0.0;
+        vval< int, float >             v1{ f1 };
+        vval< int const, float const > v2{ f1 };
+
+        float                          f2 = 0.0;
+        vval< int const, float const > v3{ f2 };
+
+        vopt< int, float >             o1{ f1 };
+        vopt< int const, float const > o3{ f1 };
+}
+
 }  // namespace vari
