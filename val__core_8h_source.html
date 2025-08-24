@@ -241,7 +241,7 @@ $(document).ready(function(){initNavTree('val__core_8h_source.html',''); initRes
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        }</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args &gt;</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <span class="keyword">constexpr</span> T&amp;</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <span class="keyword">constexpr</span> <span class="keyword">auto</span>&amp;</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        emplace( Args&amp;&amp;... args ) <span class="keyword">noexcept</span>( std::is_nothrow_constructible_v&lt; T, Args... &gt; )</div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        {</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                <span class="keyword">constexpr</span> index_type i = index_of_t_or_const_t_v&lt; T, TL &gt;;</div>

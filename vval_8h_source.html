@@ -125,10 +125,10 @@ $(document).ready(function(){initNavTree('vval_8h_source.html',''); initResizabl
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keyword">using </span>const_reference = _vref&lt; Ts <span class="keyword">const</span>... &gt;;</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> U &gt;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <span class="keyword">requires</span>( vconvertible_type&lt; std::remove_reference_t&lt; U &gt;, types &gt; )</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <span class="keyword">requires</span>( vconvertible_type&lt; std::remove_cvref_t&lt; U &gt;, types &gt; )</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keyword">constexpr</span> _vval( U&amp;&amp; v ) <span class="keyword">noexcept</span>( _forward_nothrow_constructible&lt; U &gt; )</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        {</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                _core.template emplace&lt; std::remove_reference_t&lt; U &gt; &gt;( (U&amp;&amp;) v );</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                _core.template emplace&lt; std::remove_cvref_t&lt; U &gt; &gt;( (U&amp;&amp;) v );</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        }</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> U, <span class="keyword">typename</span>... Args &gt;</div>
@@ -168,12 +168,12 @@ $(document).ready(function(){initNavTree('vval_8h_source.html',''); initResizabl
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        }</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <span class="keyword">template</span> &lt; <span class="keyword">typename</span> U &gt;</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                <span class="keyword">requires</span>( vconvertible_to&lt; typelist&lt; std::remove_reference_t&lt; U &gt; &gt;, types &gt; )</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                <span class="keyword">requires</span>( vconvertible_type&lt; std::remove_cvref_t&lt; U &gt;, types &gt; )</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keyword">constexpr</span> _vval&amp; <span class="keyword">operator</span>=( U&amp;&amp; v ) <span class="keyword">noexcept</span>( _forward_nothrow_constructible&lt; U &gt; )</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        {</div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                <span class="keywordflow">if</span> ( _core.index != null_index )</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                        _core.destroy();</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                _core.template emplace&lt; std::remove_reference_t&lt; U &gt; &gt;( (U&amp;&amp;) v );</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                _core.template emplace&lt; std::remove_cvref_t&lt; U &gt; &gt;( (U&amp;&amp;) v );</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        }</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
