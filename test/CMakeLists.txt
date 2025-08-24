@@ -18,7 +18,7 @@ if(BUILD_TESTING)
   target_link_libraries(gdb_bin PUBLIC vari doctest)
 
   set(GDB_SCRIPT ${CMAKE_BINARY_DIR}/gdb_bin.gdb)
-  set(GDB_RESULT ${CMAKE_BINARY_DIR}/gdb.txt)
+  set(GDB_RESULT ${CMAKE_BINARY_DIR}/test/gdb.txt)
   add_test(NAME gdb_bin_g
            COMMAND gdb_bin gen ${CMAKE_CURRENT_SOURCE_DIR}/../pprinter.py
                    ${GDB_SCRIPT})
