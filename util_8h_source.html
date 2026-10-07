@@ -364,7 +364,7 @@ $(document).ready(function(){initNavTree('util_8h_source.html',''); initResizabl
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span><span class="keyword">template</span> &lt; std::<span class="keywordtype">size_t</span> Align &gt;</div>
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span><span class="keyword">constexpr</span> std::intptr_t hash_ptr( <span class="keywordtype">void</span>* p )</div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>{</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        <span class="keywordflow">return</span> (std::intptr_t) ( p ) &gt;&gt; std::bit_width( Align );</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        <span class="keywordflow">return</span> ( std::intptr_t )( p ) &gt;&gt; std::bit_width( Align );</div>
 <div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>}</div>
 <div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span> </div>
 <div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>}  <span class="comment">// namespace vari</span></div>
