@@ -1,28 +1,46 @@
 name: test
 
 on:
-    push:
-        branches:
-            - main
-    pull_request:
-        branches: [deleter]
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v4
-            with:
-              submodules: 'true'
+  pre-commit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
 
-          - name: install deps
-            run: sudo apt install ninja-build ccache gdb
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
 
-          - name: configure
-            run: make configure PRESET=asan
+      - uses: pre-commit/action@v3.0.1
 
-          - name: build
-            run: make build PRESET=asan
+  test:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [gcc, clang]
+        preset: [debug, asan, ubsan, release]
+    env:
+      CC: ${{ matrix.compiler == 'clang' && 'clang' || 'gcc' }}
+      CXX: ${{ matrix.compiler == 'clang' && 'clang++' || 'g++' }}
+    steps:
+      - uses: actions/checkout@v4
 
-          - name: test
-            run: make test PRESET=asan
+      - name: install deps
+        run: sudo apt-get update && sudo apt-get install -y ninja-build gdb
+
+      - name: configure
+        run: make configure PRESET=${{ matrix.preset }}
+
+      - name: build
+        run: make build PRESET=${{ matrix.preset }}
+
+      - name: test
+        run: make test PRESET=${{ matrix.preset }}
