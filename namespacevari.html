@@ -106,8 +106,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html">_uvptr</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A nullable owning pointer to one of the types in Ts...  <a href="classvari_1_1__uvptr.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__uvref.html">_uvref</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A non-nullable owning pointer to one of the types in Ts...  <a href="structvari_1_1__uvref.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvref.html">_uvref</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A non-nullable owning pointer to one of the types in Ts...  <a href="classvari_1_1__uvref.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvari_1_1__val__storage__types_3_01typelist_3_01Ts_8_8_8_01_4_01_4.html">_val_storage_types&lt; typelist&lt; Ts... &gt; &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storage holds the alternatives without const, so they can be constructed in place; reads add the const back through <code>_val_core::_get</code>.  <a href="structvari_1_1__val__storage__types_3_01typelist_3_01Ts_8_8_8_01_4_01_4.html#details">More...</a><br /></td></tr>
@@ -135,7 +135,7 @@ template&lt;typename... Ts&gt; </td></tr>
 <tr class="separator:a3be05c6f854dc1b903a2a85e244bbdc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2388c0eb42106efee2d8ed10243b69a0"><td class="memTemplParams" colspan="2"><a id="a2388c0eb42106efee2d8ed10243b69a0" name="a2388c0eb42106efee2d8ed10243b69a0"></a>
 template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:a2388c0eb42106efee2d8ed10243b69a0"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>uvref</b> = <a class="el" href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">_define_variadic</a>&lt; <a class="el" href="structvari_1_1__uvref.html">_uvref</a>, typelist&lt; Ts... &gt;, <a class="el" href="structvari_1_1def__del.html">def_del</a> &gt;</td></tr>
+<tr class="memitem:a2388c0eb42106efee2d8ed10243b69a0"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>uvref</b> = <a class="el" href="namespacevari.html#aa40348ea19f55b6deeba5d4ab2adcead">_define_variadic</a>&lt; <a class="el" href="classvari_1_1__uvref.html">_uvref</a>, typelist&lt; Ts... &gt;, <a class="el" href="structvari_1_1def__del.html">def_del</a> &gt;</td></tr>
 <tr class="memdesc:a2388c0eb42106efee2d8ed10243b69a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">A non-nullable owning pointer to types derived out of <code>Ts...</code> list by flattening it and filtering for unique types. <br /></td></tr>
 <tr class="separator:a2388c0eb42106efee2d8ed10243b69a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50c11a69a9d782e1ccaa6ebd7be73725"><td class="memTemplParams" colspan="2"><a id="a50c11a69a9d782e1ccaa6ebd7be73725" name="a50c11a69a9d782e1ccaa6ebd7be73725"></a>
@@ -158,7 +158,7 @@ template&lt;typename... Lhs, typename... Rhs&gt; </td></tr>
 <tr class="separator:a7153d864fd4cfb53ecb694bacb29e4b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a756f7c49230c1cc08ae5bf8e54ae310a"><td class="memTemplParams" colspan="2"><a id="a756f7c49230c1cc08ae5bf8e54ae310a" name="a756f7c49230c1cc08ae5bf8e54ae310a"></a>
 template&lt;typename... Lhs, typename... Rhs&gt; </td></tr>
-<tr class="memitem:a756f7c49230c1cc08ae5bf8e54ae310a"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;=&gt;</b> (<a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Lhs... &gt; const &amp;lh, <a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Rhs... &gt; const &amp;rh) noexcept</td></tr>
+<tr class="memitem:a756f7c49230c1cc08ae5bf8e54ae310a"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;=&gt;</b> (<a class="el" href="classvari_1_1__uvref.html">_uvref</a>&lt; Lhs... &gt; const &amp;lh, <a class="el" href="classvari_1_1__uvref.html">_uvref</a>&lt; Rhs... &gt; const &amp;rh) noexcept</td></tr>
 <tr class="memdesc:a756f7c49230c1cc08ae5bf8e54ae310a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the internal pointers of both references. <br /></td></tr>
 <tr class="separator:a756f7c49230c1cc08ae5bf8e54ae310a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b586b2092d1dff0a19c1663a9cf8e38"><td class="memTemplParams" colspan="2"><a id="a6b586b2092d1dff0a19c1663a9cf8e38" name="a6b586b2092d1dff0a19c1663a9cf8e38"></a>
@@ -178,7 +178,7 @@ template&lt;typename... Lhs, typename... Rhs&gt; </td></tr>
 <tr class="separator:a836922ad4c7ca8ad3131b70f244625dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a718a87115f1ab8c073a82449b7696e18"><td class="memTemplParams" colspan="2"><a id="a718a87115f1ab8c073a82449b7696e18" name="a718a87115f1ab8c073a82449b7696e18"></a>
 template&lt;typename... Lhs, typename... Rhs&gt; </td></tr>
-<tr class="memitem:a718a87115f1ab8c073a82449b7696e18"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Lhs... &gt; const &amp;lh, <a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Rhs... &gt; const &amp;rh) noexcept</td></tr>
+<tr class="memitem:a718a87115f1ab8c073a82449b7696e18"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="classvari_1_1__uvref.html">_uvref</a>&lt; Lhs... &gt; const &amp;lh, <a class="el" href="classvari_1_1__uvref.html">_uvref</a>&lt; Rhs... &gt; const &amp;rh) noexcept</td></tr>
 <tr class="memdesc:a718a87115f1ab8c073a82449b7696e18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the internal pointers of both references. <br /></td></tr>
 <tr class="separator:a718a87115f1ab8c073a82449b7696e18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b3319b203a9e42329a474c873cfad84"><td class="memTemplParams" colspan="2"><a id="a9b3319b203a9e42329a474c873cfad84" name="a9b3319b203a9e42329a474c873cfad84"></a>
@@ -199,7 +199,7 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a2bf8a03788166e505fa2068017cf3644"><td class="memTemplParams" colspan="2"><a id="a2bf8a03788166e505fa2068017cf3644" name="a2bf8a03788166e505fa2068017cf3644"></a>
 template&lt;typename R , typename Del , typename... Ts&gt; <br />
 requires ( std::convertible_to&lt; Ts&amp;, R &gt; &amp;&amp; ... )</td></tr>
-<tr class="memitem:a2bf8a03788166e505fa2068017cf3644"><td class="memTemplItemLeft" align="right" valign="top">R&#160;</td><td class="memTemplItemRight" valign="bottom"><b>vcast</b> (<a class="el" href="structvari_1_1__uvref.html">vari::_uvref</a>&lt; Del, Ts... &gt; const &amp;r)</td></tr>
+<tr class="memitem:a2bf8a03788166e505fa2068017cf3644"><td class="memTemplItemLeft" align="right" valign="top">R&#160;</td><td class="memTemplItemRight" valign="bottom"><b>vcast</b> (<a class="el" href="classvari_1_1__uvref.html">vari::_uvref</a>&lt; Del, Ts... &gt; const &amp;r)</td></tr>
 <tr class="memdesc:a2bf8a03788166e505fa2068017cf3644"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies static cast to R to item currently owned by <code>uvref</code> <br /></td></tr>
 <tr class="separator:a2bf8a03788166e505fa2068017cf3644"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c64350b4a8a7519397a79823267381c"><td class="memTemplParams" colspan="2"><a id="a7c64350b4a8a7519397a79823267381c" name="a7c64350b4a8a7519397a79823267381c"></a>

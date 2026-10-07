@@ -116,7 +116,7 @@ requires ( vconvertible_to&lt; typelist&lt; Us... &gt;, types &gt; &amp;&amp; co
 <tr class="memitem:a8fbee5f356f022fa386fa61c8e56ed39"><td class="memTemplParams" colspan="2"><a id="a8fbee5f356f022fa386fa61c8e56ed39" name="a8fbee5f356f022fa386fa61c8e56ed39"></a>
 template&lt;typename Deleter2 , typename... Us&gt; <br />
 requires ( vconvertible_to&lt; typelist&lt; Us... &gt;, types &gt; &amp;&amp; convertible_deleter&lt; Deleter2, Deleter &gt; )</td></tr>
-<tr class="memitem:a8fbee5f356f022fa386fa61c8e56ed39"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_uvptr</b> (<a class="el" href="structvari_1_1__uvref.html">_uvref</a>&lt; Deleter2, Us... &gt; &amp;&amp;p) noexcept</td></tr>
+<tr class="memitem:a8fbee5f356f022fa386fa61c8e56ed39"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_uvptr</b> (<a class="el" href="classvari_1_1__uvref.html">_uvref</a>&lt; Deleter2, Us... &gt; &amp;&amp;p) noexcept</td></tr>
 <tr class="memdesc:a8fbee5f356f022fa386fa61c8e56ed39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <code>uvptr</code> by transfering ownership from <code>uvref</code> with compatible types. <br /></td></tr>
 <tr class="separator:a8fbee5f356f022fa386fa61c8e56ed39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad68f51509febd7e80c4ea036ca8b14a0"><td class="memItemLeft" align="right" valign="top"><a id="ad68f51509febd7e80c4ea036ca8b14a0" name="ad68f51509febd7e80c4ea036ca8b14a0"></a>
@@ -201,7 +201,7 @@ template&lt;typename... Fs&gt; </td></tr>
 <tr class="memitem:a66185129027ae6c7b77e669398bb3119"><td class="memTemplItemLeft" align="right" valign="top">constexpr decltype(auto)&#160;</td><td class="memTemplItemRight" valign="bottom"><b>visit</b> (Fs &amp;&amp;... f) const</td></tr>
 <tr class="memdesc:a66185129027ae6c7b77e669398bb3119"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the appropriate function from the list <code>fs...</code>, based on the type of the current target, or one with <code>empty_t</code> in case of null pointer. <br /></td></tr>
 <tr class="separator:a66185129027ae6c7b77e669398bb3119"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa58a859121832d5b3237542dc07ef41b"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structvari_1_1__uvref.html">owning_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#aa58a859121832d5b3237542dc07ef41b">vref</a> () &amp;&amp;noexcept</td></tr>
+<tr class="memitem:aa58a859121832d5b3237542dc07ef41b"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__uvref.html">owning_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#aa58a859121832d5b3237542dc07ef41b">vref</a> () &amp;&amp;noexcept</td></tr>
 <tr class="memdesc:aa58a859121832d5b3237542dc07ef41b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an owning variadic reference and trasnfers ownership of current target to the reference.  <a href="classvari_1_1__uvptr.html#aa58a859121832d5b3237542dc07ef41b">More...</a><br /></td></tr>
 <tr class="separator:aa58a859121832d5b3237542dc07ef41b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0268f96d4c0db70603d21f28246cbd2"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="classvari_1_1__vref.html">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvari_1_1__uvptr.html#ab0268f96d4c0db70603d21f28246cbd2">vref</a> () const &amp;noexcept</td></tr>
@@ -547,7 +547,7 @@ template&lt;typename Deleter , typename... Ts&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr <a class="el" href="structvari_1_1__uvref.html">owning_reference</a> <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::vref </td>
+          <td class="memname">constexpr <a class="el" href="classvari_1_1__uvref.html">owning_reference</a> <a class="el" href="classvari_1_1__uvptr.html">vari::_uvptr</a>&lt; Deleter, Ts &gt;::vref </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> &amp;&amp;</td>
