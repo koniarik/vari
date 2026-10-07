@@ -1,6 +1,6 @@
 /// MIT License
 ///
-/// Copyright (c) 2025 koniarik
+/// Copyright (c) 2025-2026 koniarik
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -138,9 +138,8 @@ public:
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... fs ) const
         {
-                typename _check_unique_invocability< types >::template with_nullable_pure_ref<
-                    Fs... >
-                    _{};
+                [[maybe_unused]] typename _check_unique_invocability<
+                    types >::template with_nullable_pure_ref< Fs... > _{};
                 if ( _core.ptr == nullptr )
                         return _dispatch_fun( empty, (Fs&&) fs... );
                 return _core.visit_impl( (Fs&&) fs... );

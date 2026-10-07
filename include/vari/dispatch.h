@@ -1,7 +1,7 @@
 
 /// MIT License
 ///
-/// Copyright (c) 2025 koniarik
+/// Copyright (c) 2025-2026 koniarik
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +36,7 @@ constexpr decltype( auto ) dispatch( index_type i, Cnv&& cnv, Fn&&... fn )
 {
         using types = factory_result_types_t< N, Cnv >;
 
+        [[maybe_unused]]
         typename _check_unique_invocability< types >::template with_pure_value< Fn... > _{};
 
         return _dispatch_index< 0, N >( i, [&]< index_type j >() -> decltype( auto ) {

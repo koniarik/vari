@@ -1,6 +1,6 @@
 /// MIT License
 ///
-/// Copyright (c) 2025 koniarik
+/// Copyright (c) 2025-2026 koniarik
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -254,9 +254,8 @@ public:
         constexpr decltype( auto ) visit( Fs&&... f ) const
         {
 
-                typename _check_unique_invocability< types >::template with_nullable_pure_ref<
-                    Fs... >
-                    _{};
+                [[maybe_unused]] typename _check_unique_invocability<
+                    types >::template with_nullable_pure_ref< Fs... > _{};
                 if ( _core.ptr == nullptr )
                         return _dispatch_fun( empty, (Fs&&) f... );
                 return _core.visit_impl( (Fs&&) f... );
@@ -268,10 +267,10 @@ public:
         template < typename... Fs >
         constexpr decltype( auto ) take( Fs&&... fs ) &&
         {
+                [[maybe_unused]]
                 typename _check_unique_invocability< types >::template with_deleter<
-                    Deleter >::template with_nullable_uvref< Fs... >
-                     _{};
-                auto p = release();
+                    Deleter >::template with_nullable_uvref< Fs... > _{};
+                auto                                                 p = release();
                 if ( p._core.ptr == nullptr )
                         return _dispatch_fun( empty, (Fs&&) fs... );
                 return p._core.template take_impl< same_uvref >( (Fs&&) fs... );

@@ -1,6 +1,6 @@
 /// MIT License
 ///
-/// Copyright (c) 2025 koniarik
+/// Copyright (c) 2025-2026 koniarik
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -195,6 +195,7 @@ public:
         template < typename... Fs >
         constexpr decltype( auto ) visit( Fs&&... f ) const
         {
+                [[maybe_unused]]
                 typename _check_unique_invocability< types >::template with_pure_ref< Fs... > _{};
                 VARI_ASSERT( _core.ptr );
                 return _core.visit_impl( (Fs&&) f... );
@@ -205,9 +206,8 @@ public:
         template < typename... Fs >
         constexpr decltype( auto ) take( Fs&&... fs ) &&
         {
-                typename _check_unique_invocability< types >::template with_deleter<
-                    Deleter >::template with_uvref< Fs... >
-                    _{};
+                [[maybe_unused]] typename _check_unique_invocability<
+                    types >::template with_deleter< Deleter >::template with_uvref< Fs... > _{};
                 VARI_ASSERT( _core.ptr );
                 auto tmp = _core;
                 _core.reset();

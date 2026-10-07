@@ -1,7 +1,7 @@
 
 /// MIT License
 ///
-/// Copyright (c) 2025 koniarik
+/// Copyright (c) 2025-2026 koniarik
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 #include "vari/vptr.h"
 #include "vari/vref.h"
 
+#include <cassert>
 #include <fstream>
 #include <iostream>
 #include <source_location>
