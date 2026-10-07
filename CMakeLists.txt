@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 
 option(VARI_TESTS_ENABLED "Enable tests" OFF)
 
-project(vari)
+project(vari VERSION 1.0.2)
 
 file(GLOB VARI_HEADERS include/vari/*.h include/vari/bits/*.h)
 
@@ -28,6 +28,11 @@ install(
   FILE vari-config.cmake
   NAMESPACE vari::
   DESTINATION lib/cmake/vari/)
+write_basic_package_version_file(
+  ${CMAKE_CURRENT_BINARY_DIR}/vari-config-version.cmake
+  COMPATIBILITY SameMajorVersion ARCH_INDEPENDENT)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/vari-config-version.cmake
+        DESTINATION lib/cmake/vari/)
 
 if(VARI_TESTS_ENABLED)
   include(CTest)
