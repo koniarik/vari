@@ -1,6 +1,6 @@
 /// MIT License
 ///
-/// Copyright (c) 2025 koniarik
+/// Copyright (c) 2025-2026 koniarik
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -293,7 +293,7 @@ private:
 template < std::size_t Align >
 constexpr std::intptr_t hash_ptr( void* p )
 {
-        return (std::intptr_t) ( p ) >> std::bit_width( Align );
+        return ( std::intptr_t )( p ) >> std::bit_width( Align );
 }
 
 }  // namespace vari
