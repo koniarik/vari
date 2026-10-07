@@ -77,7 +77,7 @@ template < typename F, typename... Ts >
 concept invocable_with_any = ( invocable< F, Ts > || ... || false );
 
 template < typename Deleter, typename... Ts >
-struct _uvref;
+class _uvref;
 
 template < typename T >
 struct _check_unique_invocability;
