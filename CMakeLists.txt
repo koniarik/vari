@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 
 option(VARI_TESTS_ENABLED "Enable tests" OFF)
 
-project(vari VERSION 1.0.2)
+project(vari VERSION 1.0.3)
 
 file(GLOB VARI_HEADERS include/vari/*.h include/vari/bits/*.h)
 
