@@ -22,15 +22,23 @@ add_test(NAME example COMMAND example)
 add_executable(gdb_bin ./gdb_bin.cpp)
 target_link_libraries(gdb_bin PUBLIC vari doctest::doctest)
 
-set(GDB_SCRIPT ${CMAKE_BINARY_DIR}/gdb_bin.gdb)
-set(GDB_RESULT ${CMAKE_BINARY_DIR}/test/gdb.txt)
-add_test(NAME gdb_bin_g
-         COMMAND gdb_bin gen ${CMAKE_CURRENT_SOURCE_DIR}/../pprinter.py
-                 ${GDB_SCRIPT})
-add_test(NAME gdb_bin_r COMMAND gdb gdb_bin -x ${GDB_SCRIPT} --batch)
-set_tests_properties(gdb_bin_r PROPERTIES FIXTURES_REQUIRED gdb_bin_g)
-add_test(NAME gdb_bin_e COMMAND gdb_bin eval ${GDB_RESULT})
-set_tests_properties(gdb_bin_e PROPERTIES FIXTURES_REQUIRED gdb_bin_r)
+find_program(VARI_GDB gdb)
+if(VARI_GDB
+   AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU"
+   AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  set(GDB_SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/gdb_bin.gdb)
+  set(GDB_RESULT ${CMAKE_CURRENT_BINARY_DIR}/gdb.txt)
+  add_test(NAME gdb_bin_g
+           COMMAND gdb_bin gen ${CMAKE_CURRENT_SOURCE_DIR}/../pprinter.py
+                   ${GDB_SCRIPT})
+  set_tests_properties(gdb_bin_g PROPERTIES FIXTURES_SETUP gdb_script)
+  add_test(NAME gdb_bin_r COMMAND ${VARI_GDB} $<TARGET_FILE:gdb_bin> -x
+                                  ${GDB_SCRIPT} --batch)
+  set_tests_properties(gdb_bin_r PROPERTIES FIXTURES_REQUIRED gdb_script
+                                            FIXTURES_SETUP gdb_log)
+  add_test(NAME gdb_bin_e COMMAND gdb_bin eval ${GDB_RESULT})
+  set_tests_properties(gdb_bin_e PROPERTIES FIXTURES_REQUIRED gdb_log)
+endif()
 
 add_custom_command(
   OUTPUT ${CMAKE_BINARY_DIR}/readme.cpp

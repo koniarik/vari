@@ -38,27 +38,39 @@ enum class mode
         run,
         eval
 };
-void check_impl(
-    mode                 m,
-    std::string_view     var,
-    std::string_view     expected,
-    std::ostream&        out,
-    std::source_location sl = std::source_location::current() )
+// gdb stops here once per check and prints `v`. Each instantiation must stay a separate,
+// non-inlined function, so that `v` has its own type and is addressable at the breakpoint in
+// optimized builds too. GCC folds identical functions unless they are `noipa`.
+#if defined( __clang__ )
+#define VARI_GDB_PROBE [[gnu::noinline]]
+#else
+#define VARI_GDB_PROBE [[gnu::noipa]]
+#endif
+
+template < typename T >
+VARI_GDB_PROBE void gdb_probe( T const& v )
 {
-        if ( m != mode::gen )
-                return;
-        out << "break " << sl.file_name() << ":" << sl.line() << "\n";
-        out << "commands" << "\n";
-        out << "p " << var << "\n";
-        out << "c " << "\n";
-        out << "end" << "\n";
+        asm volatile( "" : : "r"( &v ) : "memory" );
 }
-void check_impl(
-    mode                 m,
-    std::string_view     var,
-    std::string_view     expected,
-    std::istream&        in,
-    std::source_location sl = std::source_location::current() )
+
+template < typename T >
+void check(
+    [[maybe_unused]] mode             m,
+    T const&                          var,
+    [[maybe_unused]] std::string_view expected,
+    [[maybe_unused]] std::ostream&    out )
+{
+        assert( m == mode::run );
+        gdb_probe( var );
+}
+
+template < typename T >
+void check(
+    [[maybe_unused]] mode     m,
+    [[maybe_unused]] T const& var,
+    std::string_view          expected,
+    std::istream&             in,
+    std::source_location      sl = std::source_location::current() )
 {
         assert( m == mode::eval );
         while ( in && in.get() != '$' ) {
@@ -75,8 +87,6 @@ void check_impl(
         std::cerr << "  Source: " << sl.file_name() << ":" << sl.line() << "\n";
         std::exit( 2 );
 }
-
-#define CHECK( m, var, expected, out ) check_impl( m, #var, expected, out );
 
 struct expr
 {
@@ -96,39 +106,39 @@ void run_tests( mode m, auto& st )
         std::string s = "wololo";
 
         vari::vptr< int > v1;
-        CHECK( m, v1, "vari::vptr = {0x0}", st );
+        check( m, v1, "vari::vptr = {0x0}", st );
         v1 = &i;
-        CHECK( m, v1, "vari::vptr = {42}", st );
+        check( m, v1, "vari::vptr = {42}", st );
 
         vari::vptr< int, std::string > v2;
-        CHECK( m, v2, "vari::vptr = {0x0}", st );
+        check( m, v2, "vari::vptr = {0x0}", st );
         v2 = &s;
-        CHECK( m, v2, "vari::vptr = {\"wololo\"}", st );
+        check( m, v2, "vari::vptr = {\"wololo\"}", st );
 
         vari::vref< int > r1 = i;
-        CHECK( m, r1, "vari::vref = {42}", st );
+        check( m, r1, "vari::vref = {42}", st );
 
         vari::vref< int, std::string > r2 = s;
-        CHECK( m, r2, "vari::vref = {\"wololo\"}", st );
+        check( m, r2, "vari::vref = {\"wololo\"}", st );
 
         vari::uvptr< int > uv1;
-        CHECK( m, uv1, "vari::uvptr = {0x0}", st );
+        check( m, uv1, "vari::uvptr = {0x0}", st );
         uv1 = vari::uwrap( i ).vptr();
-        CHECK( m, uv1, "vari::uvptr = {42}", st );
+        check( m, uv1, "vari::uvptr = {42}", st );
 
         vari::uvptr< int, std::string > uv2;
-        CHECK( m, uv2, "vari::uvptr = {0x0}", st );
+        check( m, uv2, "vari::uvptr = {0x0}", st );
         uv2 = vari::uwrap( s ).vptr();
-        CHECK( m, uv2, "vari::uvptr = {\"wololo\"}", st );
+        check( m, uv2, "vari::uvptr = {\"wololo\"}", st );
 
         vari::uvref< int > ur1 = vari::uwrap( i );
-        CHECK( m, ur1, "vari::uvref = {42}", st );
+        check( m, ur1, "vari::uvref = {42}", st );
 
         vari::uvref< int, std::string > ur2 = vari::uwrap( s );
-        CHECK( m, ur2, "vari::uvref = {\"wololo\"}", st );
+        check( m, ur2, "vari::uvref = {\"wololo\"}", st );
 
         vari::uvref< expr > chain = vari::uwrap( gen_expr( 100 ) );
-        CHECK( m, chain, "vari::uvref = {{e = vari::uvptr = {...}}}", st );
+        check( m, chain, "vari::uvref = {{e = vari::uvptr = {...}}}", st );
 }
 
 int main( int argc, char* argv[] )
@@ -144,7 +154,11 @@ int main( int argc, char* argv[] )
                 out << "set logging overwrite" << "\n";
                 out << "set logging on" << "\n";
                 out << "set print max-depth 2" << "\n";
-                run_tests( mode::gen, out );
+                out << "break gdb_probe" << "\n";
+                out << "commands" << "\n";
+                out << "p *&v" << "\n";
+                out << "c" << "\n";
+                out << "end" << "\n";
                 out << "run run" << std::endl;
         } else if ( mode == "run" ) {
                 std::ostringstream ss;

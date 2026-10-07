@@ -17,6 +17,15 @@ def get_template_arg_list(type_obj):
             return template_args
         n += 1
 
+def wrapper_label(type_obj):
+    """Return `vari::vptr`, `vari::uvref`, ... for any spelling of a wrapper type.
+
+    The label does not depend on how the value is reached: an alias, a template
+    parameter or a const reference all print the same.
+    """
+    name = str(type_obj.unqualified().strip_typedefs())
+    return name.split("<", 1)[0].replace("vari::_", "vari::", 1)
+
 class VPtrCorePrinter(printer_base):
 
     _null_index = 2 ** 32
@@ -64,7 +73,7 @@ class VPtrCorePrinter(printer_base):
 
 class VWrapperPrinter(printer_base):
     def __init__(self, val, core):
-        self._typename = val.type
+        self._typename = wrapper_label(val.type)
         self._core = VPtrCorePrinter(core)
 
     def to_string(self):
