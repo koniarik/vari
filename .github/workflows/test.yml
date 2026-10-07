@@ -44,3 +44,24 @@ jobs:
 
       - name: test
         run: make test PRESET=${{ matrix.preset }}
+
+  install:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install deps
+        run: sudo apt-get update && sudo apt-get install -y ninja-build
+
+      - name: configure
+        run: cmake --preset release -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/_install
+
+      - name: build and install
+        run: cmake --build --preset release --target install
+
+      - name: build a find_package consumer
+        run: |
+          cmake -S test/install -B _build/install-consumer -G Ninja \
+            -DCMAKE_PREFIX_PATH=${{ github.workspace }}/_install
+          cmake --build _build/install-consumer
+          ./_build/install-consumer/consumer
