@@ -61,17 +61,17 @@ union _val_union< typelist< Ts... > >
         b2 box2;
         b3 box3;
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i < b0::size )
-                        return b0::template get< i >( s.box0 );
-                else if constexpr ( i < b0::size + b1::size )
-                        return b1::template get< i - b0::size >( s.box1 );
-                else if constexpr ( i < b0::size + b1::size + b2::size )
-                        return b2::template get< i - b0::size - b1::size >( s.box2 );
-                else if constexpr ( i < b0::size + b1::size + b2::size + b3::size )
-                        return b3::template get< i - b0::size - b1::size - b2::size >( s.box3 );
+                if constexpr ( I < b0::size )
+                        return b0::template get< I >( s.box0 );
+                else if constexpr ( I < b0::size + b1::size )
+                        return b1::template get< I - b0::size >( s.box1 );
+                else if constexpr ( I < b0::size + b1::size + b2::size )
+                        return b2::template get< I - b0::size - b1::size >( s.box2 );
+                else if constexpr ( I < b0::size + b1::size + b2::size + b3::size )
+                        return b3::template get< I - b0::size - b1::size - b2::size >( s.box3 );
         }
 };
 
@@ -87,7 +87,7 @@ union _val_union< typelist<> >
         {
         }
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
         }
@@ -111,10 +111,10 @@ union _val_union< typelist< T0 > >
         T0 item0;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
         }
 };
@@ -136,12 +136,12 @@ union _val_union< typelist< T0, T1 > >
         T1 item1;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
         }
 };
@@ -164,14 +164,14 @@ union _val_union< typelist< T0, T1, T2 > >
         T2 item2;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
-                if constexpr ( i == 2 )
+                if constexpr ( I == 2 )
                         return s.item2;
         }
 };
@@ -195,16 +195,16 @@ union _val_union< typelist< T0, T1, T2, T3 > >
         T3 item3;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
-                if constexpr ( i == 2 )
+                if constexpr ( I == 2 )
                         return s.item2;
-                if constexpr ( i == 3 )
+                if constexpr ( I == 3 )
                         return s.item3;
         }
 };
@@ -229,18 +229,18 @@ union _val_union< typelist< T0, T1, T2, T3, T4 > >
         T4 item4;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
-                if constexpr ( i == 2 )
+                if constexpr ( I == 2 )
                         return s.item2;
-                if constexpr ( i == 3 )
+                if constexpr ( I == 3 )
                         return s.item3;
-                if constexpr ( i == 4 )
+                if constexpr ( I == 4 )
                         return s.item4;
         }
 };
@@ -266,20 +266,20 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5 > >
         T5 item5;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
-                if constexpr ( i == 2 )
+                if constexpr ( I == 2 )
                         return s.item2;
-                if constexpr ( i == 3 )
+                if constexpr ( I == 3 )
                         return s.item3;
-                if constexpr ( i == 4 )
+                if constexpr ( I == 4 )
                         return s.item4;
-                if constexpr ( i == 5 )
+                if constexpr ( I == 5 )
                         return s.item5;
         }
 };
@@ -313,22 +313,22 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6 > >
         T6 item6;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
-                if constexpr ( i == 2 )
+                if constexpr ( I == 2 )
                         return s.item2;
-                if constexpr ( i == 3 )
+                if constexpr ( I == 3 )
                         return s.item3;
-                if constexpr ( i == 4 )
+                if constexpr ( I == 4 )
                         return s.item4;
-                if constexpr ( i == 5 )
+                if constexpr ( I == 5 )
                         return s.item5;
-                if constexpr ( i == 6 )
+                if constexpr ( I == 6 )
                         return s.item6;
         }
 };
@@ -364,24 +364,24 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7 > >
         T7 item7;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
-                if constexpr ( i == 2 )
+                if constexpr ( I == 2 )
                         return s.item2;
-                if constexpr ( i == 3 )
+                if constexpr ( I == 3 )
                         return s.item3;
-                if constexpr ( i == 4 )
+                if constexpr ( I == 4 )
                         return s.item4;
-                if constexpr ( i == 5 )
+                if constexpr ( I == 5 )
                         return s.item5;
-                if constexpr ( i == 6 )
+                if constexpr ( I == 6 )
                         return s.item6;
-                if constexpr ( i == 7 )
+                if constexpr ( I == 7 )
                         return s.item7;
         }
 };
@@ -419,26 +419,26 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8 > >
         T8 item8;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
-                if constexpr ( i == 2 )
+                if constexpr ( I == 2 )
                         return s.item2;
-                if constexpr ( i == 3 )
+                if constexpr ( I == 3 )
                         return s.item3;
-                if constexpr ( i == 4 )
+                if constexpr ( I == 4 )
                         return s.item4;
-                if constexpr ( i == 5 )
+                if constexpr ( I == 5 )
                         return s.item5;
-                if constexpr ( i == 6 )
+                if constexpr ( I == 6 )
                         return s.item6;
-                if constexpr ( i == 7 )
+                if constexpr ( I == 7 )
                         return s.item7;
-                if constexpr ( i == 8 )
+                if constexpr ( I == 8 )
                         return s.item8;
         }
 };
@@ -478,28 +478,28 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9 > >
         T9 item9;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
-                if constexpr ( i == 2 )
+                if constexpr ( I == 2 )
                         return s.item2;
-                if constexpr ( i == 3 )
+                if constexpr ( I == 3 )
                         return s.item3;
-                if constexpr ( i == 4 )
+                if constexpr ( I == 4 )
                         return s.item4;
-                if constexpr ( i == 5 )
+                if constexpr ( I == 5 )
                         return s.item5;
-                if constexpr ( i == 6 )
+                if constexpr ( I == 6 )
                         return s.item6;
-                if constexpr ( i == 7 )
+                if constexpr ( I == 7 )
                         return s.item7;
-                if constexpr ( i == 8 )
+                if constexpr ( I == 8 )
                         return s.item8;
-                if constexpr ( i == 9 )
+                if constexpr ( I == 9 )
                         return s.item9;
         }
 };
@@ -541,30 +541,30 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10 > >
         T10 item10;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
-                if constexpr ( i == 2 )
+                if constexpr ( I == 2 )
                         return s.item2;
-                if constexpr ( i == 3 )
+                if constexpr ( I == 3 )
                         return s.item3;
-                if constexpr ( i == 4 )
+                if constexpr ( I == 4 )
                         return s.item4;
-                if constexpr ( i == 5 )
+                if constexpr ( I == 5 )
                         return s.item5;
-                if constexpr ( i == 6 )
+                if constexpr ( I == 6 )
                         return s.item6;
-                if constexpr ( i == 7 )
+                if constexpr ( I == 7 )
                         return s.item7;
-                if constexpr ( i == 8 )
+                if constexpr ( I == 8 )
                         return s.item8;
-                if constexpr ( i == 9 )
+                if constexpr ( I == 9 )
                         return s.item9;
-                if constexpr ( i == 10 )
+                if constexpr ( I == 10 )
                         return s.item10;
         }
 };
@@ -608,32 +608,32 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11 > >
         T11 item11;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
-                if constexpr ( i == 2 )
+                if constexpr ( I == 2 )
                         return s.item2;
-                if constexpr ( i == 3 )
+                if constexpr ( I == 3 )
                         return s.item3;
-                if constexpr ( i == 4 )
+                if constexpr ( I == 4 )
                         return s.item4;
-                if constexpr ( i == 5 )
+                if constexpr ( I == 5 )
                         return s.item5;
-                if constexpr ( i == 6 )
+                if constexpr ( I == 6 )
                         return s.item6;
-                if constexpr ( i == 7 )
+                if constexpr ( I == 7 )
                         return s.item7;
-                if constexpr ( i == 8 )
+                if constexpr ( I == 8 )
                         return s.item8;
-                if constexpr ( i == 9 )
+                if constexpr ( I == 9 )
                         return s.item9;
-                if constexpr ( i == 10 )
+                if constexpr ( I == 10 )
                         return s.item10;
-                if constexpr ( i == 11 )
+                if constexpr ( I == 11 )
                         return s.item11;
         }
 };
@@ -679,34 +679,34 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T1
         T12 item12;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
-                if constexpr ( i == 2 )
+                if constexpr ( I == 2 )
                         return s.item2;
-                if constexpr ( i == 3 )
+                if constexpr ( I == 3 )
                         return s.item3;
-                if constexpr ( i == 4 )
+                if constexpr ( I == 4 )
                         return s.item4;
-                if constexpr ( i == 5 )
+                if constexpr ( I == 5 )
                         return s.item5;
-                if constexpr ( i == 6 )
+                if constexpr ( I == 6 )
                         return s.item6;
-                if constexpr ( i == 7 )
+                if constexpr ( I == 7 )
                         return s.item7;
-                if constexpr ( i == 8 )
+                if constexpr ( I == 8 )
                         return s.item8;
-                if constexpr ( i == 9 )
+                if constexpr ( I == 9 )
                         return s.item9;
-                if constexpr ( i == 10 )
+                if constexpr ( I == 10 )
                         return s.item10;
-                if constexpr ( i == 11 )
+                if constexpr ( I == 11 )
                         return s.item11;
-                if constexpr ( i == 12 )
+                if constexpr ( I == 12 )
                         return s.item12;
         }
 };
@@ -754,36 +754,36 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T1
         T13 item13;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
-                if constexpr ( i == 2 )
+                if constexpr ( I == 2 )
                         return s.item2;
-                if constexpr ( i == 3 )
+                if constexpr ( I == 3 )
                         return s.item3;
-                if constexpr ( i == 4 )
+                if constexpr ( I == 4 )
                         return s.item4;
-                if constexpr ( i == 5 )
+                if constexpr ( I == 5 )
                         return s.item5;
-                if constexpr ( i == 6 )
+                if constexpr ( I == 6 )
                         return s.item6;
-                if constexpr ( i == 7 )
+                if constexpr ( I == 7 )
                         return s.item7;
-                if constexpr ( i == 8 )
+                if constexpr ( I == 8 )
                         return s.item8;
-                if constexpr ( i == 9 )
+                if constexpr ( I == 9 )
                         return s.item9;
-                if constexpr ( i == 10 )
+                if constexpr ( I == 10 )
                         return s.item10;
-                if constexpr ( i == 11 )
+                if constexpr ( I == 11 )
                         return s.item11;
-                if constexpr ( i == 12 )
+                if constexpr ( I == 12 )
                         return s.item12;
-                if constexpr ( i == 13 )
+                if constexpr ( I == 13 )
                         return s.item13;
         }
 };
@@ -833,38 +833,38 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T1
         T14 item14;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
-                if constexpr ( i == 2 )
+                if constexpr ( I == 2 )
                         return s.item2;
-                if constexpr ( i == 3 )
+                if constexpr ( I == 3 )
                         return s.item3;
-                if constexpr ( i == 4 )
+                if constexpr ( I == 4 )
                         return s.item4;
-                if constexpr ( i == 5 )
+                if constexpr ( I == 5 )
                         return s.item5;
-                if constexpr ( i == 6 )
+                if constexpr ( I == 6 )
                         return s.item6;
-                if constexpr ( i == 7 )
+                if constexpr ( I == 7 )
                         return s.item7;
-                if constexpr ( i == 8 )
+                if constexpr ( I == 8 )
                         return s.item8;
-                if constexpr ( i == 9 )
+                if constexpr ( I == 9 )
                         return s.item9;
-                if constexpr ( i == 10 )
+                if constexpr ( I == 10 )
                         return s.item10;
-                if constexpr ( i == 11 )
+                if constexpr ( I == 11 )
                         return s.item11;
-                if constexpr ( i == 12 )
+                if constexpr ( I == 12 )
                         return s.item12;
-                if constexpr ( i == 13 )
+                if constexpr ( I == 13 )
                         return s.item13;
-                if constexpr ( i == 14 )
+                if constexpr ( I == 14 )
                         return s.item14;
         }
 };
@@ -916,40 +916,40 @@ union _val_union< typelist< T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T1
         T15 item15;
 
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {
-                if constexpr ( i == 0 )
+                if constexpr ( I == 0 )
                         return s.item0;
-                if constexpr ( i == 1 )
+                if constexpr ( I == 1 )
                         return s.item1;
-                if constexpr ( i == 2 )
+                if constexpr ( I == 2 )
                         return s.item2;
-                if constexpr ( i == 3 )
+                if constexpr ( I == 3 )
                         return s.item3;
-                if constexpr ( i == 4 )
+                if constexpr ( I == 4 )
                         return s.item4;
-                if constexpr ( i == 5 )
+                if constexpr ( I == 5 )
                         return s.item5;
-                if constexpr ( i == 6 )
+                if constexpr ( I == 6 )
                         return s.item6;
-                if constexpr ( i == 7 )
+                if constexpr ( I == 7 )
                         return s.item7;
-                if constexpr ( i == 8 )
+                if constexpr ( I == 8 )
                         return s.item8;
-                if constexpr ( i == 9 )
+                if constexpr ( I == 9 )
                         return s.item9;
-                if constexpr ( i == 10 )
+                if constexpr ( I == 10 )
                         return s.item10;
-                if constexpr ( i == 11 )
+                if constexpr ( I == 11 )
                         return s.item11;
-                if constexpr ( i == 12 )
+                if constexpr ( I == 12 )
                         return s.item12;
-                if constexpr ( i == 13 )
+                if constexpr ( I == 13 )
                         return s.item13;
-                if constexpr ( i == 14 )
+                if constexpr ( I == 14 )
                         return s.item14;
-                if constexpr ( i == 15 )
+                if constexpr ( I == 15 )
                         return s.item15;
         }
 };

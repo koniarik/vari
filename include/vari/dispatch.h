@@ -39,8 +39,8 @@ constexpr decltype( auto ) dispatch( index_type i, Cnv&& cnv, Fn&&... fn )
         [[maybe_unused]]
         typename _check_unique_invocability< types >::template with_pure_value< Fn... > _{};
 
-        return _dispatch_index< 0, N >( i, [&]< index_type j >() -> decltype( auto ) {
-                auto&& item = cnv.template operator()< j >();
+        return _dispatch_index< 0, N >( i, [&]< index_type J >() -> decltype( auto ) {
+                auto&& item = cnv.template operator()< J >();
 
                 return _dispatch_fun( (decltype( item )&&) item, (Fn&&) fn... );
         } );

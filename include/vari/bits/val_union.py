@@ -13,7 +13,7 @@ def gen_union(fd, n):
         tmpl_params.append(f"typename T{i}")
         tmpl_args.append(f"T{i}")
         items += f"T{i} item{i};\n"
-        conditions += f"if constexpr ( i == {i} )\n return s.item{i};\n"
+        conditions += f"if constexpr ( I == {i} )\n return s.item{i};\n"
 
     fd.write(f"""
 
@@ -27,7 +27,7 @@ union _val_union< typelist< {",".join(tmpl_args)} > >
 
         {items}
 
-        template < index_type i >
+        template < index_type I >
         constexpr static auto& get( auto& s )
         {{
                 {conditions}

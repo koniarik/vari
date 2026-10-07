@@ -87,8 +87,8 @@ struct _ptr_core
         constexpr decltype( auto ) visit_impl( Fs&&... fs ) const
         {
                 return _dispatch_index< 0, TL::size >(
-                    index, [&]< index_type j >() -> decltype( auto ) {
-                            using U = type_at_t< j, TL >;
+                    index, [&]< index_type J >() -> decltype( auto ) {
+                            using U = type_at_t< J, TL >;
                             U* p    = static_cast< U* >( ptr );
                             return _dispatch_fun( *p, (Fs&&) fs... );
                     } );
@@ -98,11 +98,11 @@ struct _ptr_core
         constexpr decltype( auto ) take_impl( Fs&&... fs ) const
         {
                 return _dispatch_index< 0, TL::size >(
-                    index, [&]< index_type j >() -> decltype( auto ) {
-                            using U       = type_at_t< j, TL >;
-                            using ArgType = ArgTempl< U >;
-                            U* p          = static_cast< U* >( ptr );
-                            return _dispatch_fun( ArgType{ *p }, (Fs&&) fs... );
+                    index, [&]< index_type J >() -> decltype( auto ) {
+                            using U        = type_at_t< J, TL >;
+                            using arg_type = ArgTempl< U >;
+                            U* p           = static_cast< U* >( ptr );
+                            return _dispatch_fun( arg_type{ *p }, (Fs&&) fs... );
                     } );
         }
 
@@ -110,8 +110,8 @@ struct _ptr_core
         {
                 if ( index == null_index )
                         return;
-                _dispatch_index< 0, TL::size >( index, [&]< index_type j > {
-                        using U = type_at_t< j, TL >;
+                _dispatch_index< 0, TL::size >( index, [&]< index_type J > {
+                        using U = type_at_t< J, TL >;
                         del( static_cast< U* >( ptr ) );
                 } );
         }
@@ -125,7 +125,7 @@ struct _ptr_core< typelist< T > >
 
         constexpr _ptr_core() noexcept = default;
 
-        constexpr _ptr_core( _ptr_core< typelist<> > ) noexcept
+        constexpr _ptr_core( _ptr_core< typelist<> > /*empty*/ ) noexcept
           : ptr( nullptr )
         {
         }
@@ -169,8 +169,8 @@ struct _ptr_core< typelist< T > >
         template < template < typename... > typename ArgTempl, typename... Fs >
         constexpr decltype( auto ) take_impl( Fs&&... fs ) const
         {
-                using ArgType = ArgTempl< T >;
-                return _dispatch_fun( ArgType( *ptr ), (Fs&&) fs... );
+                using arg_type = ArgTempl< T >;
+                return _dispatch_fun( arg_type( *ptr ), (Fs&&) fs... );
         }
 
         constexpr void delete_ptr( auto&& del )

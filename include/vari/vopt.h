@@ -63,7 +63,7 @@ public:
 
         template < typename U, typename... Args >
                 requires( vconvertible_type< U, types > )
-        constexpr _vopt( std::in_place_type_t< U >, Args&&... args ) noexcept(
+        constexpr _vopt( std::in_place_type_t< U > /*tag*/, Args&&... args ) noexcept(
             std::is_nothrow_constructible_v< U, Args... > )
         {
                 _core.template emplace< U >( (Args&&) args... );

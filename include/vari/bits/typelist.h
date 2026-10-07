@@ -122,20 +122,20 @@ static constexpr std::size_t index_of_t_or_const_t_v = index_of_t_or_const_t< T,
 
 // Exports type at index `j` in typelist `TL` as ::type. `TL` has to be `typelist` or typelist
 // compatible type.
-template < std::size_t j, typename TL >
+template < std::size_t J, typename TL >
 struct type_at : _default_template_guard< TL >
 {
 };
 
-template < std::size_t j, typelist_compatible TL >
-struct type_at< j, TL > : type_at< j, typelist_traits_types< TL > >
+template < std::size_t J, typelist_compatible TL >
+struct type_at< J, TL > : type_at< J, typelist_traits_types< TL > >
 {
 };
 
-template < std::size_t j, typename T, typename... Ts >
-struct type_at< j, typelist< T, Ts... > >
+template < std::size_t J, typename T, typename... Ts >
+struct type_at< J, typelist< T, Ts... > >
 {
-        using type = typename type_at< j - 1, typelist< Ts... > >::type;
+        using type = typename type_at< J - 1, typelist< Ts... > >::type;
 };
 
 template < typename T, typename... Ts >
@@ -144,8 +144,8 @@ struct type_at< 0, typelist< T, Ts... > >
         using type = T;
 };
 
-template < std::size_t j, typename TL >
-using type_at_t = typename type_at< j, TL >::type;
+template < std::size_t J, typename TL >
+using type_at_t = typename type_at< J, TL >::type;
 
 // ---
 

@@ -49,21 +49,22 @@ struct _val_storage_types< typelist< Ts... > >
 template < typename TL >
 struct _val_core
 {
-        using ST = _val_union< typename _val_storage_types< TL >::type >;
+        using storage_type = _val_union< typename _val_storage_types< TL >::type >;
 
         /// Alternative `j` of `storage`, as declared in `TL`.
-        template < index_type j, typename S >
+        template < index_type J, typename S >
         static constexpr auto& _get( S& storage ) noexcept
         {
-                using T = type_at_t< j, TL >;
+                using T = type_at_t< J, TL >;
                 if constexpr ( std::is_const_v< S > )
-                        return static_cast< T const& >( ST::template get< j >( storage ) );
+                        return static_cast< T const& >(
+                            storage_type::template get< J >( storage ) );
                 else
-                        return static_cast< T& >( ST::template get< j >( storage ) );
+                        return static_cast< T& >( storage_type::template get< J >( storage ) );
         }
 
-        index_type index = null_index;
-        ST         storage;
+        index_type   index = null_index;
+        storage_type storage;
 
         constexpr _val_core() noexcept = default;
 
@@ -94,25 +95,26 @@ struct _val_core
                 _copy_or_move_construct< true, UL >( *this, other );
         }
 
-        template < bool IS_MOVE, typename UL >
+        template < bool IsMove, typename UL >
         static constexpr void _copy_or_move_construct( auto& self, auto& other ) noexcept(
-            IS_MOVE ? all_nothrow_move_constructible_v< UL > :
-                      all_nothrow_copy_constructible_v< UL > )
+            IsMove ? all_nothrow_move_constructible_v< UL > :
+                     all_nothrow_copy_constructible_v< UL > )
         {
                 if ( other.index == null_index )
                         return;
                 _dispatch_index< 0, UL::size >(
-                    other.index, [&]< index_type j >() -> decltype( auto ) {
-                            static constexpr index_type i = _vptr_cnv_map< TL, UL >::conv( j );
-                            auto& src = _val_core< UL >::template _get< j >( other.storage );
+                    other.index, [&]< index_type J >() -> decltype( auto ) {
+                            static constexpr index_type i = _vptr_cnv_map< TL, UL >::conv( J );
+                            auto& src = _val_core< UL >::template _get< J >( other.storage );
 
                             self.index = i;
-                            if constexpr ( IS_MOVE )
+                            if constexpr ( IsMove )
                                     std::construct_at(
-                                        &ST::template get< i >( self.storage ), std::move( src ) );
+                                        &storage_type::template get< i >( self.storage ),
+                                        std::move( src ) );
                             else
                                     std::construct_at(
-                                        &ST::template get< i >( self.storage ), src );
+                                        &storage_type::template get< i >( self.storage ), src );
                     } );
         }
 
@@ -134,9 +136,9 @@ struct _val_core
         {
                 if ( lh.index == rh.index )
                         return _dispatch_index< 0, TL::size >(
-                            lh.index, [&]< index_type j >() -> decltype( auto ) {
-                                    auto& l = _get< j >( lh.storage );
-                                    auto& r = _get< j >( rh.storage );
+                            lh.index, [&]< index_type J >() -> decltype( auto ) {
+                                    auto& l = _get< J >( lh.storage );
+                                    auto& r = _get< J >( rh.storage );
                                     using namespace std;
                                     swap( l, r );
                             } );
@@ -156,12 +158,12 @@ struct _val_core
             all_nothrow_move_constructible_v< TL > && all_nothrow_destructible_v< TL > )
         {
                 _dispatch_index< 0, TL::size >(
-                    lh.index, [&]< index_type j >() -> decltype( auto ) {
+                    lh.index, [&]< index_type J >() -> decltype( auto ) {
                             std::construct_at(
-                                &ST::template get< j >( rh.storage ),
-                                std::move( _get< j >( lh.storage ) ) );
+                                &storage_type::template get< J >( rh.storage ),
+                                std::move( _get< J >( lh.storage ) ) );
                             rh.index = lh.index;
-                            std::destroy_at( &ST::template get< j >( lh.storage ) );
+                            std::destroy_at( &storage_type::template get< J >( lh.storage ) );
                     } );
         }
 
@@ -170,8 +172,8 @@ struct _val_core
         static constexpr decltype( auto ) visit_impl( auto& self, Fs&&... fs )
         {
                 return _dispatch_index< 0, TL::size >(
-                    self.index, [&]< index_type j >() -> decltype( auto ) {
-                            auto& p = _get< j >( self.storage );
+                    self.index, [&]< index_type J >() -> decltype( auto ) {
+                            auto& p = _get< J >( self.storage );
                             return _dispatch_fun( p, (Fs&&) fs... );
                     } );
         }
@@ -180,8 +182,8 @@ struct _val_core
         static constexpr decltype( auto ) visit_impl( auto& self, F&& f )
         {
                 return _dispatch_index< 0, TL::size >(
-                    self.index, [&]< index_type j >() -> decltype( auto ) {
-                            auto& p = _get< j >( self.storage );
+                    self.index, [&]< index_type J >() -> decltype( auto ) {
+                            auto& p = _get< J >( self.storage );
 
                             return ( (F&&) f )( p );
                     } );
@@ -194,14 +196,14 @@ struct _val_core
                 constexpr index_type i = index_of_t_or_const_t_v< T, TL >;
 
                 index = i;
-                std::construct_at( &ST::template get< i >( storage ), (Args&&) args... );
+                std::construct_at( &storage_type::template get< i >( storage ), (Args&&) args... );
                 return _get< i >( storage );
         }
 
         constexpr void destroy() noexcept( all_nothrow_destructible_v< TL > )
         {
-                _dispatch_index< 0, TL::size >( index, [&]< index_type j > {
-                        std::destroy_at( &ST::template get< j >( storage ) );
+                _dispatch_index< 0, TL::size >( index, [&]< index_type J > {
+                        std::destroy_at( &storage_type::template get< J >( storage ) );
                 } );
                 index = null_index;
         }
@@ -219,8 +221,8 @@ struct _val_core
                 if ( lh_i != rh_i )
                         return lh_i <=> rh_i;
                 return _dispatch_index< 0, TL::size >(
-                    lh_i, [&]< index_type j >() -> std::partial_ordering {
-                            return _get< j >( lh.storage ) <=> _get< j >( rh.storage );
+                    lh_i, [&]< index_type J >() -> std::partial_ordering {
+                            return _get< J >( lh.storage ) <=> _get< J >( rh.storage );
                     } );
         }
 
@@ -232,8 +234,8 @@ struct _val_core
                 index_type rh_i = rh.index;
                 if ( lh_i != rh_i )
                         return lh_i == rh_i;
-                return _dispatch_index< 0, TL::size >( lh_i, [&]< index_type j > {
-                        return _get< j >( lh.storage ) == _get< j >( rh.storage );
+                return _dispatch_index< 0, TL::size >( lh_i, [&]< index_type J > {
+                        return _get< J >( lh.storage ) == _get< J >( rh.storage );
                 } );
         }
 };

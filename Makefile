@@ -13,4 +13,4 @@ test: build
 	ctest --preset "$(PRESET)" --output-on-failure --verbose
 
 clang-tidy:
-	find include/ \( -iname "*.h" -or -iname "*.cpp" \) -print0 | parallel -0 clang-tidy -p _build/$(PRESET) {}
+	find include/ \( -iname "*.h" -or -iname "*.cpp" \) -print0 | parallel -0 clang-tidy {} -- -x c++ -std=c++20 -Iinclude
