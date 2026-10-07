@@ -45,6 +45,23 @@ jobs:
       - name: test
         run: make test PRESET=${{ matrix.preset }}
 
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: set up MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: configure
+        run: cmake --preset windows-debug
+
+      - name: build
+        run: cmake --build --preset windows-debug
+
+      - name: test
+        run: ctest --preset windows-debug --output-on-failure
+
   install:
     runs-on: ubuntu-24.04
     steps:

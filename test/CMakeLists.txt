@@ -40,10 +40,14 @@ if(VARI_GDB
   set_tests_properties(gdb_bin_e PROPERTIES FIXTURES_REQUIRED gdb_log)
 endif()
 
+find_package(
+  Python3
+  COMPONENTS Interpreter
+  REQUIRED)
 add_custom_command(
   OUTPUT ${CMAKE_BINARY_DIR}/readme.cpp
   COMMAND
-    python3 ${CMAKE_CURRENT_SOURCE_DIR}/gen_readme_cpp.py
+    ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/gen_readme_cpp.py
     ${CMAKE_CURRENT_SOURCE_DIR}/../README.md ${CMAKE_BINARY_DIR}/readme.cpp
   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/../README.md
           ${CMAKE_CURRENT_SOURCE_DIR}/gen_readme_cpp.py)
