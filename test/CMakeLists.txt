@@ -1,3 +1,6 @@
+# FIND_PACKAGE_ARGS of FetchContent_Declare needs CMake 3.24.
+cmake_minimum_required(VERSION 3.24)
+
 file(GLOB TESTS ./*_test.cpp)
 
 include(FetchContent)
