@@ -47,6 +47,7 @@
 
 #include <doctest/doctest.h>
 #include <source_location>
+#include <type_traits>
 #include <vector>
 
 namespace vari
@@ -398,6 +399,18 @@ TEST_CASE( "empty vopt" )
 {
         vopt<> v;
         CHECK( !v );
+}
+
+TEST_CASE( "vval keeps const alternatives const" )
+{
+        vval< int const, float const > v{ 1 };
+        v.visit( []( auto& x ) {
+                static_assert( std::is_const_v< std::remove_reference_t< decltype( x ) > > );
+        } );
+
+        vval< int const > s{ 1 };
+        static_assert( std::is_const_v< std::remove_reference_t< decltype( *s ) > > );
+        CHECK_EQ( *s, 1 );
 }
 
 TEST_CASE( "vval construct from constref" )

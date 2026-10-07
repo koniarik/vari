@@ -30,14 +30,37 @@
 
 #include <compare>
 #include <memory>
+#include <type_traits>
 
 namespace vari
 {
 
 template < typename TL >
+struct _val_storage_types;
+
+/// Storage holds the alternatives without const, so they can be constructed in place; reads add
+/// the const back through `_val_core::_get`.
+template < typename... Ts >
+struct _val_storage_types< typelist< Ts... > >
+{
+        using type = typelist< std::remove_const_t< Ts >... >;
+};
+
+template < typename TL >
 struct _val_core
 {
-        using ST = _val_union< TL >;
+        using ST = _val_union< typename _val_storage_types< TL >::type >;
+
+        /// Alternative `j` of `storage`, as declared in `TL`.
+        template < index_type j, typename S >
+        static constexpr auto& _get( S& storage ) noexcept
+        {
+                using T = type_at_t< j, TL >;
+                if constexpr ( std::is_const_v< S > )
+                        return static_cast< T const& >( ST::template get< j >( storage ) );
+                else
+                        return static_cast< T& >( ST::template get< j >( storage ) );
+        }
 
         index_type index = null_index;
         ST         storage;
@@ -81,17 +104,15 @@ struct _val_core
                 _dispatch_index< 0, UL::size >(
                     other.index, [&]< index_type j >() -> decltype( auto ) {
                             static constexpr index_type i = _vptr_cnv_map< TL, UL >::conv( j );
-                            using OST                     = typename _val_core< UL >::ST;
+                            auto& src = _val_core< UL >::template _get< j >( other.storage );
 
                             self.index = i;
                             if constexpr ( IS_MOVE )
                                     std::construct_at(
-                                        &ST::template get< i >( self.storage ),
-                                        std::move( OST::template get< j >( other.storage ) ) );
+                                        &ST::template get< i >( self.storage ), std::move( src ) );
                             else
                                     std::construct_at(
-                                        &ST::template get< i >( self.storage ),
-                                        OST::template get< j >( other.storage ) );
+                                        &ST::template get< i >( self.storage ), src );
                     } );
         }
 
@@ -114,8 +135,8 @@ struct _val_core
                 if ( lh.index == rh.index )
                         return _dispatch_index< 0, TL::size >(
                             lh.index, [&]< index_type j >() -> decltype( auto ) {
-                                    auto& l = ST::template get< j >( lh.storage );
-                                    auto& r = ST::template get< j >( rh.storage );
+                                    auto& l = _get< j >( lh.storage );
+                                    auto& r = _get< j >( rh.storage );
                                     using namespace std;
                                     swap( l, r );
                             } );
@@ -136,11 +157,11 @@ struct _val_core
         {
                 _dispatch_index< 0, TL::size >(
                     lh.index, [&]< index_type j >() -> decltype( auto ) {
-                            auto& l = ST::template get< j >( lh.storage );
-                            auto& r = ST::template get< j >( rh.storage );
-                            std::construct_at( &r, std::move( l ) );
+                            std::construct_at(
+                                &ST::template get< j >( rh.storage ),
+                                std::move( _get< j >( lh.storage ) ) );
                             rh.index = lh.index;
-                            std::destroy_at( &l );
+                            std::destroy_at( &ST::template get< j >( lh.storage ) );
                     } );
         }
 
@@ -150,7 +171,7 @@ struct _val_core
         {
                 return _dispatch_index< 0, TL::size >(
                     self.index, [&]< index_type j >() -> decltype( auto ) {
-                            auto& p = ST::template get< j >( self.storage );
+                            auto& p = _get< j >( self.storage );
                             return _dispatch_fun( p, (Fs&&) fs... );
                     } );
         }
@@ -160,7 +181,7 @@ struct _val_core
         {
                 return _dispatch_index< 0, TL::size >(
                     self.index, [&]< index_type j >() -> decltype( auto ) {
-                            auto& p = ST::template get< j >( self.storage );
+                            auto& p = _get< j >( self.storage );
 
                             return ( (F&&) f )( p );
                     } );
@@ -173,7 +194,8 @@ struct _val_core
                 constexpr index_type i = index_of_t_or_const_t_v< T, TL >;
 
                 index = i;
-                return *std::construct_at( &ST::template get< i >( storage ), (Args&&) args... );
+                std::construct_at( &ST::template get< i >( storage ), (Args&&) args... );
+                return _get< i >( storage );
         }
 
         constexpr void destroy() noexcept( all_nothrow_destructible_v< TL > )
@@ -198,8 +220,7 @@ struct _val_core
                         return lh_i <=> rh_i;
                 return _dispatch_index< 0, TL::size >(
                     lh_i, [&]< index_type j >() -> std::partial_ordering {
-                            return ST::template get< j >( lh.storage ) <=>
-                                   ST::template get< j >( rh.storage );
+                            return _get< j >( lh.storage ) <=> _get< j >( rh.storage );
                     } );
         }
 
@@ -212,8 +233,7 @@ struct _val_core
                 if ( lh_i != rh_i )
                         return lh_i == rh_i;
                 return _dispatch_index< 0, TL::size >( lh_i, [&]< index_type j > {
-                        return ST::template get< j >( lh.storage ) ==
-                               ST::template get< j >( rh.storage );
+                        return _get< j >( lh.storage ) == _get< j >( rh.storage );
                 } );
         }
 };

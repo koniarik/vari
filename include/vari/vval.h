@@ -152,7 +152,7 @@ public:
         constexpr auto& operator*() const noexcept
                 requires( types::size == 1 )
         {
-                return core_type::ST::template get< 0 >( _core.storage );
+                return core_type::template _get< 0 >( _core.storage );
         }
 
         constexpr auto* operator->() const noexcept
