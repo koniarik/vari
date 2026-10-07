@@ -1,0 +1,39 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        preset: [debug, asan, ubsan, release]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install deps
+        run: sudo apt-get update && sudo apt-get install -y ninja-build gdb
+
+      - name: configure
+        run: make configure PRESET=${{ matrix.preset }}
+
+      - name: build
+        run: make build PRESET=${{ matrix.preset }}
+
+      - name: test
+        run: make test PRESET=${{ matrix.preset }}
+
+  release:
+    needs: test
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
